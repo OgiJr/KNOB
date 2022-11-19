@@ -31,32 +31,44 @@ const HomeDefault = () => {
     <>
       <SEO title="Business Consulting" />
       <main className="page-wrapper">
-        <HeaderOne btnStyle="btn-small round btn-icon" HeaderSTyle="header-transparent" />
+        <HeaderOne btnStyle="btn-small round btn-icon" />
 
         {/* Start Slider Area  */}
-        <div className="slider-area slider-style-1 variation-default height-850 bg_image" data-black-overlay="7" style={{ backgroundImage: `url(${process.env.PUBLIC_URL}/images/bg/bg-image-3.jpg)` }}>
+        <div className="slider-area slider-style-1 variation-default height-850 bg_image" data-black-overlay="7" style={{ backgroundImage: `url(${process.env.PUBLIC_URL}/images/bg/main-banner-2.jpg)` }}>
           <div className="container">
             <div className="row">
               <div className="col-lg-12">
                 <div className="inner text-center">
-                  <span className="subtitle">KNOB</span>
-                  <h1 className="title display-one">
-                    Unique Business <span>Consulting</span>.
-                  </h1>
-                  <p className="description">We help our clients succeed by creating brand identities, digital experiences, and print materials.</p>
+                  <span className="subtitle">
+                    <span style={{ color: "orange" }}>К</span>омпетентност <span style={{ color: "orange" }}>Н</span>езависимост <span style={{ color: "orange" }}>О</span>бективност <span style={{ color: "orange" }}>Б</span>езпристрасност
+                  </span>
+                  <p className="description">КНОБ осигурява и регулира упражняването на професията на независим оценител в интерес на обществото.</p>
                   <div className="button-group">
                     <a className="btn-default btn-medium round btn-icon" target="_blank" href="https://themeforest.net/checkout/from_item/33571911?license=regular">
-                      Purchase Now{" "}
+                      Публичен регистър
                       <i className="icon">
                         <FiArrowRight />
                       </i>
                     </a>
                     <Link className="btn-default btn-medium btn-border round btn-icon" to="#">
-                      Contact Us{" "}
+                      Членове на КНОБ
                       <i className="icon">
                         <FiArrowRight />
                       </i>
                     </Link>
+                    <br /> <br />
+                    <Link className="btn-default btn-medium btn-border round btn-icon" to="#">
+                      Банкови сметки{" "}
+                      <i className="icon">
+                        <FiArrowRight />
+                      </i>
+                    </Link>
+                    <a className="btn-default btn-medium round btn-icon" target="_blank" href="https://themeforest.net/checkout/from_item/33571911?license=regular">
+                      Документи
+                      <i className="icon">
+                        <FiArrowRight />
+                      </i>
+                    </a>
                   </div>
                 </div>
               </div>

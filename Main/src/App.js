@@ -140,3 +140,4 @@ const App = () => {
 };
 
 export default App;
+document.querySelector("body").classList.toggle("light");

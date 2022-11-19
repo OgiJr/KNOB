@@ -25,17 +25,19 @@ const HeaderOne = ({ btnStyle, HeaderSTyle }) => {
       <header ref={ref} className={`rn-header header-default ${HeaderSTyle} ${headerClasses}`}>
         <div className="container position-relative">
           <div className="row align-items-center row--0">
-            <div className="col-lg-3 col-md-6 col-4">
-              <Logo image={`${process.env.PUBLIC_URL}/images/logo/logo.png`} image2={`${process.env.PUBLIC_URL}/images/logo/logo-dark.png`} />
+            <div className="col-lg-2 col-md-6 col-4">
+              <a href="/">
+                <h3>КНОБ</h3>
+              </a>
             </div>
-            <div className="col-lg-9 col-md-6 col-8 position-static">
+            <div className="col-lg-10 col-md-6 col-8 position-static">
               <div className="header-right">
                 <nav className="mainmenu-nav d-none d-lg-block">
                   <Nav />
                 </nav>
                 <div className="header-btn">
                   <a className={`btn-default ${btnStyle}`} target="_blank" href="https://themeforest.net/checkout/from_item/33571911?license=regular">
-                    BUY NOW
+                    Вход
                   </a>
                 </div>
                 <div className="mobile-menu-bar ml--5 d-block d-lg-none">
@@ -45,7 +47,6 @@ const HeaderOne = ({ btnStyle, HeaderSTyle }) => {
                     </span>
                   </div>
                 </div>
-                <Darkmode />
               </div>
             </div>
           </div>
