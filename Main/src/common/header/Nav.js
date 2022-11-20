@@ -14,10 +14,10 @@ const Nav = () => {
             <Link to="/blog-list-view">Новини</Link>
           </li>
           <li>
-            <Link to="/business-consulting-2">Изпити и курсове</Link>
+            <Link to="/blog-quiz">Изпити и курсове</Link>
           </li>
           <li>
-            <Link to="/corporate">Архив</Link>
+            <Link to="/blog-archive">Архив</Link>
           </li>
         </ul>
       </li>

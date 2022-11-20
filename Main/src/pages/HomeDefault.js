@@ -27,7 +27,7 @@ const HomeDefault = () => {
                     <span style={{ color: "orange" }}>К</span>омпетентност <span style={{ color: "orange" }}>Н</span>езависимост <span style={{ color: "orange" }}>О</span>бективност <span style={{ color: "orange" }}>Б</span>езпристрасност
                   </span>
                   <p className="description">КНОБ осигурява и регулира упражняването на професията на независим оценител в интерес на обществото.</p>
-                  <div className="button-group">
+                  <div className="button-group flex flex-row">
                     <a className="btn-default btn-medium round btn-icon" href="https://themeforest.net/checkout/from_item/33571911?license=regular">
                       Публичен регистър
                       <i className="icon">

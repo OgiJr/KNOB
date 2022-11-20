@@ -5,7 +5,7 @@ import { FaSpinner } from "react-icons/fa";
 import filters from "./Filters";
 
 const alldataBLog = BlogClassicData;
-const BlogPropTwo = ({ column, StyleVarProp }) => {
+const BlogPropTwo = ({ column, StyleVarProp, archive = "false" }) => {
   const [getAllItems] = useState(alldataBLog);
   const [dataVisibleCount, setDataVisibleCount] = useState(6);
   const [dataIncrement] = useState(3);
@@ -38,7 +38,7 @@ const BlogPropTwo = ({ column, StyleVarProp }) => {
         <div className="row row--15">
           {visibleItems.map((item) => (
             <div key={item.id} className={column}>
-              <BlogListTwo StyleVar={StyleVarProp} data={item} />
+              <BlogListTwo StyleVar={StyleVarProp} data={item} archive={archive} />
             </div>
           ))}
         </div>

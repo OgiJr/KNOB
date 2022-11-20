@@ -1,6 +1,5 @@
 import React from "react";
-import Typed from "react-typed";
-import { Card, Grid, Text, Link } from "@nextui-org/react";
+import { Card, Text } from "@nextui-org/react";
 
 const Accents = () => {
   return (
@@ -11,22 +10,20 @@ const Accents = () => {
             <div className="content">
               <div className="section-title">
                 <h2 className="title">Акценти </h2>
-                <div style={{ display: "flex", flexDirection: "row" }}>
-                  <img className="icon" style={{ width: 50, height: 50, marginTop: -10 }} src="images/icons/pin.png" alt="Pinned" />
-                  <p>
+                <div style={{ display: "flex", flexDirection: "row", alignItems: "center" }}>
+                  <img className="icon" style={{ width: 50, height: 50 }} src="images/icons/pin.png" alt="Pinned" />
+                  <p style={{ marginTop: 10 }}>
                     <b>Съобщение:</b>
-                    <br />
-                    Приемното време на Централен офис на КНОБ с клиенти на място е от понеделник до петък от 09:30 до 16:30 часа с половин час обедна почивка от 13:00 до 13:30 часа.
                   </p>
                 </div>
-                <div style={{ display: "flex", flexDirection: "row" }}>
-                  <img className="icon" style={{ width: 50, height: 50, marginTop: -10 }} src="images/icons/doc.png" alt="Docs" />
-                  <p>
-                    <b>Оформяне на оценителски доклад от дружества на независим оценител:</b>
-                    <br />В изпълнение на правомощията си по чл. 22, ал. 3, т. 7, КНОБ указва на дружествата на независим оценител, че съгласно чл. 17, ал. 1, в оценките подписани от дружеството на независим оценител задължително трябва да се съдържа и подпис на независимия оценител - физическо лице, отговорно за изготвянето на оценката. Не подписването на оценката, която не е подписана съгласно чл. 17, ал. 1 да се счита за невалидна поради нарушаване на императивното изискване на чл. 6, ал. 3 от ЗНО.
-                  </p>
+                <div style={{ marginLeft: "10px", marginRight: "10px", marginTop: "10px" }}>Приемното време на Централен офис на КНОБ с клиенти на място е от понеделник до петък от 09:30 до 16:30 часа с половин час обедна почивка от 13:00 до 13:30 часа.</div>
+                <br />
+                <div style={{ display: "flex", flexDirection: "row", alignItems: "center", marginRight: "10px" }}>
+                  <img className="icon" style={{ width: 50, height: 50 }} src="images/icons/doc.png" alt="Docs" />
+                  <b>Оформяне на оценителски доклад от дружества на независим оценител:</b>
                 </div>
-                <div className="read-more-btn mt--40" style={{ display: "flex", flexDirection: "row" }}>
+                <div style={{ marginLeft: "10px", marginRight: "10px", marginTop: "10px" }}>В изпълнение на правомощията си по чл. 22, ал. 3, т. 7, КНОБ указва на дружествата на независим оценител, че съгласно чл. 17, ал. 1, в оценките подписани от дружеството на независим оценител задължително трябва да се съдържа и подпис на независимия оценител - физическо лице, отговорно за изготвянето на оценката. Не подписването на оценката, която не е подписана съгласно чл. 17, ал. 1 да се счита за невалидна поради нарушаване на императивното изискване на чл. 6, ал. 3 от ЗНО.</div>
+                <div className=" mt--40">
                   <Card css={{ p: "$6" }} isHoverable isPressable>
                     <Card.Header>
                       <img alt="nextui logo" src="images/icons/map.png" width="34px" height="34px" />
@@ -50,7 +47,7 @@ const Accents = () => {
                       </Text>
                     </Card.Body>
                   </Card>
-                  <Card css={{ p: "$6", marginLeft: "50px" }} isHoverable isPressable>
+                  <Card css={{ p: "$6" }} isHoverable isPressable className="mt-5 md:mt-0 md:ml-5 ">
                     <Card.Header>
                       <img alt="nextui logo" src="images/icons/map.png" width="34px" height="34px" />
                       <Text style={{ fontWeight: "bold", marginTop: "27px" }}>Такса за вписване в регистъра на КНОБ</Text>
@@ -74,7 +71,7 @@ const Accents = () => {
                     </Card.Body>
                   </Card>
                 </div>
-                <div className="read-more-btn mt--40" style={{ display: "flex", flexDirection: "row" }}>
+                <div style={{}}>
                   <Card css={{ p: "$6" }} isHoverable isPressable>
                     <Card.Header>
                       <img alt="nextui logo" src="images/icons/map.png" width="34px" height="34px" />
