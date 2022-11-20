@@ -23,11 +23,11 @@ const HeaderOne = ({ btnStyle, HeaderSTyle }) => {
   return (
     <>
       <header ref={ref} className={`rn-header header-default ${HeaderSTyle} ${headerClasses}`}>
-        <div className="container position-relative">
+        <div style={{ marginRight: "3%", marginLeft: "3%" }} className="position-relative">
           <div className="row align-items-center row--0">
             <div className="col-lg-2 col-md-6 col-4">
               <a href="/">
-                <h3>КНОБ</h3>
+                <h3 className=" text-xl">КНОБ</h3>
               </a>
             </div>
             <div className="col-lg-10 col-md-6 col-8 position-static">

@@ -1,41 +1,55 @@
-import React from 'react';
-import {slugify} from "../../../utils";
+import React from "react";
 import PropTypes from "prop-types";
-import {Link} from "react-router-dom";
+import { Link } from "react-router-dom";
 
-const BlogListTwo = ({ data, StyleVar }) => {
-    const cate = data.categories.map((value, i) => {
-        return (
-            <Link to={process.env.PUBLIC_URL + `/category/${slugify(value)}`} key={i}>{value}{i !== data.categories.length - 1 && ","}</Link>
-        )
-    });
-    
-    return (
+const BlogListTwo = ({ data, StyleVar, archive = "false" }) => {
+  return (
+    <>
+      {data.archived === archive ? (
         <div className={`rn-card ${StyleVar}`}>
-            <div className="inner">
-                <div className="thumbnail">
-                    <Link to={process.env.PUBLIC_URL + `/blog-details/${data.id}`} className="image">
-                        <img src={`${process.env.PUBLIC_URL}/${data.image}`} alt="Blog Image" />
-                    </Link>
+          <div className="inner">
+            <div className="thumbnail">
+              {data.excerpt != "" ? (
+                <Link to={process.env.PUBLIC_URL + `/blog-details/${data.id}`} className="image">
+                  <img src={`${process.env.PUBLIC_URL}/${data.image}`} alt="Blog Image" />
+                </Link>
+              ) : (
+                <div className="image" style={{ height: "100%" }}>
+                  <img src={`${process.env.PUBLIC_URL}/${data.image}`} alt="Blog Image" style={{ height: "100%" }} />
                 </div>
-                <div className="content">
-                    <h4 className="title">
-                        <Link to={process.env.PUBLIC_URL + `/blog-details/${data.id}`}>
-                            {data.title}
-                        </Link>
-                    </h4>
-                    <ul className="rn-meta-list">
-                        <li><Link to={process.env.PUBLIC_URL + `/archive/${slugify(data.author)}`}>{data.author}</Link></li>
-                        <li className="separator">/</li>
-                        <li>{data.date}</li>
-                    </ul>
-                    <p className="descriptiion">{data.excerpt}</p>
-                </div>
+              )}
             </div>
+            <div className="content">
+              <h4 className="title">{data.excerpt ? <Link to={process.env.PUBLIC_URL + `/blog-details/${data.id}`}>{data.title}</Link> : data.title}</h4>
+              <ul className="rn-meta-list">
+                {data.fileName !== "" ? (
+                  <div style={{ display: "flex", flexAlign: "row" }}>
+                    <li>
+                      <div style={{ display: "flex", flexDirection: "row" }}>
+                        <img src="images/icons/file.png" alt="File" style={{ width: 20, height: 20, marginTop: 2 }} />
+                        <Link to={"#"} style={{ textDecoration: "underlined", color: "orange" }}>
+                          {data.fileName}
+                        </Link>
+                      </div>
+                    </li>
+                    <br />
+                  </div>
+                ) : (
+                  <></>
+                )}
+                <li>{data.date}</li>
+              </ul>
+              <p className="descriptiion">{data.excerpt}</p>
+            </div>
+          </div>
         </div>
-    )
-}
+      ) : (
+        <></>
+      )}
+    </>
+  );
+};
 BlogListTwo.propTypes = {
-    data: PropTypes.object
+  data: PropTypes.object,
 };
 export default BlogListTwo;

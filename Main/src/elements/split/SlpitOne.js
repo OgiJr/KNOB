@@ -1,61 +1,50 @@
-import React from 'react';
+import React from "react";
 import ScrollAnimation from "react-animate-on-scroll";
 
-
 const SlpitOne = () => {
-    return (
-            <div className="rn-splite-style">
-                <div className="split-wrapper">
-                        <div className="row no-gutters radius-10 align-items-center">
-                            <div className="col-lg-12 col-xl-6 col-12">
-                                <div className="thumbnail image-left-content">
-                                    <img src="./images/split/split-01.jpg" alt="split Images" />
-                                </div>
-                            </div>
-                            <div className="col-lg-12 col-xl-6 col-12">
-                                <div className="split-inner">
-                                    <ScrollAnimation 
-                                    animateIn="fadeInUp"
-                                    animateOut="fadeInOut"
-                                    animateOnce={true}>
-                                        <h4 className="title">What is DOOB?</h4>
-                                    </ScrollAnimation>
-                                    <ScrollAnimation 
-                                    animateIn="fadeInUp"
-                                    animateOut="fadeInOut"
-                                    animateOnce={true}>
-                                    <p className="description">Randomised words which don't look even slightly believable.
-                                        If you are to use a passage of Lorem Ipsum. You need to be sure there isn't
-                                        anything embarrassing hidden in the middle of text. in some form, by injectedeed
-                                        bedhumour, or randomised even .</p>
-                                    </ScrollAnimation>
-
-                                    
-                                    <ScrollAnimation 
-                                    animateIn="fadeInUp"
-                                    animateOut="fadeInOut"
-                                    animateOnce={true}>
-                                        <ul className="split-list">
-                                            <li>- Doug DeMarco, Design Prototyping Manager</li>
-                                            <li>- 108 million paying subscribers</li>
-                                            <li>- Over 1.7 billion hours of music played monthly</li>
-                                            <li>- 4,000+ employees working across 16 offices</li>
-                                        </ul>
-                                    </ScrollAnimation>
-                                    <ScrollAnimation 
-                                    animateIn="fadeInUp"
-                                    animateOut="fadeInOut"
-                                    animateOnce={true}>
-                                        <div className="view-more-button mt--35">
-                                            <a className="btn-default" href="/contact">Contact With Us</a>
-                                        </div>
-                                    </ScrollAnimation>
-                                </div>
-                        </div>
-                    </div>
-                </div>
+  return (
+    <div className="rn-splite-style" style={{ marginTop: "100px" }}>
+      <div className="split-wrapper">
+        <div className="row no-gutters radius-10 align-items-center">
+          <div className="col-lg-12 col-xl-6 col-12">
+            <div className="thumbnail image-left-content">
+              <img src="./images/about/about-1.jpg" alt="about" />
             </div>
-    )
-}
+          </div>
+          <div className="col-lg-12 col-xl-6 col-12">
+            <div className="split-inner">
+              <ScrollAnimation animateIn="fadeInUp" animateOut="fadeInOut" animateOnce={true}>
+                <h4 className="title">Информация за КНОБ</h4>
+              </ScrollAnimation>
+              <ScrollAnimation animateIn="fadeInUp" animateOut="fadeInOut" animateOnce={true}>
+                <p className="description">Камарата на независимите оценители в България е юридическо лице, създадено със Закона за независимите оценители (обнародван в ДВ бр. 98 от 14 ноември 2008 год., в сила от 15 декември 2008 год.)</p>
+              </ScrollAnimation>
 
-export default SlpitOne
+              <ScrollAnimation animateIn="fadeInUp" animateOut="fadeInOut" animateOnce={true}>
+                <p className="description">Камарата на независимите оценители в България е професионална организация на физическите лица, които извършват оценителска дейност на територията на Република България.</p>
+              </ScrollAnimation>
+
+              <ScrollAnimation animateIn="fadeInUp" animateOut="fadeInOut" animateOnce={true}>
+                <p className="description">Камарата на независимите оценители в България е учредена на Учредително събрание, състояло се в гр. София на 10, 11 и 21 март 2009 год. На Учредителното събрание е приет Устав на Камарата, Кодекс за професионална етика на независимите оценители и са избрани членове и председатели на Управителния съвет, Контролния съвет и Комисията по професионална етика на Камарата.</p>
+              </ScrollAnimation>
+
+              <ScrollAnimation animateIn="fadeInUp" animateOut="fadeInOut" animateOnce={true}>
+                <p className="description">Камарата на независимите оценители в България е регистрирана по Закона за независимите оценители на 13 май 2009 год. в Регистър БУЛСТАТ.</p>
+              </ScrollAnimation>
+
+              <ScrollAnimation animateIn="fadeInUp" animateOut="fadeInOut" animateOnce={true}>
+                <div className="view-more-button mt--35">
+                  <a className="btn-default" href="/contact">
+                    Свържете се с нас
+                  </a>
+                </div>
+              </ScrollAnimation>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default SlpitOne;

@@ -64,9 +64,12 @@ import BlogGridSidebar from "./components/blog/BlogGridSidebar";
 import BlogListSidebar from "./components/blog/BlogListSidebar";
 import BlogDetails from "./pages/BlogDetails";
 import Error from "./pages/Error";
+import BlockQuizes from "./components/blog/BlogQuiz";
 
 // Import Css Here
 import "./assets/scss/style.scss";
+import BlogQuiz from "./components/blog/BlogQuiz";
+import BlogArchive from "./components/blog/BlogArchive";
 
 const App = () => {
   return (
@@ -96,6 +99,8 @@ const App = () => {
           {/* Blog Part  */}
           <Route path={`${process.env.PUBLIC_URL + "/blog-grid"}`} exact component={BlogGridView} />
           <Route path={`${process.env.PUBLIC_URL + "/blog-list-view"}`} exact component={BlogListView} />
+          <Route path={`${process.env.PUBLIC_URL + "/blog-quiz"}`} exact component={BlogQuiz} />
+          <Route path={`${process.env.PUBLIC_URL + "/blog-archive"}`} exact component={BlogArchive} />
           <Route path={`${process.env.PUBLIC_URL + "/blog-grid-sidebar"}`} exact component={BlogGridSidebar} />
           <Route path={`${process.env.PUBLIC_URL + "/blog-list-sidebar"}`} exact component={BlogListSidebar} />
           <Route path={`${process.env.PUBLIC_URL + "/blog-details/:id"}`} exact component={BlogDetails} />
