@@ -44,7 +44,8 @@ const Nav = () => {
                 <ul className="mega-menu-item">
                   <li>
                     <p>
-                      <b>Бургас, Сливен и Ямбол</b> <span className="rn-badge-card">1</span>
+                      <b>Бургас, Сливен и Ямбол</b>{" "}
+                      <span className="rn-badge-card">1</span>
                     </p>
                   </li>
                   <li>
@@ -83,7 +84,8 @@ const Nav = () => {
                 <ul className="mega-menu-item">
                   <li>
                     <p>
-                      <b>Плевен, Ловеч</b> <span className="rn-badge-card">3</span>
+                      <b>Плевен, Ловеч</b>{" "}
+                      <span className="rn-badge-card">3</span>
                     </p>
                   </li>
                   <li>
@@ -122,7 +124,8 @@ const Nav = () => {
                 <ul className="mega-menu-item">
                   <li>
                     <p>
-                      <b>София - град и София - област</b> <span className="rn-badge-card">5</span>
+                      <b>София - град и София - област</b>{" "}
+                      <span className="rn-badge-card">5</span>
                     </p>
                   </li>
                   <li>
@@ -161,7 +164,8 @@ const Nav = () => {
                 <ul className="mega-menu-item">
                   <li>
                     <p>
-                      <b>Стара Загора</b> <span className="rn-badge-card">7</span>
+                      <b>Стара Загора</b>{" "}
+                      <span className="rn-badge-card">7</span>
                     </p>
                   </li>
                   <li>
@@ -179,7 +183,8 @@ const Nav = () => {
                   <li>
                     <br></br>
                     <p>
-                      <b>Шумен, Търговище, Разград</b> <span className="rn-badge-card">8</span>
+                      <b>Шумен, Търговище, Разград</b>{" "}
+                      <span className="rn-badge-card">8</span>
                     </p>
                   </li>
                   <li>
@@ -214,7 +219,14 @@ const Nav = () => {
             <Link to="/blog-list-view">Вътрешнонормативни актове</Link>
           </li>
           <li>
-            <p style={{ fontSize: "13px", textAlign: "center", marginBottom: "0px", marginTop: "4px" }}>
+            <p
+              style={{
+                fontSize: "13px",
+                textAlign: "center",
+                marginBottom: "0px",
+                marginTop: "4px",
+              }}
+            >
               <b>Решения на управителните органи</b>
             </p>
             <Link to="/blog-list-sidebar">Управителен съвет</Link>
@@ -251,7 +263,7 @@ const Nav = () => {
             <Link to="/portfolio-three-column">Карта на сайта</Link>
           </li>
           <li>
-            <Link to="/portfolio-three-column">Полезни връзки</Link>
+            <Link to="/helpful-links">Полезни връзки</Link>
           </li>
         </ul>
       </li>
