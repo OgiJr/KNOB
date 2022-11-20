@@ -24,6 +24,19 @@
     }
 }
 
+.cards {
+    display: flex;
+    @media #{$lg-layout} {
+        flexDirection:"row";
+    }
+    @media #{$md-layout} {
+        flexDirection:"column";
+    }
+    @media #{$sm-layout} {
+        flexDirection:"column"
+    }
+}
+
 .rn-section-gapBottom {
     padding-bottom: 120px !important;
     @media #{$md-layout} {
