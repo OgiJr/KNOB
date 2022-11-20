@@ -13,7 +13,7 @@ import BlogHomePage from "../components/blog/BlogHomePage";
 const HomeDefault = () => {
   return (
     <>
-      <SEO title="Business Consulting" />
+      <SEO title="Начало" />
       <main className="page-wrapper">
         <HeaderOne btnStyle="btn-small round btn-icon" />
 

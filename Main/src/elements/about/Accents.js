@@ -35,20 +35,16 @@ const Accents = () => {
                     <Card.Body css={{ py: "$2" }}>
                       <Text>
                         <b>Адрес:</b> <br /> гр. София 1000, ул. "Г.С.Раковски" № 122, вх. Б
-                      </Text>
-                      <Text>
+                        <br />
                         <b>ЕИК: </b>
                         175681478
-                      </Text>
-                      <Text>
+                        <br />
                         <b>IBAN: </b>
                         BG56 BPBI 7942 1079 5016 02
-                      </Text>
-                      <Text>
+                        <br />
                         <b>BIC: </b>
                         BPBIBGSF
-                      </Text>
-                      <Text>
+                        <br />
                         <b>Банка: </b>
                         "Юробанк България" АД
                       </Text>
@@ -62,20 +58,16 @@ const Accents = () => {
                     <Card.Body css={{ py: "$2" }}>
                       <Text>
                         <b>Адрес:</b> <br /> гр. София 1000, ул. "Г.С.Раковски" № 122, вх. Б
-                      </Text>
-                      <Text>
+                        <br />
                         <b>ЕИК: </b>
                         175681478
-                      </Text>
-                      <Text>
+                        <br />
                         <b>IBAN: </b>
                         BG29 BPBI 7942 1079 5016 03
-                      </Text>
-                      <Text>
+                        <br />
                         <b>BIC: </b>
                         BPBIBGSF
-                      </Text>
-                      <Text>
+                        <br />
                         <b>Банка: </b>
                         "Юробанк България" АД
                       </Text>
@@ -91,20 +83,16 @@ const Accents = () => {
                     <Card.Body css={{ py: "$2" }}>
                       <Text>
                         <b>Адрес:</b> <br /> гр. София 1000, ул. "Г.С.Раковски" № 122, вх. Б
-                      </Text>
-                      <Text>
+                        <br />
                         <b>ЕИК: </b>
                         175681478
-                      </Text>
-                      <Text>
+                        <br />
                         <b>IBAN: </b>
                         BG07 BPBI 7942 1079 5016 11
-                      </Text>
-                      <Text>
+                        <br />
                         <b>BIC: </b>
                         BPBIBGSF
-                      </Text>
-                      <Text>
+                        <br />
                         <b>Банка: </b>
                         "Юробанк България" АД
                       </Text>
@@ -118,20 +106,16 @@ const Accents = () => {
                     <Card.Body css={{ py: "$2" }}>
                       <Text>
                         <b>Адрес:</b> <br /> гр. София 1000, ул. "Г.С.Раковски" № 122, вх. Б
-                      </Text>
-                      <Text>
+                        <br />
                         <b>ЕИК: </b>
                         175681478
-                      </Text>
-                      <Text>
+                        <br />
                         <b>IBAN: </b>
                         BG 23 BPBI 7942 1079 5016 14
-                      </Text>
-                      <Text>
+                        <br />
                         <b>BIC: </b>
                         BPBIBGSF
-                      </Text>
-                      <Text>
+                        <br />
                         <b>Банка: </b>
                         "Юробанк България" АД
                       </Text>
