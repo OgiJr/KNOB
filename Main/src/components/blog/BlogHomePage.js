@@ -1,5 +1,5 @@
 import React from "react";
-import BlogPropTwo from "./itemProp/BlogPropTwo";
+import BlogPropMain from "./itemProp/BlogPropMain";
 
 const BlogHomePage = () => {
   return (
@@ -10,7 +10,7 @@ const BlogHomePage = () => {
           <div className="container">
             <div className="row mt_dec--30">
               <h1 style={{ textAlign: "center" }}>Новини</h1>
-              <BlogPropTwo column="col-lg-6 mt--30" StyleVarProp="box-card-style-default card-list-view" />
+              <BlogPropMain column="col-lg-6 mt--30" StyleVarProp="box-card-style-default card-list-view" />
             </div>
           </div>
         </div>

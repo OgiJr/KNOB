@@ -1,18 +1,8 @@
 import React from "react";
 import SEO from "../common/SEO";
-import HeaderOne from "../common/header/HeaderOne";
-import FooterFour from "../common/footer/FooterFour";
-import BrandThree from "../elements/brand/BrandThree";
-import AboutFour from "../elements/about/AboutFour";
-import ServiceOne from "../elements/service/ServiceOne";
-import SectionTitle from "../elements/sectionTitle/SectionTitle";
-import CounterUpFour from "../elements/counterup/CounterUpFour";
-import TeamFour from "../elements/team/TeamFour";
-import TimelineTwo from "../elements/timeline/TimelineTwo";
-import Separator from "../elements/separator/Separator";
-import SlpitOne from "../elements/split/SlpitOne";
+import Header from "../common/header/Header";
+import SplitOne from "../elements/split/SplitOne";
 import TabOne from "../elements/tab/Tab";
-import AccordionAbout from "../elements/accordion/AccordionAbout";
 import Copyright from "../common/footer/Copyright";
 
 const AboutUs = () => {
@@ -20,7 +10,7 @@ const AboutUs = () => {
     <>
       <SEO title="За нас" />
       <main className="page-wrapper">
-        <HeaderOne btnStyle="btn-small round btn-icon" HeaderSTyle="" />
+        <Header btnStyle="btn-small round btn-icon" HeaderSTyle="" />
 
         {/* Start Slider Area  */}
         <div className="slider-area slider-style-1 height-850 bg_image" data-black-overlay="7" style={{ backgroundImage: `url(${process.env.PUBLIC_URL}/images/about/banner.jpg)` }}>
@@ -42,7 +32,7 @@ const AboutUs = () => {
         {/* End Slider Area  */}
 
         {/* Start Main Area  */}
-        <SlpitOne />
+        <SplitOne />
         {/* End Main Area  */}
 
         {/* Start Main Area  */}

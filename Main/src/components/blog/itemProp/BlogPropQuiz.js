@@ -1,44 +1,30 @@
 import React, { useState, useEffect } from "react";
 import BlogClassicData from "../../../data/blog/QuizList.json";
-import BlogListThree from "./BlogListThree";
+import BlogList from "./BlogList";
 import { FaSpinner } from "react-icons/fa";
-import filters from "./Filters";
 
 const alldataBLog = BlogClassicData;
 const BlogPropQuiz = ({ column, StyleVarProp }) => {
   const [getAllItems] = useState(alldataBLog);
-  const [dataVisibleCount, setDataVisibleCount] = useState(6);
-  const [dataIncrement] = useState(3);
-  const [noMorePost, setNoMorePost] = useState(false);
-  const [activeFilter, setActiveFilter] = useState("");
+  const [dataVisibleCount] = useState(6);
+  const [noMorePost] = useState(false);
   const [visibleItems, setVisibleItems] = useState([]);
 
   useEffect(() => {
-    setActiveFilter(filters[0].text.toLowerCase());
     setVisibleItems(getAllItems.filter((item) => item.id <= dataVisibleCount));
   }, []);
 
   const handleLoadmorebl = (e) => {
     e.preventDefault();
-    let tempCount = dataVisibleCount + dataIncrement;
-    if (dataVisibleCount >= getAllItems.length) {
-      setNoMorePost(true);
-    } else {
-      setDataVisibleCount(tempCount);
-      if (activeFilter === filters[0].text.toLowerCase()) {
-        setVisibleItems(getAllItems.filter((data) => data.id <= tempCount));
-      } else {
-        setVisibleItems(getAllItems.filter((data) => data.text === activeFilter && data.id <= tempCount));
-      }
-    }
   };
+
   return (
     <>
       <div className="col-lg-12">
         <div className="row row--15">
           {visibleItems.map((item) => (
             <div key={item.id} className={column}>
-              <BlogListThree StyleVar={StyleVarProp} data={item} />
+              <BlogList StyleVar={StyleVarProp} data={item} />
             </div>
           ))}
         </div>

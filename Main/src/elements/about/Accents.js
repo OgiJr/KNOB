@@ -23,8 +23,8 @@ const Accents = () => {
                   <b>Оформяне на оценителски доклад от дружества на независим оценител:</b>
                 </div>
                 <div style={{ marginLeft: "10px", marginRight: "10px", marginTop: "10px" }}>В изпълнение на правомощията си по чл. 22, ал. 3, т. 7, КНОБ указва на дружествата на независим оценител, че съгласно чл. 17, ал. 1, в оценките подписани от дружеството на независим оценител задължително трябва да се съдържа и подпис на независимия оценител - физическо лице, отговорно за изготвянето на оценката. Не подписването на оценката, която не е подписана съгласно чл. 17, ал. 1 да се счита за невалидна поради нарушаване на императивното изискване на чл. 6, ал. 3 от ЗНО.</div>
-                <div className=" mt--40">
-                  <Card css={{ p: "$6" }} isHoverable isPressable>
+                <div className=" mt--40" style={{ display: "flex", flexDirection: "row" }}>
+                  <Card isHoverable isPressable>
                     <Card.Header>
                       <img alt="nextui logo" src="images/icons/map.png" width="34px" height="34px" />
                       <Text style={{ fontWeight: "bold", marginTop: "27px" }}>За членски внос</Text>
@@ -47,7 +47,7 @@ const Accents = () => {
                       </Text>
                     </Card.Body>
                   </Card>
-                  <Card css={{ p: "$6" }} isHoverable isPressable className="mt-5 md:mt-0 md:ml-5 ">
+                  <Card isHoverable isPressable style={{ marginLeft: 30 }}>
                     <Card.Header>
                       <img alt="nextui logo" src="images/icons/map.png" width="34px" height="34px" />
                       <Text style={{ fontWeight: "bold", marginTop: "27px" }}>Такса за вписване в регистъра на КНОБ</Text>
@@ -71,7 +71,7 @@ const Accents = () => {
                     </Card.Body>
                   </Card>
                 </div>
-                <div style={{}}>
+                <div style={{ display: "flex", flexDirection: "row", marginTop: 30 }}>
                   <Card css={{ p: "$6" }} isHoverable isPressable>
                     <Card.Header>
                       <img alt="nextui logo" src="images/icons/map.png" width="34px" height="34px" />
@@ -95,7 +95,7 @@ const Accents = () => {
                       </Text>
                     </Card.Body>
                   </Card>
-                  <Card css={{ p: "$6", marginLeft: "50px" }} isHoverable isPressable>
+                  <Card css={{ p: "$6" }} style={{ marginLeft: 30 }} isHoverable isPressable>
                     <Card.Header>
                       <img alt="nextui logo" src="images/icons/map.png" width="34px" height="34px" />
                       <Text style={{ fontWeight: "bold", marginTop: "27px" }}>Годишна вноска на основание чл.10, ал. 8 от Кодекс за професионална етика</Text>

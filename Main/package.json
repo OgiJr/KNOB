@@ -1,8 +1,8 @@
 {
-  "name": "doob",
+  "name": "knob",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://doob.rainbowit.net/",
+  "homepage": "https://КНОБ.rainbowit.net/",
   "dependencies": {
     "@nextui-org/react": "^1.0.0-beta.10",
     "@testing-library/jest-dom": "^5.12.0",

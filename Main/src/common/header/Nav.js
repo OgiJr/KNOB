@@ -11,7 +11,7 @@ const Nav = () => {
         <Link to="#">Актуално</Link>
         <ul className="submenu">
           <li>
-            <Link to="/blog-list-view">Новини</Link>
+            <Link to="/blog-news">Новини</Link>
           </li>
           <li>
             <Link to="/blog-quiz">Изпити и курсове</Link>
@@ -25,198 +25,54 @@ const Nav = () => {
         <Link to="#">Управителни органи</Link>
         <ul className="submenu">
           <li>
-            <Link to="/blog-list-view">Упрваителен съвет</Link>
+            <Link to="/board-of-directors">Упрваителен съвет</Link>
           </li>
           <li>
-            <Link to="/business-consulting-2">Контролен съвет</Link>
+            <Link to="/control-board">Контролен съвет</Link>
           </li>
           <li>
-            <Link to="/corporate">Комисия по професионална етика</Link>
+            <Link to="/ethics">Комисия по професионална етика</Link>
           </li>
         </ul>
       </li>
-      <li className="with-megamenu">
+      <li className="has-droupdown">
         <Link to="#">Регионални колегии</Link>
-        <div className="rn-megamenu">
-          <div className="wrapper">
-            <div className="row row--0">
-              <div className="col-lg-3 single-mega-item">
-                <ul className="mega-menu-item">
-                  <li>
-                    <p>
-                      <b>Бургас, Сливен и Ямбол</b>{" "}
-                      <span className="rn-badge-card">1</span>
-                    </p>
-                  </li>
-                  <li>
-                    <Link to="/button">Информация</Link>
-                  </li>
-                  <li>
-                    <Link to="/service">Членове</Link>
-                  </li>
-                  <li>
-                    <Link to="/counter">Решения</Link>
-                  </li>
-                  <li>
-                    <Link to="/progressbar">Публикации</Link>
-                  </li>
-                  <li>
-                    <br></br>
-                    <p>
-                      <b>Варна</b> <span className="rn-badge-card">2</span>
-                    </p>
-                  </li>
-                  <li>
-                    <Link to="/button">Информация</Link>
-                  </li>
-                  <li>
-                    <Link to="/service">Членове</Link>
-                  </li>
-                  <li>
-                    <Link to="/counter">Решения</Link>
-                  </li>
-                  <li>
-                    <Link to="/progressbar">Публикации</Link>
-                  </li>
-                </ul>
-              </div>
-              <div className="col-lg-3 single-mega-item">
-                <ul className="mega-menu-item">
-                  <li>
-                    <p>
-                      <b>Плевен, Ловеч</b>{" "}
-                      <span className="rn-badge-card">3</span>
-                    </p>
-                  </li>
-                  <li>
-                    <Link to="/button">Информация</Link>
-                  </li>
-                  <li>
-                    <Link to="/service">Членове</Link>
-                  </li>
-                  <li>
-                    <Link to="/counter">Решения</Link>
-                  </li>
-                  <li>
-                    <Link to="/progressbar">Публикации</Link>
-                  </li>
-                  <li>
-                    <br></br>
-                    <p>
-                      <b>Пловдив</b> <span className="rn-badge-card">4</span>
-                    </p>
-                  </li>
-                  <li>
-                    <Link to="/button">Информация</Link>
-                  </li>
-                  <li>
-                    <Link to="/service">Членове</Link>
-                  </li>
-                  <li>
-                    <Link to="/counter">Решения</Link>
-                  </li>
-                  <li>
-                    <Link to="/progressbar">Публикации</Link>
-                  </li>
-                </ul>
-              </div>
-              <div className="col-lg-3 single-mega-item">
-                <ul className="mega-menu-item">
-                  <li>
-                    <p>
-                      <b>София - град и София - област</b>{" "}
-                      <span className="rn-badge-card">5</span>
-                    </p>
-                  </li>
-                  <li>
-                    <Link to="/button">Информация</Link>
-                  </li>
-                  <li>
-                    <Link to="/service">Членове</Link>
-                  </li>
-                  <li>
-                    <Link to="/counter">Решения</Link>
-                  </li>
-                  <li>
-                    <Link to="/progressbar">Публикации</Link>
-                  </li>
-                  <li>
-                    <br></br>
-                    <p>
-                      <b>Русе</b> <span className="rn-badge-card">6</span>
-                    </p>
-                  </li>
-                  <li>
-                    <Link to="/button">Информация</Link>
-                  </li>
-                  <li>
-                    <Link to="/service">Членове</Link>
-                  </li>
-                  <li>
-                    <Link to="/counter">Решения</Link>
-                  </li>
-                  <li>
-                    <Link to="/progressbar">Публикации</Link>
-                  </li>
-                </ul>
-              </div>
-              <div className="col-lg-3 single-mega-item">
-                <ul className="mega-menu-item">
-                  <li>
-                    <p>
-                      <b>Стара Загора</b>{" "}
-                      <span className="rn-badge-card">7</span>
-                    </p>
-                  </li>
-                  <li>
-                    <Link to="/button">Информация</Link>
-                  </li>
-                  <li>
-                    <Link to="/service">Членове</Link>
-                  </li>
-                  <li>
-                    <Link to="/counter">Решения</Link>
-                  </li>
-                  <li>
-                    <Link to="/progressbar">Публикации</Link>
-                  </li>
-                  <li>
-                    <br></br>
-                    <p>
-                      <b>Шумен, Търговище, Разград</b>{" "}
-                      <span className="rn-badge-card">8</span>
-                    </p>
-                  </li>
-                  <li>
-                    <Link to="/button">Информация</Link>
-                  </li>
-                  <li>
-                    <Link to="/service">Членове</Link>
-                  </li>
-                  <li>
-                    <Link to="/counter">Решения</Link>
-                  </li>
-                  <li>
-                    <Link to="/progressbar">Публикации</Link>
-                  </li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </div>
+        <ul className="submenu">
+          <li>
+            <Link to="/burgas">Бургас, Сливен Ямбол</Link>
+          </li>
+          <li>
+            <Link to="/varna">Варна</Link>
+          </li>
+          <li>
+            <Link to="/pleven">Плевен, Ловеч</Link>
+          </li>
+          <li>
+            <Link to="/plovdiv">Пловдив</Link>
+          </li>
+          <li>
+            <Link to="/ruse">Русе</Link>
+          </li>
+          <li>
+            <Link to="/sofia">София - град и София - област</Link>
+          </li>
+          <li>
+            <Link to="/starazagora">Стара Загора</Link>
+          </li>
+          <li>
+            <Link to="/shumen">Шумен, Търговище, Разград</Link>
+          </li>
+        </ul>
       </li>
 
       <li className="has-droupdown">
         <Link to="#">Нормативна база и документи</Link>
         <ul className="submenu">
           <li>
-            <Link to="/blog-grid">Нормативни актове</Link>
+            <Link to="/normative">Нормативни актове</Link>
           </li>
           <li>
-            <Link to="/blog-grid-sidebar">Стандарти за оценяване</Link>
-          </li>
-          <li>
-            <Link to="/blog-list-view">Вътрешнонормативни актове</Link>
+            <Link to="/valuation-standards">Стандарти за оценяване</Link>
           </li>
           <li>
             <p
@@ -229,9 +85,8 @@ const Nav = () => {
             >
               <b>Решения на управителните органи</b>
             </p>
-            <Link to="/blog-list-sidebar">Управителен съвет</Link>
-            <Link to="/blog-list-sidebar">Контролен съвет</Link>
-            <Link to="/blog-list-sidebar">КПЕ</Link>
+            <Link to="#">Управителен съвет</Link>
+            <Link to="#">Контролен съвет</Link>
           </li>
         </ul>
       </li>
@@ -240,28 +95,18 @@ const Nav = () => {
         <Link to="#">REV</Link>
         <ul className="submenu">
           <li>
-            <Link to="/portfolio">Информация и документи</Link>
+            <Link to="/rev">Информация и документи</Link>
           </li>
           <li>
-            <Link to="/portfolio-three-column">TEGoVa</Link>
+            <a href="https://tegova.org/" target="_blank" rel="norefferer">
+              TEGoVa
+            </a>
           </li>
         </ul>
       </li>
       <li className="has-droupdown">
         <Link to="#">Помощ</Link>
         <ul className="submenu">
-          <li>
-            <Link to="/portfolio">Работа със сайта</Link>
-          </li>
-          <li>
-            <Link to="/portfolio-three-column">ЧЗВ</Link>
-          </li>
-          <li>
-            <Link to="/portfolio">Мерни единици</Link>
-          </li>
-          <li>
-            <Link to="/portfolio-three-column">Карта на сайта</Link>
-          </li>
           <li>
             <Link to="/helpful-links">Полезни връзки</Link>
           </li>

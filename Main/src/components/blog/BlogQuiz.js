@@ -7,7 +7,7 @@ import BlogPropQuiz from "./itemProp/BlogPropQuiz";
 const BlogQuiz = () => {
   return (
     <>
-      <SEO title="Новини || КНОБ " />
+      <SEO title="Новини " />
       <Layout>
         <BreadcrumbOne title="Изпити и квалификационни курсове" rootUrl="/" />
 
