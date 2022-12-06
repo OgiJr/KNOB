@@ -27,7 +27,7 @@ const Header = ({ btnStyle, HeaderSTyle }) => {
                   <Nav />
                 </nav>
                 <div className="header-btn">
-                  <a className={`btn-default ${btnStyle}`} target="_blank" href="#">
+                  <a className={`btn-default ${btnStyle}`} href="/login">
                     Вход
                   </a>
                 </div>

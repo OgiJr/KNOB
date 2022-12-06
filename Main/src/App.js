@@ -28,6 +28,8 @@ import Normative from "./pages/Normative";
 import MemberTable from "./components/table/memberTable";
 import Banks from "./pages/Banks";
 import Documents from "./pages/Documents";
+import Login from "./pages/Dashboard/Login";
+import Admin from "./pages/Dashboard/Admin";
 
 // Import Css Here
 import "./assets/scss/style.scss";
@@ -68,6 +70,10 @@ const App = () => {
           <Route path={`${process.env.PUBLIC_URL + "/banks"}`} exact component={Banks} />
           <Route path={`${process.env.PUBLIC_URL + "/documents"}`} exact component={Documents} />
           {/* Frontend pages end*/}
+          {/* Backend pages start*/}
+          <Route path={`${process.env.PUBLIC_URL + "/dashboard-admin"}`} exact component={Admin} />
+          <Route path={`${process.env.PUBLIC_URL + "/login"}`} exact component={Login} />
+          {/*Backend pages end */}
         </Switch>
       </PageScrollTop>
     </Router>
