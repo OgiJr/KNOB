@@ -27,9 +27,9 @@ const BlogListArchived = ({ data, StyleVar, archive = "false" }) => {
                     <li>
                       <div style={{ display: "flex", flexDirection: "row" }}>
                         <img src="images/icons/file.png" alt="File" style={{ width: 20, height: 20, marginTop: 2 }} />
-                        <Link to={"#"} style={{ textDecoration: "underlined", color: "orange" }}>
+                        <a href={data.file} style={{ textDecoration: "underlined", color: "orange" }}>
                           {data.fileName}
-                        </Link>
+                        </a>
                       </div>
                     </li>
                     <br />

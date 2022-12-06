@@ -29,21 +29,25 @@ const Rev = () => {
                 <img src="images/team/rev.png" style={{ borderRadius: 100, marginTop: 20, alignSelf: "center", height: 150, width: 150 }} />
               </div>
               <br />
-              <Link to={"#"} className="hidden-mobile" style={{ textDecoration: "underline", color: "red" }}>
+              <a href="/uploaded/Rev/кодекс.pdf" className="hidden-mobile" style={{ textDecoration: "underline", color: "red" }}>
                 <img src="images/icons/file.png" style={{ width: 30, height: 30 }} /> Кодекс за професионална етика, правила и норми на поведение на независими оценители, сертифицирани и придобили статут REV
-              </Link>
+              </a>
               <br />
-              <Link to={"#"} className="hidden-mobile" style={{ textDecoration: "underline", color: "red" }}>
+              <a href="/uploaded/Rev/критерии.pdf" className="hidden-mobile" style={{ textDecoration: "underline", color: "red" }}>
+                <img src="images/icons/file.png" style={{ width: 30, height: 30 }} /> Критерии за проверка и оценка на представените оценителски доклади
+              </a>
+              <br />
+              <a href="/uploaded/Rev/отчет.pdf" className="hidden-mobile" style={{ textDecoration: "underline", color: "red" }}>
                 <img src="images/icons/file.png" style={{ width: 30, height: 30 }} /> Годишен отчет на независимите оценители със статут REV
-              </Link>
+              </a>
               <br />
-              <Link to={"#"} className="hidden-mobile" style={{ textDecoration: "underline", color: "red" }}>
+              <a href="/uploaded/Rev/тарифа.pdf" className="hidden-mobile" style={{ textDecoration: "underline", color: "red" }}>
                 <img src="images/icons/file.png" style={{ width: 30, height: 30 }} /> Тарифа – Финансови отношения, приложими към независими оценители, относно придобиване/придобили статут на сертифициран REV
-              </Link>
+              </a>
               <br />
-              <Link to={"#"} className="hidden-mobile" style={{ textDecoration: "underline", color: "blue" }}>
+              <a href="/uploaded/Rev/ng4kc798yhjf1s5r.doc" className="hidden-mobile" style={{ textDecoration: "underline", color: "blue" }}>
                 <img src="images/icons/file.png" style={{ width: 30, height: 30 }} /> Указания за подаване на Заявление и изискуеми документи и декларации за кандидатстване за придобиване на статут REV
-              </Link>
+              </a>
             </div>
           </div>
           <div className="col-lg-6 mt_md--30 mt_sm--30">

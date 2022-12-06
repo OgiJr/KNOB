@@ -11,7 +11,7 @@ const Documents = () => {
       <main className="page-wrapper">
         <Header btnStyle="btn-small round btn-icon" />
 
-        <div style={{ marginLeft: 15, marginRight: 15 }}>
+        <div style={{ marginLeft: 50, marginRight: 50, marginTop: 50, marginBottom: 300 }}>
           <div className="mt--40 cardsAccent">
             <Card isHoverable isPressable>
               <Card.Header>

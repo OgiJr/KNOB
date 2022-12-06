@@ -15,7 +15,6 @@ const HomeDefault = () => {
       <SEO title="Начало" />
       <main className="page-wrapper">
         <Header btnStyle="btn-small round btn-icon" />
-
         {/* Start Slider Area  */}
         <div className="slider-area slider-style-1 variation-default height-850 bg_image" data-black-overlay="7" style={{ backgroundImage: `url(${process.env.PUBLIC_URL}/images/bg/main-banner-2.jpg)` }}>
           <div className="container">

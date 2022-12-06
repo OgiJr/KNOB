@@ -7,7 +7,7 @@ const BlogList = ({ data, StyleVar }) => {
   const { setVisible, bindings } = useModal();
   return (
     <Card isHoverable isPressable onClick={() => setVisible(true)}>
-      <Modal preventClose scroll width="900px" aria-labelledby="modal-title" aria-describedby="modal-description" {...bindings}>
+      <Modal scroll width="900px" aria-labelledby="modal-title" aria-describedby="modal-description" {...bindings}>
         <Modal.Header>
           <span style={{ fontSize: "14px" }}>
             <b>{data.title}</b>
@@ -40,9 +40,9 @@ const BlogList = ({ data, StyleVar }) => {
                 <li>
                   <div style={{ display: "flex", flexDirection: "row" }}>
                     <img src="images/icons/file.png" alt="File" style={{ width: 20, height: 20, marginTop: 2 }} />
-                    <Link to={"#"} style={{ textDecoration: "underline", color: data.file.includes(".doc") ? "#021691" : data.file.includes(".xl") || data.file.includes(".csv") ? "green" : data.file.includes(".pdf") ? "#8b0000" : "orange" }}>
+                    <a href={data.file} style={{ textDecoration: "underline", color: data.file.includes(".doc") ? "#021691" : data.file.includes(".xl") || data.file.includes(".csv") ? "green" : data.file.includes(".pdf") ? "#8b0000" : "orange" }}>
                       {"  " + data.fileName}
-                    </Link>
+                    </a>
                     <br />
                   </div>
                   {data.fileName2 !== "" ? (
@@ -50,9 +50,9 @@ const BlogList = ({ data, StyleVar }) => {
                       <li>
                         <div style={{ display: "flex", flexDirection: "row" }}>
                           <img src="images/icons/file.png" alt="File" style={{ width: 20, height: 20, marginTop: 2 }} />
-                          <Link to={"#"} style={{ textDecoration: "underline", color: data.file2.includes(".doc") ? "#021691" : data.file2.includes(".xl") || data.file2.includes(".csv") ? "green" : data.file2.includes(".pdf") ? "#8b0000" : "orange" }}>
+                          <a href={data.file2} style={{ textDecoration: "underline", color: data.file2.includes(".doc") ? "#021691" : data.file2.includes(".xl") || data.file2.includes(".csv") ? "green" : data.file2.includes(".pdf") ? "#8b0000" : "orange" }}>
                             {" " + data.file2Name}
-                          </Link>
+                          </a>
                         </div>
                       </li>
                       <br />
@@ -65,9 +65,9 @@ const BlogList = ({ data, StyleVar }) => {
                       <li>
                         <div style={{ display: "flex", flexDirection: "row" }}>
                           <img src="images/icons/file.png" alt="File" style={{ width: 20, height: 20, marginTop: 2 }} />
-                          <Link to={"#"} style={{ textDecoration: "underline", color: data.file3.includes(".doc") ? "#021691" : data.file3.includes(".xl") || data.file3.includes(".csv") ? "green" : data.file3.includes(".pdf") ? "#8b0000" : "orange" }}>
+                          <a href={data.file3} style={{ textDecoration: "underline", color: data.file3.includes(".doc") ? "#021691" : data.file3.includes(".xl") || data.file3.includes(".csv") ? "green" : data.file3.includes(".pdf") ? "#8b0000" : "orange" }}>
                             {" " + data.file3Name}
-                          </Link>
+                          </a>
                         </div>
                       </li>
                       <br />

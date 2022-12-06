@@ -20,12 +20,12 @@ const ValuationStandards = () => {
 
   return (
     <>
-      <SEO title="Нормативни актове" />
+      <SEO title="Стандарти за оценяване" />
       <main className="page-wrapper">
         <Header btnStyle="btn-small round btn-icon" HeaderSTyle="" />
         <br />
         <div style={{ display: "flex", flexDirection: "column", alignSelf: "center", justifyContent: "center" }}>
-          <h1 style={{ textAlign: "center" }}>Нормативни актове</h1>
+          <h1 style={{ textAlign: "center" }}>Стандарти за оценяване</h1>
           <div className="cards" style={{ display: "flex", flexDirection: "column", alignSelf: "center" }}>
             <Card isHoverable style={{ marginTop: 20, display: "flex", alignSelf: "center" }}>
               <Card.Header>Bulgarian Valuation Standards are mandatory for implementation in the country from 01 June 2018, according to the Independent Valuers Act (IVA). They have been approved by the General Meeting of the Chamber of Independent Appraisers in Bulgaria (CIAB) on 17-18 March in the town of Shumen</Card.Header>
@@ -34,9 +34,9 @@ const ValuationStandards = () => {
                 <br />
                 <br />
                 Файлове:
-                <Link to={"#"} style={{ textDecoration: "underline", color: "red", display: "flex", flexDirection: "row" }}>
+                <a href="/uploaded/Normative/ValuationStandards.pdf" style={{ textDecoration: "underline", color: "red", display: "flex", flexDirection: "row" }}>
                   <img src="images/icons/file.png" style={{ width: 30, height: 30 }} /> Bulgarian Valuation Standards are mandatory for implementation in the country from 01 June 2018
-                </Link>
+                </a>
               </Card.Body>
             </Card>
             <Card isHoverable style={{ marginTop: 10, display: "flex", alignSelf: "center" }}>
@@ -46,9 +46,9 @@ const ValuationStandards = () => {
                 <br />
                 <br />
                 Файлове:
-                <Link to={"#"} style={{ textDecoration: "underline", color: "red", display: "flex", flexDirection: "row" }}>
+                <a href="/uploaded/Normative/Стандарти.pdf" style={{ textDecoration: "underline", color: "red", display: "flex", flexDirection: "row" }}>
                   <img src="images/icons/file.png" style={{ width: 30, height: 30 }} /> БЪЛГАРСКИ СТАНДАРТИ ЗА ОЦЕНЯВАНЕ /БСО/ 2018 г. - в сила от 1 юни 2018 г.
-                </Link>
+                </a>
               </Card.Body>
             </Card>
           </div>

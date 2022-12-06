@@ -35,9 +35,9 @@ const Normative = () => {
                   <br />
                   <br />
                   Файлове:
-                  <Link to={"#"} style={{ textDecoration: "underline", color: "red", display: "flex", flexDirection: "row" }}>
+                  <a href={item.file_path} style={{ textDecoration: "underline", color: "red", display: "flex", flexDirection: "row" }}>
                     <img src="images/icons/file.png" style={{ width: 30, height: 30 }} /> {item.file}
-                  </Link>
+                  </a>
                 </Card.Body>
               </Card>
             </div>
