@@ -1,6 +1,7 @@
 import React from "react";
 import { Modal, Button, Dropdown, Input, Pagination, Table, Row, Card } from "@nextui-org/react";
 import "../../assets/scss/table.css";
+import { ButtonGroup } from "react-bootstrap";
 
 const cities = [{ name: "с. Дряново" }, { name: "Айтос" }, { name: "Аксаково" }, { name: "Априлци" }];
 const capacities = [{ name: "Недвижими имоти" }, { name: "Недвижими културни ценности" }, { name: "Машини и съоражения" }, { name: "Права на интелектуална и индустриална собственост" }, { name: "Търговски предприятия и вземания" }, { name: "Финансови активи и фанансови институции" }, { name: "Други активи" }, { name: "Земеделски земи и трайни насъждения" }, { name: "Поземлени имоти в горски територии" }];
@@ -65,7 +66,7 @@ const rowsCompanies = [{ key: "1", id: "1", company: "АБАКУС КОНСУЛ�
 //End company variables
 
 //Start invalid variables
-const columnsInvalid = [
+const columnsInvalidPeople = [
   {
     key: "id",
     label: "№",
@@ -91,13 +92,39 @@ const columnsInvalid = [
     label: "Основание",
   },
 ];
-const rowsInvalid = [{ key: "1", id: "1", name: "Лили Георгиева Маринова", type: "НИ", oldNumber: "100101146(14.12.2009)", newNumber: "101101146(22.12.2010)", reason: "Смяна на фамилията" }];
+const rowsInvalidPeople = [{ key: "1", id: "1", name: "Лили Георгиева Маринова", type: "НИ", oldNumber: "100101146(14.12.2009)", newNumber: "101101146(22.12.2010)", reason: "Смяна на фамилията" }];
+
+const columnsInvalidCompanies = [
+  {
+    key: "id",
+    label: "№",
+  },
+  {
+    key: "name",
+    label: "Фирма",
+  },
+  {
+    key: "oldNumber",
+    label: "Обезсилен",
+  },
+  {
+    key: "newNumber",
+    label: "Нов",
+  },
+  {
+    key: "reason",
+    label: "Основание",
+  },
+];
+const rowsInvalidCompanies = [{ key: "1", id: "1", name: "АДВАНС АДРЕС ЕКСПЕРТНИ ОЦЕНКИ ЕООД", oldNumber: "900300023(20.07.2010)", newNumber: "901400023(6.07.2011)", reason: "Промяна в специализирания състав на дружеството и добавяне на нова правоспособност" }];
+
 //End invalid variables
 
 const BarTable = () => {
   const [selected, setSelected] = React.useState(new Set(["50"]));
   const [visible, setVisible] = React.useState(false);
   const [tableType, setTableType] = React.useState("people");
+  const [invalidType, setinvalidType] = React.useState("people");
 
   //Start people variables
   const [name, setName] = React.useState("");
@@ -300,6 +327,14 @@ const BarTable = () => {
                 </div>
               </Card.Body>
             </Card>
+            <Button.Group color="warning" style={{ marginTop: 20 }}>
+              <Button style={{ fontSize: 12 }} onPress={() => setinvalidType("people")}>
+                Физически лица
+              </Button>
+              <Button style={{ fontSize: 12 }} onPress={() => setinvalidType("companies")}>
+                Юридически лица
+              </Button>
+            </Button.Group>
           </div>
         )}
         {tableType !== "invalid" ? <span style={{ marginTop: 20, marginLeft: 0, fontSize: 12 }}>За подробна информация натиснете името на оценителя</span> : <></>}
@@ -376,7 +411,7 @@ const BarTable = () => {
                 )}
               </Table.Body>
             </Table>
-          ) : tableType == "companies" ? (
+          ) : tableType === "companies" ? (
             <Table
               css={{
                 height: "auto",
@@ -418,6 +453,32 @@ const BarTable = () => {
                 )}
               </Table.Body>
             </Table>
+          ) : invalidType === "people" ? (
+            <Table
+              css={{
+                height: "auto",
+                minWidth: "100%",
+              }}
+            >
+              <Table.Header columns={columnsInvalidPeople}>
+                {(column) => (
+                  <Table.Column key={column.key}>
+                    <span style={{ fontSize: 14 }}>{column.label}</span>
+                  </Table.Column>
+                )}
+              </Table.Header>
+              <Table.Body items={rowsInvalidPeople}>
+                {(item) => (
+                  <Table.Row key={item.key}>
+                    {(columnKey) => (
+                      <Table.Cell>
+                        <span style={{ color: "black", fontSize: 14, fontWeight: "normal" }}>{item[columnKey]}</span>
+                      </Table.Cell>
+                    )}
+                  </Table.Row>
+                )}
+              </Table.Body>
+            </Table>
           ) : (
             <Table
               css={{
@@ -425,19 +486,19 @@ const BarTable = () => {
                 minWidth: "100%",
               }}
             >
-              <Table.Header columns={columnsInvalid}>
+              <Table.Header columns={columnsInvalidCompanies}>
                 {(column) => (
                   <Table.Column key={column.key}>
                     <span style={{ fontSize: 14 }}>{column.label}</span>
                   </Table.Column>
                 )}
               </Table.Header>
-              <Table.Body items={rowsInvalid}>
+              <Table.Body items={rowsInvalidCompanies}>
                 {(item) => (
                   <Table.Row key={item.key}>
                     {(columnKey) => (
                       <Table.Cell>
-                        <span style={{ color: "black", fontSize: 14, fontWeight: "normal" }}>{item[columnKey]}</span>
+                        <span style={{ color: "black", fontSize: 13, fontWeight: "normal" }}>{item[columnKey]}</span>
                       </Table.Cell>
                     )}
                   </Table.Row>

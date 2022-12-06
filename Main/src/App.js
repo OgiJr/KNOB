@@ -29,12 +29,17 @@ import MemberTable from "./components/table/memberTable";
 import Banks from "./pages/Banks";
 import Documents from "./pages/Documents";
 import Login from "./pages/Dashboard/Login";
-import Admin from "./pages/Dashboard/Admin";
+import DashboardNews from "./pages/Dashboard/DashboardNews";
+import DashboardQuizes from "./pages/Dashboard/DashboardQuizes";
+import DashboardNormative from "./pages/Dashboard/DashboardNormative";
+import DashboardMembers from "./pages/Dashboard/DashboardMembers";
 
 // Import Css Here
 import "./assets/scss/style.scss";
 import BlogQuiz from "./components/blog/BlogQuiz";
 import BlogArchive from "./components/blog/BlogArchive";
+import DashboardRegistry from "./pages/Dashboard/DashboardRegistry";
+import DashboardCompanies from "./pages/Dashboard/DashboardCompanies";
 
 const App = () => {
   return (
@@ -71,8 +76,13 @@ const App = () => {
           <Route path={`${process.env.PUBLIC_URL + "/documents"}`} exact component={Documents} />
           {/* Frontend pages end*/}
           {/* Backend pages start*/}
-          <Route path={`${process.env.PUBLIC_URL + "/dashboard-admin"}`} exact component={Admin} />
+          <Route path={`${process.env.PUBLIC_URL + "/dashboard-admin"}`} exact component={DashboardNews} />
           <Route path={`${process.env.PUBLIC_URL + "/login"}`} exact component={Login} />
+          <Route path={`${process.env.PUBLIC_URL + "/dashboard-quizes"}`} exact component={DashboardQuizes} />
+          <Route path={`${process.env.PUBLIC_URL + "/dashboard-normative"}`} exact component={DashboardNormative} />
+          <Route path={`${process.env.PUBLIC_URL + "/dashboard-members"}`} exact component={DashboardMembers} />
+          <Route path={`${process.env.PUBLIC_URL + "/dashboard-registry"}`} exact component={DashboardRegistry} />
+          <Route path={`${process.env.PUBLIC_URL + "/dashboard-companies"}`} exact component={DashboardCompanies} />
           {/*Backend pages end */}
         </Switch>
       </PageScrollTop>
