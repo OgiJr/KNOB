@@ -17,17 +17,17 @@ import Shumen from "./pages/Shumen";
 import AboutUs from "./pages/AboutUs";
 import Rev from "./pages/Rev";
 import HelpfulLinks from "./elements/helpful/HelpfulLinks";
-
-// Elements import Here
-
+import PublicRegistry from "./pages/PublicRegistry";
 import Contact from "./elements/contact/Contact";
-
 import BlogNews from "./components/blog/BlogNews";
 import BlogDetails from "./pages/BlogDetails";
 import ControlBoard from "./pages/ControlBoard";
 import Directors from "./pages/Directors";
 import Ethics from "./pages/Ethics";
 import Normative from "./pages/Normative";
+import MemberTable from "./components/table/memberTable";
+import Banks from "./pages/Banks";
+import Documents from "./pages/Documents";
 
 // Import Css Here
 import "./assets/scss/style.scss";
@@ -62,6 +62,11 @@ const App = () => {
           <Route path={`${process.env.PUBLIC_URL + "/rev"}`} exact component={Rev} />
           <Route path={`${process.env.PUBLIC_URL + "/helpful-links"}`} exact component={HelpfulLinks} />
           <Route path={`${process.env.PUBLIC_URL + "/contact"}`} exact component={Contact} />
+          <Route path={`${process.env.PUBLIC_URL + "/contact"}`} exact component={Contact} />
+          <Route path={`${process.env.PUBLIC_URL + "/member-table"}`} exact component={MemberTable} />
+          <Route path={`${process.env.PUBLIC_URL + "/public-registry"}`} exact component={PublicRegistry} />
+          <Route path={`${process.env.PUBLIC_URL + "/banks"}`} exact component={Banks} />
+          <Route path={`${process.env.PUBLIC_URL + "/documents"}`} exact component={Documents} />
           {/* Frontend pages end*/}
         </Switch>
       </PageScrollTop>

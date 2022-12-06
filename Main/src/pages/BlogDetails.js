@@ -13,7 +13,7 @@ const BlogDetails = ({
   const data = BlogClassicData.filter((blog) => blog.id === blogId);
   return (
     <>
-      <SEO title="Blog Details || КНОБ" />
+      <SEO title="Блог" />
       <Layout>
         <div className="rn-blog-details-area">
           <BlogDetailsContent data={data[0]} />

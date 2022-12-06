@@ -1,0 +1,46 @@
+.hidden-mobile{
+    display: flex;
+    flex-direction: row;
+}
+
+.cardsRev{
+    display: flex;
+    flex-direction: row;
+    margin-left: 100px;
+    margin-right: 100px;
+}
+
+.card1{
+    margin-right: 10px;
+}
+
+.card2{
+    margin-left: 10px;
+}
+.finalCard  {
+    align-self: center;
+    width: 50%;
+    margin-top: 20px;
+}
+
+@media screen and (max-width: 600px) {
+    .hidden-mobile {
+      display: none;
+    }
+    .cardsRev{
+        display: flex;
+        flex-direction: column;
+        margin-left: 25px;
+        margin-right: 25px;
+    }
+    .card1{
+        margin-right: 0px;
+    }
+    .card2{
+        margin-left: 0px;
+        margin-top: 20px;
+    }
+    .finalCard{
+        width: 85%;
+    }
+  }

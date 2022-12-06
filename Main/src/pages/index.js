@@ -27,27 +27,27 @@ const HomeDefault = () => {
                   </span>
                   <p className="description">КНОБ осигурява и регулира упражняването на професията на независим оценител в интерес на обществото.</p>
                   <div className="button-group flex flex-row">
-                    <a className="btn-default btn-medium round btn-icon" href="https://themeforest.net/checkout/from_item/33571911?license=regular">
+                    <a className="btn-default btn-medium round btn-icon" href="public-registry">
                       Публичен регистър
                       <i className="icon">
                         <FiArrowRight />
                       </i>
                     </a>
-                    <Link className="btn-default btn-medium btn-border round btn-icon" to="#">
+                    <Link className="btn-default btn-medium btn-border round btn-icon" to="member-table">
                       Членове на КНОБ
                       <i className="icon">
                         <FiArrowRight />
                       </i>
                     </Link>
                     <br /> <br />
-                    <HashLink className="btn-default btn-medium btn-border round btn-icon" smooth to="#banks">
-                      Банкови сметки{" "}
+                    <HashLink to="/banks" className="btn-default btn-medium btn-border round btn-icon">
+                      Банкови сметки
                       <i className="icon">
                         <FiArrowRight />
                       </i>
                     </HashLink>
-                    <a className="btn-default btn-medium round btn-icon" href="#banks">
-                      Документи
+                    <a className="btn-default btn-medium round btn-icon" href="/documents">
+                      Документи за вписване
                       <i className="icon">
                         <FiArrowRight />
                       </i>
@@ -61,7 +61,7 @@ const HomeDefault = () => {
         {/* End Slider Area  */}
 
         {/* Start About Area  */}
-        <Accents id="banks" />
+        <Accents />
         {/* End About Area  */}
 
         <Separator />

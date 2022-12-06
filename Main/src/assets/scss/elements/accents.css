@@ -1,0 +1,21 @@
+.cardsAccent{
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+}
+
+.cardAccent{
+    display: flex;
+    flex-direction: row;
+}
+
+@media screen and (max-width: 600px) {
+.cardsAccent{
+    flex-direction: column;    
+}
+.cardAccent{
+    margin-left: 0px;
+    margin-top: 50px;
+}
+
+}

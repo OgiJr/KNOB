@@ -3,6 +3,11 @@
 ----------------------------*/
 
 .rn-splite-style {
+    @media screen and (max-width: 1100px) {
+        .thumbnail {
+          display: none;
+        }
+      }
     .thumbnail {
         img {
             border-radius: 0;

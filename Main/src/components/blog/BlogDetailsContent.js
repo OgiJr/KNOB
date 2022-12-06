@@ -45,7 +45,7 @@ const BlogDetailsContent = ({ data }) => {
         <div className="">
           <div className="row" style={{ display: "flex", justifyContent: "center" }}>
             <div className="col-lg-10" style={{ alignSelf: "center" }}>
-              <Card css={{ width: "95%" }} isHoverable isPressable>
+              <Card isHoverable isPressable>
                 <div className="content" style={{ margin: "30px" }}>
                   {data.body.map((value, i) => {
                     return <div key={i} dangerouslySetInnerHTML={{ __html: value }} />;

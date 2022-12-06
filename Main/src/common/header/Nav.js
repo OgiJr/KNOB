@@ -57,7 +57,7 @@ const Nav = () => {
             <Link to="/sofia">София - град и София - област</Link>
           </li>
           <li>
-            <Link to="/starazagora">Стара Загора</Link>
+            <Link to="/stara-zagora">Стара Загора</Link>
           </li>
           <li>
             <Link to="/shumen">Шумен, Търговище, Разград</Link>
@@ -109,6 +109,15 @@ const Nav = () => {
         <ul className="submenu">
           <li>
             <Link to="/helpful-links">Полезни връзки</Link>
+          </li>
+          <li>
+            <Link to="/public-registry">Публичен регистър</Link>
+          </li>
+          <li>
+            <Link to="/banks">Банкови сметки</Link>
+          </li>
+          <li>
+            <Link to="/documents">Документи за вписване</Link>
           </li>
         </ul>
       </li>

@@ -1,0 +1,13 @@
+.margin-responsive{
+    margin-top: 50px;
+}
+
+@media screen and (max-width: 600px) {
+    .hidden-phone{
+        display: none;    
+    }
+    .margin-responsive{
+        margin-top: 0px;
+    }
+        
+}

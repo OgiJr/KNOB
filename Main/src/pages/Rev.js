@@ -5,7 +5,7 @@ import Copyright from "../common/footer/Copyright";
 import { Link } from "react-router-dom";
 import { Card } from "@nextui-org/react";
 import RevData from "../data/rev/RevList.json";
-
+import "../assets/scss/elements/rev.css";
 const Rev = () => {
   const alldataRev = RevData;
   const [getAllItems] = useState(alldataRev);
@@ -17,7 +17,7 @@ const Rev = () => {
 
   return (
     <>
-      <SEO title="За нас" />
+      <SEO title="REV" />
       <main className="page-wrapper">
         <Header btnStyle="btn-small round btn-icon" HeaderSTyle="" />
 
@@ -26,29 +26,31 @@ const Rev = () => {
           <div className="col-lg-6">
             <div className="content-left">
               <div style={{ display: "flex", justifyContent: "center" }}>
-                <img src="images/rev.jpg" style={{ borderRadius: 100, marginTop: 20, alignSelf: "center" }} />
+                <img src="images/team/rev.png" style={{ borderRadius: 100, marginTop: 20, alignSelf: "center", height: 150, width: 150 }} />
               </div>
               <br />
-              <Link to={"#"} style={{ textDecoration: "underline", color: "red", display: "flex", flexDirection: "row" }}>
+              <Link to={"#"} className="hidden-mobile" style={{ textDecoration: "underline", color: "red" }}>
                 <img src="images/icons/file.png" style={{ width: 30, height: 30 }} /> Кодекс за професионална етика, правила и норми на поведение на независими оценители, сертифицирани и придобили статут REV
               </Link>
               <br />
-              <Link to={"#"} style={{ textDecoration: "underline", color: "red", display: "flex", flexDirection: "row" }}>
+              <Link to={"#"} className="hidden-mobile" style={{ textDecoration: "underline", color: "red" }}>
                 <img src="images/icons/file.png" style={{ width: 30, height: 30 }} /> Годишен отчет на независимите оценители със статут REV
               </Link>
               <br />
-              <Link to={"#"} style={{ textDecoration: "underline", color: "red", display: "flex", flexDirection: "row" }}>
+              <Link to={"#"} className="hidden-mobile" style={{ textDecoration: "underline", color: "red" }}>
                 <img src="images/icons/file.png" style={{ width: 30, height: 30 }} /> Тарифа – Финансови отношения, приложими към независими оценители, относно придобиване/придобили статут на сертифициран REV
               </Link>
               <br />
-              <Link to={"#"} style={{ textDecoration: "underline", color: "blue", display: "flex", flexDirection: "row" }}>
+              <Link to={"#"} className="hidden-mobile" style={{ textDecoration: "underline", color: "blue" }}>
                 <img src="images/icons/file.png" style={{ width: 30, height: 30 }} /> Указания за подаване на Заявление и изискуеми документи и декларации за кандидатстване за придобиване на статут REV
               </Link>
             </div>
           </div>
           <div className="col-lg-6 mt_md--30 mt_sm--30">
-            <div className="content-right">
-              <h5 className="subtitle">КАМАРА НА НЕЗАВИСИМИТЕ ОЦЕНИТЕЛИ В БЪЛГАРИЯ СЕРТИФИЦИРА СЪС СТАТУТ REV - ПРИЗНАТ ЕВРОПЕЙСКИ ОЦЕНИТЕЛ</h5>
+            <div className="content-right" style={{ marginLeft: 10, marginRight: 10 }}>
+              <h5 className="subtitle" style={{ textAlign: "center" }}>
+                КАМАРА НА НЕЗАВИСИМИТЕ ОЦЕНИТЕЛИ В БЪЛГАРИЯ СЕРТИФИЦИРА СЪС СТАТУТ REV - ПРИЗНАТ ЕВРОПЕЙСКИ ОЦЕНИТЕЛ
+              </h5>
               <div className="description">
                 <p style={{ fontSize: 14 }}>
                   Председателят на Управителния Съвет на Камарата на независимите оценители в България, през м. май 2018 г. подписа договор с международната организация TEGoVA даващ право на КНОБ да сертифицира независими оценители със статут REV – признат европейски оценител по правоспособност „Недвижими имоти”.
@@ -76,8 +78,8 @@ const Rev = () => {
         <br />
         <div style={{ display: "flex", flexDirection: "column" }}>
           {visibleItems.map((item) => (
-            <div key={item.id} style={{ display: "flex", flexDirection: "row", marginLeft: 100, marginTop: 10, marginRight: 100 }}>
-              <Card style={{ marginRight: 10 }}>
+            <div key={item.id} className="cardsRev" style={{ marginTop: 20 }}>
+              <Card className="card1" isPressable>
                 <Card.Header>{item.c1}</Card.Header>
                 <Card.Body>
                   {item.dates1}
@@ -93,7 +95,7 @@ const Rev = () => {
                   {item.phone1}
                 </Card.Body>
               </Card>
-              <Card style={{ marginLeft: 10 }}>
+              <Card className="card2" isPressable>
                 <Card.Header> {item.c2}</Card.Header>
                 <Card.Body>
                   {item.dates2}
@@ -111,7 +113,7 @@ const Rev = () => {
               </Card>
             </div>
           ))}
-          <Card style={{ width: "50%", marginLeft: 100, marginTop: 10 }}>
+          <Card className="finalCard" isPressable>
             <Card.Header>Certificate / Сертификат: REV-BG/CIAB/2026/1</Card.Header>
             <Card.Body>
               Issued on / Издаден на: 01/06/2021 Valid until / Валиден до: 31/05/2026

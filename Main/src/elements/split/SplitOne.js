@@ -6,7 +6,7 @@ const SplitOne = () => {
     <div className="rn-splite-style" style={{}}>
       <div className="split-wrapper">
         <div className="row no-gutters radius-10 align-items-center">
-          <div className="col-lg-12 col-xl-6 col-12">
+          <div className="hide-mobile col-lg-12 col-xl-6 col-12">
             <div className="thumbnail image-left-content">
               <img src="./images/about/about-1.jpg" alt="about" />
             </div>

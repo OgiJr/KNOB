@@ -13,7 +13,7 @@ const Copyright = () => {
           </div>
           <div className="col-lg-6 col-md-4 col-sm-12 col-12">
             <div className="copyright-right text-center text-md-end">
-              <p className="copyright-text" style={{ fontSize: "16px" }}>
+              <p className="copyright-text" style={{ fontSize: "16px", marginTop: 20 }}>
                 Created by{" "}
                 <a target={"_blank"} href="https://javery.bg/" style={{ color: "orange" }}>
                   {" "}

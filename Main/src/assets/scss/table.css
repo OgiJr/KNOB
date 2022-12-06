@@ -1,0 +1,41 @@
+.modalResponsive{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.buttonGroupLarge{
+    display: flex;
+}
+
+.buttonGroupPhone{
+    display: none;
+}
+
+.guide{
+    display:flex;
+    flex-direction: row;
+}
+
+@media screen and (max-width: 1200px) {
+    .modalResponsive{
+        display: flex;
+        flex-direction: column !important;
+        text-align: center;
+    }
+    .buttonGroupLarge{
+        display: none;
+    }
+    .buttonGroupPhone{
+        display: flex;
+    }   
+    .guide{
+        display:flex;
+        flex-direction: column;
+    } 
+    .filter{
+        display:flex;
+        flex-direction: column;
+        margin-right: 15%;
+    } 
+}

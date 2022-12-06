@@ -1,9 +1,10 @@
 import React from "react";
 import { Card, Text } from "@nextui-org/react";
+import "../../assets/scss/elements/accents.css";
 
 const Accents = () => {
   return (
-    <div className="rwt-about-area rn-section-gap">
+    <div className="rwt-about-area rn-section-gap" style={{ marginLeft: 15, marginRight: 15 }}>
       <div className="container">
         <div className="row row--30 align-items-center">
           <div className=" mt_md--40 mt_sm--40">
@@ -23,7 +24,7 @@ const Accents = () => {
                   <b>Оформяне на оценителски доклад от дружества на независим оценител:</b>
                 </div>
                 <div style={{ marginLeft: "10px", marginRight: "10px", marginTop: "10px" }}>В изпълнение на правомощията си по чл. 22, ал. 3, т. 7, КНОБ указва на дружествата на независим оценител, че съгласно чл. 17, ал. 1, в оценките подписани от дружеството на независим оценител задължително трябва да се съдържа и подпис на независимия оценител - физическо лице, отговорно за изготвянето на оценката. Не подписването на оценката, която не е подписана съгласно чл. 17, ал. 1 да се счита за невалидна поради нарушаване на императивното изискване на чл. 6, ал. 3 от ЗНО.</div>
-                <div className=" mt--40" style={{ display: "flex", flexDirection: "row" }}>
+                <div className="mt--40 cardsAccent">
                   <Card isHoverable isPressable>
                     <Card.Header>
                       <img alt="nextui logo" src="images/icons/map.png" width="34px" height="34px" />
@@ -47,7 +48,7 @@ const Accents = () => {
                       </Text>
                     </Card.Body>
                   </Card>
-                  <Card isHoverable isPressable style={{ marginLeft: 30 }}>
+                  <Card isHoverable isPressable>
                     <Card.Header>
                       <img alt="nextui logo" src="images/icons/map.png" width="34px" height="34px" />
                       <Text style={{ fontWeight: "bold", marginTop: "27px" }}>Такса за вписване в регистъра на КНОБ</Text>
@@ -71,7 +72,7 @@ const Accents = () => {
                     </Card.Body>
                   </Card>
                 </div>
-                <div style={{ display: "flex", flexDirection: "row", marginTop: 30 }}>
+                <div className="cardsAccent" style={{ marginTop: 20 }}>
                   <Card css={{ p: "$6" }} isHoverable isPressable>
                     <Card.Header>
                       <img alt="nextui logo" src="images/icons/map.png" width="34px" height="34px" />
@@ -95,7 +96,7 @@ const Accents = () => {
                       </Text>
                     </Card.Body>
                   </Card>
-                  <Card css={{ p: "$6" }} style={{ marginLeft: 30 }} isHoverable isPressable>
+                  <Card css={{ p: "$6" }} isHoverable isPressable>
                     <Card.Header>
                       <img alt="nextui logo" src="images/icons/map.png" width="34px" height="34px" />
                       <Text style={{ fontWeight: "bold", marginTop: "27px" }}>Годишна вноска на основание чл.10, ал. 8 от Кодекс за професионална етика</Text>

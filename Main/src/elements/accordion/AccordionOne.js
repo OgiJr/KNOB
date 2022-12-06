@@ -3,10 +3,7 @@ import { Accordion, Card, Button } from "react-bootstrap";
 
 const AccordionOne = ({ customStyle }) => {
   return (
-    <Accordion
-      className={`rn-accordion-style ${customStyle}`}
-      defaultActiveKey="0"
-    >
+    <Accordion className={`rn-accordion-style ${customStyle}`} defaultActiveKey="0">
       <Card>
         <Card.Header>
           <Accordion.Toggle as={Button} variant="link" eventKey="0">
@@ -28,10 +25,7 @@ const AccordionOne = ({ customStyle }) => {
               </li>
               <li style={{ color: "#ff6d00" }}>
                 {" "}
-                <a
-                  style={{ color: "black" }}
-                  href="https://www.appraisers.org/"
-                >
+                <a style={{ color: "black" }} href="https://www.appraisers.org/">
                   Aмериканско общество на оценителите
                 </a>{" "}
               </li>
@@ -41,18 +35,12 @@ const AccordionOne = ({ customStyle }) => {
                 </a>{" "}
               </li>
               <li style={{ color: "#ff6d00" }}>
-                <a
-                  style={{ color: "black" }}
-                  href="https://www.propertymark.co.uk/"
-                >
+                <a style={{ color: "black" }} href="https://www.propertymark.co.uk/">
                   Национална асоциация на оценителите - Великобритания
                 </a>{" "}
               </li>
               <li style={{ color: "#ff6d00" }}>
-                <a
-                  style={{ color: "black" }}
-                  href="https://www.isa-appraisers.org/"
-                >
+                <a style={{ color: "black" }} href="https://www.isa-appraisers.org/">
                   Международно общество на оценителите
                 </a>{" "}
               </li>
@@ -62,10 +50,7 @@ const AccordionOne = ({ customStyle }) => {
                 </a>{" "}
               </li>
               <li style={{ color: "#ff6d00" }}>
-                <a
-                  style={{ color: "black" }}
-                  href="https://www.appraisalinstitute.org/"
-                >
+                <a style={{ color: "black" }} href="https://www.appraisalinstitute.org/">
                   Оценителският институт (Appraisal Institute)
                 </a>{" "}
               </li>
@@ -90,18 +75,12 @@ const AccordionOne = ({ customStyle }) => {
                 </a>{" "}
               </li>
               <li style={{ color: "#ff6d00" }}>
-                <a
-                  style={{ color: "black" }}
-                  href="http://www.eibank.bg/cgi-sys/suspendedpage.cgi"
-                >
+                <a style={{ color: "black" }} href="http://www.eibank.bg/cgi-sys/suspendedpage.cgi">
                   Стопанска и инвестиционна банка
                 </a>{" "}
               </li>
               <li style={{ color: "#ff6d00" }}>
-                <a
-                  style={{ color: "black" }}
-                  href="https://www.worldbank.org/en/country/bulgaria"
-                >
+                <a style={{ color: "black" }} href="https://www.worldbank.org/en/country/bulgaria">
                   Световна банка, офис София
                 </a>{" "}
               </li>
@@ -156,10 +135,7 @@ const AccordionOne = ({ customStyle }) => {
                 </a>{" "}
               </li>
               <li style={{ color: "#ff6d00" }}>
-                <a
-                  style={{ color: "black" }}
-                  href="http://www.gli.government.bg/bg/page/394"
-                >
+                <a style={{ color: "black" }} href="http://www.gli.government.bg/bg/page/394">
                   Нормативна уредба по инспекция на труда
                 </a>{" "}
               </li>
@@ -169,10 +145,7 @@ const AccordionOne = ({ customStyle }) => {
                 </a>{" "}
               </li>
               <li style={{ color: "#ff6d00" }}>
-                <a
-                  style={{ color: "black" }}
-                  href="https://www.daxy.com/cgi-bin/page.py?ind=news"
-                >
+                <a style={{ color: "black" }} href="https://www.daxy.com/cgi-bin/page.py?ind=news">
                   Държавен вестник
                 </a>{" "}
               </li>
@@ -182,17 +155,13 @@ const AccordionOne = ({ customStyle }) => {
                 </a>{" "}
               </li>
               <li style={{ color: "#ff6d00" }}>
-                <a
-                  style={{ color: "black" }}
-                  href="http://bulstat.registryagency.bg/"
-                >
+                <a style={{ color: "black" }} href="http://bulstat.registryagency.bg/">
                   БУЛСТАТ
                 </a>{" "}
               </li>
               <li style={{ color: "#ff6d00" }}>
                 <a style={{ color: "black" }} href="http://finance.news.bg/">
-                  Ежедневни финансови анализи и прогнози, котировки в реално
-                  време, фондова борса, валутна информация
+                  Ежедневни финансови анализи и прогнози, котировки в реално време, фондова борса, валутна информация
                 </a>{" "}
               </li>
               <li style={{ color: "#ff6d00" }}>
@@ -202,33 +171,22 @@ const AccordionOne = ({ customStyle }) => {
               </li>
               <li style={{ color: "#ff6d00" }}>
                 <a style={{ color: "black" }} href="http://www.econ.bg/">
-                  Икономически портал - информация в областта на икономиката,
-                  финансите, приватизацията, валутните и капиталови пазари;
-                  малки и средни предприятия, икономическа статистика и др.
+                  Икономически портал - информация в областта на икономиката, финансите, приватизацията, валутните и капиталови пазари; малки и средни предприятия, икономическа статистика и др.
                 </a>{" "}
               </li>
               <li style={{ color: "#ff6d00" }}>
-                <a
-                  style={{ color: "black" }}
-                  href="https://www.hugedomains.com/domain_profile.cfm?d=hotmonitor.com"
-                >
-                  Виртуален бизнес център - портал с ръководства и софтуер за
-                  изготвяне на бизнес и маркетингови планове, безплатни
-                  ръководства за бизнес планиране и др.
+                <a style={{ color: "black" }} href="https://www.hugedomains.com/domain_profile.cfm?d=hotmonitor.com">
+                  Виртуален бизнес център - портал с ръководства и софтуер за изготвяне на бизнес и маркетингови планове, безплатни ръководства за бизнес планиране и др.
                 </a>{" "}
               </li>
               <li style={{ color: "#ff6d00" }}>
                 <a style={{ color: "black" }} href="http://www.im.nat.bg/">
-                  Икономически справочник - закони, нормативни актове,
-                  инструкции, стандарти и др. в икономическата и финансовата
-                  сфера
+                  Икономически справочник - закони, нормативни актове, инструкции, стандарти и др. в икономическата и финансовата сфера
                 </a>{" "}
               </li>
               <li style={{ color: "#ff6d00" }}>
                 <a style={{ color: "black" }} href="https://ime.bg/">
-                  Институт по пазарна икономика - политика, бизнес - среда,
-                  финанси и икономика, конкурентноспособност, регионално
-                  развитие
+                  Институт по пазарна икономика - политика, бизнес - среда, финанси и икономика, конкурентноспособност, регионално развитие
                 </a>{" "}
               </li>
               <li style={{ color: "#ff6d00" }}>
@@ -238,8 +196,7 @@ const AccordionOne = ({ customStyle }) => {
               </li>
               <li style={{ color: "#ff6d00" }}>
                 <a style={{ color: "black" }} href="https://www.nsi.bg/bg">
-                  Национален статистически институт - статистика, БУЛСТАТ
-                  /справки/
+                  Национален статистически институт - статистика, БУЛСТАТ /справки/
                 </a>{" "}
               </li>
               <li style={{ color: "#ff6d00" }}>
@@ -249,54 +206,36 @@ const AccordionOne = ({ customStyle }) => {
               </li>
               <li style={{ color: "#ff6d00" }}>
                 <a style={{ color: "black" }} href="http://ced.bg/bg/">
-                  Център за икономическо развитие - макроикономически и секторни
-                  изследвания и проучвания
+                  Център за икономическо развитие - макроикономически и секторни изследвания и проучвания
                 </a>{" "}
               </li>
               <li style={{ color: "#ff6d00" }}>
                 <a style={{ color: "black" }} href="http://alaric.bg/">
-                  Държавна комисия по ценните книжа - закони и наредби,
-                  документи на ДКЦК, информация за инвеститорите
+                  Държавна комисия по ценните книжа - закони и наредби, документи на ДКЦК, информация за инвеститорите
                 </a>{" "}
               </li>
               <li style={{ color: "#ff6d00" }}>
-                <a
-                  style={{ color: "black" }}
-                  href="http://www.bepc.government.bg/"
-                >
-                  Агенция за насърчаване на търговията - икономическа и фирмена
-                  информация, предстоящи панаири и изложения, консултански,
-                  информационни и аналитично - проучвателни услуги
+                <a style={{ color: "black" }} href="http://www.bepc.government.bg/">
+                  Агенция за насърчаване на търговията - икономическа и фирмена информация, предстоящи панаири и изложения, консултански, информационни и аналитично - проучвателни услуги
                 </a>{" "}
               </li>
               <li style={{ color: "#ff6d00" }}>
-                <a
-                  style={{ color: "black" }}
-                  href="http://www.priv.government.bg/"
-                >
-                  Агенция за приватизация - обяви, крайни срокове,
-                  прессъобщения, решения, статистика, приватизирани предприятия,
-                  информационни карти, централизирани публични търгове, публично
-                  предлагане, целева приватизация, сделки, одобряване от МС
+                <a style={{ color: "black" }} href="http://www.priv.government.bg/">
+                  Агенция за приватизация - обяви, крайни срокове, прессъобщения, решения, статистика, приватизирани предприятия, информационни карти, централизирани публични търгове, публично предлагане, целева приватизация, сделки, одобряване от МС
                 </a>{" "}
               </li>
               <li style={{ color: "#ff6d00" }}>
                 <a style={{ color: "black" }} href="https://www.nsi.bg/bg">
-                  Национален статистически институт - статистически данни за
-                  основни икономически показатели на РБ
+                  Национален статистически институт - статистически данни за основни икономически показатели на РБ
                 </a>{" "}
               </li>
               <li style={{ color: "#ff6d00" }}>
                 <a style={{ color: "black" }} href="https://www.minfin.bg/">
-                  Агенция за държавни вземания - търгове, оценители, нормативни
-                  документи
+                  Агенция за държавни вземания - търгове, оценители, нормативни документи
                 </a>{" "}
               </li>
               <li style={{ color: "#ff6d00" }}>
-                <a
-                  style={{ color: "black" }}
-                  href="https://www.bulnao.government.bg/bg/"
-                >
+                <a style={{ color: "black" }} href="https://www.bulnao.government.bg/bg/">
                   Сметна палата на Република българия
                 </a>{" "}
               </li>
@@ -311,34 +250,22 @@ const AccordionOne = ({ customStyle }) => {
                 </a>{" "}
               </li>
               <li style={{ color: "#ff6d00" }}>
-                <a
-                  style={{ color: "black" }}
-                  href="https://www.mi.government.bg/"
-                >
+                <a style={{ color: "black" }} href="https://www.mi.government.bg/">
                   Министерство на икономиката
                 </a>{" "}
               </li>
               <li style={{ color: "#ff6d00" }}>
-                <a
-                  style={{ color: "black" }}
-                  href="http://www.minedu.government.bg/news-home/"
-                >
+                <a style={{ color: "black" }} href="http://www.minedu.government.bg/news-home/">
                   Министерство на образованието
                 </a>{" "}
               </li>
               <li style={{ color: "#ff6d00" }}>
-                <a
-                  style={{ color: "black" }}
-                  href="https://www.mlsp.government.bg/"
-                >
+                <a style={{ color: "black" }} href="https://www.mlsp.government.bg/">
                   Министерство на труда и социалната политика
                 </a>{" "}
               </li>
               <li style={{ color: "#ff6d00" }}>
-                <a
-                  style={{ color: "black" }}
-                  href="https://www.justice.government.bg/"
-                >
+                <a style={{ color: "black" }} href="https://www.justice.government.bg/">
                   Министерство на правосъдието
                 </a>{" "}
               </li>
@@ -358,10 +285,7 @@ const AccordionOne = ({ customStyle }) => {
                 </a>{" "}
               </li>
               <li style={{ color: "#ff6d00" }}>
-                <a
-                  style={{ color: "black" }}
-                  href="https://www.parliament.bg/bg"
-                >
+                <a style={{ color: "black" }} href="https://www.parliament.bg/bg">
                   Народно събрание
                 </a>{" "}
               </li>
@@ -380,18 +304,12 @@ const AccordionOne = ({ customStyle }) => {
           <Card.Body>
             <ul>
               <li style={{ color: "#ff6d00" }}>
-                <a
-                  style={{ color: "black" }}
-                  href="https://www.appraisersassociation.org/"
-                >
+                <a style={{ color: "black" }} href="https://www.appraisersassociation.org/">
                   Асоциация на американските оценители
                 </a>{" "}
               </li>
               <li style={{ color: "#ff6d00" }}>
-                <a
-                  style={{ color: "black" }}
-                  href="https://www.mfa.government.bg/"
-                >
+                <a style={{ color: "black" }} href="https://www.mfa.government.bg/">
                   Министерство на външните работи
                 </a>{" "}
               </li>
@@ -410,10 +328,7 @@ const AccordionOne = ({ customStyle }) => {
           <Card.Body>
             <ul>
               <li style={{ color: "#ff6d00" }}>
-                <a
-                  style={{ color: "black" }}
-                  href="http://bpbulgarianproperties.ru/"
-                >
+                <a style={{ color: "black" }} href="http://bpbulgarianproperties.ru/">
                   Недвижимость в Болгарии
                 </a>{" "}
               </li>

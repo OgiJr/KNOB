@@ -27,4 +27,4 @@ const BlogArchive = () => {
   );
 };
 
-export default BlogPropMain;
+export default BlogArchive;

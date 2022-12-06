@@ -26,7 +26,11 @@ const MobileMenu = ({ show, onClose }) => {
     <div className={`popup-mobile-menu ${show ? "active" : ""}`}>
       <div className="inner">
         <div className="header-top">
-          <div style={{ fontWeight: "bold", color: "orange", fontSize: 24 }}>КНОБ</div>
+          <div style={{ fontWeight: "bold", color: "orange", fontSize: 24 }}>
+            <a href="/" style={{ color: "orange" }}>
+              КНОБ
+            </a>
+          </div>
           <div className="close-menu">
             <span className="close-button" onClick={onClose}>
               <FiX />
