@@ -286,6 +286,8 @@ const cities = [
   { name: "Шабла" },
   { name: "Шивачево" },
   { name: "Шумен" },
+  { name: "Якоруда" },
+  { name: "Ямбол" },
 ];
 const capacities = [
   { name: "Недвижими имоти" },
