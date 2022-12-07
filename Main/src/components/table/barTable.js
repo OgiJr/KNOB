@@ -1,7 +1,6 @@
 import React from "react";
 import { Modal, Button, Dropdown, Input, Pagination, Table, Row, Card } from "@nextui-org/react";
 import "../../assets/scss/table.css";
-import { ButtonGroup } from "react-bootstrap";
 
 const cities = [{ name: "с. Дряново" }, { name: "Айтос" }, { name: "Аксаково" }, { name: "Априлци" }];
 const capacities = [{ name: "Недвижими имоти" }, { name: "Недвижими културни ценности" }, { name: "Машини и съоражения" }, { name: "Права на интелектуална и индустриална собственост" }, { name: "Търговски предприятия и вземания" }, { name: "Финансови активи и фанансови институции" }, { name: "Други активи" }, { name: "Земеделски земи и трайни насъждения" }, { name: "Поземлени имоти в горски територии" }];
