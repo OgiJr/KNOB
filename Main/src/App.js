@@ -33,7 +33,7 @@ import DashboardNews from "./pages/Dashboard/DashboardNews";
 import DashboardQuizes from "./pages/Dashboard/DashboardQuizes";
 import DashboardNormative from "./pages/Dashboard/DashboardNormative";
 import DashboardMembers from "./pages/Dashboard/DashboardMembers";
-
+import DashboardRev from "./pages/Dashboard/DashboardRev";
 // Import Css Here
 import "./assets/scss/style.scss";
 import BlogQuiz from "./components/blog/BlogQuiz";
@@ -83,6 +83,7 @@ const App = () => {
           <Route path={`${process.env.PUBLIC_URL + "/dashboard-members"}`} exact component={DashboardMembers} />
           <Route path={`${process.env.PUBLIC_URL + "/dashboard-registry"}`} exact component={DashboardRegistry} />
           <Route path={`${process.env.PUBLIC_URL + "/dashboard-companies"}`} exact component={DashboardCompanies} />
+          <Route path={`${process.env.PUBLIC_URL + "/dashboard-rev"}`} exact component={DashboardRev} />
           {/*Backend pages end */}
         </Switch>
       </PageScrollTop>

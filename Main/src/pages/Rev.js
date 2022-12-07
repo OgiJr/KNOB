@@ -89,7 +89,7 @@ const Rev = () => {
                   {item.dates1}
                   <br />
                   <br />
-                  {item.names1}
+                  {item.name1}
                   <br />
                   {item.bgName1}
                   <br />

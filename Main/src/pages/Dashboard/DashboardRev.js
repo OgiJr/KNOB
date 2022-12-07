@@ -1,24 +1,24 @@
 import SEO from "../../common/SEO";
 import HeaderAdmin from "../../common/header/HeaderAdmin";
 import Copyright from "../../common/footer/Copyright";
-import { Button, Input, Modal, Table, Textarea } from "@nextui-org/react";
+import { Button, Input, Modal, Table } from "@nextui-org/react";
 import { Form } from "react-bootstrap";
 import React from "react";
 
 const columns = [
   {
-    key: "title",
-    label: "Заглавие",
+    key: "name",
+    label: "Имена",
   },
   {
-    key: "date",
-    label: "Дата",
+    key: "certificate",
+    label: "Сертификат",
   },
 ];
 
-const rows = [{ key: "1", title: "Вписване в „Регистъра на независимите оценители” на успешно издържалите изпита по „Земеделски земи и трайни насаждения”", date: "17.11.2022г." }];
+const rows = [{ key: "1", name: "Цанко Спасовски", certificate: "REV-BG/CIAB/2023/3" }];
 
-const DashboardNormative = () => {
+const DashboardRev = () => {
   const [visibleAdd, setVisibleAdd] = React.useState(false);
   const [visibleEdit, setVisibleEdit] = React.useState(false);
 
@@ -29,13 +29,30 @@ const DashboardNormative = () => {
         <Form>
           <Modal.Header>
             <div style={{ marginTop: 20 }}>
-              <Input placeholder="Заглавие" style={{ background: "white", margin: 0 }} />
+              <Input placeholder="Сертификат №" style={{ background: "white", margin: 0 }} />
             </div>
           </Modal.Header>
           <Modal.Body>
             <div style={{ display: "flex", flexDirection: "column", alignSelf: "center" }}>
-              <p style={{ marginBottom: 5, fontSize: 14, marginTop: 15 }}>Прикачен файл</p>
-              <input type="file" style={{ marginBottom: 15 }} />{" "}
+              <div style={{ marginTop: 20 }}>
+                <Input placeholder="Сертификат №" style={{ background: "white", margin: 0 }} />
+              </div>
+              <div style={{ marginTop: 20 }}>
+                <Input placeholder="Имена на български" style={{ background: "white", margin: 0 }} />
+              </div>
+              <div style={{ marginTop: 20 }}>
+                <Input placeholder="Имена на английски" style={{ background: "white", margin: 0 }} />
+              </div>
+              <div style={{ marginTop: 20, display: "flex", flexDirection: "row", justifyContent: "space-between" }}>
+                <Input type="date" label="Дата на издаване" style={{ background: "white", margin: 0 }} />
+                <Input type="date" label="Валиден до" style={{ background: "white", margin: 0 }} />
+              </div>
+              <div style={{ marginTop: 20 }}>
+                <Input placeholder="Град" style={{ background: "white", margin: 0 }} />
+              </div>
+              <div style={{ marginTop: 20 }}>
+                <Input placeholder="Телефон" style={{ background: "white", margin: 0 }} />
+              </div>
             </div>
           </Modal.Body>
           <Modal.Footer>
@@ -51,14 +68,34 @@ const DashboardNormative = () => {
       <Modal scroll open={visibleEdit} onClose={() => setVisibleEdit(false)}>
         <Form>
           <Modal.Header>
-            <div style={{ marginTop: 20 }}>
-              <Input placeholder="Заглавие" style={{ background: "white", margin: 0 }} />
-            </div>
+            <span style={{ fontSize: 12 }}>
+              Моля въведте информацията на английски и български. Вижте формата в страницата{" "}
+              <a href="/rev" style={{ color: "orange", marginLeft: 0 }}>
+                REV
+              </a>
+            </span>
           </Modal.Header>
           <Modal.Body>
             <div style={{ display: "flex", flexDirection: "column", alignSelf: "center" }}>
-              <p style={{ marginBottom: 5, fontSize: 14, marginTop: 15 }}>Прикачен файл</p>
-              <input type="file" style={{ marginBottom: 15 }} />{" "}
+              <div style={{ marginTop: 20 }}>
+                <Input placeholder="Сертификат №" style={{ background: "white", margin: 0 }} />
+              </div>
+              <div style={{ marginTop: 20 }}>
+                <Input placeholder="Имена на български" style={{ background: "white", margin: 0 }} />
+              </div>
+              <div style={{ marginTop: 20 }}>
+                <Input placeholder="Имена на английски" style={{ background: "white", margin: 0 }} />
+              </div>
+              <div style={{ marginTop: 20, display: "flex", flexDirection: "row", justifyContent: "space-between" }}>
+                <Input type="date" label="Дата на издаване" style={{ background: "white", margin: 0 }} />
+                <Input type="date" label="Валиден до" style={{ background: "white", margin: 0 }} />
+              </div>
+              <div style={{ marginTop: 20 }}>
+                <Input placeholder="Град" style={{ background: "white", margin: 0 }} />
+              </div>
+              <div style={{ marginTop: 20 }}>
+                <Input placeholder="Телефон" style={{ background: "white", margin: 0 }} />
+              </div>
             </div>
           </Modal.Body>
           <Modal.Footer>
@@ -66,7 +103,7 @@ const DashboardNormative = () => {
               Изтрий
             </Button>
             <Button auto type="submit" color="warning">
-              Качи
+              Запази
             </Button>
           </Modal.Footer>
         </Form>
@@ -78,7 +115,7 @@ const DashboardNormative = () => {
         <HeaderAdmin btnStyle="btn-small round btn-icon" />
         <div style={{ display: "flex", flexDirection: "column", alignItems: "center", marginTop: 50 }}>
           <Button size="xl" color="warning" style={{ width: 200 }} onPress={() => setVisibleAdd(true)}>
-            Добавете норматив
+            Добавете сертификат
           </Button>
           <div style={{ display: "flex", width: "100%", justifyContent: "center", marginTop: 50, marginBottom: 50 }}>
             <Table
@@ -120,4 +157,4 @@ const DashboardNormative = () => {
     </>
   );
 };
-export default DashboardNormative;
+export default DashboardRev;

@@ -14,6 +14,9 @@ const NavAdmin = () => {
         <Link to="/dashboard-normative">Нормативни актове</Link>
       </li>
       <li>
+        <Link to="/dashboard-rev">REV</Link>
+      </li>
+      <li>
         <Link to="/dashboard-members">Членове</Link>
       </li>
       <li>
