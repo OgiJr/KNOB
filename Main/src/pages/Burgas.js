@@ -3,7 +3,7 @@ import SEO from "../common/SEO";
 import Header from "../common/header/Header";
 import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
 import Copyright from "../common/footer/Copyright";
-import "../assets/scss/elements/bar.css";
+import "../assets/scss/elements/bar.scss";
 import BarTable from "../components/table/barTable";
 
 const Burgas = () => {

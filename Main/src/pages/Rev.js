@@ -2,10 +2,9 @@ import React, { useEffect, useState } from "react";
 import SEO from "../common/SEO";
 import Header from "../common/header/Header";
 import Copyright from "../common/footer/Copyright";
-import { Link } from "react-router-dom";
 import { Card } from "@nextui-org/react";
 import RevData from "../data/rev/RevList.json";
-import "../assets/scss/elements/rev.css";
+import "../assets/scss/elements/rev.scss";
 const Rev = () => {
   const alldataRev = RevData;
   const [getAllItems] = useState(alldataRev);

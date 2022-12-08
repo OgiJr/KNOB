@@ -2,7 +2,7 @@ import React from "react";
 import SEO from "../common/SEO";
 import Header from "../common/header/Header";
 import Copyright from "../common/footer/Copyright";
-import "../assets/scss/elements/bar.css";
+import "../assets/scss/elements/bar.scss";
 import BarTable from "../components/table/barTable";
 
 const PublicRegistry = () => {

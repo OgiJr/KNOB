@@ -5,7 +5,7 @@ import Copyright from "../common/footer/Copyright";
 import { Card } from "@nextui-org/react";
 import NormativeData from "../data/acts/normativeList.json";
 import { Link } from "react-router-dom";
-import "../assets/scss/elements/normative.css";
+import "../assets/scss/elements/normative.scss";
 
 const ValuationStandards = () => {
   const alldataRev = NormativeData;

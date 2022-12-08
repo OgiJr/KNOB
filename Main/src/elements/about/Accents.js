@@ -1,6 +1,6 @@
 import React from "react";
 import { Card, Text } from "@nextui-org/react";
-import "../../assets/scss/elements/accents.css";
+import "../../assets/scss/elements/accents.scss";
 
 const Accents = () => {
   return (

@@ -34,12 +34,17 @@ import DashboardQuizes from "./pages/Dashboard/DashboardQuizes";
 import DashboardNormative from "./pages/Dashboard/DashboardNormative";
 import DashboardMembers from "./pages/Dashboard/DashboardMembers";
 import DashboardRev from "./pages/Dashboard/DashboardRev";
-// Import Css Here
-import "./assets/scss/style.scss";
 import BlogQuiz from "./components/blog/BlogQuiz";
 import BlogArchive from "./components/blog/BlogArchive";
 import DashboardRegistry from "./pages/Dashboard/DashboardRegistry";
 import DashboardCompanies from "./pages/Dashboard/DashboardCompanies";
+
+// Import Css Here
+import "./assets/scss/style.scss";
+import "./assets/scss/elements/accents.scss";
+import "./assets/scss/elements/bar.scss";
+import "./assets/scss/elements/normative.scss";
+import "./assets/scss/elements/rev.scss";
 
 const App = () => {
   return (

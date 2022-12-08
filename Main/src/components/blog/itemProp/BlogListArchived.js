@@ -11,11 +11,11 @@ const BlogListArchived = ({ data, StyleVar, archive = "false" }) => {
             <div className="thumbnail">
               {data.excerpt != "" ? (
                 <Link to={process.env.PUBLIC_URL + `/blog-details/${data.id}`} className="image">
-                  <img src={`${process.env.PUBLIC_URL}/${data.image}`} alt="Blog Image" />
+                  <img src={`${process.env.PUBLIC_URL}/${data.image}`} alt="Blog Image" style={{ width: "90%", height: "100%" }} />
                 </Link>
               ) : (
-                <div className="image" style={{ height: "100%" }}>
-                  <img src={`${process.env.PUBLIC_URL}/${data.image}`} alt="Blog Image" />
+                <div className="image">
+                  <img src={`${process.env.PUBLIC_URL}/${data.image}`} alt="Blog Image" style={{ width: "90%", height: "100%" }} />
                 </div>
               )}
             </div>
