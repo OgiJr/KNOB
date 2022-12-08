@@ -45,6 +45,7 @@ import "./assets/scss/elements/accents.scss";
 import "./assets/scss/elements/bar.scss";
 import "./assets/scss/elements/normative.scss";
 import "./assets/scss/elements/rev.scss";
+import "./assets/scss/table.scss";
 
 const App = () => {
   return (

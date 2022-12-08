@@ -1,15 +1,6 @@
 import React from "react";
-import {
-  Modal,
-  Button,
-  Dropdown,
-  Input,
-  Pagination,
-  Table,
-  Row,
-  Card,
-} from "@nextui-org/react";
-import "../../assets/scss/table.css";
+import { Modal, Button, Dropdown, Input, Pagination, Table, Row, Card } from "@nextui-org/react";
+import "../../assets/scss/table.scss";
 
 const cities = [
   { name: "с. Дряново" },
@@ -289,17 +280,7 @@ const cities = [
   { name: "Якоруда" },
   { name: "Ямбол" },
 ];
-const capacities = [
-  { name: "Недвижими имоти" },
-  { name: "Недвижими културни ценности" },
-  { name: "Машини и съоражения" },
-  { name: "Права на интелектуална и индустриална собственост" },
-  { name: "Търговски предприятия и вземания" },
-  { name: "Финансови активи и фанансови институции" },
-  { name: "Други активи" },
-  { name: "Земеделски земи и трайни насъждения" },
-  { name: "Поземлени имоти в горски територии" },
-];
+const capacities = [{ name: "Недвижими имоти" }, { name: "Недвижими културни ценности" }, { name: "Машини и съоражения" }, { name: "Права на интелектуална и индустриална собственост" }, { name: "Търговски предприятия и вземания" }, { name: "Финансови активи и фанансови институции" }, { name: "Други активи" }, { name: "Земеделски земи и трайни насъждения" }, { name: "Поземлени имоти в горски територии" }];
 
 //Start people variables
 const columnsPeople = [
@@ -352,10 +333,8 @@ const rowsPeople = [
     city: "Бургас",
     mobile: "0888276526",
     phone: "",
-    capacity:
-      "Земеделски земи и трайни насаждения, Машини и съоръжения, Недвижими имоти, Търговски предприятия и вземания",
-    certificateNumber:
-      "810100079 (30.12.2010 г.) , 300100303 (14.12.2009 г.) , 100100786 (14.12.2009 г.) , 500100271 (14.12.2009 г.)",
+    capacity: "Земеделски земи и трайни насаждения, Машини и съоръжения, Недвижими имоти, Търговски предприятия и вземания",
+    certificateNumber: "810100079 (30.12.2010 г.) , 300100303 (14.12.2009 г.) , 100100786 (14.12.2009 г.) , 500100271 (14.12.2009 г.)",
     address: "Бургас 8001, ж.к. Братя Миладинови",
     speciality: "Счетоводство и контрол",
     expirience: "НИ-2005 МС-2005 ТП-2008 ЗЗ-2009",
@@ -475,8 +454,7 @@ const rowsInvalidCompanies = [
     name: "АДВАНС АДРЕС ЕКСПЕРТНИ ОЦЕНКИ ЕООД",
     oldNumber: "900300023(20.07.2010)",
     newNumber: "901400023(6.07.2011)",
-    reason:
-      "Промяна в специализирания състав на дружеството и добавяне на нова правоспособност",
+    reason: "Промяна в специализирания състав на дружеството и добавяне на нова правоспособност",
   },
 ];
 
@@ -492,9 +470,7 @@ const BarTable = () => {
   const [name, setName] = React.useState("");
   const [capacity, setCapacity] = React.useState(new Set([""]));
   const [address, setAddress] = React.useState(new Set([""]));
-  const [certificateNumber, setCertificateNumber] = React.useState(
-    new Set([""])
-  );
+  const [certificateNumber, setCertificateNumber] = React.useState(new Set([""]));
   const [member, setMember] = React.useState(new Set([""]));
   const [mobile, setMobile] = React.useState(new Set([""]));
   const [phone, setPhone] = React.useState(new Set([""]));
@@ -510,22 +486,13 @@ const BarTable = () => {
   const [bulstat, setBulstat] = React.useState("");
   //End companies variables
 
-  const selectedValue = React.useMemo(
-    () => Array.from(selected).join(", ").replaceAll("_", " "),
-    [selected]
-  );
+  const selectedValue = React.useMemo(() => Array.from(selected).join(", ").replaceAll("_", " "), [selected]);
 
   return (
     <>
       {/* Start Modal Area */}
       {tableType == "people" ? (
-        <Modal
-          closeButton
-          aria-labelledby="modal-title"
-          width="85%"
-          open={visible}
-          onClose={() => setVisible(false)}
-        >
+        <Modal closeButton aria-labelledby="modal-title" width="85%" open={visible} onClose={() => setVisible(false)}>
           <Modal.Header>
             <h5>{name}</h5>
           </Modal.Header>
@@ -537,81 +504,46 @@ const BarTable = () => {
               marginBottom: 15,
             }}
           >
-            <div
-              className="modalResponsive"
-              style={{ borderBottom: "1px solid black" }}
-            >
-              <span style={{ fontWeight: "bold" }}>
-                Оценителска правоспособност:
-              </span>
+            <div className="modalResponsive" style={{ borderBottom: "1px solid black" }}>
+              <span style={{ fontWeight: "bold" }}>Оценителска правоспособност:</span>
               {capacity}
             </div>
-            <div
-              className="modalResponsive"
-              style={{ borderBottom: "1px solid black" }}
-            >
+            <div className="modalResponsive" style={{ borderBottom: "1px solid black" }}>
               <span style={{ fontWeight: "bold" }}>Членува в КНОБ:</span>
               {member}
             </div>
-            <div
-              className="modalResponsive"
-              style={{ borderBottom: "1px solid black" }}
-            >
+            <div className="modalResponsive" style={{ borderBottom: "1px solid black" }}>
               <span style={{ fontWeight: "bold" }}>Сертификати номера:</span>
               {certificateNumber}
             </div>
-            <div
-              className="modalResponsive"
-              style={{ borderBottom: "1px solid black" }}
-            >
+            <div className="modalResponsive" style={{ borderBottom: "1px solid black" }}>
               <span style={{ fontWeight: "bold" }}>Адрес:</span>
               {address}
             </div>
-            <div
-              className="modalResponsive"
-              style={{ borderBottom: "1px solid black" }}
-            >
+            <div className="modalResponsive" style={{ borderBottom: "1px solid black" }}>
               <span style={{ fontWeight: "bold" }}>Телефон:</span>
               {phone}
             </div>
-            <div
-              className="modalResponsive"
-              style={{ borderBottom: "1px solid black" }}
-            >
+            <div className="modalResponsive" style={{ borderBottom: "1px solid black" }}>
               <span style={{ fontWeight: "bold" }}>Мобилен:</span>
               {mobile}
             </div>
-            <div
-              className="modalResponsive"
-              style={{ borderBottom: "1px solid black" }}
-            >
+            <div className="modalResponsive" style={{ borderBottom: "1px solid black" }}>
               <span style={{ fontWeight: "bold" }}>Специалност:</span>
               {speciality}
             </div>
-            <div
-              className="modalResponsive"
-              style={{ borderBottom: "1px solid black" }}
-            >
+            <div className="modalResponsive" style={{ borderBottom: "1px solid black" }}>
               <span style={{ fontWeight: "bold" }}>Стаж:</span>
               {expirience}
             </div>
-            <div
-              className="modalResponsive"
-              style={{ borderBottom: "1px solid black" }}
-            >
+            <div className="modalResponsive" style={{ borderBottom: "1px solid black" }}>
               <span style={{ fontWeight: "bold" }}>Образование:</span>
               {education}
             </div>
           </Modal.Body>
         </Modal>
       ) : (
-        <Modal
-          closeButton
-          aria-labelledby="modal-title"
-          width="85%"
-          open={visible}
-          onClose={() => setVisible(false)}
-        >
+        <Modal closeButton aria-labelledby="modal-title" width="85%" open={visible} onClose={() => setVisible(false)}>
           <Modal.Header>
             <h5>{companyName}</h5>
           </Modal.Header>
@@ -623,54 +555,31 @@ const BarTable = () => {
               marginBottom: 15,
             }}
           >
-            <div
-              className="modalResponsive"
-              style={{ borderBottom: "1px solid black" }}
-            >
-              <span style={{ fontWeight: "bold" }}>
-                Оценителска правоспособност:
-              </span>
+            <div className="modalResponsive" style={{ borderBottom: "1px solid black" }}>
+              <span style={{ fontWeight: "bold" }}>Оценителска правоспособност:</span>
               {companyCapacity}
             </div>
-            <div
-              className="modalResponsive"
-              style={{ borderBottom: "1px solid black" }}
-            >
+            <div className="modalResponsive" style={{ borderBottom: "1px solid black" }}>
               <span style={{ fontWeight: "bold" }}>Сертификат номер:</span>
               {companyCertificate}
             </div>
-            <div
-              className="modalResponsive"
-              style={{ borderBottom: "1px solid black" }}
-            >
+            <div className="modalResponsive" style={{ borderBottom: "1px solid black" }}>
               <span style={{ fontWeight: "bold" }}>ЕИК / Булстат:</span>
               {bulstat}
             </div>
-            <div
-              className="modalResponsive"
-              style={{ borderBottom: "1px solid black" }}
-            >
+            <div className="modalResponsive" style={{ borderBottom: "1px solid black" }}>
               <span style={{ fontWeight: "bold" }}>Адрес на управление:</span>
               {address}
             </div>
-            <div
-              className="modalResponsive"
-              style={{ borderBottom: "1px solid black" }}
-            >
+            <div className="modalResponsive" style={{ borderBottom: "1px solid black" }}>
               <span style={{ fontWeight: "bold" }}>Мобилен:</span>
               {mobile}
             </div>
             <Row justify="space-between">
-              <span style={{ fontWeight: "bold", fontSize: 24 }}>
-                Оценители:
-              </span>
+              <span style={{ fontWeight: "bold", fontSize: 24 }}>Оценители:</span>
             </Row>
             <Row justify="space-between">
-              <span
-                style={{ fontWeight: "bold", color: "orange", fontSize: 20 }}
-              >
-                {name}
-              </span>
+              <span style={{ fontWeight: "bold", color: "orange", fontSize: 20 }}>{name}</span>
             </Row>
             <div className="modalResponsive">
               <span style={{ fontWeight: "bold" }}>Правоспособности: </span>
@@ -687,33 +596,19 @@ const BarTable = () => {
 
       {/* Start  Search Area*/}
       <div style={{ display: "flex", flexDirection: "column", marginLeft: 30 }}>
-        <h3 style={{ color: "orange", marginTop: 30 }}>
-          Публичен регистър на независимите оценители
-        </h3>
+        <h3 style={{ color: "orange", marginTop: 30 }}>Публичен регистър на независимите оценители</h3>
         <Button.Group color="warning" className="buttonGroupLarge">
-          <Button
-            style={{ fontSize: 16 }}
-            onPress={() => setTableType("people")}
-          >
+          <Button style={{ fontSize: 16 }} onPress={() => setTableType("people")}>
             Физически лица
           </Button>
-          <Button
-            style={{ fontSize: 16 }}
-            onPress={() => setTableType("companies")}
-          >
+          <Button style={{ fontSize: 16 }} onPress={() => setTableType("companies")}>
             Юридически лица
           </Button>
-          <Button
-            style={{ fontSize: 16 }}
-            onPress={() => setTableType("invalid")}
-          >
+          <Button style={{ fontSize: 16 }} onPress={() => setTableType("invalid")}>
             Обезсилени сертификати
           </Button>
         </Button.Group>
-        <div
-          style={{ flexDirection: "column", gap: 10 }}
-          className="buttonGroupPhone"
-        >
+        <div style={{ flexDirection: "column", gap: 10 }} className="buttonGroupPhone">
           <Button
             style={{
               fontSize: 14,
@@ -764,30 +659,11 @@ const BarTable = () => {
             >
               Филтър
             </p>
-            <form
-              className="filter"
-              style={{ display: "flex", marginLeft: 15, gap: 30 }}
-            >
+            <form className="filter" style={{ display: "flex", marginLeft: 15, gap: 30 }}>
               <div style={{ display: "flex", flexDirection: "column " }}>
-                {tableType == "people" ? (
-                  <Input
-                    style={{ background: "white", margin: 0, fontSize: 16 }}
-                    size="xl"
-                    labelPlaceholder="Име, презиме и фамилия"
-                  />
-                ) : (
-                  <Input
-                    style={{ background: "white", margin: 0, fontSize: 16 }}
-                    size="xl"
-                    labelPlaceholder="Фирма"
-                  />
-                )}
+                {tableType == "people" ? <Input style={{ background: "white", margin: 0, fontSize: 16 }} size="xl" labelPlaceholder="Име, презиме и фамилия" /> : <Input style={{ background: "white", margin: 0, fontSize: 16 }} size="xl" labelPlaceholder="Фирма" />}
                 <Dropdown placement="bottom-left">
-                  <Dropdown.Button
-                    flat
-                    style={{ marginTop: 30 }}
-                    color="warning"
-                  >
+                  <Dropdown.Button flat style={{ marginTop: 30 }} color="warning">
                     Град
                   </Dropdown.Button>
                   <Dropdown.Menu items={cities}>
@@ -801,17 +677,10 @@ const BarTable = () => {
               </div>
               <div style={{ display: "flex", flexDirection: "column" }}>
                 <Dropdown placement="bottom-left">
-                  <Dropdown.Button
-                    color="warning"
-                    flat
-                    style={{ marginBottom: 30 }}
-                  >
+                  <Dropdown.Button color="warning" flat style={{ marginBottom: 30 }}>
                     Оценителска правоспособност
                   </Dropdown.Button>
-                  <Dropdown.Menu
-                    aria-label="Dynamic Actions"
-                    items={capacities}
-                  >
+                  <Dropdown.Menu aria-label="Dynamic Actions" items={capacities}>
                     {(item) => (
                       <Dropdown.Item key={item.name}>
                         <span style={{ fontSize: 8 }}>{item.name}</span>
@@ -819,18 +688,10 @@ const BarTable = () => {
                     )}
                   </Dropdown.Menu>
                 </Dropdown>
-                <Input
-                  style={{ background: "white", margin: 0, fontSize: 16 }}
-                  size="xl"
-                  labelPlaceholder="Сертификат №:"
-                />
+                <Input style={{ background: "white", margin: 0, fontSize: 16 }} size="xl" labelPlaceholder="Сертификат №:" />
               </div>
               <div style={{ display: "flex", alignItems: "center" }}>
-                <Button
-                  style={{ fontSize: 14, height: 30 }}
-                  type="submit"
-                  color="warning"
-                >
+                <Button style={{ fontSize: 14, height: 30 }} type="submit" color="warning">
                   Покажи
                 </Button>
               </div>
@@ -856,15 +717,9 @@ const BarTable = () => {
                     marginRight: 10,
                   }}
                 >
-                  <span style={{ display: "flex", flex: 1 }}>
-                    НИ-недвижими имоти
-                  </span>
-                  <span style={{ display: "flex", flex: 1 }}>
-                    МС-машини и съоръжения
-                  </span>
-                  <span style={{ display: "flex", flex: 1 }}>
-                    ПИИС-права на интелектуалната и индустриалната собственост
-                  </span>
+                  <span style={{ display: "flex", flex: 1 }}>НИ-недвижими имоти</span>
+                  <span style={{ display: "flex", flex: 1 }}>МС-машини и съоръжения</span>
+                  <span style={{ display: "flex", flex: 1 }}>ПИИС-права на интелектуалната и индустриалната собственост</span>
                 </div>
                 <div
                   className="guide"
@@ -875,15 +730,9 @@ const BarTable = () => {
                     marginRight: 10,
                   }}
                 >
-                  <span style={{ display: "flex", flex: 1 }}>
-                    ТПВ-търговски предприятия и вземания{" "}
-                  </span>
-                  <span style={{ display: "flex", flex: 1 }}>
-                    ФА-финансови активи и финансови институции{" "}
-                  </span>
-                  <span style={{ display: "flex", flex: 1 }}>
-                    ДРУГИ-други активи
-                  </span>
+                  <span style={{ display: "flex", flex: 1 }}>ТПВ-търговски предприятия и вземания </span>
+                  <span style={{ display: "flex", flex: 1 }}>ФА-финансови активи и финансови институции </span>
+                  <span style={{ display: "flex", flex: 1 }}>ДРУГИ-други активи</span>
                 </div>
                 <div
                   className="guide"
@@ -894,39 +743,23 @@ const BarTable = () => {
                     marginRight: 10,
                   }}
                 >
-                  <span style={{ display: "flex", flex: 1 }}>
-                    ЗЗ-земеделски земи и трайни насаждения{" "}
-                  </span>
-                  <span style={{ display: "flex", flex: 1 }}>
-                    ЗГ-поземлени имоти в горски територии
-                  </span>
+                  <span style={{ display: "flex", flex: 1 }}>ЗЗ-земеделски земи и трайни насаждения </span>
+                  <span style={{ display: "flex", flex: 1 }}>ЗГ-поземлени имоти в горски територии</span>
                   <div style={{ display: "flex", flex: 1 }}></div>
                 </div>
               </Card.Body>
             </Card>
             <Button.Group color="warning" style={{ marginTop: 20 }}>
-              <Button
-                style={{ fontSize: 12 }}
-                onPress={() => setinvalidType("people")}
-              >
+              <Button style={{ fontSize: 12 }} onPress={() => setinvalidType("people")}>
                 Физически лица
               </Button>
-              <Button
-                style={{ fontSize: 12 }}
-                onPress={() => setinvalidType("companies")}
-              >
+              <Button style={{ fontSize: 12 }} onPress={() => setinvalidType("companies")}>
                 Юридически лица
               </Button>
             </Button.Group>
           </div>
         )}
-        {tableType !== "invalid" ? (
-          <span style={{ marginTop: 20, marginLeft: 0, fontSize: 12 }}>
-            За подробна информация натиснете името на оценителя
-          </span>
-        ) : (
-          <></>
-        )}
+        {tableType !== "invalid" ? <span style={{ marginTop: 20, marginLeft: 0, fontSize: 12 }}>За подробна информация натиснете името на оценителя</span> : <></>}
         <div
           style={{
             display: "flex",
@@ -948,14 +781,7 @@ const BarTable = () => {
               <Dropdown.Button flat color="warning" size="xl">
                 {selectedValue}
               </Dropdown.Button>
-              <Dropdown.Menu
-                aria-label="Single selection actions"
-                color="warning"
-                disallowEmptySelection
-                selectionMode="single"
-                selectedKeys={selected}
-                onSelectionChange={setSelected}
-              >
+              <Dropdown.Menu aria-label="Single selection actions" color="warning" disallowEmptySelection selectionMode="single" selectedKeys={selected} onSelectionChange={setSelected}>
                 <Dropdown.Item key="10">
                   <span style={{ fontSize: 14 }}>10</span>
                 </Dropdown.Item>
@@ -974,12 +800,7 @@ const BarTable = () => {
               </Dropdown.Menu>
             </Dropdown>
             <div style={{ marginRight: 20 }}>
-              <Pagination
-                total={20}
-                initialPage={1}
-                color="warning"
-                size="xl"
-              />
+              <Pagination total={20} initialPage={1} color="warning" size="xl" />
             </div>
           </div>
         </div>
@@ -994,11 +815,7 @@ const BarTable = () => {
               <Table.Header columns={columnsPeople}>
                 {(column) => (
                   <Table.Column key={column.key}>
-                    <span
-                      style={{ fontSize: 14, marginLeft: 5, marginRight: 5 }}
-                    >
-                      {column.label}
-                    </span>
+                    <span style={{ fontSize: 14, marginLeft: 5, marginRight: 5 }}>{column.label}</span>
                   </Table.Column>
                 )}
               </Table.Header>
@@ -1063,9 +880,7 @@ const BarTable = () => {
                           onClick={() => {
                             setCompanyCapacity(item.capacityCompany);
                             setCompanyName(item.company);
-                            setCompanyCertificate(
-                              item.certificateNumberCompany
-                            );
+                            setCompanyCertificate(item.certificateNumberCompany);
                             setBulstat(item.bulstat);
                             setAddress(item.address);
                             setMobile(item.mobile);

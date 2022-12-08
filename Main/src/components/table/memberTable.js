@@ -1,6 +1,6 @@
 import React from "react";
 import { Modal, Button, Dropdown, Input, Pagination, Table, Row, Card } from "@nextui-org/react";
-import "../../assets/scss/table.css";
+import "../../assets/scss/table.scss";
 import Header from "../../common/header/Header";
 import SEO from "../../common/SEO";
 
