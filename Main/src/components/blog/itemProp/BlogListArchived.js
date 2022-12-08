@@ -15,7 +15,7 @@ const BlogListArchived = ({ data, StyleVar, archive = "false" }) => {
                 </Link>
               ) : (
                 <div className="image" style={{ height: "100%" }}>
-                  <img src={`${process.env.PUBLIC_URL}/${data.image}`} alt="Blog Image" style={{ height: "100%" }} />
+                  <img src={`${process.env.PUBLIC_URL}/${data.image}`} alt="Blog Image" />
                 </div>
               )}
             </div>
