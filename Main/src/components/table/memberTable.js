@@ -70,39 +70,39 @@ const MemberTable = () => {
           <h5>{name}</h5>
         </Modal.Header>
         <Modal.Body style={{ marginLeft: 15, marginRight: 15, marginTop: 15, marginBottom: 15 }}>
-          <div className="modalResponsive" style={{ borderBottom: "1px solid black" }}>
+          <div className="modalResponsive">
             <span style={{ fontWeight: "bold" }}>Оценителска правоспособност:</span>
             {capacity}
           </div>
-          <div className="modalResponsive" style={{ borderBottom: "1px solid black" }}>
+          <div className="modalResponsive">
             <span style={{ fontWeight: "bold" }}>Членува в КНОБ:</span>
             {member}
           </div>
-          <div className="modalResponsive" style={{ borderBottom: "1px solid black" }}>
+          <div className="modalResponsive">
             <span style={{ fontWeight: "bold" }}>Сертификати номера:</span>
             {certificateNumber}
           </div>
-          <div className="modalResponsive" style={{ borderBottom: "1px solid black" }}>
+          <div className="modalResponsive">
             <span style={{ fontWeight: "bold" }}>Адрес:</span>
             {address}
           </div>
-          <div className="modalResponsive" style={{ borderBottom: "1px solid black" }}>
+          <div className="modalResponsive">
             <span style={{ fontWeight: "bold" }}>Телефон:</span>
             {phone}
           </div>
-          <div className="modalResponsive" style={{ borderBottom: "1px solid black" }}>
+          <div className="modalResponsive">
             <span style={{ fontWeight: "bold" }}>Мобилен:</span>
             {mobile}
           </div>
-          <div className="modalResponsive" style={{ borderBottom: "1px solid black" }}>
+          <div className="modalResponsive">
             <span style={{ fontWeight: "bold" }}>Специалност:</span>
             {speciality}
           </div>
-          <div className="modalResponsive" style={{ borderBottom: "1px solid black" }}>
+          <div className="modalResponsive">
             <span style={{ fontWeight: "bold" }}>Стаж:</span>
             {expirience}
           </div>
-          <div className="modalResponsive" style={{ borderBottom: "1px solid black" }}>
+          <div className="modalResponsive">
             <span style={{ fontWeight: "bold" }}>Образование:</span>
             {education}
           </div>

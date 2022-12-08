@@ -116,7 +116,7 @@ const Rev = () => {
               </Card>
             </div>
           ))}
-          <Card className="finalCard" style={{ marginTop: 20, marginLeft: 20, marginRight: 20 }} isPressable>
+          <Card style={{ marginTop: 20, marginLeft: "7%", width: "85%" }} isPressable>
             <Card.Header>Certificate / Сертификат: REV-BG/CIAB/2026/1</Card.Header>
             <Card.Body>
               Issued on / Издаден на: 01/06/2021 Valid until / Валиден до: 31/05/2026

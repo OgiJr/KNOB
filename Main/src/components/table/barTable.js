@@ -504,39 +504,39 @@ const BarTable = () => {
               marginBottom: 15,
             }}
           >
-            <div className="modalResponsive" style={{ borderBottom: "1px solid black" }}>
+            <div className="modalResponsive">
               <span style={{ fontWeight: "bold" }}>Оценителска правоспособност:</span>
               {capacity}
             </div>
-            <div className="modalResponsive" style={{ borderBottom: "1px solid black" }}>
+            <div className="modalResponsive">
               <span style={{ fontWeight: "bold" }}>Членува в КНОБ:</span>
               {member}
             </div>
-            <div className="modalResponsive" style={{ borderBottom: "1px solid black" }}>
+            <div className="modalResponsive">
               <span style={{ fontWeight: "bold" }}>Сертификати номера:</span>
               {certificateNumber}
             </div>
-            <div className="modalResponsive" style={{ borderBottom: "1px solid black" }}>
+            <div className="modalResponsive">
               <span style={{ fontWeight: "bold" }}>Адрес:</span>
               {address}
             </div>
-            <div className="modalResponsive" style={{ borderBottom: "1px solid black" }}>
+            <div className="modalResponsive">
               <span style={{ fontWeight: "bold" }}>Телефон:</span>
               {phone}
             </div>
-            <div className="modalResponsive" style={{ borderBottom: "1px solid black" }}>
+            <div className="modalResponsive">
               <span style={{ fontWeight: "bold" }}>Мобилен:</span>
               {mobile}
             </div>
-            <div className="modalResponsive" style={{ borderBottom: "1px solid black" }}>
+            <div className="modalResponsive">
               <span style={{ fontWeight: "bold" }}>Специалност:</span>
               {speciality}
             </div>
-            <div className="modalResponsive" style={{ borderBottom: "1px solid black" }}>
+            <div className="modalResponsive">
               <span style={{ fontWeight: "bold" }}>Стаж:</span>
               {expirience}
             </div>
-            <div className="modalResponsive" style={{ borderBottom: "1px solid black" }}>
+            <div className="modalResponsive">
               <span style={{ fontWeight: "bold" }}>Образование:</span>
               {education}
             </div>
@@ -555,23 +555,23 @@ const BarTable = () => {
               marginBottom: 15,
             }}
           >
-            <div className="modalResponsive" style={{ borderBottom: "1px solid black" }}>
+            <div className="modalResponsive">
               <span style={{ fontWeight: "bold" }}>Оценителска правоспособност:</span>
               {companyCapacity}
             </div>
-            <div className="modalResponsive" style={{ borderBottom: "1px solid black" }}>
+            <div className="modalResponsive">
               <span style={{ fontWeight: "bold" }}>Сертификат номер:</span>
               {companyCertificate}
             </div>
-            <div className="modalResponsive" style={{ borderBottom: "1px solid black" }}>
+            <div className="modalResponsive">
               <span style={{ fontWeight: "bold" }}>ЕИК / Булстат:</span>
               {bulstat}
             </div>
-            <div className="modalResponsive" style={{ borderBottom: "1px solid black" }}>
+            <div className="modalResponsive">
               <span style={{ fontWeight: "bold" }}>Адрес на управление:</span>
               {address}
             </div>
-            <div className="modalResponsive" style={{ borderBottom: "1px solid black" }}>
+            <div className="modalResponsive">
               <span style={{ fontWeight: "bold" }}>Мобилен:</span>
               {mobile}
             </div>
@@ -597,18 +597,7 @@ const BarTable = () => {
       {/* Start  Search Area*/}
       <div style={{ display: "flex", flexDirection: "column", marginLeft: 30 }}>
         <h3 style={{ color: "orange", marginTop: 30 }}>Публичен регистър на независимите оценители</h3>
-        <Button.Group color="warning" className="buttonGroupLarge">
-          <Button style={{ fontSize: 16 }} onPress={() => setTableType("people")}>
-            Физически лица
-          </Button>
-          <Button style={{ fontSize: 16 }} onPress={() => setTableType("companies")}>
-            Юридически лица
-          </Button>
-          <Button style={{ fontSize: 16 }} onPress={() => setTableType("invalid")}>
-            Обезсилени сертификати
-          </Button>
-        </Button.Group>
-        <div style={{ flexDirection: "column", gap: 10 }} className="buttonGroupPhone">
+        <div style={{ display: "flex", flexDirection: "column", gap: 10, width: "40rem" }}>
           <Button
             style={{
               fontSize: 14,

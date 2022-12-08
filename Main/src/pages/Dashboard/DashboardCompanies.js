@@ -60,31 +60,31 @@ const DashboardCompanies = () => {
             <Input width={500} placeholder={companyName} style={{ background: "white", textAlign: "center", marginLeft: 0, marginRight: 0, marginBottom: 10 }} />
           </Modal.Header>
           <Modal.Body style={{ marginLeft: 15, marginRight: 15, marginTop: 15, marginBottom: 15 }}>
-            <div className="modalResponsive" style={{ borderBottom: "1px solid black" }}>
+            <div className="modalResponsive">
               <span style={{ fontWeight: "bold" }}>Град:</span>
               <Input width={500} placeholder={city} style={{ background: "white", marginLeft: 0, marginRight: 0, marginBottom: 10 }} />
             </div>
-            <div className="modalResponsive" style={{ borderBottom: "1px solid black" }}>
+            <div className="modalResponsive">
               <span style={{ fontWeight: "bold" }}>Мобилен:</span>
               <Input width={500} placeholder={mobile} style={{ background: "white", marginLeft: 0, marginRight: 0, marginBottom: 10 }} />
             </div>
-            <div className="modalResponsive" style={{ borderBottom: "1px solid black" }}>
+            <div className="modalResponsive">
               <span style={{ fontWeight: "bold" }}>Сертификати номера:</span>
               <Input width={500} placeholder={companyCertificate} style={{ background: "white", marginLeft: 0, marginRight: 0, marginBottom: 10 }} />
             </div>
-            <div className="modalResponsive" style={{ borderBottom: "1px solid black" }}>
+            <div className="modalResponsive">
               <span style={{ fontWeight: "bold" }}>Адрес:</span>
               <Input width={500} placeholder={address} style={{ background: "white", marginLeft: 0, marginRight: 0, marginBottom: 10 }} />
             </div>
-            <div className="modalResponsive" style={{ borderBottom: "1px solid black" }}>
+            <div className="modalResponsive">
               <span style={{ fontWeight: "bold" }}>Булстат:</span>
               <Input width={500} placeholder={bulstat} style={{ background: "white", marginLeft: 0, marginRight: 0, marginBottom: 10 }} />
             </div>
-            <div className="modalResponsive" style={{ borderBottom: "1px solid black" }}>
+            <div className="modalResponsive">
               <span style={{ fontWeight: "bold" }}>Оценителска правоспособност:</span>
               <Input width={500} placeholder={companyCapacity} style={{ background: "white", marginLeft: 0, marginRight: 0, marginBottom: 10 }} />
             </div>
-            <div className="modalResponsive" style={{ borderBottom: "1px solid black" }}>
+            <div className="modalResponsive">
               <span style={{ fontWeight: "bold" }}>Оценител:</span>
               <Input width={500} placeholder={name} style={{ background: "white", marginLeft: 0, marginRight: 0, marginBottom: 10 }} />
             </div>
@@ -111,15 +111,15 @@ const DashboardCompanies = () => {
             <h5>Обезсилване на сертификата на: {companyName}</h5>
           </Modal.Header>
           <Modal.Body style={{ marginLeft: 15, marginRight: 15, marginTop: 15, marginBottom: 15 }}>
-            <div className="modalResponsive" style={{ borderBottom: "1px solid black" }}>
+            <div className="modalResponsive">
               <span style={{ fontWeight: "bold" }}>Обезсилен:</span>
               <Input width={500} placeholder={companyCertificate} style={{ background: "white", marginLeft: 0, marginRight: 0, marginBottom: 10 }} />
             </div>
-            <div className="modalResponsive" style={{ borderBottom: "1px solid black" }}>
+            <div className="modalResponsive">
               <span style={{ fontWeight: "bold" }}>Нов:</span>
               <Input width={500} style={{ background: "white", marginLeft: 0, marginRight: 0, marginBottom: 10 }} />
             </div>
-            <div className="modalResponsive" style={{ borderBottom: "1px solid black" }}>
+            <div className="modalResponsive">
               <span style={{ fontWeight: "bold" }}>Основание:</span>
               <Input width={500} style={{ background: "white", marginLeft: 0, marginRight: 0, marginBottom: 10 }} />
             </div>
