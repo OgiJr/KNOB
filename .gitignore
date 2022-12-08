@@ -1,4 +1,5 @@
 node_modules
+Main/node_modules/
 Main/node_modules/.cache/.eslintcache
 Main/node_modules/.bin/react-scripts
 Main/node_modules/.cache/.eslintcache
