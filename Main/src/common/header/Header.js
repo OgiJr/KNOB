@@ -14,23 +14,20 @@ const Header = ({ btnStyle, HeaderSTyle }) => {
   return (
     <>
       <header ref={ref} className={`rn-header header-default ${HeaderSTyle} ${headerClasses}`}>
-        <div style={{ marginRight: "3%", marginLeft: "3%" }} className="position-relative">
-          <div className="row align-items-center row--0">
-            <div className="col-lg-2 col-md-6 col-4">
+        <div style={{ marginRight: "1%", marginLeft: "1%" }} className="position-relative">
+          <div className="row align-items-center row--0" style={{ flexWrap: "wrap" }}>
+            <div className="col-md-1 col-md-1 col-4">
               <a href="/">
-                <h3 className=" text-xl">КНОБ</h3>
+                <h3 className=" text-xl" style={{ fontSize: 20, marginTop: 15 }}>
+                  КНОБ
+                </h3>
               </a>
             </div>
-            <div className="col-lg-10 col-md-6 col-8 position-static">
-              <div className="header-right">
+            <div className="col-lg-11  col-md-6 col-8 position-static" style={{ display: "flex", justifyContent: "end" }}>
+              <div className="">
                 <nav className="mainmenu-nav d-none d-lg-block">
                   <Nav />
                 </nav>
-                <div className="header-btn">
-                  <a className={`btn-default ${btnStyle}`} href="/login">
-                    Вход
-                  </a>
-                </div>
                 <div className="mobile-menu-bar ml--5 d-block d-lg-none">
                   <div className="hamberger">
                     <span className="hamberger-button" onClick={onCanvasHandler}>

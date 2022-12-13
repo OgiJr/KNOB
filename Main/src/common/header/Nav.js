@@ -5,19 +5,27 @@ const Nav = () => {
   return (
     <ul className="mainmenu">
       <li>
-        <Link to="/about-us">За нас</Link>
+        <Link to="/about-us" className="element">
+          За нас
+        </Link>
+      </li>
+      <li>
+        <Link to="/blog-news">Актуални новини</Link>
       </li>
       <li className="has-droupdown">
-        <Link to="#">Актуално</Link>
+        <Link to="#">Обучения, курсове и квалификация</Link>
         <ul className="submenu">
           <li>
-            <Link to="/blog-news">Новини</Link>
+            <Link to="/seminars">Обучения</Link>
           </li>
           <li>
-            <Link to="/blog-quiz">Изпити и курсове</Link>
+            <Link to="/courses">Курсове</Link>
           </li>
           <li>
-            <Link to="/blog-archive">Архив</Link>
+            <Link to="/qualifications">Квалификация</Link>
+          </li>
+          <li>
+            <Link to="/qualification-committee">Съвет по методология и квалификация</Link>
           </li>
         </ul>
       </li>
@@ -64,65 +72,60 @@ const Nav = () => {
           </li>
         </ul>
       </li>
-
       <li className="has-droupdown">
-        <Link to="#">Нормативна база и документи</Link>
+        <Link to="#">Стандарти</Link>
         <ul className="submenu">
           <li>
-            <Link to="/normative">Нормативни актове</Link>
+            <Link to="/valuation-standards">Български стандарти за оценяване</Link>
           </li>
           <li>
-            <Link to="/valuation-standards">Стандарти за оценяване</Link>
-          </li>
-          <li>
-            <p
-              style={{
-                fontSize: "13px",
-                textAlign: "center",
-                marginBottom: "0px",
-                marginTop: "4px",
-              }}
-            >
-              <b>Решения на управителните органи</b>
-            </p>
-            <Link to="#">Управителен съвет</Link>
-            <Link to="#">Контролен съвет</Link>
+            <Link to="/valuation-standards-eu">Европейски стандарти за оценяване</Link>
           </li>
         </ul>
       </li>
-
       <li className="has-droupdown">
-        <Link to="#">REV</Link>
+        <Link to="#">Ресурси</Link>
         <ul className="submenu">
           <li>
-            <Link to="/rev">Информация и документи</Link>
+            <Link to="/literature">Литература</Link>
           </li>
+          <li>
+            <Link to="/publications">Публикации</Link>
+          </li>
+        </ul>
+      </li>
+      <li className="has-droupdown">
+        <Link to="#">Документи</Link>
+        <ul className="submenu">
+          <li>
+            <Link to="/us">Протоколи УС</Link>
+          </li>
+          <li>
+            <Link to="/ks">Протоколи КС</Link>
+          </li>
+          <li>
+            <Link to="/kpe">Протоколи КПЕ</Link>
+          </li>
+          <li>
+            <Link to="/os">Протоколи ОС</Link>
+          </li>
+        </ul>
+      </li>
+      <li className="has-droupdown">
+        <Link to="#">Международна дейност</Link>
+        <ul className="submenu">
           <li>
             <a href="https://tegova.org/" target="_blank" rel="norefferer">
               TEGoVa
             </a>
           </li>
-        </ul>
-      </li>
-      <li className="has-droupdown">
-        <Link to="#">Помощ</Link>
-        <ul className="submenu">
           <li>
-            <Link to="/helpful-links">Полезни връзки</Link>
-          </li>
-          <li>
-            <Link to="/public-registry">Публичен регистър</Link>
-          </li>
-          <li>
-            <Link to="/banks">Банкови сметки</Link>
-          </li>
-          <li>
-            <Link to="/documents">Документи за вписване</Link>
+            <Link to="/rev">Новини</Link>
           </li>
         </ul>
       </li>
       <li className="has-droupdown">
-        <Link to="/contact">Контакт</Link>
+        <Link to="/contact">Контакти</Link>
       </li>
     </ul>
   );

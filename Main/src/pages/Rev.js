@@ -5,6 +5,7 @@ import Copyright from "../common/footer/Copyright";
 import { Card } from "@nextui-org/react";
 import RevData from "../data/rev/RevList.json";
 import "../assets/scss/elements/rev.scss";
+import BlogRev from "../components/blog/BlogRev";
 const Rev = () => {
   const alldataRev = RevData;
   const [getAllItems] = useState(alldataRev);
@@ -20,6 +21,25 @@ const Rev = () => {
       <main className="page-wrapper">
         <Header btnStyle="btn-small round btn-icon" HeaderSTyle="" />
 
+        {/* Start Slider Area  */}
+        <div className="slider-area slider-style-1 height-850 bg_image" data-black-overlay="7" style={{ backgroundImage: `url(${process.env.PUBLIC_URL}/images/banner/international.jpg)` }}>
+          <div className="container">
+            <div className="row">
+              <div className="col-lg-12">
+                <div className="inner pt--80 text-center">
+                  <div>
+                    <h3 className="rn-sub-badge">
+                      <span className="theme-gradient hidden md:flex">Камара на независимите оценители в България</span>
+                    </h3>
+                  </div>
+                  <h1 className="title display-one mt-10">Международна дейност</h1>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        {/* End Slider Area  */}
+        <BlogRev />
         {/* Start Problems  */}
         <div className="row mt--40 row--30" style={{ marginLeft: "5%", marginRight: "5%" }}>
           <div className="col-lg-6">
@@ -78,61 +98,6 @@ const Rev = () => {
           </div>
         </div>
         {/* End  Problems */}
-        <br />
-        <div style={{ display: "flex", flexDirection: "column" }}>
-          {visibleItems.map((item) => (
-            <div key={item.id} className="cardsRev" style={{ marginTop: 20 }}>
-              <Card className="card1" isPressable>
-                <Card.Header>{item.c1}</Card.Header>
-                <Card.Body>
-                  {item.dates1}
-                  <br />
-                  <br />
-                  {item.name1}
-                  <br />
-                  {item.bgName1}
-                  <br />
-                  <br />
-                  {item.city1}
-                  <br />
-                  {item.phone1}
-                </Card.Body>
-              </Card>
-              <Card className="card2" isPressable>
-                <Card.Header> {item.c2}</Card.Header>
-                <Card.Body>
-                  {item.dates2}
-                  <br />
-                  <br />
-                  {item.name2}
-                  <br />
-                  {item.bgName2}
-                  <br />
-                  <br />
-                  {item.city2}
-                  <br />
-                  {item.phone2}
-                </Card.Body>
-              </Card>
-            </div>
-          ))}
-          <Card style={{ marginTop: 20, marginLeft: "7%", width: "85%" }} isPressable>
-            <Card.Header>Certificate / Сертификат: REV-BG/CIAB/2026/1</Card.Header>
-            <Card.Body>
-              Issued on / Издаден на: 01/06/2021 Valid until / Валиден до: 31/05/2026
-              <br />
-              <br />
-              Name: Ivanchev, Nikolay
-              <br />
-              Имена на български език: Николай Иванов Иванчев
-              <br />
-              <br />
-              City / Град: Botevgrad / Ботевград
-              <br />
-              Phone / Телефон: +359 89 860 09 07
-            </Card.Body>
-          </Card>
-        </div>
         <div style={{ marginTop: "3%" }}>
           <Copyright style={{ marginTop: "0px" }} />
         </div>

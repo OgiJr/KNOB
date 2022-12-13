@@ -1,0 +1,22 @@
+[
+{
+    "id": 1,
+    "title": "Примерна публикация едно",
+    "image": "images/blog/blog-03.jpg",
+    "date": "25.08.2022г.",
+    "excerpt": "",
+    "body":  [""],
+    "archived": "false",
+    "type":"publication"
+},
+{
+    "id": 2,
+    "title": "Примерна публикация две",
+    "image": "images/blog/blog-04.jpg",
+    "date": "25.08.2022г.",
+    "excerpt": "",
+    "body":  [""],
+    "archived": "false",
+    "type":"publication"
+}
+]

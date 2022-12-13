@@ -34,10 +34,10 @@ import DashboardQuizes from "./pages/Dashboard/DashboardQuizes";
 import DashboardNormative from "./pages/Dashboard/DashboardNormative";
 import DashboardMembers from "./pages/Dashboard/DashboardMembers";
 import DashboardRev from "./pages/Dashboard/DashboardRev";
-import BlogQuiz from "./components/blog/BlogQuiz";
 import BlogArchive from "./components/blog/BlogArchive";
 import DashboardRegistry from "./pages/Dashboard/DashboardRegistry";
 import DashboardCompanies from "./pages/Dashboard/DashboardCompanies";
+import BlogSeminars from "./components/blog/BlogSeminars";
 
 // Import Css Here
 import "./assets/scss/style.scss";
@@ -46,6 +46,17 @@ import "./assets/scss/elements/bar.scss";
 import "./assets/scss/elements/normative.scss";
 import "./assets/scss/elements/rev.scss";
 import "./assets/scss/table.scss";
+import BlogCourses from "./components/blog/BlogCourses";
+import BlogQualifications from "./components/blog/BlogQualification";
+import QualificationCommittee from "./pages/QualificationCommittee";
+import ValuationStandardsEu from "./pages/ValuationStandardsEu";
+import RevRegistry from "./pages/RevRegistry";
+import Literature from "./components/blog/Literature";
+import Publication from "./components/blog/Publications";
+import Us from "./pages/Us";
+import Ks from "./pages/Ks";
+import Kpe from "./pages/Kpe";
+import Os from "./pages/Os";
 
 const App = () => {
   return (
@@ -56,7 +67,8 @@ const App = () => {
           <Route path={`${process.env.PUBLIC_URL + "/"}`} exact component={HomeDefault} />
           <Route path={`${process.env.PUBLIC_URL + "/about-us"}`} exact component={AboutUs} />
           <Route path={`${process.env.PUBLIC_URL + "/blog-news"}`} exact component={BlogNews} />
-          <Route path={`${process.env.PUBLIC_URL + "/blog-quiz"}`} exact component={BlogQuiz} />
+          <Route path={`${process.env.PUBLIC_URL + "/seminars"}`} exact component={BlogSeminars} />
+          <Route path={`${process.env.PUBLIC_URL + "/courses"}`} exact component={BlogCourses} />
           <Route path={`${process.env.PUBLIC_URL + "/blog-archive"}`} exact component={BlogArchive} />
           <Route path={`${process.env.PUBLIC_URL + "/blog-details/:id"}`} exact component={BlogDetails} />
           <Route path={`${process.env.PUBLIC_URL + "/board-of-directors"}`} exact component={Directors} />
@@ -80,6 +92,16 @@ const App = () => {
           <Route path={`${process.env.PUBLIC_URL + "/public-registry"}`} exact component={PublicRegistry} />
           <Route path={`${process.env.PUBLIC_URL + "/banks"}`} exact component={Banks} />
           <Route path={`${process.env.PUBLIC_URL + "/documents"}`} exact component={Documents} />
+          <Route path={`${process.env.PUBLIC_URL + "/qualifications"}`} exact component={BlogQualifications} />
+          <Route path={`${process.env.PUBLIC_URL + "/qualification-committee"}`} exact component={QualificationCommittee} />
+          <Route path={`${process.env.PUBLIC_URL + "/valuation-standards-eu"}`} exact component={ValuationStandardsEu} />
+          <Route path={`${process.env.PUBLIC_URL + "/rev-registry"}`} exact component={RevRegistry} />
+          <Route path={`${process.env.PUBLIC_URL + "/literature"}`} exact component={Literature} />
+          <Route path={`${process.env.PUBLIC_URL + "/publications"}`} exact component={Publication} />
+          <Route path={`${process.env.PUBLIC_URL + "/us"}`} exact component={Us} />
+          <Route path={`${process.env.PUBLIC_URL + "/ks"}`} exact component={Ks} />
+          <Route path={`${process.env.PUBLIC_URL + "/kpe"}`} exact component={Kpe} />
+          <Route path={`${process.env.PUBLIC_URL + "/os"}`} exact component={Os} />
           {/* Frontend pages end*/}
           {/* Backend pages start*/}
           <Route path={`${process.env.PUBLIC_URL + "/dashboard-admin"}`} exact component={DashboardNews} />

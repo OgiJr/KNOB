@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { FiArrowRight } from "react-icons/fi";
+import { FiArrowLeft, FiArrowRight } from "react-icons/fi";
 import SEO from "../common/SEO";
 import Header from "../common/header/Header";
 import Copyright from "../common/footer/Copyright";
@@ -16,41 +16,48 @@ const HomeDefault = () => {
       <main className="page-wrapper">
         <Header btnStyle="btn-small round btn-icon" />
         {/* Start Slider Area  */}
-        <div className="slider-area slider-style-1 variation-default height-850 bg_image" data-black-overlay="7" style={{ backgroundImage: `url(${process.env.PUBLIC_URL}/images/bg/main-banner-2.jpg)` }}>
+        <div className="slider-area slider-style-1 variation-default height-850 bg_image" data-black-overlay="2" style={{ backgroundImage: `url(${process.env.PUBLIC_URL}/images/bg/main-banner-2.jpg)`, height: "auto" }}>
           <div className="container">
             <div className="row">
               <div className="col-lg-12">
                 <div className="inner text-center">
-                  <span className="subtitle">
-                    <span style={{ color: "orange" }}>К</span>омпетентност <span style={{ color: "orange" }}>Н</span>езависимост <span style={{ color: "orange" }}>О</span>бективност <span style={{ color: "orange" }}>Б</span>езпристрасност
-                  </span>
-                  <p className="description">КНОБ осигурява и регулира упражняването на професията на независим оценител в интерес на обществото.</p>
-                  <div className="button-group flex flex-row">
-                    <a className="btn-default btn-medium round btn-icon" href="public-registry">
-                      Публичен регистър
-                      <i className="icon">
-                        <FiArrowRight />
-                      </i>
-                    </a>
-                    <Link className="btn-default btn-medium btn-border round btn-icon" to="member-table">
-                      Членове на КНОБ
-                      <i className="icon">
-                        <FiArrowRight />
-                      </i>
-                    </Link>
-                    <br /> <br />
-                    <HashLink to="/banks" className="btn-default btn-medium btn-border round btn-icon">
-                      Банкови сметки
-                      <i className="icon">
-                        <FiArrowRight />
-                      </i>
-                    </HashLink>
-                    <a className="btn-default btn-medium round btn-icon" href="/documents">
-                      Документи за вписване
-                      <i className="icon">
-                        <FiArrowRight />
-                      </i>
-                    </a>
+                  <div className="button-group" style={{ display: "flex", flexDirection: "column", alignItems: "flex-end", marginTop: 40 }}>
+                    <div style={{ display: "flex", flexDirection: "column" }}>
+                      <a className="btn-default btn-medium round btn-icon" href="https://public.ciab-bg.com/" style={{ width: 500 }}>
+                        <i className="icon">
+                          <FiArrowLeft />
+                        </i>
+                        Към стария сайт
+                      </a>
+                      <a className="btn-default btn-medium round btn-icon" href="public-registry" style={{ width: 500 }}>
+                        <i className="icon">
+                          <FiArrowLeft />
+                        </i>
+                        Публичен регистър
+                      </a>
+                    </div>
+                    <div style={{ display: "flex", flexDirection: "column" }}>
+                      <a className="btn-default btn-medium round btn-icon" href="/rev-registry" style={{ width: 500 }}>
+                        <i className="icon">
+                          <FiArrowLeft />
+                        </i>
+                        Регистър на REV оценителите в България
+                      </a>
+                      <a className="btn-default btn-medium round btn-icon" href="#" style={{ width: 500 }}>
+                        <i className="icon">
+                          <FiArrowLeft />
+                        </i>
+                        Подаване на отчет (от 1 януари 2023)
+                      </a>
+                    </div>
+                    <div style={{ display: "flex", flexDirection: "row" }}>
+                      <a className="btn-default btn-medium round btn-icon" href="/documents" style={{ width: 500, marginBottom: 40 }}>
+                        <i className="icon">
+                          <FiArrowLeft />
+                        </i>
+                        Документи за вписване
+                      </a>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -60,10 +67,8 @@ const HomeDefault = () => {
         {/* End Slider Area  */}
 
         {/* Start About Area  */}
-        <Accents />
+        {/* <Accents /> */}
         {/* End About Area  */}
-
-        <Separator />
 
         {/* Start About Area  */}
         <BlogHomePage />

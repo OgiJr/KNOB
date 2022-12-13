@@ -7,6 +7,14 @@ import BreadcrumbOne from "../elements/breadcrumb/BreadcrumbOne";
 import { Card, Text } from "@nextui-org/react";
 
 const Ethics = () => {
+  const committeeChair = [{ name: "Сузана Савева Недева	" }];
+  const committee = [
+    { key: 1, name: "Красимира Димитрова Арабаджиева" },
+    { key: 2, name: "Живка Недева Бонева" },
+    { key: 3, name: "Силвия Христова Михова" },
+    { key: 4, name: "Галина Димитрова Йорданова-Иванова" },
+  ];
+
   return (
     <>
       <SEO title="За нас" />
@@ -29,7 +37,7 @@ const Ethics = () => {
                 <b>Председател:</b>
                 <div style={{ display: "flex", flexDirection: "row" }}>
                   <Text style={{ textAlign: "center" }}>
-                    Георги Владимиров Георгиев, Представляващ КНОБ -{" "}
+                    {committeeChair.map((item) => item.name)} -{" "}
                     <a href="mailto:office@ciab-bg.com" style={{ color: "#ff6d00" }}>
                       office@ciab-bg.com
                     </a>
@@ -40,32 +48,15 @@ const Ethics = () => {
                 <b>Членове:</b>
                 <div style={{ display: "flex", flexDirection: "row" }}>
                   <Text style={{ textAlign: "center" }}>
-                    Сузана Савева Недева -{" "}
-                    <a href="mailto:office@ciab-bg.com" style={{ color: "#ff6d00" }}>
-                      office@ciab-bg.com
-                    </a>
-                    <br />
-                    Красимира Димитрова Арабаджиева -
-                    <a href="mailto:office@ciab-bg.com" style={{ color: "#ff6d00" }}>
-                      office@ciab-bg.com
-                    </a>
-                    <br />
-                    Живка Недева Бонева -
-                    <a href="mailto:office@ciab-bg.com" style={{ color: "#ff6d00" }}>
-                      office@ciab-bg.com
-                    </a>
-                    <br />
-                    <br />
-                    Силвия Христова Михова -
-                    <a href="mailto:office@ciab-bg.com" style={{ color: "#ff6d00" }}>
-                      office@ciab-bg.com
-                    </a>
-                    <br />
-                    Галина Димитрова Йорданова-Иванова -
-                    <a href="mailto:office@ciab-bg.com" style={{ color: "#ff6d00" }}>
-                      office@ciab-bg.com
-                    </a>
-                    <br />
+                    {committee.map((item) => (
+                      <div>
+                        {item.name} -{" "}
+                        <a href="mailto:office@ciab-bg.com" style={{ color: "#ff6d00" }}>
+                          office@ciab-bg.com
+                        </a>
+                        <br />{" "}
+                      </div>
+                    ))}
                   </Text>
                 </div>
               </div>

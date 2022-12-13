@@ -4,9 +4,19 @@ import Header from "../common/header/Header";
 import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
 import Copyright from "../common/footer/Copyright";
 import "../assets/scss/elements/bar.scss";
-import BarTable from "../components/table/barTable";
+import { Card, Text } from "@nextui-org/react";
 
 const Burgas = () => {
+  const committeeChair = [{ name: "Георги Владимиров Георгиев" }];
+  const committee = [
+    { key: 1, name: "Венета Колева Желева" },
+    { key: 2, name: "Атанас Неделчев Атанасов" },
+    { key: 3, name: "Борис Кирилов Гиздаков" },
+    { key: 4, name: "Борислав Петров Стоицев" },
+    { key: 5, name: "Красимир Иванов Братанов " },
+    { key: 6, name: "Симеон Радев Захариев" },
+  ];
+
   return (
     <>
       <SEO title="За нас" />
@@ -30,6 +40,7 @@ const Burgas = () => {
             </div>
           </div>
         </div>
+
         {/* End Slider Area  */}
 
         {/* Start Info Area  */}
@@ -67,6 +78,42 @@ const Burgas = () => {
                             </div>
                           </div>
                         </TabPanel>
+                        <Card css={{ p: "$6" }} isHoverable style={{ marginTop: 10 }}>
+                          <Card.Header style={{ display: "flex", flexDirection: "row", justifyContent: "center" }}>
+                            <Text h4 css={{ lineHeight: "$xs", textAlign: "center" }}>
+                              Членове на управителния съвет
+                            </Text>
+                          </Card.Header>
+                          <Card.Body css={{ py: "$2" }}>
+                            <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
+                              <b>Председател:</b>
+                              <div style={{ display: "flex", flexDirection: "row" }}>
+                                <Text style={{ textAlign: "center" }}>
+                                  {committeeChair.map((item) => item.name)}, Представляващ КНОБ -{" "}
+                                  <a href="mailto:office@ciab-bg.com" style={{ color: "#ff6d00" }}>
+                                    office@ciab-bg.com
+                                  </a>
+                                </Text>
+                              </div>
+                            </div>
+                            <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
+                              <b>Членове:</b>
+                              <div style={{ display: "flex", flexDirection: "row" }}>
+                                <Text style={{ textAlign: "center" }}>
+                                  {committee.map((item) => (
+                                    <div>
+                                      {item.name} -{" "}
+                                      <a href="mailto:office@ciab-bg.com" style={{ color: "#ff6d00" }}>
+                                        office@ciab-bg.com
+                                      </a>
+                                      <br />{" "}
+                                    </div>
+                                  ))}
+                                </Text>
+                              </div>
+                            </div>
+                          </Card.Body>
+                        </Card>
                       </div>
                     </div>
                   </div>
@@ -77,9 +124,6 @@ const Burgas = () => {
         </div>
         {/* End Info Area  */}
 
-        {/* Start  Search Area*/}
-        <BarTable />
-        {/* End Search Area */}
         <div style={{ marginTop: "3%" }}>
           <Copyright style={{ marginTop: "0px" }} />
         </div>

@@ -7,6 +7,16 @@ import BreadcrumbOne from "../elements/breadcrumb/BreadcrumbOne";
 import { Card, Text } from "@nextui-org/react";
 
 const Directors = () => {
+  const committeeChair = [{ name: "Георги Владимиров Георгиев" }];
+  const committee = [
+    { key: 1, name: "Венета Колева Желева" },
+    { key: 2, name: "Атанас Неделчев Атанасов" },
+    { key: 3, name: "Борис Кирилов Гиздаков" },
+    { key: 4, name: "Борислав Петров Стоицев" },
+    { key: 5, name: "Красимир Иванов Братанов " },
+    { key: 6, name: "Симеон Радев Захариев" },
+  ];
+
   return (
     <>
       <SEO title="За нас" />
@@ -29,7 +39,7 @@ const Directors = () => {
                 <b>Председател:</b>
                 <div style={{ display: "flex", flexDirection: "row" }}>
                   <Text style={{ textAlign: "center" }}>
-                    Георги Владимиров Георгиев, Представляващ КНОБ -{" "}
+                    {committeeChair.map((item) => item.name)}, Представляващ КНОБ -{" "}
                     <a href="mailto:office@ciab-bg.com" style={{ color: "#ff6d00" }}>
                       office@ciab-bg.com
                     </a>
@@ -40,36 +50,15 @@ const Directors = () => {
                 <b>Членове:</b>
                 <div style={{ display: "flex", flexDirection: "row" }}>
                   <Text style={{ textAlign: "center" }}>
-                    Венета Колева Желева -{" "}
-                    <a href="mailto:office@ciab-bg.com" style={{ color: "#ff6d00" }}>
-                      office@ciab-bg.com
-                    </a>
-                    <br />
-                    Атанас Неделчев Атанасов -
-                    <a href="mailto:office@ciab-bg.com" style={{ color: "#ff6d00" }}>
-                      office@ciab-bg.com
-                    </a>
-                    <br />
-                    Борис Кирилов Гиздаков -
-                    <a href="mailto:office@ciab-bg.com" style={{ color: "#ff6d00" }}>
-                      office@ciab-bg.com
-                    </a>
-                    <br />
-                    <br />
-                    Борислав Петров Стоицев -
-                    <a href="mailto:office@ciab-bg.com" style={{ color: "#ff6d00" }}>
-                      office@ciab-bg.com
-                    </a>
-                    <br />
-                    Красимир Иванов Братанов -
-                    <a href="mailto:office@ciab-bg.com" style={{ color: "#ff6d00" }}>
-                      office@ciab-bg.com
-                    </a>
-                    <br />
-                    Симеон Радев Захариев -
-                    <a href="mailto:office@ciab-bg.com" style={{ color: "#ff6d00" }}>
-                      office@ciab-bg.com
-                    </a>
+                    {committee.map((item) => (
+                      <div>
+                        {item.name} -{" "}
+                        <a href="mailto:office@ciab-bg.com" style={{ color: "#ff6d00" }}>
+                          office@ciab-bg.com
+                        </a>
+                        <br />{" "}
+                      </div>
+                    ))}
                   </Text>
                 </div>
               </div>
