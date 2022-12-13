@@ -4,6 +4,7 @@ import Copyright from "../../common/footer/Copyright";
 import { Button, Input, Modal, Table, Textarea } from "@nextui-org/react";
 import { Form } from "react-bootstrap";
 import React from "react";
+import BreadcrumbOne from "../../elements/breadcrumb/BreadcrumbOne";
 
 const columns = [
   {
@@ -16,9 +17,9 @@ const columns = [
   },
 ];
 
-const rows = [{ key: "1", title: "Покана за квалификационно мероприятие", date: "17.11.2022г.", archived: "Не" }];
+const rows = [{ key: "1", title: "Примерен протокол", date: "17.11.2022г.", archived: "Не" }];
 
-const DashboardNews = () => {
+const DashboardPublicationsUs = () => {
   const [visibleAdd, setVisibleAdd] = React.useState(false);
   const [visibleEdit, setVisibleEdit] = React.useState(false);
 
@@ -34,9 +35,9 @@ const DashboardNews = () => {
           </Modal.Header>
           <Modal.Body>
             <div style={{ display: "flex", flexDirection: "column", alignSelf: "center" }}>
-              <p style={{ marginBottom: 5, fontSize: 14 }}>Снимка</p>
-              <input type="file" style={{ marginBottom: 15 }} />
-              <Textarea labelPlaceholder="Описание (HTML)" style={{ color: "black" }} rows={5} />
+              <Textarea labelPlaceholder="Описание" style={{ color: "black" }} rows={5} />
+              <br />
+              <Input style={{ margin: 0, background: "white" }} label="Име на файла" />
               <p style={{ marginBottom: 5, fontSize: 14, marginTop: 15 }}>Прикачен файл</p>
               <input type="file" style={{ marginBottom: 15 }} />
             </div>
@@ -60,9 +61,9 @@ const DashboardNews = () => {
           </Modal.Header>
           <Modal.Body>
             <div style={{ display: "flex", flexDirection: "column", alignSelf: "center" }}>
-              <p style={{ marginBottom: 5, fontSize: 14 }}>Снимка</p>
-              <input type="file" style={{ marginBottom: 15 }} />
-              <Textarea labelPlaceholder="Описание (HTML)" style={{ color: "black" }} rows={5} />
+              <Textarea labelPlaceholder="Описание" style={{ color: "black" }} rows={5} />
+              <br />
+              <Input style={{ margin: 0, background: "white" }} label="Име на файла" />
               <p style={{ marginBottom: 5, fontSize: 14, marginTop: 15 }}>Прикачен файл</p>
               <input type="file" style={{ marginBottom: 15 }} />
             </div>
@@ -82,15 +83,17 @@ const DashboardNews = () => {
       <SEO title="Административен панел" />
       <main className="page-wrapper">
         <HeaderAdmin btnStyle="btn-small round btn-icon" />
-        <div style={{ display: "flex", height: "90vh", flexDirection: "column", alignItems: "center", justifyItems: "center", justifyContent: "center" }}>
-          <Button size="xl" color="warning" style={{ width: 200 }} onPress={() => setVisibleAdd(true)}>
-            Добавете новина
+        <BreadcrumbOne title="Протоколи УС" />
+        <div style={{ display: "flex", height: "90vh", flexDirection: "column", alignItems: "center", justifyItems: "center", justifyContent: "start" }}>
+          <Button size="xl" color="warning" style={{ width: 200, marginTop: 50 }} onPress={() => setVisibleAdd(true)}>
+            Добавете протокол
           </Button>
           <div style={{ display: "flex", width: "100%", justifyContent: "center", marginTop: 50, marginBottom: 50 }}>
             <Table
               css={{
                 height: "auto",
                 minWidth: "100%",
+                width: "100%",
               }}
             >
               <Table.Header columns={columns}>
@@ -126,4 +129,4 @@ const DashboardNews = () => {
     </>
   );
 };
-export default DashboardNews;
+export default DashboardPublicationsUs;

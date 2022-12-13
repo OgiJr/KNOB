@@ -33,9 +33,9 @@ const ValuationStandards = () => {
         <br />
         <div style={{ display: "flex", flexDirection: "column", alignSelf: "center", justifyContent: "center" }}>
           <h1 style={{ textAlign: "center" }}>Български стандарти за оценяване</h1>
-          <div style={{ display: "flex", flexDirection: "row" }}>
+          <div style={{ display: "flex" }} className="colPC">
             <Image src="images/about/standards-1.jpg" width="50%" style={{ borderRadius: 24 }} />
-            <div className="cards" style={{ display: "flex", width: "50%", flexDirection: "column", alignSelf: "center", marginRight: 24 }}>
+            <div className="cards" style={{ display: "flex", width: "80%", flexDirection: "column", alignSelf: "center", marginRight: 24 }}>
               <Card isHoverable style={{ marginTop: 20, display: "flex", alignSelf: "center" }}>
                 <Card.Header>Bulgarian Valuation Standards are mandatory for implementation in the country from 01 June 2018, according to the Independent Valuers Act (IVA). They have been approved by the General Meeting of the Chamber of Independent Appraisers in Bulgaria (CIAB) on 17-18 March in the town of Shumen</Card.Header>
                 <Card.Body>

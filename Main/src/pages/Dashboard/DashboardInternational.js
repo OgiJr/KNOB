@@ -18,7 +18,7 @@ const columns = [
 
 const rows = [{ key: "1", title: "Покана за квалификационно мероприятие", date: "17.11.2022г.", archived: "Не" }];
 
-const DashboardNews = () => {
+const DashboardInternational = () => {
   const [visibleAdd, setVisibleAdd] = React.useState(false);
   const [visibleEdit, setVisibleEdit] = React.useState(false);
 
@@ -126,4 +126,4 @@ const DashboardNews = () => {
     </>
   );
 };
-export default DashboardNews;
+export default DashboardInternational;

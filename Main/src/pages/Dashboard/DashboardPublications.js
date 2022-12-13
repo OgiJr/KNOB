@@ -18,7 +18,7 @@ const columns = [
 
 const rows = [{ key: "1", title: "Покана за квалификационно мероприятие", date: "17.11.2022г.", archived: "Не" }];
 
-const DashboardNews = () => {
+const DashboardPublications = () => {
   const [visibleAdd, setVisibleAdd] = React.useState(false);
   const [visibleEdit, setVisibleEdit] = React.useState(false);
 
@@ -84,7 +84,7 @@ const DashboardNews = () => {
         <HeaderAdmin btnStyle="btn-small round btn-icon" />
         <div style={{ display: "flex", height: "90vh", flexDirection: "column", alignItems: "center", justifyItems: "center", justifyContent: "center" }}>
           <Button size="xl" color="warning" style={{ width: 200 }} onPress={() => setVisibleAdd(true)}>
-            Добавете новина
+            Добавете публикация
           </Button>
           <div style={{ display: "flex", width: "100%", justifyContent: "center", marginTop: 50, marginBottom: 50 }}>
             <Table
@@ -126,4 +126,4 @@ const DashboardNews = () => {
     </>
   );
 };
-export default DashboardNews;
+export default DashboardPublications;

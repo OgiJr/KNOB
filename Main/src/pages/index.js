@@ -16,46 +16,36 @@ const HomeDefault = () => {
       <main className="page-wrapper">
         <Header btnStyle="btn-small round btn-icon" />
         {/* Start Slider Area  */}
-        <div className="slider-area slider-style-1 variation-default height-850 bg_image" data-black-overlay="2" style={{ backgroundImage: `url(${process.env.PUBLIC_URL}/images/bg/main-banner-2.jpg)`, height: "auto" }}>
+        <div className="slider-area slider-style-1 variation-default height-850 bg_image" style={{ backgroundImage: `url(${process.env.PUBLIC_URL}/images/bg/main-banner-2.jpg)`, height: "auto" }}>
           <div className="container">
             <div className="row">
               <div className="col-lg-12">
                 <div className="inner text-center">
                   <div className="button-group" style={{ display: "flex", flexDirection: "column", alignItems: "flex-end", marginTop: 40 }}>
                     <div style={{ display: "flex", flexDirection: "column" }}>
-                      <a className="btn-default btn-medium round btn-icon" href="https://public.ciab-bg.com/" style={{ width: 500 }}>
-                        <i className="icon">
-                          <FiArrowLeft />
-                        </i>
+                      <a className="btn-default btn-medium round btn-icon" href="https://public.ciab-bg.com/" style={{ width: 210 }}>
                         Към стария сайт
                       </a>
-                      <a className="btn-default btn-medium round btn-icon" href="public-registry" style={{ width: 500 }}>
-                        <i className="icon">
-                          <FiArrowLeft />
-                        </i>
+                      <a className="btn-default btn-medium round btn-icon" href="public-registry" style={{ width: 210 }}>
                         Публичен регистър
                       </a>
                     </div>
                     <div style={{ display: "flex", flexDirection: "column" }}>
-                      <a className="btn-default btn-medium round btn-icon" href="/rev-registry" style={{ width: 500 }}>
-                        <i className="icon">
-                          <FiArrowLeft />
-                        </i>
-                        Регистър на REV оценителите в България
+                      <a className="btn-default btn-medium round btn-icon" href="/rev-registry" style={{ width: 210 }}>
+                        Регистър на REV
                       </a>
-                      <a className="btn-default btn-medium round btn-icon" href="#" style={{ width: 500 }}>
-                        <i className="icon">
-                          <FiArrowLeft />
-                        </i>
-                        Подаване на отчет (от 1 януари 2023)
+                      <a className="btn-default btn-medium round btn-icon" href="#" style={{ width: 210 }}>
+                        Годишен отчет
                       </a>
                     </div>
                     <div style={{ display: "flex", flexDirection: "row" }}>
-                      <a className="btn-default btn-medium round btn-icon" href="/documents" style={{ width: 500, marginBottom: 40 }}>
-                        <i className="icon">
-                          <FiArrowLeft />
-                        </i>
+                      <a className="btn-default btn-medium round btn-icon" href="/documents" style={{ width: 210 }}>
                         Документи за вписване
+                      </a>
+                    </div>
+                    <div style={{ display: "flex", flexDirection: "row" }}>
+                      <a className="btn-default btn-medium round btn-icon" href="/login" style={{ width: 210, marginTop: 20, marginBottom: 40 }}>
+                        Вход
                       </a>
                     </div>
                   </div>

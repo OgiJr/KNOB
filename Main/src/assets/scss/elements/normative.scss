@@ -3,9 +3,16 @@
     margin-left: 100px;
 }
 
+.colPC{
+    flex-direction: row;
+}
+
 @media screen and (max-width: 600px) {
 .cards{
     width: 90%;
     margin-left: 5%;
+}
+.colPC{
+    flex-direction: column;
 }
 }

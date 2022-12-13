@@ -23,7 +23,7 @@ button {
         background: linear-gradient(95deg, var(--color-primary) 15%, var(--color-tertiary) 45%, var(--color-pink) 75%, var(--color-secondary) 100%) 95% / 200% 100%;
         transition-duration: 300ms;
         color: var(--color-white);
-        font-size: 16px;
+        font-size: 11px;
         font-weight: 400;
         text-align: center;
         text-decoration: none;
@@ -62,9 +62,9 @@ button {
             font-weight: 500;
         }
         &.btn-medium {
-            height: 65px;
-            line-height: 63px;
-            padding: 0 40px;
+            height: 30px;
+            line-height: 30px;
+            padding: 0 20px;
             @media #{$sm-layout} {
                 padding: 0 30px;
             }

@@ -1,44 +1,60 @@
 import SEO from "../../common/SEO";
 import HeaderAdmin from "../../common/header/HeaderAdmin";
 import Copyright from "../../common/footer/Copyright";
-import { Button, Input, Modal, Table, Textarea } from "@nextui-org/react";
+import { Button, Dropdown, Input, Modal, Table } from "@nextui-org/react";
 import { Form } from "react-bootstrap";
 import React from "react";
 
 const columns = [
   {
-    key: "title",
-    label: "Заглавие",
+    key: "name",
+    label: "Имена",
   },
   {
-    key: "date",
-    label: "Дата",
+    key: "email",
+    label: "Имейл",
+  },
+  {
+    key: "chair",
+    label: "Председател",
   },
 ];
 
-const rows = [{ key: "1", title: "Покана за квалификационно мероприятие", date: "17.11.2022г.", archived: "Не" }];
+const rows = [
+  { key: "1", name: "Цанко Спасовски", email: "office@ciab-bg.com", chair: "Да" },
+  { key: "2", name: "Иван Иванов", email: "office@ciab-bg.com", chair: "Не" },
+];
 
-const DashboardNews = () => {
+const DashboardUs = () => {
   const [visibleAdd, setVisibleAdd] = React.useState(false);
   const [visibleEdit, setVisibleEdit] = React.useState(false);
 
   return (
     <>
       {/* Modal add start */}
-      <Modal scroll width="600px" open={visibleAdd} onClose={() => setVisibleAdd(false)}>
+      <Modal scroll open={visibleAdd} onClose={() => setVisibleAdd(false)}>
         <Form>
           <Modal.Header>
             <div style={{ marginTop: 20 }}>
-              <Input placeholder="Заглавие" style={{ background: "white", margin: 0 }} />
+              <Input placeholder="Имена" style={{ background: "white", margin: 0 }} />
             </div>
           </Modal.Header>
           <Modal.Body>
             <div style={{ display: "flex", flexDirection: "column", alignSelf: "center" }}>
-              <p style={{ marginBottom: 5, fontSize: 14 }}>Снимка</p>
-              <input type="file" style={{ marginBottom: 15 }} />
-              <Textarea labelPlaceholder="Описание (HTML)" style={{ color: "black" }} rows={5} />
-              <p style={{ marginBottom: 5, fontSize: 14, marginTop: 15 }}>Прикачен файл</p>
-              <input type="file" style={{ marginBottom: 15 }} />
+              <div style={{ marginTop: 20 }}>
+                <Input placeholder="Email" style={{ background: "white", margin: 0 }} />
+              </div>
+              <div style={{ marginTop: 20 }}>
+                <Dropdown>
+                  <Dropdown.Button color="warning" shadow>
+                    Председател
+                  </Dropdown.Button>
+                  <Dropdown.Menu>
+                    <Dropdown.Item key="chair">Да</Dropdown.Item>
+                    <Dropdown.Item key="notChair">Не</Dropdown.Item>
+                  </Dropdown.Menu>
+                </Dropdown>
+              </div>
             </div>
           </Modal.Body>
           <Modal.Footer>
@@ -51,27 +67,36 @@ const DashboardNews = () => {
       {/* Modal add end */}
 
       {/* Modal edit start */}
-      <Modal scroll width="600px" open={visibleEdit} onClose={() => setVisibleEdit(false)}>
+      <Modal scroll open={visibleEdit} onClose={() => setVisibleEdit(false)}>
         <Form>
           <Modal.Header>
             <div style={{ marginTop: 20 }}>
-              <Input placeholder="Заглавие" style={{ background: "white", margin: 0 }} />
+              <Input placeholder="Имена" style={{ background: "white", margin: 0 }} />
             </div>
           </Modal.Header>
           <Modal.Body>
             <div style={{ display: "flex", flexDirection: "column", alignSelf: "center" }}>
-              <p style={{ marginBottom: 5, fontSize: 14 }}>Снимка</p>
-              <input type="file" style={{ marginBottom: 15 }} />
-              <Textarea labelPlaceholder="Описание (HTML)" style={{ color: "black" }} rows={5} />
-              <p style={{ marginBottom: 5, fontSize: 14, marginTop: 15 }}>Прикачен файл</p>
-              <input type="file" style={{ marginBottom: 15 }} />
+              <div style={{ marginTop: 20 }}>
+                <Input placeholder="Email" style={{ background: "white", margin: 0 }} />
+              </div>
+              <div style={{ marginTop: 20 }}>
+                <Dropdown>
+                  <Dropdown.Button color="warning" shadow>
+                    Председател
+                  </Dropdown.Button>
+                  <Dropdown.Menu>
+                    <Dropdown.Item key="chair">Да</Dropdown.Item>
+                    <Dropdown.Item key="notChair">Не</Dropdown.Item>
+                  </Dropdown.Menu>
+                </Dropdown>
+              </div>
             </div>
           </Modal.Body>
           <Modal.Footer>
             <Button auto type="submit" color="error">
               Изтрий
             </Button>
-            <Button auto color="success">
+            <Button auto type="submit" color="warning">
               Запази
             </Button>
           </Modal.Footer>
@@ -82,9 +107,9 @@ const DashboardNews = () => {
       <SEO title="Административен панел" />
       <main className="page-wrapper">
         <HeaderAdmin btnStyle="btn-small round btn-icon" />
-        <div style={{ display: "flex", height: "90vh", flexDirection: "column", alignItems: "center", justifyItems: "center", justifyContent: "center" }}>
+        <div style={{ display: "flex", flexDirection: "column", alignItems: "center", height: "90vh", justifyContent: "center" }}>
           <Button size="xl" color="warning" style={{ width: 200 }} onPress={() => setVisibleAdd(true)}>
-            Добавете новина
+            Добавете член
           </Button>
           <div style={{ display: "flex", width: "100%", justifyContent: "center", marginTop: 50, marginBottom: 50 }}>
             <Table
@@ -111,7 +136,7 @@ const DashboardNews = () => {
                             setVisibleEdit(true);
                           }}
                         >
-                          <span style={{ color: "black", fontSize: 14, fontWeight: "normal" }}>{item[columnKey]}</span>
+                          {item.chair === "Не" ? <span style={{ color: "black", fontSize: 14, fontWeight: "normal" }}>{item[columnKey]}</span> : <span style={{ color: "orange", fontSize: 14, fontWeight: "normal" }}>{item[columnKey]}</span>}
                         </span>
                       </Table.Cell>
                     )}
@@ -126,4 +151,4 @@ const DashboardNews = () => {
     </>
   );
 };
-export default DashboardNews;
+export default DashboardUs;

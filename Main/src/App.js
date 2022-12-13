@@ -30,7 +30,6 @@ import Banks from "./pages/Banks";
 import Documents from "./pages/Documents";
 import Login from "./pages/Dashboard/Login";
 import DashboardNews from "./pages/Dashboard/DashboardNews";
-import DashboardQuizes from "./pages/Dashboard/DashboardQuizes";
 import DashboardNormative from "./pages/Dashboard/DashboardNormative";
 import DashboardMembers from "./pages/Dashboard/DashboardMembers";
 import DashboardRev from "./pages/Dashboard/DashboardRev";
@@ -57,6 +56,22 @@ import Us from "./pages/Us";
 import Ks from "./pages/Ks";
 import Kpe from "./pages/Kpe";
 import Os from "./pages/Os";
+import DashboardSeminars from "./pages/Dashboard/DashboardSeminars";
+import DashboardCourses from "./pages/Dashboard/DashboardCourses";
+import DashboardQualifications from "./pages/Dashboard/DashboardQualifications";
+import DashboardInternational from "./pages/Dashboard/DashboardInternational";
+import DashboardMethodology from "./pages/Dashboard/DashboardMethodology";
+import DashboardUs from "./pages/Dashboard/DashboardUs";
+import DashboardKs from "./pages/Dashboard/DashboardKs";
+import DashboardKpe from "./pages/Dashboard/DashboardKpe";
+import DashboardRc from "./pages/Dashboard/DashboardRc";
+import DashboardStandards from "./pages/Dashboard/DashboardStandards";
+import DashboardResources from "./pages/Dashboard/DashboardPublications";
+import DashboardLiterature from "./pages/Dashboard/DashboardLiterature";
+import DashboardPublicationsUs from "./pages/Dashboard/DashboardPublicationsUs";
+import DashboardPublicationsKs from "./pages/Dashboard/DashboardPublicationsKs";
+import DashboardPublicationsKpe from "./pages/Dashboard/DashboardPublicationsKpe";
+import DashboardPublicationsOs from "./pages/Dashboard/DashboardPublicationsOs";
 
 const App = () => {
   return (
@@ -105,8 +120,23 @@ const App = () => {
           {/* Frontend pages end*/}
           {/* Backend pages start*/}
           <Route path={`${process.env.PUBLIC_URL + "/dashboard-admin"}`} exact component={DashboardNews} />
+          <Route path={`${process.env.PUBLIC_URL + "/dashboard-international"}`} exact component={DashboardInternational} />
+          <Route path={`${process.env.PUBLIC_URL + "/dashboard-publications"}`} exact component={DashboardResources} />
+          <Route path={`${process.env.PUBLIC_URL + "/dashboard-us"}`} exact component={DashboardPublicationsUs} />
+          <Route path={`${process.env.PUBLIC_URL + "/dashboard-ks"}`} exact component={DashboardPublicationsKs} />
+          <Route path={`${process.env.PUBLIC_URL + "/dashboard-kpe"}`} exact component={DashboardPublicationsKpe} />
+          <Route path={`${process.env.PUBLIC_URL + "/dashboard-os"}`} exact component={DashboardPublicationsOs} />
+          <Route path={`${process.env.PUBLIC_URL + "/dashboard-literature"}`} exact component={DashboardLiterature} />
+          <Route path={`${process.env.PUBLIC_URL + "/members-methodology"}`} exact component={DashboardMethodology} />
+          <Route path={`${process.env.PUBLIC_URL + "/members-us"}`} exact component={DashboardUs} />
+          <Route path={`${process.env.PUBLIC_URL + "/members-ks"}`} exact component={DashboardKs} />
+          <Route path={`${process.env.PUBLIC_URL + "/members-kpe"}`} exact component={DashboardKpe} />
+          <Route path={`${process.env.PUBLIC_URL + "/members-rc"}`} exact component={DashboardRc} />
+          <Route path={`${process.env.PUBLIC_URL + "/dashboard-standards"}`} exact component={DashboardStandards} />
           <Route path={`${process.env.PUBLIC_URL + "/login"}`} exact component={Login} />
-          <Route path={`${process.env.PUBLIC_URL + "/dashboard-quizes"}`} exact component={DashboardQuizes} />
+          <Route path={`${process.env.PUBLIC_URL + "/dashboard-seminars"}`} exact component={DashboardSeminars} />
+          <Route path={`${process.env.PUBLIC_URL + "/dashboard-qualifications"}`} exact component={DashboardQualifications} />
+          <Route path={`${process.env.PUBLIC_URL + "/dashboard-courses"}`} exact component={DashboardCourses} />
           <Route path={`${process.env.PUBLIC_URL + "/dashboard-normative"}`} exact component={DashboardNormative} />
           <Route path={`${process.env.PUBLIC_URL + "/dashboard-members"}`} exact component={DashboardMembers} />
           <Route path={`${process.env.PUBLIC_URL + "/dashboard-registry"}`} exact component={DashboardRegistry} />
