@@ -76,17 +76,25 @@ const DashboardStandards = () => {
             <Card style={{ marginLeft: 50, marginRight: 50 }}>
               <Card.Header>Европейски стандарти</Card.Header>
               <Card.Body>
-                <Input type="file" style={{ fontSize: 14, background: "white", margin: 0 }} label="Файл на английски" />
+                <Input label="Заглавие" style={{ margin: 0, background: "white" }} />
+                <div style={{ marginBottom: 10 }} />
+                <Input type="file" style={{ fontSize: 14, background: "white", margin: 0 }} label="Файл" />
                 <br />
-                <Input type="file" style={{ fontSize: 14, background: "white", margin: 0 }} label="Файл на български" />
+                <Button color="warning" style={{ selfAlign: "center", width: 200 }}>
+                  Добавете файл
+                </Button>
               </Card.Body>
             </Card>
             <Card style={{ marginLeft: 50, marginRight: 50 }}>
               <Card.Header>Български стандарти</Card.Header>
               <Card.Body>
-                <Input style={{ fontSize: 14, background: "white", margin: 0 }} type="file" label="Файл на английски" />
+                <Input label="Заглавие" style={{ margin: 0, background: "white" }} />
+                <div style={{ marginBottom: 10 }} />
+                <Input type="file" style={{ fontSize: 14, background: "white", margin: 0 }} label="Файл" />
                 <br />
-                <Input style={{ fontSize: 14, background: "white", margin: 0 }} type="file" label="Файл на български" />
+                <Button color="warning" style={{ selfAlign: "center", width: 200 }}>
+                  Добавете файл
+                </Button>
               </Card.Body>
             </Card>
           </div>

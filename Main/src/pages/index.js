@@ -32,7 +32,7 @@ const HomeDefault = () => {
                     </div>
                     <div style={{ display: "flex", flexDirection: "column" }}>
                       <a className="btn-default btn-medium round btn-icon" href="/rev-registry" style={{ width: 210 }}>
-                        Регистър на REV
+                        Регистър REV
                       </a>
                       <a className="btn-default btn-medium round btn-icon" href="#" style={{ width: 210 }}>
                         Годишен отчет

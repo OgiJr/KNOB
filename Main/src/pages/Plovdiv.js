@@ -23,7 +23,7 @@ const Plovdiv = () => {
         <Header btnStyle="btn-small round btn-icon" HeaderSTyle="" />
 
         {/* Start Slider Area  */}
-        <div className="slider-area slider-style-1 height-850 bg_image" data-black-overlay="7" style={{ backgroundImage: `url(${process.env.PUBLIC_URL}/images/banner/plovdiv.jpg)` }}>
+        <div className="slider-area slider-style-1 height-850 bg_image" data-black-overlay="2" style={{ backgroundImage: `url(${process.env.PUBLIC_URL}/images/banner/plovdiv.jpg)` }}>
           <div className="container">
             <div className="row">
               <div className="col-lg-12">

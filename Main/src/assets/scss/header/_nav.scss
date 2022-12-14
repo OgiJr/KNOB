@@ -9,16 +9,16 @@
         > li {
             > a {
                 color: var(--color-body);
-                font-size: 10px;
+                font-size: 12px;
                 font-weight: 500;
                 padding: 0 17px;
                 display: block;
                 height: 80px;
                 line-height: 80px;
-                transition: 0.3s;
-                &:hover {
-                    color: var(--color-primary);
-                }
+                transition: 0.3s;   
+            }
+            > a:hover{
+                color: orange !important;
             }
         }
         li {
@@ -65,6 +65,7 @@
                         opacity: 1;
                         visibility: visible;
                         top: 100%;
+                        color:orange;
                     }
                 }
             }
@@ -110,7 +111,7 @@
                                     }
 
                                     &:hover {
-                                        color: var(--color-primary);
+                                        color: var(orange);
                                         background: var(--color-darker);
                                     }
                                 }

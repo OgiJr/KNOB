@@ -13,6 +13,31 @@ const Nav = () => {
         <Link to="/blog-news">Актуални новини</Link>
       </li>
       <li className="has-droupdown">
+        <Link to="#">Управителни органи</Link>
+        <ul className="submenu">
+          <li>
+            <Link to="/board-of-directors">Упрваителен съвет</Link>
+          </li>
+          <li>
+            <Link to="/control-board">Контролен съвет</Link>
+          </li>
+          <li>
+            <Link to="/ethics">Комисия по професионална етика</Link>
+          </li>
+        </ul>
+      </li>
+      <li className="has-droupdown">
+        <Link to="#">Стандарти</Link>
+        <ul className="submenu">
+          <li>
+            <Link to="/valuation-standards">Български стандарти за оценяване</Link>
+          </li>
+          <li>
+            <Link to="/valuation-standards-eu">Европейски стандарти за оценяване</Link>
+          </li>
+        </ul>
+      </li>
+      <li className="has-droupdown">
         <Link to="#">Обучения, курсове и квалификация</Link>
         <ul className="submenu">
           <li>
@@ -27,19 +52,12 @@ const Nav = () => {
           <li>
             <Link to="/qualification-committee">Съвет по методология и квалификация</Link>
           </li>
-        </ul>
-      </li>
-      <li className="has-droupdown">
-        <Link to="#">Управителни органи</Link>
-        <ul className="submenu">
+          <p style={{ marginBottom: 0, marginLeft: 10, fontWeight: "bold", fontSize: 14 }}>Ресурси</p>
           <li>
-            <Link to="/board-of-directors">Упрваителен съвет</Link>
+            <Link to="/literature">Литература</Link>
           </li>
           <li>
-            <Link to="/control-board">Контролен съвет</Link>
-          </li>
-          <li>
-            <Link to="/ethics">Комисия по професионална етика</Link>
+            <Link to="/publications">Публикации</Link>
           </li>
         </ul>
       </li>
@@ -73,24 +91,15 @@ const Nav = () => {
         </ul>
       </li>
       <li className="has-droupdown">
-        <Link to="#">Стандарти</Link>
+        <Link to="#">Международна дейност</Link>
         <ul className="submenu">
           <li>
-            <Link to="/valuation-standards">Български стандарти за оценяване</Link>
+            <a href="https://tegova.org/" target="_blank" rel="norefferer">
+              TEGoVa
+            </a>
           </li>
           <li>
-            <Link to="/valuation-standards-eu">Европейски стандарти за оценяване</Link>
-          </li>
-        </ul>
-      </li>
-      <li className="has-droupdown">
-        <Link to="#">Ресурси</Link>
-        <ul className="submenu">
-          <li>
-            <Link to="/literature">Литература</Link>
-          </li>
-          <li>
-            <Link to="/publications">Публикации</Link>
+            <Link to="/rev">Новини</Link>
           </li>
         </ul>
       </li>
@@ -108,19 +117,6 @@ const Nav = () => {
           </li>
           <li>
             <Link to="/os">Протоколи ОС</Link>
-          </li>
-        </ul>
-      </li>
-      <li className="has-droupdown">
-        <Link to="#">Международна дейност</Link>
-        <ul className="submenu">
-          <li>
-            <a href="https://tegova.org/" target="_blank" rel="norefferer">
-              TEGoVa
-            </a>
-          </li>
-          <li>
-            <Link to="/rev">Новини</Link>
           </li>
         </ul>
       </li>
