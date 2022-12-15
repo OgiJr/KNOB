@@ -25,7 +25,7 @@ const DashboardLiterature = () => {
   return (
     <>
       {/* Modal add start */}
-      <Modal scroll width="600px" open={visibleAdd} onClose={() => setVisibleAdd(false)}>
+      <Modal scroll fullScreen width="600px" open={visibleAdd} onClose={() => setVisibleAdd(false)}>
         <Form>
           <Modal.Header>
             <div style={{ marginTop: 20 }}>
@@ -36,6 +36,8 @@ const DashboardLiterature = () => {
             <div style={{ display: "flex", flexDirection: "column", alignSelf: "center" }}>
               <p style={{ marginBottom: 5, fontSize: 14 }}>Снимка</p>
               <input type="file" style={{ marginBottom: 15 }} />
+              <Input labelPlaceholder="Кратко описание" style={{ color: "black", margin: 0, background: "white" }} />
+              <br />
               <Textarea labelPlaceholder="Описание (HTML)" style={{ color: "black" }} rows={5} />
               <p style={{ marginBottom: 5, fontSize: 14, marginTop: 15 }}>Прикачен файл</p>
               <input type="file" style={{ marginBottom: 15 }} />
@@ -51,7 +53,7 @@ const DashboardLiterature = () => {
       {/* Modal add end */}
 
       {/* Modal edit start */}
-      <Modal scroll width="600px" open={visibleEdit} onClose={() => setVisibleEdit(false)}>
+      <Modal scroll fullScreen width="600px" open={visibleEdit} onClose={() => setVisibleEdit(false)}>
         <Form>
           <Modal.Header>
             <div style={{ marginTop: 20 }}>
@@ -62,6 +64,8 @@ const DashboardLiterature = () => {
             <div style={{ display: "flex", flexDirection: "column", alignSelf: "center" }}>
               <p style={{ marginBottom: 5, fontSize: 14 }}>Снимка</p>
               <input type="file" style={{ marginBottom: 15 }} />
+              <Input labelPlaceholder="Кратко описание" style={{ color: "black", margin: 0, background: "white" }} />
+              <br />
               <Textarea labelPlaceholder="Описание (HTML)" style={{ color: "black" }} rows={5} />
               <p style={{ marginBottom: 5, fontSize: 14, marginTop: 15 }}>Прикачен файл</p>
               <input type="file" style={{ marginBottom: 15 }} />
