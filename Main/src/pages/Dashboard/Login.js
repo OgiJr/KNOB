@@ -28,7 +28,12 @@ const Login = () => {
                 </Grid>
 
                 <Grid style={{ marginTop: 30 }}>
-                  <Input labelPlaceholder="Парола" type="password" status="Default" style={{ background: "white", margin: 0 }} />
+                  <Input
+                    labelPlaceholder="Парола"
+                    type="password"
+                    status="Default"
+                    style={{ background: "white", margin: 0 }}
+                  />
                 </Grid>
                 <Row justify="center">
                   <a href="/dashboard-admin">
@@ -72,31 +77,65 @@ const Login = () => {
                   <h6>Създай акаунт</h6>
                 </Grid>
                 <Grid style={{ marginTop: 10 }}>
-                  <Input placeholder="Имейл" status="default" style={{ background: "white", margin: 0, fontSize: 10, width: 200 }} />
+                  <Input
+                    placeholder="Имейл"
+                    status="default"
+                    style={{ background: "white", margin: 0, fontSize: 10, width: 200 }}
+                  />
                 </Grid>
                 <Grid style={{ marginTop: 15 }}>
-                  <Input placeholder="Парола" type="password" status="Default" style={{ background: "white", fontSize: 10, width: 200, margin: 0 }} />
+                  <Input
+                    placeholder="Парола"
+                    type="password"
+                    status="Default"
+                    style={{ background: "white", fontSize: 10, width: 200, margin: 0 }}
+                  />
                 </Grid>
                 <Grid style={{ marginTop: 15 }}>
-                  <Input placeholder="Потвърдете парола" type="password" status="Default" style={{ background: "white", fontSize: 10, width: 200, margin: 0 }} />
+                  <Input
+                    placeholder="Потвърдете парола"
+                    type="password"
+                    status="Default"
+                    style={{ background: "white", fontSize: 10, width: 200, margin: 0 }}
+                  />
                 </Grid>
                 <Grid style={{ marginTop: 30 }}>
-                  <Input placeholder="Име" status="Default" style={{ background: "white", fontSize: 10, width: 200, margin: 0 }} />
+                  <Input
+                    placeholder="Име"
+                    status="Default"
+                    style={{ background: "white", fontSize: 10, width: 200, margin: 0 }}
+                  />
                 </Grid>
                 <Grid style={{ marginTop: 15 }}>
-                  <Input placeholder="Презиме" status="Default" style={{ background: "white", fontSize: 10, width: 200, margin: 0 }} />
+                  <Input
+                    placeholder="Презиме"
+                    status="Default"
+                    style={{ background: "white", fontSize: 10, width: 200, margin: 0 }}
+                  />
                 </Grid>
                 <Grid style={{ marginTop: 15 }}>
-                  <Input placeholder="Фамилия" status="Default" style={{ background: "white", fontSize: 10, width: 200, margin: 0 }} />
+                  <Input
+                    placeholder="Фамилия"
+                    status="Default"
+                    style={{ background: "white", fontSize: 10, width: 200, margin: 0 }}
+                  />
                 </Grid>
                 <Grid style={{ marginTop: 15 }}>
-                  <Input placeholder="Телефон" status="Default" style={{ background: "white", fontSize: 10, width: 200, margin: 0 }} />
+                  <Input
+                    placeholder="Телефон"
+                    status="Default"
+                    style={{ background: "white", fontSize: 10, width: 200, margin: 0 }}
+                  />
                 </Grid>
                 <Grid style={{ marginTop: 15 }}>
-                  <Input placeholder="Мобилен" status="Default" style={{ background: "white", margin: 0, fontSize: 10, width: 200 }} />
+                  <Input
+                    placeholder="Мобилен"
+                    status="Default"
+                    style={{ background: "white", margin: 0, fontSize: 10, width: 200 }}
+                  />
                 </Grid>
                 <Dropdown placement="bottom-left">
-                  <Dropdown.Button flat style={{ marginTop: 15, width: 200, fontSize: 10, width: 200 }} color="warning">
+                  <Dropdown.Button flat style={{ marginTop: 15, width: 200, fontSize: 10 }} color="warning">
                     Град
                   </Dropdown.Button>
                   <Dropdown.Menu items={cities}>
@@ -108,7 +147,11 @@ const Login = () => {
                   </Dropdown.Menu>
                 </Dropdown>
                 <Grid style={{ marginTop: 15 }}>
-                  <Input placeholder="Адрес" status="Default" style={{ background: "white", margin: 0, fontSize: 10, width: 200 }} />
+                  <Input
+                    placeholder="Адрес"
+                    status="Default"
+                    style={{ background: "white", margin: 0, fontSize: 10, width: 200 }}
+                  />
                 </Grid>
                 <Row justify="center">
                   <a href="/dashboard-admin">

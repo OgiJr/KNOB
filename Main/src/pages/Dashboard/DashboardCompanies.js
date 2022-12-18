@@ -5,7 +5,17 @@ import Copyright from "../../common/footer/Copyright";
 import { Button, Dropdown, Input, Modal, Pagination, Table } from "@nextui-org/react";
 
 const cities = [{ name: "с. Дряново" }, { name: "Айтос" }, { name: "Аксаково" }, { name: "Априлци" }];
-const capacities = [{ name: "Недвижими имоти" }, { name: "Недвижими културни ценности" }, { name: "Машини и съоражения" }, { name: "Права на интелектуална и индустриална собственост" }, { name: "Търговски предприятия и вземания" }, { name: "Финансови активи и фанансови институции" }, { name: "Други активи" }, { name: "Земеделски земи и трайни насъждения" }, { name: "Поземлени имоти в горски територии" }];
+const capacities = [
+  { name: "Недвижими имоти" },
+  { name: "Недвижими културни ценности" },
+  { name: "Машини и съоражения" },
+  { name: "Права на интелектуална и индустриална собственост" },
+  { name: "Търговски предприятия и вземания" },
+  { name: "Финансови активи и фанансови институции" },
+  { name: "Други активи" },
+  { name: "Земеделски земи и трайни насъждения" },
+  { name: "Поземлени имоти в горски територии" },
+];
 
 //Start company variables
 const columns = [
@@ -30,7 +40,24 @@ const columns = [
     label: "Телефон",
   },
 ];
-const rows = [{ key: "1", id: "1", company: "АБАКУС КОНСУЛТИНГ ЕООД", city: "София", mobile: "0888289007", phone: "", capacityCompany: "Недвижими имоти", certificateNumberCompany: "900100223 (07.10.2016 г.)", bulstat: "203468650", address: "София 1415, ж.к. Драгалевци ул.Момино венче", speciality: "Горско стопанство", name: "Галина Йорданова Зоин", capacityPerson: "Недвижими имоти", certificatePerson: "100102176 (17.11.2014 г.)" }];
+const rows = [
+  {
+    key: "1",
+    id: "1",
+    company: "АБАКУС КОНСУЛТИНГ ЕООД",
+    city: "София",
+    mobile: "0888289007",
+    phone: "",
+    capacityCompany: "Недвижими имоти",
+    certificateNumberCompany: "900100223 (07.10.2016 г.)",
+    bulstat: "203468650",
+    address: "София 1415, ж.к. Драгалевци ул.Момино венче",
+    speciality: "Горско стопанство",
+    name: "Галина Йорданова Зоин",
+    capacityPerson: "Недвижими имоти",
+    certificatePerson: "100102176 (17.11.2014 г.)",
+  },
+];
 //End company variables
 
 const DashboardCompanies = () => {
@@ -57,36 +84,68 @@ const DashboardCompanies = () => {
         {/* Start Modal Area */}
         <Modal closeButton width="85%" open={visible} onClose={() => setVisible(false)}>
           <Modal.Header>
-            <Input width={500} placeholder={companyName} style={{ background: "white", textAlign: "center", marginLeft: 0, marginRight: 0, marginBottom: 10 }} />
+            <Input
+              width={500}
+              placeholder={companyName}
+              style={{ background: "white", textAlign: "center", marginLeft: 0, marginRight: 0, marginBottom: 10 }}
+            />
           </Modal.Header>
           <Modal.Body style={{ marginLeft: 15, marginRight: 15, marginTop: 15, marginBottom: 15 }}>
             <div className="modalResponsive">
               <span style={{ fontWeight: "bold" }}>Град:</span>
-              <Input width={500} placeholder={city} style={{ background: "white", marginLeft: 0, marginRight: 0, marginBottom: 10 }} />
+              <Input
+                width={500}
+                placeholder={city}
+                style={{ background: "white", marginLeft: 0, marginRight: 0, marginBottom: 10 }}
+              />
             </div>
             <div className="modalResponsive">
               <span style={{ fontWeight: "bold" }}>Мобилен:</span>
-              <Input width={500} placeholder={mobile} style={{ background: "white", marginLeft: 0, marginRight: 0, marginBottom: 10 }} />
+              <Input
+                width={500}
+                placeholder={mobile}
+                style={{ background: "white", marginLeft: 0, marginRight: 0, marginBottom: 10 }}
+              />
             </div>
             <div className="modalResponsive">
               <span style={{ fontWeight: "bold" }}>Сертификати номера:</span>
-              <Input width={500} placeholder={companyCertificate} style={{ background: "white", marginLeft: 0, marginRight: 0, marginBottom: 10 }} />
+              <Input
+                width={500}
+                placeholder={companyCertificate}
+                style={{ background: "white", marginLeft: 0, marginRight: 0, marginBottom: 10 }}
+              />
             </div>
             <div className="modalResponsive">
               <span style={{ fontWeight: "bold" }}>Адрес:</span>
-              <Input width={500} placeholder={address} style={{ background: "white", marginLeft: 0, marginRight: 0, marginBottom: 10 }} />
+              <Input
+                width={500}
+                placeholder={address}
+                style={{ background: "white", marginLeft: 0, marginRight: 0, marginBottom: 10 }}
+              />
             </div>
             <div className="modalResponsive">
               <span style={{ fontWeight: "bold" }}>Булстат:</span>
-              <Input width={500} placeholder={bulstat} style={{ background: "white", marginLeft: 0, marginRight: 0, marginBottom: 10 }} />
+              <Input
+                width={500}
+                placeholder={bulstat}
+                style={{ background: "white", marginLeft: 0, marginRight: 0, marginBottom: 10 }}
+              />
             </div>
             <div className="modalResponsive">
               <span style={{ fontWeight: "bold" }}>Оценителска правоспособност:</span>
-              <Input width={500} placeholder={companyCapacity} style={{ background: "white", marginLeft: 0, marginRight: 0, marginBottom: 10 }} />
+              <Input
+                width={500}
+                placeholder={companyCapacity}
+                style={{ background: "white", marginLeft: 0, marginRight: 0, marginBottom: 10 }}
+              />
             </div>
             <div className="modalResponsive">
               <span style={{ fontWeight: "bold" }}>Оценител:</span>
-              <Input width={500} placeholder={name} style={{ background: "white", marginLeft: 0, marginRight: 0, marginBottom: 10 }} />
+              <Input
+                width={500}
+                placeholder={name}
+                style={{ background: "white", marginLeft: 0, marginRight: 0, marginBottom: 10 }}
+              />
             </div>
           </Modal.Body>
           <Modal.Footer>
@@ -113,7 +172,11 @@ const DashboardCompanies = () => {
           <Modal.Body style={{ marginLeft: 15, marginRight: 15, marginTop: 15, marginBottom: 15 }}>
             <div className="modalResponsive">
               <span style={{ fontWeight: "bold" }}>Обезсилен:</span>
-              <Input width={500} placeholder={companyCertificate} style={{ background: "white", marginLeft: 0, marginRight: 0, marginBottom: 10 }} />
+              <Input
+                width={500}
+                placeholder={companyCertificate}
+                style={{ background: "white", marginLeft: 0, marginRight: 0, marginBottom: 10 }}
+              />
             </div>
             <div className="modalResponsive">
               <span style={{ fontWeight: "bold" }}>Нов:</span>
@@ -163,7 +226,11 @@ const DashboardCompanies = () => {
                   )}
                 </Dropdown.Menu>
               </Dropdown>
-              <Input style={{ background: "white", margin: 0, fontSize: 16 }} size="xl" labelPlaceholder="Сертификат №:" />
+              <Input
+                style={{ background: "white", margin: 0, fontSize: 16 }}
+                size="xl"
+                labelPlaceholder="Сертификат №:"
+              />
             </div>
             <div style={{ display: "flex", alignItems: "center" }}>
               <Button style={{ fontSize: 14, height: 30 }} type="submit" color="warning">
@@ -171,7 +238,9 @@ const DashboardCompanies = () => {
               </Button>
             </div>
           </form>
-          <span style={{ marginTop: 20, marginLeft: 0, fontSize: 12 }}>За да редактирате натиснете името на оценителя</span>
+          <span style={{ marginTop: 20, marginLeft: 0, fontSize: 12 }}>
+            За да редактирате натиснете името на оценителя
+          </span>
           <Button
             style={{ width: "20%", marginTop: 15, marginLeft: 10 }}
             color="success"
@@ -196,7 +265,14 @@ const DashboardCompanies = () => {
                 <Dropdown.Button flat color="warning" size="xl">
                   {selectedValue}
                 </Dropdown.Button>
-                <Dropdown.Menu aria-label="Single selection actions" color="warning" disallowEmptySelection selectionMode="single" selectedKeys={selected} onSelectionChange={setSelected}>
+                <Dropdown.Menu
+                  aria-label="Single selection actions"
+                  color="warning"
+                  disallowEmptySelection
+                  selectionMode="single"
+                  selectedKeys={selected}
+                  onSelectionChange={setSelected}
+                >
                   <Dropdown.Item key="10">
                     <span style={{ fontSize: 14 }}>10</span>
                   </Dropdown.Item>

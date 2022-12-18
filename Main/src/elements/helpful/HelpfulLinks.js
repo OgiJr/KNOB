@@ -16,7 +16,13 @@ const HelpfulLinks = () => {
             <div className="container">
               <div className="row">
                 <div className="col-lg-10 offset-lg-1">
-                  <SectionTitle textAlign="text-center" radiusRounded="" subtitle="Полезни " title="Връзки" description="" />
+                  <SectionTitle
+                    textAlign="text-center"
+                    radiusRounded=""
+                    subtitle="Полезни "
+                    title="Връзки"
+                    description=""
+                  />
                 </div>
               </div>
               <div className="row mt--35 row--20">

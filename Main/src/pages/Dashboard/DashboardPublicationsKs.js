@@ -84,7 +84,16 @@ const DashboardPublicationsKs = () => {
       <main className="page-wrapper">
         <HeaderAdmin btnStyle="btn-small round btn-icon" />
         <BreadcrumbOne title="Протоколи КС" />
-        <div style={{ display: "flex", height: "90vh", flexDirection: "column", alignItems: "center", justifyItems: "center", justifyContent: "start" }}>
+        <div
+          style={{
+            display: "flex",
+            height: "90vh",
+            flexDirection: "column",
+            alignItems: "center",
+            justifyItems: "center",
+            justifyContent: "start",
+          }}
+        >
           <Button size="xl" color="warning" style={{ width: 200, marginTop: 50 }} onPress={() => setVisibleAdd(true)}>
             Добавете протокол
           </Button>

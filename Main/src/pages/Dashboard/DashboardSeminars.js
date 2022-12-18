@@ -16,7 +16,14 @@ const columns = [
   },
 ];
 
-const rows = [{ key: "1", title: "Вписване в „Регистъра на независимите оценители” на успешно издържалите изпита по „Земеделски земи и трайни насаждения”", date: "17.11.2022г." }];
+const rows = [
+  {
+    key: "1",
+    title:
+      "Вписване в „Регистъра на независимите оценители” на успешно издържалите изпита по „Земеделски земи и трайни насаждения”",
+    date: "17.11.2022г.",
+  },
+];
 
 const DashboardSeminars = () => {
   const [visibleAdd, setVisibleAdd] = React.useState(false);
@@ -90,7 +97,15 @@ const DashboardSeminars = () => {
       <SEO title="Административен панел" />
       <main className="page-wrapper">
         <HeaderAdmin btnStyle="btn-small round btn-icon" />
-        <div style={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", height: "90vh" }}>
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            justifyContent: "center",
+            height: "90vh",
+          }}
+        >
           <Button size="xl" color="warning" style={{ width: 200 }} onPress={() => setVisibleAdd(true)}>
             Добавете семинар
           </Button>

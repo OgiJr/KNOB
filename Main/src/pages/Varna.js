@@ -23,7 +23,11 @@ const Varna = () => {
         <Header btnStyle="btn-small round btn-icon" HeaderSTyle="" />
 
         {/* Start Slider Area  */}
-        <div className="slider-area slider-style-1 height-850 bg_image" data-black-overlay="2" style={{ backgroundImage: `url(${process.env.PUBLIC_URL}/images/banner/varna.jpg)` }}>
+        <div
+          className="slider-area slider-style-1 height-850 bg_image"
+          data-black-overlay="2"
+          style={{ backgroundImage: `url(${process.env.PUBLIC_URL}/images/banner/varna.jpg)` }}
+        >
           <div className="container">
             <div className="row">
               <div className="col-lg-12">
@@ -67,7 +71,12 @@ const Varna = () => {
                           <div className="rn-tab-content">
                             <div className="inner">
                               Официален сайт на Регионална колегия - Варна:{" "}
-                              <a style={{ color: "blue" }} href="https://www.ciab-varna.com" target="_blank" rel="noreffer">
+                              <a
+                                style={{ color: "blue" }}
+                                href="https://www.ciab-varna.com"
+                                target="_blank"
+                                rel="noreffer noreferrer"
+                              >
                                 www.ciab-varna.com
                               </a>
                               <br />

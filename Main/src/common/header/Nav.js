@@ -94,7 +94,7 @@ const Nav = () => {
         <Link to="#">Международна дейност</Link>
         <ul className="submenu">
           <li>
-            <a href="https://tegova.org/" target="_blank" rel="norefferer">
+            <a href="https://tegova.org/" target="_blank" rel="norefferer noreferrer">
               TEGoVa
             </a>
           </li>

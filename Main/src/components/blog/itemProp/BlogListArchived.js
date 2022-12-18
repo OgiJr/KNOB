@@ -8,18 +8,32 @@ const BlogListArchived = ({ data, StyleVar, archive = "false" }) => {
       <div className={`rn-card ${StyleVar}`}>
         <div className="inner" style={{ display: "flex", flexDirection: "column" }}>
           <div className="thumbnail">
-            {data.excerpt != "" ? (
+            {data.excerpt !== "" ? (
               <Link to={process.env.PUBLIC_URL + `/blog-details/${data.id}`} className="image" style={{ height: 400 }}>
-                <img src={`${process.env.PUBLIC_URL}/${data.image}`} alt="Blog Image" style={{ width: "100%", height: "100%", borderRadius: 0 }} />
+                <img
+                  src={`${process.env.PUBLIC_URL}/${data.image}`}
+                  alt="Blog"
+                  style={{ width: "100%", height: "100%", borderRadius: 0 }}
+                />
               </Link>
             ) : (
               <div className="image">
-                <img src={`${process.env.PUBLIC_URL}/${data.image}`} alt="Blog Image" style={{ width: "100%", height: "100%", borderRadius: 0 }} />
+                <img
+                  src={`${process.env.PUBLIC_URL}/${data.image}`}
+                  alt="Blog"
+                  style={{ width: "100%", height: "100%", borderRadius: 0 }}
+                />
               </div>
             )}
           </div>
           <div className="content">
-            <h4 className="title">{data.excerpt ? <Link to={process.env.PUBLIC_URL + `/blog-details/${data.id}`}>{data.title}</Link> : data.title}</h4>
+            <h4 className="title">
+              {data.excerpt ? (
+                <Link to={process.env.PUBLIC_URL + `/blog-details/${data.id}`}>{data.title}</Link>
+              ) : (
+                data.title
+              )}
+            </h4>
             <ul className="rn-meta-list" style={{ display: "flex", flexDirection: "row" }}>
               {data.fileName !== "" ? (
                 <div style={{ display: "flex", flexAlign: "row" }}>

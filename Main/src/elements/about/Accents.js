@@ -17,13 +17,22 @@ const Accents = () => {
                     <b>Съобщение:</b>
                   </p>
                 </div>
-                <div style={{ marginLeft: "10px", marginRight: "10px", marginTop: "10px" }}>Приемното време на Централен офис на КНОБ с клиенти на място е от понеделник до петък от 09:30 до 16:30 часа с половин час обедна почивка от 13:00 до 13:30 часа.</div>
+                <div style={{ marginLeft: "10px", marginRight: "10px", marginTop: "10px" }}>
+                  Приемното време на Централен офис на КНОБ с клиенти на място е от понеделник до петък от 09:30 до
+                  16:30 часа с половин час обедна почивка от 13:00 до 13:30 часа.
+                </div>
                 <br />
                 <div style={{ display: "flex", flexDirection: "row", alignItems: "center", marginRight: "10px" }}>
                   <img className="icon" style={{ width: 50, height: 50 }} src="images/icons/doc.png" alt="Docs" />
                   <b>Оформяне на оценителски доклад от дружества на независим оценител:</b>
                 </div>
-                <div style={{ marginLeft: "10px", marginRight: "10px", marginTop: "10px" }}>В изпълнение на правомощията си по чл. 22, ал. 3, т. 7, КНОБ указва на дружествата на независим оценител, че съгласно чл. 17, ал. 1, в оценките подписани от дружеството на независим оценител задължително трябва да се съдържа и подпис на независимия оценител - физическо лице, отговорно за изготвянето на оценката. Не подписването на оценката, която не е подписана съгласно чл. 17, ал. 1 да се счита за невалидна поради нарушаване на императивното изискване на чл. 6, ал. 3 от ЗНО.</div>
+                <div style={{ marginLeft: "10px", marginRight: "10px", marginTop: "10px" }}>
+                  В изпълнение на правомощията си по чл. 22, ал. 3, т. 7, КНОБ указва на дружествата на независим
+                  оценител, че съгласно чл. 17, ал. 1, в оценките подписани от дружеството на независим оценител
+                  задължително трябва да се съдържа и подпис на независимия оценител - физическо лице, отговорно за
+                  изготвянето на оценката. Не подписването на оценката, която не е подписана съгласно чл. 17, ал. 1 да
+                  се счита за невалидна поради нарушаване на императивното изискване на чл. 6, ал. 3 от ЗНО.
+                </div>
                 <div className="mt--40 cardsAccent">
                   <Card isHoverable isPressable>
                     <Card.Header>
@@ -51,7 +60,9 @@ const Accents = () => {
                   <Card isHoverable isPressable>
                     <Card.Header>
                       <img alt="nextui logo" src="images/icons/map.png" width="34px" height="34px" />
-                      <Text style={{ fontWeight: "bold", marginTop: "27px" }}>Такса за вписване в регистъра на КНОБ</Text>
+                      <Text style={{ fontWeight: "bold", marginTop: "27px" }}>
+                        Такса за вписване в регистъра на КНОБ
+                      </Text>
                     </Card.Header>
                     <Card.Body css={{ py: "$2" }}>
                       <Text>
@@ -99,7 +110,9 @@ const Accents = () => {
                   <Card css={{ p: "$6" }} isHoverable isPressable>
                     <Card.Header>
                       <img alt="nextui logo" src="images/icons/map.png" width="34px" height="34px" />
-                      <Text style={{ fontWeight: "bold", marginTop: "27px" }}>Годишна вноска на основание чл.10, ал. 8 от Кодекс за професионална етика</Text>
+                      <Text style={{ fontWeight: "bold", marginTop: "27px" }}>
+                        Годишна вноска на основание чл.10, ал. 8 от Кодекс за професионална етика
+                      </Text>
                     </Card.Header>
                     <Card.Body css={{ py: "$2" }}>
                       <Text>

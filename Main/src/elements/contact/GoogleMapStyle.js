@@ -20,11 +20,7 @@ class GoogleMapStyle extends Component {
           defaultCenter={this.props.center}
           defaultZoom={this.props.zoom}
         >
-          <AnyReactComponent
-            lat={42.76157553331203}
-            lng={23.202866591097205}
-            text="My Marker"
-          />
+          <AnyReactComponent lat={42.76157553331203} lng={23.202866591097205} text="My Marker" />
         </GoogleMapReact>
       </div>
     );

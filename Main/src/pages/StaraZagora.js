@@ -4,7 +4,6 @@ import Header from "../common/header/Header";
 import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
 import Copyright from "../common/footer/Copyright";
 import "../assets/scss/elements/bar.scss";
-import BarTable from "../components/table/barTable";
 import { Card, Text } from "@nextui-org/react";
 
 const StaraZagora = () => {
@@ -24,7 +23,11 @@ const StaraZagora = () => {
         <Header btnStyle="btn-small round btn-icon" HeaderSTyle="" />
 
         {/* Start Slider Area  */}
-        <div className="slider-area slider-style-1 height-850 bg_image" data-black-overlay="2" style={{ backgroundImage: `url(${process.env.PUBLIC_URL}/images/banner/stara-zagora.jpg)` }}>
+        <div
+          className="slider-area slider-style-1 height-850 bg_image"
+          data-black-overlay="2"
+          style={{ backgroundImage: `url(${process.env.PUBLIC_URL}/images/banner/stara-zagora.jpg)` }}
+        >
           <div className="container">
             <div className="row">
               <div className="col-lg-12">

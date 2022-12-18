@@ -12,7 +12,7 @@ const BlogPropCourse = ({ column, StyleVarProp }) => {
 
   useEffect(() => {
     setVisibleItems(getAllItems.filter((item) => item.id <= dataVisibleCount));
-  }, []);
+  }, [dataVisibleCount, getAllItems]);
 
   const handleLoadmorebl = (e) => {
     e.preventDefault();
@@ -31,7 +31,11 @@ const BlogPropCourse = ({ column, StyleVarProp }) => {
       </div>
       <div className="col-lg-12">
         <div className="rwt-load-more text-center mt--60">
-          <button className="btn btn-default btn-icon" onClick={handleLoadmorebl} disabled={noMorePost ? "disabled" : null}>
+          <button
+            className="btn btn-default btn-icon"
+            onClick={handleLoadmorebl}
+            disabled={noMorePost ? "disabled" : null}
+          >
             {visibleItems.length === 0 ? (
               "Няма актуални курсове"
             ) : (

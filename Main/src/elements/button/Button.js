@@ -13,34 +13,65 @@ const Button = () => {
     <>
       <SEO title="Button || КНОБ - React Business  Template" />
       <Layout>
-        <BreadcrumbOne title="The Easiest Way To Create Website <br /> Quick Copy & Make site." rootUrl="/" parentUrl="Home" currentUrl="Button" />
+        <BreadcrumbOne
+          title="The Easiest Way To Create Website <br /> Quick Copy & Make site."
+          rootUrl="/"
+          parentUrl="Home"
+          currentUrl="Button"
+        />
         <div className="main-content">
           {/* Start Elements Area  */}
           <div className="rwt-button-area rn-section-gap">
             <div className="container">
               <div className="row row--30">
                 <div className="col-lg-6 col-md-6 col-12">
-                  <SectionTitle textAlign="text-start" radiusRounded="" subtitle="Easily switchable" title="Button Sizes" description="" />
+                  <SectionTitle
+                    textAlign="text-start"
+                    radiusRounded=""
+                    subtitle="Easily switchable"
+                    title="Button Sizes"
+                    description=""
+                  />
 
-                  <ScrollAnimation animateIn="fadeInUp" animateOut="fadeInOut" animateOnce={true} className="button-group">
+                  <ScrollAnimation
+                    animateIn="fadeInUp"
+                    animateOut="fadeInOut"
+                    animateOnce={true}
+                    className="button-group"
+                  >
                     <Link className="btn-default btn-small" to="#">
                       Button Solid
                     </Link>
                   </ScrollAnimation>
 
-                  <ScrollAnimation animateIn="fadeInUp" animateOut="fadeInOut" animateOnce={true} className="button-group mt--20">
+                  <ScrollAnimation
+                    animateIn="fadeInUp"
+                    animateOut="fadeInOut"
+                    animateOnce={true}
+                    className="button-group mt--20"
+                  >
                     <Link className="btn-default" to="#">
                       Button Solid
                     </Link>
                   </ScrollAnimation>
 
-                  <ScrollAnimation animateIn="fadeInUp" animateOut="fadeInOut" animateOnce={true} className="button-group mt--20">
+                  <ScrollAnimation
+                    animateIn="fadeInUp"
+                    animateOut="fadeInOut"
+                    animateOnce={true}
+                    className="button-group mt--20"
+                  >
                     <Link className="btn-default btn-large" to="#">
                       Button Solid
                     </Link>
                   </ScrollAnimation>
 
-                  <ScrollAnimation animateIn="fadeInUp" animateOut="fadeInOut" animateOnce={true} className="button-group mt--20">
+                  <ScrollAnimation
+                    animateIn="fadeInUp"
+                    animateOut="fadeInOut"
+                    animateOnce={true}
+                    className="button-group mt--20"
+                  >
                     <Link className="btn-default btn-extra-large" to="#">
                       Button Solid
                     </Link>
@@ -48,27 +79,53 @@ const Button = () => {
                 </div>
 
                 <div className="col-lg-6 col-md-6 col-12 mt_sm--40">
-                  <SectionTitle textAlign="text-start" radiusRounded="" subtitle="Include borders" title="Outlined Buttons" description="" />
+                  <SectionTitle
+                    textAlign="text-start"
+                    radiusRounded=""
+                    subtitle="Include borders"
+                    title="Outlined Buttons"
+                    description=""
+                  />
 
-                  <ScrollAnimation animateIn="fadeInUp" animateOut="fadeInOut" animateOnce={true} className="button-group">
+                  <ScrollAnimation
+                    animateIn="fadeInUp"
+                    animateOut="fadeInOut"
+                    animateOnce={true}
+                    className="button-group"
+                  >
                     <Link className="btn-default btn-small btn-border" to="#">
                       Button Outlined
                     </Link>
                   </ScrollAnimation>
 
-                  <ScrollAnimation animateIn="fadeInUp" animateOut="fadeInOut" animateOnce={true} className="button-group mt--20">
+                  <ScrollAnimation
+                    animateIn="fadeInUp"
+                    animateOut="fadeInOut"
+                    animateOnce={true}
+                    className="button-group mt--20"
+                  >
                     <Link className="btn-default btn-border" to="#">
                       Button Outlined
                     </Link>
                   </ScrollAnimation>
 
-                  <ScrollAnimation animateIn="fadeInUp" animateOut="fadeInOut" animateOnce={true} className="button-group mt--20">
+                  <ScrollAnimation
+                    animateIn="fadeInUp"
+                    animateOut="fadeInOut"
+                    animateOnce={true}
+                    className="button-group mt--20"
+                  >
                     <Link className="btn-default btn-large btn-border" to="#">
                       Button Outlined
                     </Link>
                   </ScrollAnimation>
 
-                  <ScrollAnimation animateIn="fadeInUp" animateOut="fadeInOut" animateOnce={true} className="button-group mt--20">
+                  <ScrollAnimation
+                    animateIn="fadeInUp"
+                    animateOut="fadeInOut"
+                    animateOnce={true}
+                    className="button-group mt--20"
+                  >
                     <Link className="btn-default btn-extra-large btn-border" to="#">
                       Button Outlined
                     </Link>
@@ -85,9 +142,20 @@ const Button = () => {
             <div className="container">
               <div className="row row--30">
                 <div className="col-lg-6 col-md-6 col-12">
-                  <SectionTitle textAlign="text-start" radiusRounded="" subtitle="Easily switchable icon" title="Button Icon" description="" />
+                  <SectionTitle
+                    textAlign="text-start"
+                    radiusRounded=""
+                    subtitle="Easily switchable icon"
+                    title="Button Icon"
+                    description=""
+                  />
 
-                  <ScrollAnimation animateIn="fadeInUp" animateOut="fadeInOut" animateOnce={true} className="button-group">
+                  <ScrollAnimation
+                    animateIn="fadeInUp"
+                    animateOut="fadeInOut"
+                    animateOnce={true}
+                    className="button-group"
+                  >
                     <Link className="btn-default btn-small btn-icon" to="#">
                       Button Solid{" "}
                       <i className="icon">
@@ -96,7 +164,12 @@ const Button = () => {
                     </Link>
                   </ScrollAnimation>
 
-                  <ScrollAnimation animateIn="fadeInUp" animateOut="fadeInOut" animateOnce={true} className="button-group mt--20">
+                  <ScrollAnimation
+                    animateIn="fadeInUp"
+                    animateOut="fadeInOut"
+                    animateOnce={true}
+                    className="button-group mt--20"
+                  >
                     <Link className="btn-default btn-icon" to="#">
                       Button Solid{" "}
                       <i className="icon">
@@ -105,7 +178,12 @@ const Button = () => {
                     </Link>
                   </ScrollAnimation>
 
-                  <ScrollAnimation animateIn="fadeInUp" animateOut="fadeInOut" animateOnce={true} className="button-group mt--20">
+                  <ScrollAnimation
+                    animateIn="fadeInUp"
+                    animateOut="fadeInOut"
+                    animateOnce={true}
+                    className="button-group mt--20"
+                  >
                     <Link className="btn-default btn-large btn-icon" to="#">
                       Button Solid{" "}
                       <i className="icon">
@@ -114,7 +192,12 @@ const Button = () => {
                     </Link>
                   </ScrollAnimation>
 
-                  <ScrollAnimation animateIn="fadeInUp" animateOut="fadeInOut" animateOnce={true} className="button-group mt--20">
+                  <ScrollAnimation
+                    animateIn="fadeInUp"
+                    animateOut="fadeInOut"
+                    animateOnce={true}
+                    className="button-group mt--20"
+                  >
                     <Link className="btn-default btn-extra-large btn-icon" to="#">
                       Button Solid{" "}
                       <i className="icon">
@@ -125,8 +208,19 @@ const Button = () => {
                 </div>
 
                 <div className="col-lg-6 col-md-6 col-12 mt_sm--40">
-                  <SectionTitle textAlign="text-start" radiusRounded="" subtitle="Include Icon" title="Outlined Buttons" description="" />
-                  <ScrollAnimation animateIn="fadeInUp" animateOut="fadeInOut" animateOnce={true} className="button-group">
+                  <SectionTitle
+                    textAlign="text-start"
+                    radiusRounded=""
+                    subtitle="Include Icon"
+                    title="Outlined Buttons"
+                    description=""
+                  />
+                  <ScrollAnimation
+                    animateIn="fadeInUp"
+                    animateOut="fadeInOut"
+                    animateOnce={true}
+                    className="button-group"
+                  >
                     <Link className="btn-default btn-small btn-border btn-icon" to="#">
                       Button Outlined{" "}
                       <i className="icon">
@@ -135,7 +229,12 @@ const Button = () => {
                     </Link>
                   </ScrollAnimation>
 
-                  <ScrollAnimation animateIn="fadeInUp" animateOut="fadeInOut" animateOnce={true} className="button-group mt--20">
+                  <ScrollAnimation
+                    animateIn="fadeInUp"
+                    animateOut="fadeInOut"
+                    animateOnce={true}
+                    className="button-group mt--20"
+                  >
                     <Link className="btn-default btn-border btn-icon" to="#">
                       Button Outlined{" "}
                       <i className="icon">
@@ -144,7 +243,12 @@ const Button = () => {
                     </Link>
                   </ScrollAnimation>
 
-                  <ScrollAnimation animateIn="fadeInUp" animateOut="fadeInOut" animateOnce={true} className="button-group mt--20">
+                  <ScrollAnimation
+                    animateIn="fadeInUp"
+                    animateOut="fadeInOut"
+                    animateOnce={true}
+                    className="button-group mt--20"
+                  >
                     <Link className="btn-default btn-large btn-border btn-icon" to="#">
                       Button Outlined{" "}
                       <i className="icon">
@@ -153,7 +257,12 @@ const Button = () => {
                     </Link>
                   </ScrollAnimation>
 
-                  <ScrollAnimation animateIn="fadeInUp" animateOut="fadeInOut" animateOnce={true} className="button-group mt--20">
+                  <ScrollAnimation
+                    animateIn="fadeInUp"
+                    animateOut="fadeInOut"
+                    animateOnce={true}
+                    className="button-group mt--20"
+                  >
                     <Link className="btn-default btn-extra-large btn-border btn-icon" to="#">
                       Button Outlined{" "}
                       <i className="icon">
@@ -173,9 +282,20 @@ const Button = () => {
             <div className="container">
               <div className="row row--30">
                 <div className="col-lg-12 col-md-6 col-12">
-                  <SectionTitle textAlign="text-start" radiusRounded="" subtitle="Button Extra" title="Button Variation" description="" />
+                  <SectionTitle
+                    textAlign="text-start"
+                    radiusRounded=""
+                    subtitle="Button Extra"
+                    title="Button Variation"
+                    description=""
+                  />
 
-                  <ScrollAnimation animateIn="fadeInUp" animateOut="fadeInOut" animateOnce={true} className="button-group">
+                  <ScrollAnimation
+                    animateIn="fadeInUp"
+                    animateOut="fadeInOut"
+                    animateOnce={true}
+                    className="button-group"
+                  >
                     <Link className="btn-default text-underline" to="#">
                       <span>View More</span>
                     </Link>

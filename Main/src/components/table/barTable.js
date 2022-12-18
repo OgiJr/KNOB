@@ -280,7 +280,17 @@ const cities = [
   { name: "Якоруда" },
   { name: "Ямбол" },
 ];
-const capacities = [{ name: "Недвижими имоти" }, { name: "Недвижими културни ценности" }, { name: "Машини и съоражения" }, { name: "Права на интелектуална и индустриална собственост" }, { name: "Търговски предприятия и вземания" }, { name: "Финансови активи и фанансови институции" }, { name: "Други активи" }, { name: "Земеделски земи и трайни насъждения" }, { name: "Поземлени имоти в горски територии" }];
+const capacities = [
+  { name: "Недвижими имоти" },
+  { name: "Недвижими културни ценности" },
+  { name: "Машини и съоражения" },
+  { name: "Права на интелектуална и индустриална собственост" },
+  { name: "Търговски предприятия и вземания" },
+  { name: "Финансови активи и фанансови институции" },
+  { name: "Други активи" },
+  { name: "Земеделски земи и трайни насъждения" },
+  { name: "Поземлени имоти в горски територии" },
+];
 
 //Start people variables
 const columnsPeople = [
@@ -333,8 +343,10 @@ const rowsPeople = [
     city: "Бургас",
     mobile: "0888276526",
     phone: "",
-    capacity: "Земеделски земи и трайни насаждения, Машини и съоръжения, Недвижими имоти, Търговски предприятия и вземания",
-    certificateNumber: "810100079 (30.12.2010 г.) , 300100303 (14.12.2009 г.) , 100100786 (14.12.2009 г.) , 500100271 (14.12.2009 г.)",
+    capacity:
+      "Земеделски земи и трайни насаждения, Машини и съоръжения, Недвижими имоти, Търговски предприятия и вземания",
+    certificateNumber:
+      "810100079 (30.12.2010 г.) , 300100303 (14.12.2009 г.) , 100100786 (14.12.2009 г.) , 500100271 (14.12.2009 г.)",
     address: "Бургас 8001, ж.к. Братя Миладинови",
     speciality: "Счетоводство и контрол",
     expirience: "НИ-2005 МС-2005 ТП-2008 ЗЗ-2009",
@@ -491,7 +503,7 @@ const BarTable = () => {
   return (
     <>
       {/* Start Modal Area */}
-      {tableType == "people" ? (
+      {tableType === "people" ? (
         <Modal closeButton aria-labelledby="modal-title" width="85%" open={visible} onClose={() => setVisible(false)}>
           <Modal.Header>
             <h5>{name}</h5>
@@ -650,7 +662,15 @@ const BarTable = () => {
             </p>
             <form className="filter" style={{ display: "flex", marginLeft: 15, gap: 30 }}>
               <div style={{ display: "flex", flexDirection: "column " }}>
-                {tableType == "people" ? <Input style={{ background: "white", margin: 0, fontSize: 16 }} size="xl" labelPlaceholder="Име, презиме и фамилия" /> : <Input style={{ background: "white", margin: 0, fontSize: 16 }} size="xl" labelPlaceholder="Фирма" />}
+                {tableType === "people" ? (
+                  <Input
+                    style={{ background: "white", margin: 0, fontSize: 16 }}
+                    size="xl"
+                    labelPlaceholder="Име, презиме и фамилия"
+                  />
+                ) : (
+                  <Input style={{ background: "white", margin: 0, fontSize: 16 }} size="xl" labelPlaceholder="Фирма" />
+                )}
                 <Dropdown placement="bottom-left">
                   <Dropdown.Button flat style={{ marginTop: 30 }} color="warning">
                     Град
@@ -677,7 +697,11 @@ const BarTable = () => {
                     )}
                   </Dropdown.Menu>
                 </Dropdown>
-                <Input style={{ background: "white", margin: 0, fontSize: 16 }} size="xl" labelPlaceholder="Сертификат №:" />
+                <Input
+                  style={{ background: "white", margin: 0, fontSize: 16 }}
+                  size="xl"
+                  labelPlaceholder="Сертификат №:"
+                />
               </div>
               <div style={{ display: "flex", alignItems: "center" }}>
                 <Button style={{ fontSize: 14, height: 30 }} type="submit" color="warning">
@@ -708,7 +732,9 @@ const BarTable = () => {
                 >
                   <span style={{ display: "flex", flex: 1 }}>НИ-недвижими имоти</span>
                   <span style={{ display: "flex", flex: 1 }}>МС-машини и съоръжения</span>
-                  <span style={{ display: "flex", flex: 1 }}>ПИИС-права на интелектуалната и индустриалната собственост</span>
+                  <span style={{ display: "flex", flex: 1 }}>
+                    ПИИС-права на интелектуалната и индустриалната собственост
+                  </span>
                 </div>
                 <div
                   className="guide"
@@ -748,7 +774,13 @@ const BarTable = () => {
             </Button.Group>
           </div>
         )}
-        {tableType !== "invalid" ? <span style={{ marginTop: 20, marginLeft: 0, fontSize: 12 }}>За подробна информация натиснете името на оценителя</span> : <></>}
+        {tableType !== "invalid" ? (
+          <span style={{ marginTop: 20, marginLeft: 0, fontSize: 12 }}>
+            За подробна информация натиснете името на оценителя
+          </span>
+        ) : (
+          <></>
+        )}
         <div
           style={{
             display: "flex",
@@ -770,7 +802,14 @@ const BarTable = () => {
               <Dropdown.Button flat color="warning" size="xl">
                 {selectedValue}
               </Dropdown.Button>
-              <Dropdown.Menu aria-label="Single selection actions" color="warning" disallowEmptySelection selectionMode="single" selectedKeys={selected} onSelectionChange={setSelected}>
+              <Dropdown.Menu
+                aria-label="Single selection actions"
+                color="warning"
+                disallowEmptySelection
+                selectionMode="single"
+                selectedKeys={selected}
+                onSelectionChange={setSelected}
+              >
                 <Dropdown.Item key="10">
                   <span style={{ fontSize: 14 }}>10</span>
                 </Dropdown.Item>

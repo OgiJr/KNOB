@@ -4,7 +4,6 @@ import SEO from "../../common/SEO";
 import Layout from "../../common/Layout";
 import BreadcrumbOne from "../../elements/breadcrumb/BreadcrumbOne";
 import BlogProp from "./itemProp/BlogProp";
-import SideCategories from "./sidebar/SideCategories";
 import SidebarPost from "./sidebar/SidebarPost";
 import SidebarTag from "./sidebar/SidebarTag";
 import SidebarArchive from "./sidebar/SidebarArchive";
@@ -15,7 +14,12 @@ const BlogGridSidebar = () => {
       <SEO title="Blog Grid Sidebar || Doob - React Business  Template" />
 
       <Layout>
-        <BreadcrumbOne title="The Easiest Way To Create Website <br /> Quick Copy & Make site." rootUrl="/" parentUrl="Home" currentUrl="Blog Grid Sidebar" />
+        <BreadcrumbOne
+          title="The Easiest Way To Create Website <br /> Quick Copy & Make site."
+          rootUrl="/"
+          parentUrl="Home"
+          currentUrl="Blog Grid Sidebar"
+        />
         <div className="main-content">
           {/* Start Blog Area  */}
           <div className="rn-blog-area rn-section-gap">

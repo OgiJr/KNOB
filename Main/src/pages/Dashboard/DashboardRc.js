@@ -159,7 +159,15 @@ const DashboardRc = () => {
           </Button>
           <div style={{ display: "flex", flexDirection: "column", width: "100%", justifyContent: "center" }}>
             {regions.map((item) => (
-              <div style={{ display: "flex", flexDirection: "column", marginLeft: 100, marginRight: 100, marginBottom: 50 }}>
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  marginLeft: 100,
+                  marginRight: 100,
+                  marginBottom: 50,
+                }}
+              >
                 <h3>{item.name}</h3>
                 <Table
                   css={{
@@ -185,7 +193,15 @@ const DashboardRc = () => {
                                 setVisibleEdit(true);
                               }}
                             >
-                              {item.chair === "Не" ? <span style={{ color: "black", fontSize: 14, fontWeight: "normal" }}>{item[columnKey]}</span> : <span style={{ color: "orange", fontSize: 14, fontWeight: "normal" }}>{item[columnKey]}</span>}
+                              {item.chair === "Не" ? (
+                                <span style={{ color: "black", fontSize: 14, fontWeight: "normal" }}>
+                                  {item[columnKey]}
+                                </span>
+                              ) : (
+                                <span style={{ color: "orange", fontSize: 14, fontWeight: "normal" }}>
+                                  {item[columnKey]}
+                                </span>
+                              )}
                             </span>
                           </Table.Cell>
                         )}

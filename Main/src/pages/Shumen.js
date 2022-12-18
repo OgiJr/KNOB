@@ -4,7 +4,6 @@ import Header from "../common/header/Header";
 import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
 import Copyright from "../common/footer/Copyright";
 import "../assets/scss/elements/bar.scss";
-import BarTable from "../components/table/barTable";
 import { Card, Text } from "@nextui-org/react";
 
 const Shumen = () => {
@@ -24,7 +23,11 @@ const Shumen = () => {
         <Header btnStyle="btn-small round btn-icon" HeaderSTyle="" />
 
         {/* Start Slider Area  */}
-        <div className="slider-area slider-style-1 height-850 bg_image" data-black-overlay="2" style={{ backgroundImage: `url(${process.env.PUBLIC_URL}/images/banner/shumen.jpg)` }}>
+        <div
+          className="slider-area slider-style-1 height-850 bg_image"
+          data-black-overlay="2"
+          style={{ backgroundImage: `url(${process.env.PUBLIC_URL}/images/banner/shumen.jpg)` }}
+        >
           <div className="container">
             <div className="row">
               <div className="col-lg-12">
@@ -68,7 +71,12 @@ const Shumen = () => {
                           <div className="rn-tab-content">
                             <div className="inner">
                               Официален сайт на Регионална колегия - Шумен, Търговище, Разград: <br />
-                              <a style={{ color: "blue" }} href="https://www.ciab-shumen.com" target="_blank" rel="noreffer">
+                              <a
+                                style={{ color: "blue" }}
+                                href="https://www.ciab-shumen.com"
+                                target="_blank"
+                                rel="noreffer noreferrer"
+                              >
                                 www.ciab-shumen .com
                               </a>
                               <br />

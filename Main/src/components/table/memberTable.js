@@ -1,11 +1,21 @@
 import React from "react";
-import { Modal, Button, Dropdown, Input, Pagination, Table, Row, Card } from "@nextui-org/react";
+import { Modal, Button, Dropdown, Input, Pagination, Table } from "@nextui-org/react";
 import "../../assets/scss/table.scss";
 import Header from "../../common/header/Header";
 import SEO from "../../common/SEO";
 
 const cities = [{ name: "с. Дряново" }, { name: "Айтос" }, { name: "Аксаково" }, { name: "Априлци" }];
-const capacities = [{ name: "Недвижими имоти" }, { name: "Недвижими културни ценности" }, { name: "Машини и съоражения" }, { name: "Права на интелектуална и индустриална собственост" }, { name: "Търговски предприятия и вземания" }, { name: "Финансови активи и фанансови институции" }, { name: "Други активи" }, { name: "Земеделски земи и трайни насъждения" }, { name: "Поземлени имоти в горски територии" }];
+const capacities = [
+  { name: "Недвижими имоти" },
+  { name: "Недвижими културни ценности" },
+  { name: "Машини и съоражения" },
+  { name: "Права на интелектуална и индустриална собственост" },
+  { name: "Търговски предприятия и вземания" },
+  { name: "Финансови активи и фанансови институции" },
+  { name: "Други активи" },
+  { name: "Земеделски земи и трайни насъждения" },
+  { name: "Поземлени имоти в горски територии" },
+];
 
 //Start people variables
 const columnsPeople = [
@@ -35,15 +45,45 @@ const columnsPeople = [
   },
 ];
 const rowsPeople = [
-  { key: "1", id: "1", name: "Атанас Иванов Димов", member: "Да", city: "Ямбол", mobile: "0898634582", phone: "046663637", capacity: "Поземлени имоти в горски територии", certificateNumber: "820100133 (6.2.2012 г.)", address: "Ямбол 8600, ул. Христо Смирненски", speciality: "Горско стопанство", expirience: "ЗГ-1999", education: "висше(ВЛТИ-София)" },
-  { key: "2", id: "2", name: "Иван Димитров Димов", member: "Да", city: "Бургас", mobile: "0888276526", phone: "", capacity: "Земеделски земи и трайни насаждения, Машини и съоръжения, Недвижими имоти, Търговски предприятия и вземания", certificateNumber: "810100079 (30.12.2010 г.) , 300100303 (14.12.2009 г.) , 100100786 (14.12.2009 г.) , 500100271 (14.12.2009 г.)", address: "Бургас 8001, ж.к. Братя Миладинови", speciality: "Счетоводство и контрол", expirience: "НИ-2005 МС-2005 ТП-2008 ЗЗ-2009", education: "висше (БСУ - Бургас)" },
+  {
+    key: "1",
+    id: "1",
+    name: "Атанас Иванов Димов",
+    member: "Да",
+    city: "Ямбол",
+    mobile: "0898634582",
+    phone: "046663637",
+    capacity: "Поземлени имоти в горски територии",
+    certificateNumber: "820100133 (6.2.2012 г.)",
+    address: "Ямбол 8600, ул. Христо Смирненски",
+    speciality: "Горско стопанство",
+    expirience: "ЗГ-1999",
+    education: "висше(ВЛТИ-София)",
+  },
+  {
+    key: "2",
+    id: "2",
+    name: "Иван Димитров Димов",
+    member: "Да",
+    city: "Бургас",
+    mobile: "0888276526",
+    phone: "",
+    capacity:
+      "Земеделски земи и трайни насаждения, Машини и съоръжения, Недвижими имоти, Търговски предприятия и вземания",
+    certificateNumber:
+      "810100079 (30.12.2010 г.) , 300100303 (14.12.2009 г.) , 100100786 (14.12.2009 г.) , 500100271 (14.12.2009 г.)",
+    address: "Бургас 8001, ж.к. Братя Миладинови",
+    speciality: "Счетоводство и контрол",
+    expirience: "НИ-2005 МС-2005 ТП-2008 ЗЗ-2009",
+    education: "висше (БСУ - Бургас)",
+  },
 ];
 //End people variables
 
 const MemberTable = () => {
   const [selected, setSelected] = React.useState(new Set(["50"]));
   const [visible, setVisible] = React.useState(false);
-  const [tableType, setTableType] = React.useState("people");
+  const [tableType] = React.useState("people");
 
   //Start people variables
   const [name, setName] = React.useState("");
@@ -116,7 +156,15 @@ const MemberTable = () => {
         <p style={{ fontSize: 16, fontWeight: "bold", marginTop: 15, marginLeft: 15, marginBottom: 10 }}>Филтър</p>
         <form className="filter" style={{ display: "flex", marginLeft: 15, gap: 30 }}>
           <div style={{ display: "flex", flexDirection: "column " }}>
-            {tableType == "people" ? <Input style={{ background: "white", margin: 0, fontSize: 16 }} size="xl" labelPlaceholder="Име, презиме и фамилия" /> : <Input style={{ background: "white", margin: 0, fontSize: 16 }} size="xl" labelPlaceholder="Фирма" />}
+            {tableType === "people" ? (
+              <Input
+                style={{ background: "white", margin: 0, fontSize: 16 }}
+                size="xl"
+                labelPlaceholder="Име, презиме и фамилия"
+              />
+            ) : (
+              <Input style={{ background: "white", margin: 0, fontSize: 16 }} size="xl" labelPlaceholder="Фирма" />
+            )}
             <Dropdown placement="bottom-left">
               <Dropdown.Button flat style={{ marginTop: 30 }} color="warning">
                 Град
@@ -143,7 +191,11 @@ const MemberTable = () => {
                 )}
               </Dropdown.Menu>
             </Dropdown>
-            <Input style={{ background: "white", margin: 0, fontSize: 16 }} size="xl" labelPlaceholder="Сертификат №:" />
+            <Input
+              style={{ background: "white", margin: 0, fontSize: 16 }}
+              size="xl"
+              labelPlaceholder="Сертификат №:"
+            />
           </div>
           <div style={{ display: "flex", alignItems: "center" }}>
             <Button style={{ fontSize: 14, height: 30 }} type="submit" color="warning">
@@ -151,14 +203,23 @@ const MemberTable = () => {
             </Button>
           </div>
         </form>
-        <span style={{ marginTop: 20, marginLeft: 0, fontSize: 12 }}>За подробна информация натиснете името на оценителя</span>
+        <span style={{ marginTop: 20, marginLeft: 0, fontSize: 12 }}>
+          За подробна информация натиснете името на оценителя
+        </span>
         <div style={{ display: "flex", flexDirection: "row", justifyContent: "end", selfAlign: "end" }}>
           <div style={{ display: "flex", flexDirection: "row", alignItems: "center", gap: 20, marginTop: 20 }}>
             <Dropdown>
               <Dropdown.Button flat color="warning" size="xl">
                 {selectedValue}
               </Dropdown.Button>
-              <Dropdown.Menu aria-label="Single selection actions" color="warning" disallowEmptySelection selectionMode="single" selectedKeys={selected} onSelectionChange={setSelected}>
+              <Dropdown.Menu
+                aria-label="Single selection actions"
+                color="warning"
+                disallowEmptySelection
+                selectionMode="single"
+                selectedKeys={selected}
+                onSelectionChange={setSelected}
+              >
                 <Dropdown.Item key="10">
                   <span style={{ fontSize: 14 }}>10</span>
                 </Dropdown.Item>

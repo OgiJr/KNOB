@@ -13,7 +13,7 @@ const RevRegistry = () => {
 
   useEffect(() => {
     setVisibleItems(getAllItems.filter((item) => item.id));
-  }, []);
+  }, [getAllItems, setVisibleItems]);
 
   return (
     <>
@@ -21,7 +21,17 @@ const RevRegistry = () => {
       <main className="page-wrapper">
         <Header btnStyle="btn-small round btn-icon" HeaderSTyle="" />
         <br />
-        <div style={{ display: "flex", flexDirection: "column", marginLeft: 20, gap: 20, alignContent: "center", alignItems: "center", justifyContent: "center" }}>
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            marginLeft: 20,
+            gap: 20,
+            alignContent: "center",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
           <span style={{ color: "black", fontWeight: "bold" }}>Филтрирайте по име, град и номер на сертификата</span>
           <Input placeholder="Име" style={{ margin: 0, background: "white" }} width={300} />
           <Input placeholder="Град" style={{ margin: 0, background: "white" }} width={300} />

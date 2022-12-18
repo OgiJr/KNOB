@@ -82,7 +82,16 @@ const DashboardLiterature = () => {
       <SEO title="Административен панел" />
       <main className="page-wrapper">
         <HeaderAdmin btnStyle="btn-small round btn-icon" />
-        <div style={{ display: "flex", height: "90vh", flexDirection: "column", alignItems: "center", justifyItems: "center", justifyContent: "center" }}>
+        <div
+          style={{
+            display: "flex",
+            height: "90vh",
+            flexDirection: "column",
+            alignItems: "center",
+            justifyItems: "center",
+            justifyContent: "center",
+          }}
+        >
           <Button size="xl" color="warning" style={{ width: 200 }} onPress={() => setVisibleAdd(true)}>
             Добавете новина
           </Button>

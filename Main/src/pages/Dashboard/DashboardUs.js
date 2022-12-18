@@ -107,7 +107,15 @@ const DashboardUs = () => {
       <SEO title="Административен панел" />
       <main className="page-wrapper">
         <HeaderAdmin btnStyle="btn-small round btn-icon" />
-        <div style={{ display: "flex", flexDirection: "column", alignItems: "center", height: "90vh", justifyContent: "center" }}>
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            height: "90vh",
+            justifyContent: "center",
+          }}
+        >
           <Button size="xl" color="warning" style={{ width: 200 }} onPress={() => setVisibleAdd(true)}>
             Добавете член
           </Button>
@@ -136,7 +144,15 @@ const DashboardUs = () => {
                             setVisibleEdit(true);
                           }}
                         >
-                          {item.chair === "Не" ? <span style={{ color: "black", fontSize: 14, fontWeight: "normal" }}>{item[columnKey]}</span> : <span style={{ color: "orange", fontSize: 14, fontWeight: "normal" }}>{item[columnKey]}</span>}
+                          {item.chair === "Не" ? (
+                            <span style={{ color: "black", fontSize: 14, fontWeight: "normal" }}>
+                              {item[columnKey]}
+                            </span>
+                          ) : (
+                            <span style={{ color: "orange", fontSize: 14, fontWeight: "normal" }}>
+                              {item[columnKey]}
+                            </span>
+                          )}
                         </span>
                       </Table.Cell>
                     )}

@@ -148,7 +148,9 @@ const ContactOne = () => {
           <Card css={{ p: "$6" }} isHoverable isPressable>
             <Card.Header>
               <img alt="nextui logo" src="images/icons/map.png" width="34px" height="34px" />
-              <Text style={{ fontWeight: "bold", marginTop: "27px" }}>Годишна вноска на основание чл.10, ал. 8 от Кодекс за професионална етика</Text>
+              <Text style={{ fontWeight: "bold", marginTop: "27px" }}>
+                Годишна вноска на основание чл.10, ал. 8 от Кодекс за професионална етика
+              </Text>
             </Card.Header>
             <Card.Body css={{ py: "$2" }}>
               <Text>

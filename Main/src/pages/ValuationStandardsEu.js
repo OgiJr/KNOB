@@ -7,7 +7,8 @@ import NormativeData from "../data/acts/normativeList.json";
 import "../assets/scss/elements/normative.scss";
 
 const ValuationStandardsEu = () => {
-  const fileNameEnglish = " Bulgarian Valuation Standards are mandatory for implementation in the country from 01 June 2018";
+  const fileNameEnglish =
+    " Bulgarian Valuation Standards are mandatory for implementation in the country from 01 June 2018";
   const fileUrlEnglish = "/uploaded/Normative/ValuationStandards.pdf";
   const dateEnglish = "02.05.2018";
 
@@ -23,7 +24,7 @@ const ValuationStandardsEu = () => {
 
   useEffect(() => {
     setVisibleItems(getAllItems.filter((item) => item.id));
-  }, []);
+  }, [setVisibleItems, getAllItems]);
 
   return (
     <>
@@ -35,28 +36,45 @@ const ValuationStandardsEu = () => {
           <h1 style={{ textAlign: "center" }}>Европейски стандарти за оценяване</h1>
           <div style={{ display: "flex", flexDirection: "row" }}>
             <Image src="images/about/standards-2.jpg" width="50%" style={{ borderRadius: 24 }} />
-            <div className="cards" style={{ display: "flex", width: "50%", flexDirection: "column", alignSelf: "center", marginRight: 24 }}>
+            <div
+              className="cards"
+              style={{ display: "flex", width: "50%", flexDirection: "column", alignSelf: "center", marginRight: 24 }}
+            >
               <Card isHoverable style={{ marginTop: 20, display: "flex", alignSelf: "center" }}>
-                <Card.Header>Bulgarian Valuation Standards are mandatory for implementation in the country from 01 June 2018, according to the Independent Valuers Act (IVA). They have been approved by the General Meeting of the Chamber of Independent Appraisers in Bulgaria (CIAB) on 17-18 March in the town of Shumen</Card.Header>
+                <Card.Header>
+                  Bulgarian Valuation Standards are mandatory for implementation in the country from 01 June 2018,
+                  according to the Independent Valuers Act (IVA). They have been approved by the General Meeting of the
+                  Chamber of Independent Appraisers in Bulgaria (CIAB) on 17-18 March in the town of Shumen
+                </Card.Header>
                 <Card.Body>
                   Published: {dateEnglish}
                   <br />
                   <br />
                   Files:
-                  <a href={fileUrlEnglish} style={{ textDecoration: "underline", color: "red", display: "flex", flexDirection: "row" }}>
-                    <img src="images/icons/file.png" style={{ width: 30, height: 30 }} /> {fileNameEnglish}
+                  <a
+                    href={fileUrlEnglish}
+                    style={{ textDecoration: "underline", color: "red", display: "flex", flexDirection: "row" }}
+                  >
+                    <img src="images/icons/file.png" style={{ width: 30, height: 30 }} alt="" /> {fileNameEnglish}
                   </a>
                 </Card.Body>
               </Card>
               <Card isHoverable style={{ marginTop: 10, display: "flex", alignSelf: "center" }}>
-                <Card.Header>Български стандарти за оценяване /БСО/ са задължителни за прилагане в страната от 01.06.2018 г., съгласно Закона за независимите оценители /ЗНО/, приети от Общото събрание на Камарата на независимите оценители в България /КНОБ/ на 17-18 март в гр. Шумен</Card.Header>
+                <Card.Header>
+                  Български стандарти за оценяване /БСО/ са задължителни за прилагане в страната от 01.06.2018 г.,
+                  съгласно Закона за независимите оценители /ЗНО/, приети от Общото събрание на Камарата на независимите
+                  оценители в България /КНОБ/ на 17-18 март в гр. Шумен
+                </Card.Header>
                 <Card.Body>
                   Публикувано: {dateBulgarian}
                   <br />
                   <br />
                   Файлове:
-                  <a href={fileUrlBulgarian} style={{ textDecoration: "underline", color: "red", display: "flex", flexDirection: "row" }}>
-                    <img src="images/icons/file.png" style={{ width: 30, height: 30 }} /> {fileNameBulgarian}
+                  <a
+                    href={fileUrlBulgarian}
+                    style={{ textDecoration: "underline", color: "red", display: "flex", flexDirection: "row" }}
+                  >
+                    <img src="images/icons/file.png" style={{ width: 30, height: 30 }} alt="" /> {fileNameBulgarian}
                   </a>
                 </Card.Body>
               </Card>

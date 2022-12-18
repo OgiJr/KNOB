@@ -20,7 +20,11 @@ const BlogDetailsContent = ({ data }) => {
                       <div style={{ display: "flex", flexAlign: "row", justifyContent: "center" }}>
                         <li>
                           <div style={{ display: "flex", flexDirection: "row" }}>
-                            <img src={`${process.env.PUBLIC_URL}/images/icons/file.png`} alt="File" style={{ width: 20, height: 20, marginTop: 2 }} />
+                            <img
+                              src={`${process.env.PUBLIC_URL}/images/icons/file.png`}
+                              alt="File"
+                              style={{ width: 20, height: 20, marginTop: 2 }}
+                            />
                             <Link to={"#"} style={{ textDecoration: "underlined", color: "orange" }}>
                               {data.fileName}
                             </Link>
@@ -33,7 +37,11 @@ const BlogDetailsContent = ({ data }) => {
                     )}
                   </li>
                   <li>
-                    <img src={`${process.env.PUBLIC_URL}/${data.image}`} style={{ borderRadius: 100, width: 300, height: 300 }}></img>
+                    <img
+                      src={`${process.env.PUBLIC_URL}/${data.image}`}
+                      style={{ borderRadius: 100, width: 300, height: 300 }}
+                      alt="blog"
+                    ></img>
                   </li>
                 </ul>
               </div>

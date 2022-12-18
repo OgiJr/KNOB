@@ -1,9 +1,10 @@
 import React from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import PageScrollTop from "./components/pageToTop/PageScrollTop";
+import { useStoreState } from "pullstate";
+import { AuthStore } from "./stores/AuthStore";
 
 // Pages import Here
-
 import HomeDefault from "./pages/index";
 import ValuationStandards from "./pages/ValuationStandards";
 import Burgas from "./pages/Burgas";
@@ -74,75 +75,116 @@ import DashboardPublicationsKpe from "./pages/Dashboard/DashboardPublicationsKpe
 import DashboardPublicationsOs from "./pages/Dashboard/DashboardPublicationsOs";
 
 const App = () => {
+  const [current_routes, set_current_routes] = React.useState([]);
+
+  const public_routes = [
+    <Route path="/login" exact component={Login} key="/login" />,
+    <Route path="/" exact component={HomeDefault} key="/" />,
+    <Route path="/about-us" exact component={AboutUs} key="/about-us" />,
+    <Route path="/blog-news" exact component={BlogNews} key="/blog-news" />,
+    <Route path="/seminars" exact component={BlogSeminars} key="/seminars" />,
+    <Route path="/courses" exact component={BlogCourses} key="/courses" />,
+    <Route path="/blog-archive" exact component={BlogArchive} key="/blog-archive" />,
+    <Route path="/blog-details/:id" exact component={BlogDetails} key="/blog-details/:id" />,
+    <Route path="/board-of-directors" exact component={Directors} key="/board-of-directors" />,
+    <Route path="/ethics" exact component={Ethics} key="/ethics" />,
+    <Route path="/control-board" exact component={ControlBoard} key="/control-board" />,
+    <Route path="/burgas" exact component={Burgas} key="/burgas" />,
+    <Route path="/varna" exact component={Varna} key="/varna" />,
+    <Route path="/pleven" exact component={Pleven} key="/pleven" />,
+    <Route path="/plovdiv" exact component={Plovdiv} key="/plovdiv" />,
+    <Route path="/ruse" exact component={Ruse} key="/ruse" />,
+    <Route path="/sofia" exact component={Sofia} key="/sofia" />,
+    <Route path="/stara-zagora" exact component={StaraZagora} key="/stara-zagora" />,
+    <Route path="/shumen" exact component={Shumen} key="/shumen" />,
+    <Route path="/normative" exact component={Normative} key="/normative" />,
+    <Route path="/valuation-standards" exact component={ValuationStandards} key="/valuation-standards" />,
+    <Route path="/rev" exact component={Rev} key="/rev" />,
+    <Route path="/helpful-links" exact component={HelpfulLinks} key="/helpful-links" />,
+    <Route path="/contact" exact component={Contact} key="/contact" />,
+    <Route path="/contact" exact component={Contact} key="/contact" />,
+    <Route path="/member-table" exact component={MemberTable} key="/member-table" />,
+    <Route path="/public-registry" exact component={PublicRegistry} key="/public-registry" />,
+    <Route path="/banks" exact component={Banks} key="/banks" />,
+    <Route path="/documents" exact component={Documents} key="/documents" />,
+    <Route path="/qualifications" exact component={BlogQualifications} key="/qualifications" />,
+    <Route path="/qualification-committee" exact component={QualificationCommittee} key="/qualification-committee" />,
+    <Route path="/valuation-standards-eu" exact component={ValuationStandardsEu} key="/valuation-standards-eu" />,
+    <Route path="/rev-registry" exact component={RevRegistry} key="/rev-registry" />,
+    <Route path="/literature" exact component={Literature} key="/literature" />,
+    <Route path="/publications" exact component={Publication} key="/publications" />,
+  ];
+  const guest_routes = [
+    <Route path="/us" exact component={Us} key="/us" />,
+    <Route path="/ks" exact component={Ks} key="/ks" />,
+    <Route path="/kpe" exact component={Kpe} key="/kpe" />,
+    <Route path="/os" exact component={Os} key="/os" />,
+  ];
+  const curator_routes = [
+    <Route path="/dashboard-admin" exact component={DashboardNews} key="/dashboard-admin" />,
+    <Route path="/dashboard-international" exact component={DashboardInternational} key="/dashboard-international" />,
+    <Route path="/dashboard-publications" exact component={DashboardResources} key="/dashboard-publications" />,
+    <Route path="/dashboard-us" exact component={DashboardPublicationsUs} key="/dashboard-us" />,
+    <Route path="/dashboard-ks" exact component={DashboardPublicationsKs} key="/dashboard-ks" />,
+    <Route path="/dashboard-kpe" exact component={DashboardPublicationsKpe} key="/dashboard-kpe" />,
+    <Route path="/dashboard-os" exact component={DashboardPublicationsOs} key="/dashboard-os" />,
+    <Route path="/dashboard-literature" exact component={DashboardLiterature} key="/dashboard-literature" />,
+    <Route path="/members-methodology" exact component={DashboardMethodology} key="/members-methodology" />,
+    <Route path="/members-us" exact component={DashboardUs} key="/members-us" />,
+    <Route path="/members-ks" exact component={DashboardKs} key="/members-ks" />,
+    <Route path="/members-kpe" exact component={DashboardKpe} key="/members-kpe" />,
+    <Route path="/members-rc" exact component={DashboardRc} key="/members-rc" />,
+    <Route path="/dashboard-standards" exact component={DashboardStandards} key="/dashboard-standards" />,
+    <Route path="/dashboard-seminars" exact component={DashboardSeminars} key="/dashboard-seminars" />,
+    <Route
+      path="/dashboard-qualifications"
+      exact
+      component={DashboardQualifications}
+      key="/dashboard-qualifications"
+    />,
+    <Route path="/dashboard-courses" exact component={DashboardCourses} key="/dashboard-courses" />,
+    <Route path="/dashboard-normative" exact component={DashboardNormative} key="/dashboard-normative" />,
+    <Route path="/dashboard-members" exact component={DashboardMembers} key="/dashboard-members" />,
+    <Route path="/dashboard-rev" exact component={DashboardRev} key="/dashboard-rev" />,
+  ];
+  const admin_routes = [
+    <Route path="/dashboard-registry" exact component={DashboardRegistry} key="/dashboard-registry" />,
+    <Route path="/dashboard-companies" exact component={DashboardCompanies} key="/dashboard-companies" />,
+  ];
+
+  const auth_state = useStoreState(AuthStore);
+
+  React.useState(() => {
+    set_current_routes(public_routes);
+    console.log(auth_state);
+
+    if (auth_state.is_logged_in) {
+      console.log("User is logged in");
+      set_current_routes(curator_routes.concat(guest_routes));
+    }
+
+    if (auth_state.user_type === "Curator") {
+      console.log("User is curator");
+      set_current_routes(curator_routes.concat(curator_routes));
+    }
+
+    if (auth_state.user_type === "Admin") {
+      console.log("User is admin");
+      set_current_routes(curator_routes.concat(curator_routes));
+      set_current_routes(curator_routes.concat(admin_routes));
+    }
+
+    set_current_routes(curator_routes.concat(<Route component={() => <>Not Found!</>} />));
+  }, [auth_state, set_current_routes, current_routes]);
+
   return (
     <Router>
       <PageScrollTop>
         <Switch>
-          {/* Frontend pages */}
-          <Route path={`${process.env.PUBLIC_URL + "/"}`} exact component={HomeDefault} />
-          <Route path={`${process.env.PUBLIC_URL + "/about-us"}`} exact component={AboutUs} />
-          <Route path={`${process.env.PUBLIC_URL + "/blog-news"}`} exact component={BlogNews} />
-          <Route path={`${process.env.PUBLIC_URL + "/seminars"}`} exact component={BlogSeminars} />
-          <Route path={`${process.env.PUBLIC_URL + "/courses"}`} exact component={BlogCourses} />
-          <Route path={`${process.env.PUBLIC_URL + "/blog-archive"}`} exact component={BlogArchive} />
-          <Route path={`${process.env.PUBLIC_URL + "/blog-details/:id"}`} exact component={BlogDetails} />
-          <Route path={`${process.env.PUBLIC_URL + "/board-of-directors"}`} exact component={Directors} />
-          <Route path={`${process.env.PUBLIC_URL + "/ethics"}`} exact component={Ethics} />
-          <Route path={`${process.env.PUBLIC_URL + "/control-board"}`} exact component={ControlBoard} />
-          <Route path={`${process.env.PUBLIC_URL + "/burgas"}`} exact component={Burgas} />
-          <Route path={`${process.env.PUBLIC_URL + "/varna"}`} exact component={Varna} />
-          <Route path={`${process.env.PUBLIC_URL + "/pleven"}`} exact component={Pleven} />
-          <Route path={`${process.env.PUBLIC_URL + "/plovdiv"}`} exact component={Plovdiv} />
-          <Route path={`${process.env.PUBLIC_URL + "/ruse"}`} exact component={Ruse} />
-          <Route path={`${process.env.PUBLIC_URL + "/sofia"}`} exact component={Sofia} />
-          <Route path={`${process.env.PUBLIC_URL + "/stara-zagora"}`} exact component={StaraZagora} />
-          <Route path={`${process.env.PUBLIC_URL + "/shumen"}`} exact component={Shumen} />
-          <Route path={`${process.env.PUBLIC_URL + "/normative"}`} exact component={Normative} />
-          <Route path={`${process.env.PUBLIC_URL + "/valuation-standards"}`} exact component={ValuationStandards} />
-          <Route path={`${process.env.PUBLIC_URL + "/rev"}`} exact component={Rev} />
-          <Route path={`${process.env.PUBLIC_URL + "/helpful-links"}`} exact component={HelpfulLinks} />
-          <Route path={`${process.env.PUBLIC_URL + "/contact"}`} exact component={Contact} />
-          <Route path={`${process.env.PUBLIC_URL + "/contact"}`} exact component={Contact} />
-          <Route path={`${process.env.PUBLIC_URL + "/member-table"}`} exact component={MemberTable} />
-          <Route path={`${process.env.PUBLIC_URL + "/public-registry"}`} exact component={PublicRegistry} />
-          <Route path={`${process.env.PUBLIC_URL + "/banks"}`} exact component={Banks} />
-          <Route path={`${process.env.PUBLIC_URL + "/documents"}`} exact component={Documents} />
-          <Route path={`${process.env.PUBLIC_URL + "/qualifications"}`} exact component={BlogQualifications} />
-          <Route path={`${process.env.PUBLIC_URL + "/qualification-committee"}`} exact component={QualificationCommittee} />
-          <Route path={`${process.env.PUBLIC_URL + "/valuation-standards-eu"}`} exact component={ValuationStandardsEu} />
-          <Route path={`${process.env.PUBLIC_URL + "/rev-registry"}`} exact component={RevRegistry} />
-          <Route path={`${process.env.PUBLIC_URL + "/literature"}`} exact component={Literature} />
-          <Route path={`${process.env.PUBLIC_URL + "/publications"}`} exact component={Publication} />
-          <Route path={`${process.env.PUBLIC_URL + "/us"}`} exact component={Us} />
-          <Route path={`${process.env.PUBLIC_URL + "/ks"}`} exact component={Ks} />
-          <Route path={`${process.env.PUBLIC_URL + "/kpe"}`} exact component={Kpe} />
-          <Route path={`${process.env.PUBLIC_URL + "/os"}`} exact component={Os} />
-          {/* Frontend pages end*/}
-          {/* Backend pages start*/}
-          <Route path={`${process.env.PUBLIC_URL + "/dashboard-admin"}`} exact component={DashboardNews} />
-          <Route path={`${process.env.PUBLIC_URL + "/dashboard-international"}`} exact component={DashboardInternational} />
-          <Route path={`${process.env.PUBLIC_URL + "/dashboard-publications"}`} exact component={DashboardResources} />
-          <Route path={`${process.env.PUBLIC_URL + "/dashboard-us"}`} exact component={DashboardPublicationsUs} />
-          <Route path={`${process.env.PUBLIC_URL + "/dashboard-ks"}`} exact component={DashboardPublicationsKs} />
-          <Route path={`${process.env.PUBLIC_URL + "/dashboard-kpe"}`} exact component={DashboardPublicationsKpe} />
-          <Route path={`${process.env.PUBLIC_URL + "/dashboard-os"}`} exact component={DashboardPublicationsOs} />
-          <Route path={`${process.env.PUBLIC_URL + "/dashboard-literature"}`} exact component={DashboardLiterature} />
-          <Route path={`${process.env.PUBLIC_URL + "/members-methodology"}`} exact component={DashboardMethodology} />
-          <Route path={`${process.env.PUBLIC_URL + "/members-us"}`} exact component={DashboardUs} />
-          <Route path={`${process.env.PUBLIC_URL + "/members-ks"}`} exact component={DashboardKs} />
-          <Route path={`${process.env.PUBLIC_URL + "/members-kpe"}`} exact component={DashboardKpe} />
-          <Route path={`${process.env.PUBLIC_URL + "/members-rc"}`} exact component={DashboardRc} />
-          <Route path={`${process.env.PUBLIC_URL + "/dashboard-standards"}`} exact component={DashboardStandards} />
-          <Route path={`${process.env.PUBLIC_URL + "/login"}`} exact component={Login} />
-          <Route path={`${process.env.PUBLIC_URL + "/dashboard-seminars"}`} exact component={DashboardSeminars} />
-          <Route path={`${process.env.PUBLIC_URL + "/dashboard-qualifications"}`} exact component={DashboardQualifications} />
-          <Route path={`${process.env.PUBLIC_URL + "/dashboard-courses"}`} exact component={DashboardCourses} />
-          <Route path={`${process.env.PUBLIC_URL + "/dashboard-normative"}`} exact component={DashboardNormative} />
-          <Route path={`${process.env.PUBLIC_URL + "/dashboard-members"}`} exact component={DashboardMembers} />
-          <Route path={`${process.env.PUBLIC_URL + "/dashboard-registry"}`} exact component={DashboardRegistry} />
-          <Route path={`${process.env.PUBLIC_URL + "/dashboard-companies"}`} exact component={DashboardCompanies} />
-          <Route path={`${process.env.PUBLIC_URL + "/dashboard-rev"}`} exact component={DashboardRev} />
-          {/*Backend pages end */}
+          {current_routes.map((x) => {
+            console.log(x.props.path);
+            return x;
+          })}
         </Switch>
       </PageScrollTop>
     </Router>

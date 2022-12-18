@@ -11,14 +11,25 @@ const AccordionAbout = () => {
     <>
       <SEO title="Accordion || Doob - React Business  Template" />
       <Layout>
-        <BreadcrumbOne title="The Easiest Way To Create Website <br /> Quick Copy & Make site." rootUrl="/" parentUrl="Home" currentUrl="Accordion" />
+        <BreadcrumbOne
+          title="The Easiest Way To Create Website <br /> Quick Copy & Make site."
+          rootUrl="/"
+          parentUrl="Home"
+          currentUrl="Accordion"
+        />
         <div className="main-content">
           {/* Start Accordion Area  */}
           <div className="rn-accordion-area rn-section-gap">
             <div className="container">
               <div className="row">
                 <div className="col-lg-10 offset-lg-1">
-                  <SectionTitle textAlign="text-center" radiusRounded="" subtitle="Accordion" title="Customize All" description="" />
+                  <SectionTitle
+                    textAlign="text-center"
+                    radiusRounded=""
+                    subtitle="Accordion"
+                    title="Customize All"
+                    description=""
+                  />
                 </div>
               </div>
               <div className="row mt--35 row--20">
@@ -36,7 +47,13 @@ const AccordionAbout = () => {
             <div className="container">
               <div className="row">
                 <div className="col-lg-10 offset-lg-1">
-                  <SectionTitle textAlign="text-center" radiusRounded="" subtitle="Accordion" title="Customize All" description="" />
+                  <SectionTitle
+                    textAlign="text-center"
+                    radiusRounded=""
+                    subtitle="Accordion"
+                    title="Customize All"
+                    description=""
+                  />
                 </div>
               </div>
               <div className="row mt--35 row--20">
@@ -54,7 +71,13 @@ const AccordionAbout = () => {
             <div className="container">
               <div className="row">
                 <div className="col-lg-10 offset-lg-1">
-                  <SectionTitle textAlign="text-center" radiusRounded="" subtitle="Accordion" title="Customize All" description="" />
+                  <SectionTitle
+                    textAlign="text-center"
+                    radiusRounded=""
+                    subtitle="Accordion"
+                    title="Customize All"
+                    description=""
+                  />
                 </div>
               </div>
               <div className="row mt--35 row--20">
@@ -72,7 +95,13 @@ const AccordionAbout = () => {
             <div className="container">
               <div className="row">
                 <div className="col-lg-10 offset-lg-1">
-                  <SectionTitle textAlign="text-center" radiusRounded="" subtitle="Accordion" title="Customize All" description="" />
+                  <SectionTitle
+                    textAlign="text-center"
+                    radiusRounded=""
+                    subtitle="Accordion"
+                    title="Customize All"
+                    description=""
+                  />
                 </div>
               </div>
               <div className="row mt--35 row--20">

@@ -15,7 +15,13 @@ const Contact = () => {
             <div className="container">
               <div className="row">
                 <div className="col-lg-12 mb--40">
-                  <SectionTitle textAlign="text-center" radiusRounded="" subtitle="Контактна Форма" title="Контакти" description="Ние ценим Вашите комплименти, оплаквания и предложения. Надяваме се да получим обратна връзка от Вас." />
+                  <SectionTitle
+                    textAlign="text-center"
+                    radiusRounded=""
+                    subtitle="Контактна Форма"
+                    title="Контакти"
+                    description="Ние ценим Вашите комплименти, оплаквания и предложения. Надяваме се да получим обратна връзка от Вас."
+                  />
                 </div>
               </div>
               <ContactOne />

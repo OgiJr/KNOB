@@ -1,29 +1,9 @@
 import SEO from "../../common/SEO";
 import HeaderAdmin from "../../common/header/HeaderAdmin";
 import Copyright from "../../common/footer/Copyright";
-import { Button, Card, Dropdown, Input, Modal, Table } from "@nextui-org/react";
+import { Button, Card, Dropdown, Input, Modal } from "@nextui-org/react";
 import { Form } from "react-bootstrap";
 import React from "react";
-
-const columns = [
-  {
-    key: "name",
-    label: "Имена",
-  },
-  {
-    key: "email",
-    label: "Имейл",
-  },
-  {
-    key: "chair",
-    label: "Председател",
-  },
-];
-
-const rows = [
-  { key: "1", name: "Цанко Спасовски", email: "office@ciab-bg.com", chair: "Да" },
-  { key: "2", name: "Иван Иванов", email: "office@ciab-bg.com", chair: "Не" },
-];
 
 const DashboardStandards = () => {
   const [visibleEdit, setVisibleEdit] = React.useState(false);
@@ -71,7 +51,15 @@ const DashboardStandards = () => {
       <SEO title="Административен панел" />
       <main className="page-wrapper">
         <HeaderAdmin btnStyle="btn-small round btn-icon" />
-        <div style={{ display: "flex", flexDirection: "column", alignItems: "center", height: "90vh", justifyContent: "center" }}>
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            height: "90vh",
+            justifyContent: "center",
+          }}
+        >
           <div style={{ display: "flex", width: "100%", justifyContent: "center", marginTop: 50, marginBottom: 50 }}>
             <Card style={{ marginLeft: 50, marginRight: 50 }}>
               <Card.Header>Европейски стандарти</Card.Header>

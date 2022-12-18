@@ -19,7 +19,10 @@ const Documents = () => {
                 <Text style={{ fontWeight: "bold", marginTop: "27px" }}>За членски внос</Text>
               </Card.Header>
               <Card.Body css={{ py: "$2" }} style={{ marginLeft: 30 }}>
-                <a href="/uploaded/Documents/Анкетна карта.xls" style={{ color: "orange", textDecoration: "underline" }}>
+                <a
+                  href="/uploaded/Documents/Анкетна карта.xls"
+                  style={{ color: "orange", textDecoration: "underline" }}
+                >
                   Анкетна карта
                 </a>
                 <br />

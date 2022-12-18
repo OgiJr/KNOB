@@ -1,7 +1,7 @@
 import SEO from "../../common/SEO";
 import HeaderAdmin from "../../common/header/HeaderAdmin";
 import Copyright from "../../common/footer/Copyright";
-import { Button, Input, Modal, Table, Textarea } from "@nextui-org/react";
+import { Button, Input, Modal, Table } from "@nextui-org/react";
 import { Form } from "react-bootstrap";
 import React from "react";
 
@@ -16,7 +16,14 @@ const columns = [
   },
 ];
 
-const rows = [{ key: "1", title: "Вписване в „Регистъра на независимите оценители” на успешно издържалите изпита по „Земеделски земи и трайни насаждения”", date: "17.11.2022г." }];
+const rows = [
+  {
+    key: "1",
+    title:
+      "Вписване в „Регистъра на независимите оценители” на успешно издържалите изпита по „Земеделски земи и трайни насаждения”",
+    date: "17.11.2022г.",
+  },
+];
 
 const DashboardNormative = () => {
   const [visibleAdd, setVisibleAdd] = React.useState(false);
