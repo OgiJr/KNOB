@@ -35,9 +35,6 @@ const DashboardRev = () => {
           <Modal.Body>
             <div style={{ display: "flex", flexDirection: "column", alignSelf: "center" }}>
               <div style={{ marginTop: 20 }}>
-                <Input placeholder="Сертификат №" style={{ background: "white", margin: 0 }} />
-              </div>
-              <div style={{ marginTop: 20 }}>
                 <Input placeholder="Имена на български" style={{ background: "white", margin: 0 }} />
               </div>
               <div style={{ marginTop: 20 }}>
