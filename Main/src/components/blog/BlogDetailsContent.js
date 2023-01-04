@@ -15,18 +15,25 @@ const BlogDetailsContent = ({ data }) => {
                 </div>
                 <ul className="rn-meta-list">
                   <li>
-                    {data.date}
-                    {data.fileName !== "" ? (
+                    {new Date(data.timestamp).toLocaleString("bg-BG", {
+                      year: "numeric",
+                      month: "long",
+                      day: "numeric",
+                    })}
+                    {data.file ? (
                       <div style={{ display: "flex", flexAlign: "row", justifyContent: "center" }}>
                         <li>
                           <div style={{ display: "flex", flexDirection: "row" }}>
                             <img
-                              src={`${process.env.PUBLIC_URL}/images/icons/file.png`}
+                              src={`/images/icons/file.png`}
                               alt="File"
                               style={{ width: 20, height: 20, marginTop: 2 }}
                             />
-                            <Link to={"#"} style={{ textDecoration: "underlined", color: "orange" }}>
-                              {data.fileName}
+                            <Link
+                              to={`${process.env.REACT_APP_API_URL}/${data.file.path}`}
+                              style={{ textDecoration: "underlined", color: "orange" }}
+                            >
+                              {data.file.name}
                             </Link>
                           </div>
                         </li>
@@ -38,7 +45,7 @@ const BlogDetailsContent = ({ data }) => {
                   </li>
                   <li>
                     <img
-                      src={`${process.env.PUBLIC_URL}/${data.image}`}
+                      src={`${process.env.REACT_APP_API_URL}/${data.picture.path}`}
                       style={{ borderRadius: 100, width: 300, height: 300 }}
                       alt="blog"
                     ></img>
@@ -55,9 +62,10 @@ const BlogDetailsContent = ({ data }) => {
             <div className="col-lg-10" style={{ alignSelf: "center" }}>
               <Card isHoverable isPressable>
                 <div className="content" style={{ margin: "30px" }}>
-                  {data.body.map((value, i) => {
+                  {data.description}
+                  {/* {data.body.map((value, i) => {
                     return <div key={i} dangerouslySetInnerHTML={{ __html: value }} />;
-                  })}
+                  })} */}
                   {/* 
                 <div className="category-meta">
                   <span className="text">Tags:</span>

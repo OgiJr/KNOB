@@ -13,7 +13,7 @@ const HomeDefault = () => {
         {/* Start Slider Area  */}
         <div
           className="slider-area slider-style-1 variation-default height-850 bg_image"
-          style={{ backgroundImage: `url(${process.env.PUBLIC_URL}/images/bg/main-banner-2.jpg)`, height: "auto" }}
+          style={{ backgroundImage: `url(/images/bg/main-banner-2.jpg)`, height: "auto" }}
         >
           <div className="container">
             <div className="row">

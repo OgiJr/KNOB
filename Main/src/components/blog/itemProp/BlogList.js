@@ -32,7 +32,7 @@ const BlogList = ({ data, StyleVar }) => {
         </Card.Header>
         <Card.Body>
           <img
-            src={`${process.env.PUBLIC_URL}/${data.image}`}
+            src={`/${data.image}`}
             alt="Blog"
             style={{ height: 300, width: 300, alignSelf: "center", borderRadius: 50 }}
           />

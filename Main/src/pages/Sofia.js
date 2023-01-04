@@ -26,7 +26,7 @@ const Sofia = () => {
         <div
           className="slider-area slider-style-1 height-850 bg_image"
           data-black-overlay="2"
-          style={{ backgroundImage: `url(${process.env.PUBLIC_URL}/images/about/banner.jpg)` }}
+          style={{ backgroundImage: `url(/images/about/banner.jpg)` }}
         >
           <div className="container">
             <div className="row">

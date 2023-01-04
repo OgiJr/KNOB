@@ -4,6 +4,14 @@ import PageScrollTop from "./components/pageToTop/PageScrollTop";
 import { useStoreState } from "pullstate";
 import { AuthStore } from "./stores/AuthStore";
 
+// Import Css Here
+import "./assets/scss/style.scss";
+import "./assets/scss/elements/accents.scss";
+import "./assets/scss/elements/bar.scss";
+import "./assets/scss/elements/normative.scss";
+import "./assets/scss/elements/rev.scss";
+import "./assets/scss/table.scss";
+
 // Pages import Here
 import HomeDefault from "./pages/index";
 import ValuationStandards from "./pages/ValuationStandards";
@@ -38,14 +46,8 @@ import BlogArchive from "./components/blog/BlogArchive";
 import DashboardRegistry from "./pages/Dashboard/DashboardRegistry";
 import DashboardCompanies from "./pages/Dashboard/DashboardCompanies";
 import BlogSeminars from "./components/blog/BlogSeminars";
+import Custom404 from "./pages/404";
 
-// Import Css Here
-import "./assets/scss/style.scss";
-import "./assets/scss/elements/accents.scss";
-import "./assets/scss/elements/bar.scss";
-import "./assets/scss/elements/normative.scss";
-import "./assets/scss/elements/rev.scss";
-import "./assets/scss/table.scss";
 import BlogCourses from "./components/blog/BlogCourses";
 import BlogQualifications from "./components/blog/BlogQualification";
 import QualificationCommittee from "./pages/QualificationCommittee";
@@ -74,9 +76,9 @@ import DashboardPublicationsKs from "./pages/Dashboard/DashboardPublicationsKs";
 import DashboardPublicationsKpe from "./pages/Dashboard/DashboardPublicationsKpe";
 import DashboardPublicationsOs from "./pages/Dashboard/DashboardPublicationsOs";
 
-const App = () => {
-  const [current_routes, set_current_routes] = React.useState([]);
+require("dotenv").config();
 
+const App = () => {
   const public_routes = [
     <Route path="/login" exact component={Login} key="/login" />,
     <Route path="/" exact component={HomeDefault} key="/" />,
@@ -101,7 +103,6 @@ const App = () => {
     <Route path="/valuation-standards" exact component={ValuationStandards} key="/valuation-standards" />,
     <Route path="/rev" exact component={Rev} key="/rev" />,
     <Route path="/helpful-links" exact component={HelpfulLinks} key="/helpful-links" />,
-    <Route path="/contact" exact component={Contact} key="/contact" />,
     <Route path="/contact" exact component={Contact} key="/contact" />,
     <Route path="/member-table" exact component={MemberTable} key="/member-table" />,
     <Route path="/public-registry" exact component={PublicRegistry} key="/public-registry" />,
@@ -152,40 +153,97 @@ const App = () => {
     <Route path="/dashboard-companies" exact component={DashboardCompanies} key="/dashboard-companies" />,
   ];
 
+  const [current_routes, set_current_routes] = React.useState(public_routes);
+
   const auth_state = useStoreState(AuthStore);
 
   React.useState(() => {
+    if (auth_state.token) {
+      fetch(`${process.env.REACT_APP_API_URL}/api/is-user-logged-in`, {
+        headers: {
+          Authorization: `Bearer ${auth_state.token}`,
+        },
+      })
+        .then((res) => res.json())
+        .then((res) => {
+          console.log(res);
+          if (!res.result) {
+            AuthStore.update((s) => {
+              s.is_logged_in = false;
+              s.user_type = null;
+              s.token = null;
+            });
+          } else {
+            AuthStore.update((s) => {
+              s.is_logged_in = true;
+            });
+          }
+        })
+        .catch(() => {
+          AuthStore.update((s) => {
+            s.is_logged_in = false;
+            s.user_type = null;
+            s.token = null;
+          });
+        });
+      fetch(`${process.env.REACT_APP_API_URL}/api/get-user-type`, {
+        headers: {
+          Authorization: `Bearer ${auth_state.token}`,
+        },
+      })
+        .then((res) => res.json())
+        .then((res) => {
+          if (!res.result) {
+            AuthStore.update((s) => {
+              s.is_logged_in = false;
+              s.user_type = null;
+              s.token = null;
+            });
+          } else {
+            AuthStore.update((s) => {
+              s.user_type = res.resultß;
+            });
+          }
+        })
+        .catch(() => {
+          AuthStore.update((s) => {
+            s.is_logged_in = false;
+            s.user_type = null;
+            s.token = null;
+          });
+        });
+    } else {
+      AuthStore.update((s) => {
+        s.is_logged_in = false;
+        s.user_type = null;
+        s.token = null;
+      });
+    }
+  });
+
+  React.useState(() => {
     set_current_routes(public_routes);
-    console.log(auth_state);
 
     if (auth_state.is_logged_in) {
-      console.log("User is logged in");
-      set_current_routes(curator_routes.concat(guest_routes));
+      set_current_routes(current_routes.concat(guest_routes));
     }
 
     if (auth_state.user_type === "Curator") {
-      console.log("User is curator");
-      set_current_routes(curator_routes.concat(curator_routes));
+      set_current_routes(current_routes.concat(curator_routes));
     }
 
     if (auth_state.user_type === "Admin") {
-      console.log("User is admin");
-      set_current_routes(curator_routes.concat(curator_routes));
-      set_current_routes(curator_routes.concat(admin_routes));
+      set_current_routes(current_routes.concat(curator_routes));
+      set_current_routes(current_routes.concat(admin_routes));
     }
 
-    set_current_routes(curator_routes.concat(<Route component={() => <>Not Found!</>} />));
+    set_current_routes(current_routes.concat(<Route component={Custom404} />));
   }, [auth_state, set_current_routes, current_routes]);
 
   return (
     <Router>
       <PageScrollTop>
-        <Switch>
-          {current_routes.map((x) => {
-            console.log(x.props.path);
-            return x;
-          })}
-        </Switch>
+        <Switch>{current_routes.map((x) => x)}</Switch>
       </PageScrollTop>
     </Router>
   );

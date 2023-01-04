@@ -15,7 +15,7 @@ const AboutUs = () => {
         <div
           className="slider-area slider-style-1 height-850 bg_image"
           data-black-overlay="2"
-          style={{ backgroundImage: `url(${process.env.PUBLIC_URL}/images/about/about-6.jpg)` }}
+          style={{ backgroundImage: `url(/images/about/about-6.jpg)` }}
         >
           <div className="container">
             <div className="row">
