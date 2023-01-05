@@ -6,12 +6,12 @@ const BlogPropMain = ({ data, column, StyleVarProp, archive = "false" }) => {
     <>
       <div className="col-lg-12">
         <div className="row row--15">
-          {data.length === 0 && <>no news</>}
-          {data.map((item) => (
-            <div key={item._id} className={column}>
-              <BlogListArchived StyleVar={StyleVarProp} data={item} archive={archive} />
-            </div>
-          ))}
+          {data &&
+            data.map((item) => (
+              <div key={item._id} className={column}>
+                <BlogListArchived StyleVar={StyleVarProp} data={item} archive={archive} />
+              </div>
+            ))}
         </div>
       </div>
     </>

@@ -1,8 +1,5 @@
 import React from "react";
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import PageScrollTop from "./components/pageToTop/PageScrollTop";
-import { useStoreState } from "pullstate";
-import { AuthStore } from "./stores/AuthStore";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
 // Import Css Here
 import "./assets/scss/style.scss";
@@ -75,178 +72,360 @@ import DashboardPublicationsUs from "./pages/Dashboard/DashboardPublicationsUs";
 import DashboardPublicationsKs from "./pages/Dashboard/DashboardPublicationsKs";
 import DashboardPublicationsKpe from "./pages/Dashboard/DashboardPublicationsKpe";
 import DashboardPublicationsOs from "./pages/Dashboard/DashboardPublicationsOs";
+import { ProtectedRoute } from "./components/ProtectedRoute";
+import { AuthLayout } from "./components/AuthLayout";
 
 require("dotenv").config();
 
+const public_routes = [
+  { path: "/login", element: <Login /> },
+  { path: "/", element: <HomeDefault /> },
+  { path: "/about-us", element: <AboutUs /> },
+  { path: "/blog-news", element: <BlogNews /> },
+  { path: "/seminars", element: <BlogSeminars /> },
+  { path: "/courses", element: <BlogCourses /> },
+  { path: "/blog-archive", element: <BlogArchive /> },
+  { path: "/blog-details/:id", element: <BlogDetails /> },
+  { path: "/board-of-directors", element: <Directors /> },
+  { path: "/ethics", element: <Ethics /> },
+  { path: "/control-board", element: <ControlBoard /> },
+  { path: "/burgas", element: <Burgas /> },
+  { path: "/varna", element: <Varna /> },
+  { path: "/pleven", element: <Pleven /> },
+  { path: "/plovdiv", element: <Plovdiv /> },
+  { path: "/ruse", element: <Ruse /> },
+  { path: "/sofia", element: <Sofia /> },
+  { path: "/stara-zagora", element: <StaraZagora /> },
+  { path: "/shumen", element: <Shumen /> },
+  { path: "/normative", element: <Normative /> },
+  { path: "/valuation-standards", element: <ValuationStandards /> },
+  { path: "/rev", element: <Rev /> },
+  { path: "/helpful-links", element: <HelpfulLinks /> },
+  { path: "/contact", element: <Contact /> },
+  { path: "/member-table", element: <MemberTable /> },
+  { path: "/public-registry", element: <PublicRegistry /> },
+  { path: "/banks", element: <Banks /> },
+  { path: "/documents", element: <Documents /> },
+  { path: "/qualifications", element: <BlogQualifications /> },
+  { path: "/qualification-committee", element: <QualificationCommittee /> },
+  { path: "/valuation-standards-eu", element: <ValuationStandardsEu /> },
+  { path: "/rev-registry", element: <RevRegistry /> },
+  { path: "/literature", element: <Literature /> },
+  { path: "/publications", element: <Publication /> },
+];
+
+const guest_routes = [
+  {
+    path: "/us",
+    element: (
+      <ProtectedRoute>
+        <Us />
+      </ProtectedRoute>
+    ),
+  },
+  {
+    path: "/ks",
+    element: (
+      <ProtectedRoute>
+        <Ks />
+      </ProtectedRoute>
+    ),
+  },
+  {
+    path: "/kpe",
+    element: (
+      <ProtectedRoute>
+        <Kpe />
+      </ProtectedRoute>
+    ),
+  },
+  {
+    path: "/os",
+    element: (
+      <ProtectedRoute>
+        <Os />
+      </ProtectedRoute>
+    ),
+  },
+];
+
+const curator_routes = [
+  {
+    path: "/dashboard-admin",
+    element: (
+      <ProtectedRoute type="Curator">
+        <DashboardNews />
+      </ProtectedRoute>
+    ),
+  },
+  {
+    path: "/dashboard-international",
+    element: (
+      <ProtectedRoute type="Curator">
+        <DashboardInternational />
+      </ProtectedRoute>
+    ),
+  },
+  {
+    path: "/dashboard-publications",
+    element: (
+      <ProtectedRoute type="Curator">
+        <DashboardResources />
+      </ProtectedRoute>
+    ),
+  },
+  {
+    path: "/dashboard-us",
+    element: (
+      <ProtectedRoute type="Curator">
+        <DashboardPublicationsUs />
+      </ProtectedRoute>
+    ),
+  },
+  {
+    path: "/dashboard-ks",
+    element: (
+      <ProtectedRoute type="Curator">
+        <DashboardPublicationsKs />
+      </ProtectedRoute>
+    ),
+  },
+  {
+    path: "/dashboard-kpe",
+    element: (
+      <ProtectedRoute type="Curator">
+        <DashboardPublicationsKpe />
+      </ProtectedRoute>
+    ),
+  },
+  {
+    path: "/dashboard-os",
+    element: (
+      <ProtectedRoute type="Curator">
+        <DashboardPublicationsOs />
+      </ProtectedRoute>
+    ),
+  },
+  {
+    path: "/dashboard-literature",
+    element: (
+      <ProtectedRoute type="Curator">
+        <DashboardLiterature />
+      </ProtectedRoute>
+    ),
+  },
+  {
+    path: "/members-methodology",
+    element: (
+      <ProtectedRoute type="Curator">
+        <DashboardMethodology />
+      </ProtectedRoute>
+    ),
+  },
+  {
+    path: "/members-us",
+    element: (
+      <ProtectedRoute type="Curator">
+        <DashboardUs />
+      </ProtectedRoute>
+    ),
+  },
+  {
+    path: "/members-ks",
+    element: (
+      <ProtectedRoute type="Curator">
+        <DashboardKs />
+      </ProtectedRoute>
+    ),
+  },
+  {
+    path: "/members-kpe",
+    element: (
+      <ProtectedRoute type="Curator">
+        <DashboardKpe />
+      </ProtectedRoute>
+    ),
+  },
+  {
+    path: "/members-rc",
+    element: (
+      <ProtectedRoute type="Curator">
+        <DashboardRc />
+      </ProtectedRoute>
+    ),
+  },
+  {
+    path: "/dashboard-standards",
+    element: (
+      <ProtectedRoute type="Curator">
+        <DashboardStandards />
+      </ProtectedRoute>
+    ),
+  },
+  {
+    path: "/dashboard-seminars",
+    element: (
+      <ProtectedRoute type="Curator">
+        <DashboardSeminars />
+      </ProtectedRoute>
+    ),
+  },
+  {
+    path: "/dashboard-qualifications",
+    element: (
+      <ProtectedRoute type="Curator">
+        <DashboardQualifications />
+      </ProtectedRoute>
+    ),
+  },
+  {
+    path: "/dashboard-courses",
+    element: (
+      <ProtectedRoute type="Curator">
+        <DashboardCourses />
+      </ProtectedRoute>
+    ),
+  },
+  {
+    path: "/dashboard-normative",
+    element: (
+      <ProtectedRoute type="Curator">
+        <DashboardNormative />
+      </ProtectedRoute>
+    ),
+  },
+  {
+    path: "/dashboard-members",
+    element: (
+      <ProtectedRoute type="Curator">
+        <DashboardMembers />
+      </ProtectedRoute>
+    ),
+  },
+  {
+    path: "/dashboard-rev",
+    element: (
+      <ProtectedRoute type="Curator">
+        <DashboardRev />
+      </ProtectedRoute>
+    ),
+  },
+];
+
+const admin_routes = [
+  {
+    path: "/dashboard-registry",
+    element: (
+      <ProtectedRoute type="Admin">
+        <DashboardRegistry />
+      </ProtectedRoute>
+    ),
+  },
+  {
+    path: "/dashboard-companies",
+    element: (
+      <ProtectedRoute type="Admin">
+        <DashboardCompanies />
+      </ProtectedRoute>
+    ),
+  },
+];
+
+const all_routes = [
+  ...public_routes,
+  ...curator_routes,
+  ...admin_routes,
+  ...guest_routes,
+  { path: "*", element: <Custom404 /> },
+];
+
 const App = () => {
-  const public_routes = [
-    <Route path="/login" exact component={Login} key="/login" />,
-    <Route path="/" exact component={HomeDefault} key="/" />,
-    <Route path="/about-us" exact component={AboutUs} key="/about-us" />,
-    <Route path="/blog-news" exact component={BlogNews} key="/blog-news" />,
-    <Route path="/seminars" exact component={BlogSeminars} key="/seminars" />,
-    <Route path="/courses" exact component={BlogCourses} key="/courses" />,
-    <Route path="/blog-archive" exact component={BlogArchive} key="/blog-archive" />,
-    <Route path="/blog-details/:id" exact component={BlogDetails} key="/blog-details/:id" />,
-    <Route path="/board-of-directors" exact component={Directors} key="/board-of-directors" />,
-    <Route path="/ethics" exact component={Ethics} key="/ethics" />,
-    <Route path="/control-board" exact component={ControlBoard} key="/control-board" />,
-    <Route path="/burgas" exact component={Burgas} key="/burgas" />,
-    <Route path="/varna" exact component={Varna} key="/varna" />,
-    <Route path="/pleven" exact component={Pleven} key="/pleven" />,
-    <Route path="/plovdiv" exact component={Plovdiv} key="/plovdiv" />,
-    <Route path="/ruse" exact component={Ruse} key="/ruse" />,
-    <Route path="/sofia" exact component={Sofia} key="/sofia" />,
-    <Route path="/stara-zagora" exact component={StaraZagora} key="/stara-zagora" />,
-    <Route path="/shumen" exact component={Shumen} key="/shumen" />,
-    <Route path="/normative" exact component={Normative} key="/normative" />,
-    <Route path="/valuation-standards" exact component={ValuationStandards} key="/valuation-standards" />,
-    <Route path="/rev" exact component={Rev} key="/rev" />,
-    <Route path="/helpful-links" exact component={HelpfulLinks} key="/helpful-links" />,
-    <Route path="/contact" exact component={Contact} key="/contact" />,
-    <Route path="/member-table" exact component={MemberTable} key="/member-table" />,
-    <Route path="/public-registry" exact component={PublicRegistry} key="/public-registry" />,
-    <Route path="/banks" exact component={Banks} key="/banks" />,
-    <Route path="/documents" exact component={Documents} key="/documents" />,
-    <Route path="/qualifications" exact component={BlogQualifications} key="/qualifications" />,
-    <Route path="/qualification-committee" exact component={QualificationCommittee} key="/qualification-committee" />,
-    <Route path="/valuation-standards-eu" exact component={ValuationStandardsEu} key="/valuation-standards-eu" />,
-    <Route path="/rev-registry" exact component={RevRegistry} key="/rev-registry" />,
-    <Route path="/literature" exact component={Literature} key="/literature" />,
-    <Route path="/publications" exact component={Publication} key="/publications" />,
-  ];
-  const guest_routes = [
-    <Route path="/us" exact component={Us} key="/us" />,
-    <Route path="/ks" exact component={Ks} key="/ks" />,
-    <Route path="/kpe" exact component={Kpe} key="/kpe" />,
-    <Route path="/os" exact component={Os} key="/os" />,
-  ];
-  const curator_routes = [
-    <Route path="/dashboard-admin" exact component={DashboardNews} key="/dashboard-admin" />,
-    <Route path="/dashboard-international" exact component={DashboardInternational} key="/dashboard-international" />,
-    <Route path="/dashboard-publications" exact component={DashboardResources} key="/dashboard-publications" />,
-    <Route path="/dashboard-us" exact component={DashboardPublicationsUs} key="/dashboard-us" />,
-    <Route path="/dashboard-ks" exact component={DashboardPublicationsKs} key="/dashboard-ks" />,
-    <Route path="/dashboard-kpe" exact component={DashboardPublicationsKpe} key="/dashboard-kpe" />,
-    <Route path="/dashboard-os" exact component={DashboardPublicationsOs} key="/dashboard-os" />,
-    <Route path="/dashboard-literature" exact component={DashboardLiterature} key="/dashboard-literature" />,
-    <Route path="/members-methodology" exact component={DashboardMethodology} key="/members-methodology" />,
-    <Route path="/members-us" exact component={DashboardUs} key="/members-us" />,
-    <Route path="/members-ks" exact component={DashboardKs} key="/members-ks" />,
-    <Route path="/members-kpe" exact component={DashboardKpe} key="/members-kpe" />,
-    <Route path="/members-rc" exact component={DashboardRc} key="/members-rc" />,
-    <Route path="/dashboard-standards" exact component={DashboardStandards} key="/dashboard-standards" />,
-    <Route path="/dashboard-seminars" exact component={DashboardSeminars} key="/dashboard-seminars" />,
-    <Route
-      path="/dashboard-qualifications"
-      exact
-      component={DashboardQualifications}
-      key="/dashboard-qualifications"
-    />,
-    <Route path="/dashboard-courses" exact component={DashboardCourses} key="/dashboard-courses" />,
-    <Route path="/dashboard-normative" exact component={DashboardNormative} key="/dashboard-normative" />,
-    <Route path="/dashboard-members" exact component={DashboardMembers} key="/dashboard-members" />,
-    <Route path="/dashboard-rev" exact component={DashboardRev} key="/dashboard-rev" />,
-  ];
-  const admin_routes = [
-    <Route path="/dashboard-registry" exact component={DashboardRegistry} key="/dashboard-registry" />,
-    <Route path="/dashboard-companies" exact component={DashboardCompanies} key="/dashboard-companies" />,
-  ];
+  // React.useState(() => {
+  //   if (auth_state.token) {
+  //     fetch(`${process.env.REACT_APP_API_URL}/api/is-user-logged-in`, {
+  //       headers: {
+  //         Authorization: `Bearer ${auth_state.token}`,
+  //       },
+  //     })
+  //       .then((res) => res.json())
+  //       .then((res) => {
+  //         console.log(res);
+  //         if (!res.result) {
+  //           AuthStore.update((s) => {
+  //             s.is_logged_in = false;
+  //             s.user_type = null;
+  //             s.token = null;
+  //           });
+  //         } else {
+  //           AuthStore.update((s) => {
+  //             s.is_logged_in = true;
+  //           });
+  //         }
+  //       })
+  //       .catch(() => {
+  //         AuthStore.update((s) => {
+  //           s.is_logged_in = false;
+  //           s.user_type = null;
+  //           s.token = null;
+  //         });
+  //       });
+  //     fetch(`${process.env.REACT_APP_API_URL}/api/get-user-type`, {
+  //       headers: {
+  //         Authorization: `Bearer ${auth_state.token}`,
+  //       },
+  //     })
+  //       .then((res) => res.json())
+  //       .then((res) => {
+  //         if (!res.result) {
+  //           AuthStore.update((s) => {
+  //             s.is_logged_in = false;
+  //             s.user_type = null;
+  //             s.token = null;
+  //           });
+  //         } else {
+  //           AuthStore.update((s) => {
+  //             s.user_type = res.resultß;
+  //           });
+  //         }
+  //       })
+  //       .catch(() => {
+  //         AuthStore.update((s) => {
+  //           s.is_logged_in = false;
+  //           s.user_type = null;
+  //           s.token = null;
+  //         });
+  //       });
+  //   } else {
+  //     AuthStore.update((s) => {
+  //       s.is_logged_in = false;
+  //       s.user_type = null;
+  //       s.token = null;
+  //     });
+  //   }
+  // });
 
-  const [current_routes, set_current_routes] = React.useState(public_routes);
+  // React.useState(() => {
+  //   set_current_routes(public_routes);
 
-  const auth_state = useStoreState(AuthStore);
+  //   if (auth_state.is_logged_in) {
+  //     set_current_routes(current_routes.concat(guest_routes));
+  //   }
 
-  React.useState(() => {
-    if (auth_state.token) {
-      fetch(`${process.env.REACT_APP_API_URL}/api/is-user-logged-in`, {
-        headers: {
-          Authorization: `Bearer ${auth_state.token}`,
-        },
-      })
-        .then((res) => res.json())
-        .then((res) => {
-          console.log(res);
-          if (!res.result) {
-            AuthStore.update((s) => {
-              s.is_logged_in = false;
-              s.user_type = null;
-              s.token = null;
-            });
-          } else {
-            AuthStore.update((s) => {
-              s.is_logged_in = true;
-            });
-          }
-        })
-        .catch(() => {
-          AuthStore.update((s) => {
-            s.is_logged_in = false;
-            s.user_type = null;
-            s.token = null;
-          });
-        });
-      fetch(`${process.env.REACT_APP_API_URL}/api/get-user-type`, {
-        headers: {
-          Authorization: `Bearer ${auth_state.token}`,
-        },
-      })
-        .then((res) => res.json())
-        .then((res) => {
-          if (!res.result) {
-            AuthStore.update((s) => {
-              s.is_logged_in = false;
-              s.user_type = null;
-              s.token = null;
-            });
-          } else {
-            AuthStore.update((s) => {
-              s.user_type = res.resultß;
-            });
-          }
-        })
-        .catch(() => {
-          AuthStore.update((s) => {
-            s.is_logged_in = false;
-            s.user_type = null;
-            s.token = null;
-          });
-        });
-    } else {
-      AuthStore.update((s) => {
-        s.is_logged_in = false;
-        s.user_type = null;
-        s.token = null;
-      });
-    }
-  });
+  //   if (auth_state.user_type === "Curator") {
+  //     set_current_routes(current_routes.concat(curator_routes));
+  //   }
 
-  React.useState(() => {
-    set_current_routes(public_routes);
+  //   if (auth_state.user_type === "Admin") {
+  //     set_current_routes(current_routes.concat(curator_routes));
+  //     set_current_routes(current_routes.concat(admin_routes));
+  //   }
+  // }, [auth_state, set_current_routes, current_routes]);
 
-    if (auth_state.is_logged_in) {
-      set_current_routes(current_routes.concat(guest_routes));
-    }
+  // console.log(current_routes);
 
-    if (auth_state.user_type === "Curator") {
-      set_current_routes(current_routes.concat(curator_routes));
-    }
+  const router = createBrowserRouter([{ element: <AuthLayout />, children: all_routes }]);
 
-    if (auth_state.user_type === "Admin") {
-      set_current_routes(current_routes.concat(curator_routes));
-      set_current_routes(current_routes.concat(admin_routes));
-    }
-
-    set_current_routes(current_routes.concat(<Route component={Custom404} />));
-  }, [auth_state, set_current_routes, current_routes]);
-
-  return (
-    <Router>
-      <PageScrollTop>
-        <Switch>{current_routes.map((x) => x)}</Switch>
-      </PageScrollTop>
-    </Router>
-  );
+  return <RouterProvider router={router} />;
 };
 
 export default App;
