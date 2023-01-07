@@ -5,15 +5,12 @@ import Copyright from "../common/footer/Copyright";
 import SplitFour from "../elements/split/SplitFour";
 import BreadcrumbOne from "../elements/breadcrumb/BreadcrumbOne";
 import { Card, Text } from "@nextui-org/react";
+import useSWR from "swr";
+
+const fetcher = (url) => fetch(url).then((res) => res.json());
 
 const Ethics = () => {
-  const committeeChair = [{ name: "Сузана Савева Недева	" }];
-  const committee = [
-    { key: 1, name: "Красимира Димитрова Арабаджиева" },
-    { key: 2, name: "Живка Недева Бонева" },
-    { key: 3, name: "Силвия Христова Михова" },
-    { key: 4, name: "Галина Димитрова Йорданова-Иванова" },
-  ];
+  const { data, error, isLoading } = useSWR(`${process.env.REACT_APP_API_URL}/api/get-ethics-committee`, fetcher);
 
   return (
     <>
@@ -35,29 +32,40 @@ const Ethics = () => {
             <Card.Body css={{ py: "$2" }}>
               <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
                 <b>Председател:</b>
-                <div style={{ display: "flex", flexDirection: "row" }}>
-                  <Text style={{ textAlign: "center" }}>
-                    {committeeChair.map((item) => item.name)} -{" "}
-                    <a href="mailto:office@ciab-bg.com" style={{ color: "#ff6d00" }}>
-                      office@ciab-bg.com
-                    </a>
-                  </Text>
+                <div style={{ display: "flex", flexDirection: "column" }}>
+                  {
+                    data && data.results.map((item) => (
+                      <>
+                        {
+                          item.is_representative ? (
+                            <Text style={{ textAlign: "center", marginBottom: 5, marginTop: 5 }}>
+                              {item.full_name}, Представляващ КНОБ -{" "}
+                              <a href={"mailto:"+item.email} style={{ color: "#ff6d00" }}>
+                                {item.email}
+                              </a>
+                            </Text>) : (<></>)}
+                      </>
+                    ))
+                  }
                 </div>
               </div>
               <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
                 <b>Членове:</b>
-                <div style={{ display: "flex", flexDirection: "row" }}>
-                  <Text style={{ textAlign: "center" }}>
-                    {committee.map((item) => (
-                      <div>
-                        {item.name} -{" "}
-                        <a href="mailto:office@ciab-bg.com" style={{ color: "#ff6d00" }}>
-                          office@ciab-bg.com
-                        </a>
-                        <br />{" "}
-                      </div>
-                    ))}
-                  </Text>
+                <div style={{ display: "flex", flexDirection: "column" }}>
+                {
+                    data && data.results.map((item) => (
+                      <>
+                        {
+                          !item.is_representative ? (
+                            <Text style={{ textAlign: "center", marginBottom: 5, marginTop: 5 }}>
+                              {item.full_name} -{" "}
+                              <a href={"mailto:"+item.email} style={{ color: "#ff6d00" }}>
+                                {item.email}
+                              </a>
+                            </Text>) : (<></>)}
+                      </>
+                    ))
+                  }
                 </div>
               </div>
             </Card.Body>

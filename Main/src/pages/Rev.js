@@ -2,17 +2,14 @@ import React, { useEffect, useState } from "react";
 import SEO from "../common/SEO";
 import Header from "../common/header/Header";
 import Copyright from "../common/footer/Copyright";
-import RevData from "../data/rev/RevList.json";
 import "../assets/scss/elements/rev.scss";
 import BlogRev from "../components/blog/BlogRev";
-const Rev = () => {
-  const alldataRev = RevData;
-  const [getAllItems] = useState(alldataRev);
-  const [setVisibleItems] = useState([]);
+import useSWR from "swr";
 
-  useEffect(() => {
-    setVisibleItems(getAllItems.filter((item) => item.id));
-  }, [getAllItems, setVisibleItems]);
+const fetcher = (url) => fetch(url).then((res) => res.json());
+
+const Rev = () => {
+  const { data, error, isLoading } = useSWR(`${process.env.REACT_APP_API_URL}/api/get-international-content`, fetcher);
 
   return (
     <>
@@ -42,7 +39,10 @@ const Rev = () => {
           </div>
         </div>
         {/* End Slider Area  */}
-        <BlogRev />
+        {isLoading && <div>Loading...</div>}
+        {error && <div>{error}</div>}
+        {data && (
+          <BlogRev data={data} />)}
         {/* Start Problems  */}
         <div className="row mt--40 row--30" style={{ marginLeft: "5%", marginRight: "5%" }}>
           <div className="col-lg-6">

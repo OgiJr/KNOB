@@ -1,7 +1,7 @@
 import React from "react";
-import BlogPropRev from "./itemProp/BlogPropRev";
+import BlogPropMain from "./itemProp/BlogPropMain";
 
-const BlogRev = () => {
+const BlogRev = (data) => {
   return (
     <>
       <div className="main-content">
@@ -10,7 +10,13 @@ const BlogRev = () => {
           <div className="container">
             <div className="row mt_dec--30">
               <h1 style={{ textAlign: "center" }}>Актуално</h1>
-              <BlogPropRev column="col-lg-6 mt--30" StyleVarProp="box-card-style-default card-list-view" />
+                {data && (
+                  <BlogPropMain
+                    data={data.data.results}
+                    column="col-lg-6 mt--30"
+                    StyleVarProp="box-card-style-default card-list-view"
+                  />
+                )}
             </div>
           </div>
         </div>

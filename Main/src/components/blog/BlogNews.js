@@ -22,7 +22,7 @@ const BlogNews = () => {
             <div className="container">
               <div className="row mt_dec--30">
                 {isLoading && <div>Loading...</div>}
-                {error && <div>Failed to load</div>}
+                {error && <div>{error}</div>}
                 {data && (
                   <BlogPropMain
                     data={data.results}

@@ -1,22 +1,12 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { Link } from "react-router-dom";
 
-const BlogListArchived = ({ data, StyleVar}) => {
+const ResourceList = ({ data, StyleVar}) => {
   return (
     <>
       <div className={`rn-card ${StyleVar}`}>
         <div className="inner" style={{ display: "flex", flexDirection: "column" }}>
           <div className="thumbnail">
-            {data.short_description !== "" ? (
-              <Link to={`/blog-details/${data._id}`} className="image" style={{ height: 400 }}>
-                <img
-                  src={`${process.env.REACT_APP_API_URL}/${data.picture.path}`}
-                  alt="Blog"
-                  style={{ width: "100%", height: "100%", borderRadius: 0 }}
-                />
-              </Link>
-            ) : (
               <div className="image">
                 <img
                   src={`${process.env.REACT_APP_API_URL}/${data.picture.path}`}
@@ -24,15 +14,10 @@ const BlogListArchived = ({ data, StyleVar}) => {
                   style={{ width: "100%", height: "100%", borderRadius: 0 }}
                 />
               </div>
-            )}
           </div>
           <div className="content" style={{ display: "flex", flexDirection: "column" }}>
             <h4 style={{ fontSize: 20 }}>
-              {data.short_description ? (
-                <Link to={process.env.PUBLIC_URL + `/blog-details/${data.id}`}>{data.title}</Link>
-              ) : (
-                data.title
-              )}
+                {data.title}
             </h4>
             <ul className="rn-meta-list">
               {data.file && (
@@ -67,7 +52,7 @@ const BlogListArchived = ({ data, StyleVar}) => {
     </>
   );
 };
-BlogListArchived.propTypes = {
+ResourceList.propTypes = {
   data: PropTypes.object,
 };
-export default BlogListArchived;
+export default ResourceList;

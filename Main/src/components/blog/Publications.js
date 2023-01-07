@@ -2,9 +2,12 @@ import React from "react";
 import SEO from "../../common/SEO";
 import Layout from "../../common/Layout";
 import BreadcrumbOne from "../../elements/breadcrumb/BreadcrumbOne";
-import BlogPropPublication from "./itemProp/BlogPropPublication";
+import BlogPropLiterature from "./itemProp/BlogPropLiterature";
+import useSWR from "swr";
 
+const fetcher = (url) => fetch(url).then((res) => res.json());
 const Publication = () => {
+  const { data, error, isLoading } = useSWR(`${process.env.REACT_APP_API_URL}/api/get-publication-content`, fetcher);
   return (
     <>
       <SEO title="Публикации" />
@@ -16,7 +19,10 @@ const Publication = () => {
           <div className="rn-blog-area rn-section-gap">
             <div className="container">
               <div className="row mt_dec--30">
-                <BlogPropPublication column="col-lg-6 mt--30" StyleVarProp="box-card-style-default card-list-view" />
+                {isLoading && <div>Loading...</div>}
+                {error && <div>{error}</div>}
+                {data && (
+                  <BlogPropLiterature column="col-lg-6 mt--30" StyleVarProp="box-card-style-default card-list-view" data={data.results} />)}
               </div>
             </div>
           </div>
