@@ -13,6 +13,7 @@ const BlogRev = (data) => {
                 {data && (
                   <BlogPropMain
                     data={data.data.results}
+                    international={true}
                     column="col-lg-6 mt--30"
                     StyleVarProp="box-card-style-default card-list-view"
                   />

@@ -10,7 +10,7 @@ import useSWR from "swr";
 const fetcher = (url) => fetch(url).then((res) => res.json());
 
 const Burgas = () => {
-  const { data, error, isLoading } = useSWR(`${process.env.REACT_APP_API_URL}/api/get-regional-committee`, fetcher);
+  const { data, error, isLoading } = useSWR(`${process.env.REACT_APP_API_URL}/api/get-regional-committee?city=Burgas`, fetcher);
   return (
     <>
       <SEO title="За нас" />
@@ -40,7 +40,7 @@ const Burgas = () => {
         </div>
 
         {/* End Slider Area  */}
-
+        {data && console.log(data.members)}
         {/* Start Info Area  */}
         <div className="col-lg-12 margin-responsive">
           <div className="row">
@@ -92,7 +92,7 @@ const Burgas = () => {
                               <b>Председател:</b>
                               <div style={{ display: "flex", flexDirection: "column" }}>
                                 {
-                                  data && data.results.map((item) => (
+                                  data && data.members.map((item) => (
                                     <>
                                       {
                                         item.is_representative ? (
@@ -111,7 +111,7 @@ const Burgas = () => {
                               <b>Членове:</b>
                               <div style={{ display: "flex", flexDirection: "column" }}>
                                 {
-                                  data && data.results.map((item) => (
+                                  data && data.members.map((item) => (
                                     <>
                                       {
                                         !item.is_representative ? (
