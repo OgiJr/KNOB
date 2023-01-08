@@ -33,17 +33,17 @@ export const ProtectedRoute = ({ children, type = "Guest" }) => {
   });
 
   if (!user) {
-    return <Navigate to="/" />;
+    return <Navigate to="/login" />;
   }
 
   if (!is_logged_in) {
-    return <Navigate to="/" />;
+    return <Navigate to="/login" />;
   }
   if (type === "Admin" && userType !== "Admin") {
-    return <Navigate to="/" />;
+    return <Navigate to="/login" />;
   }
   if (type === "Curator" && userType !== "Admin" && userType !== "Curator") {
-    return <Navigate to="/" />;
+    return <Navigate to="/login" />;
   }
 
   return children;
