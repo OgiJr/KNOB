@@ -8,29 +8,35 @@ export const ProtectedRoute = ({ children, type = "Guest" }) => {
   const [userType, setType] = React.useState("Guest");
 
   React.useEffect(() => {
-    (async () => {
-      const l_r = await fetch(`${process.env.REACT_APP_API_URL}/api/is-user-logged-in`, {
-        method: "GET",
-        headers: {
-          Authorization: `Bearer ${user.token}`,
-        },
-      });
-      const { result: is_logged_in } = await l_r.json();
+    if (user) {
+      (async () => {
+        const l_r = await fetch(`${process.env.REACT_APP_API_URL}/api/is-user-logged-in`, {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${user.token}`,
+          },
+        });
+        const { result: is_logged_in } = await l_r.json();
 
-      setIsLoggedIn(is_logged_in);
+        setIsLoggedIn(is_logged_in);
 
-      const t_r = await fetch(`${process.env.REACT_APP_API_URL}/api/get-user-type`, {
-        method: "GET",
-        headers: {
-          Authorization: `Bearer ${user.token}`,
-        },
-      });
-      const { result: type } = await t_r.json();
-      setType(type);
-    })();
-  }, [user.token]);
+        const t_r = await fetch(`${process.env.REACT_APP_API_URL}/api/get-user-type`, {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${user.token}`,
+          },
+        });
+        const { result: type } = await t_r.json();
+        setType(type);
+      })();
+    }
+  });
 
-  if (!user || !is_logged_in) {
+  if (!user) {
+    return <Navigate to="/" />;
+  }
+
+  if (!is_logged_in) {
     return <Navigate to="/" />;
   }
   if (type === "Admin" && userType !== "Admin") {
