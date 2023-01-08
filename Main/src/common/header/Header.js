@@ -25,10 +25,10 @@ const Header = ({ btnStyle, HeaderSTyle }) => {
             </div>
             <div className="col-lg-11  col-md-6 col-8 position-static" style={{ display: "flex", justifyContent: "end" }}>
               <div className="">
-                <nav className="mainmenu-nav d-none d-lg-block">
+                <nav className="mainmenu-nav d-none d-xxl-block">
                   <Nav />
                 </nav>
-                <div className="mobile-menu-bar ml--5 d-block d-lg-none">
+                <div className="mobile-menu-bar ml--5 d-block d-xxl-none">
                   <div className="hamberger">
                     <span className="hamberger-button" onClick={onCanvasHandler}>
                       <FiMenu />

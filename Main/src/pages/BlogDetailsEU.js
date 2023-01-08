@@ -7,13 +7,13 @@ import { useSearchParams } from "react-router-dom";
 
 const fetcher = (url) => fetch(url).then((res) => res.json());
 
-const BlogDetails = () => {
+const BlogDetailsEu = () => {
 
   const [searchParams] = useSearchParams();
   const id = searchParams.get("id");
   
   const { data, error, isLoading } = useSWR(
-    `${process.env.REACT_APP_API_URL}/api/get-knob-content-item?_id=${id}`,
+    `${process.env.REACT_APP_API_URL}/api/get-international-content-item?_id=${id}`,
     fetcher
   );
 
@@ -30,4 +30,4 @@ const BlogDetails = () => {
     </>
   );
 };
-export default BlogDetails;
+export default BlogDetailsEu;

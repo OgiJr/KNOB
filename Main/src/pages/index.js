@@ -3,6 +3,9 @@ import SEO from "../common/SEO";
 import Header from "../common/header/Header";
 import Copyright from "../common/footer/Copyright";
 import BlogHomePage from "../components/blog/BlogHomePage";
+import useSWR from "swr";
+
+const fetcher = (url) => fetch(url).then((res) => res.json());
 
 const HomeDefault = () => {
   return (
@@ -43,7 +46,7 @@ const HomeDefault = () => {
                       <a className="btn-default btn-medium round btn-icon" href="/rev-registry" style={{ width: 210 }}>
                         Регистър REV
                       </a>
-                      <a className="btn-default btn-medium round btn-icon" href="/yearly-report" style={{ width: 210 }}>
+                      <a className="btn-default btn-medium round btn-icon" href="https://annualreport-ciab.com/" target="_blank" style={{ width: 210 }}>
                         Годишен отчет
                       </a>
                     </div>

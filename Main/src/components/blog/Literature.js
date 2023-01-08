@@ -3,8 +3,11 @@ import SEO from "../../common/SEO";
 import Layout from "../../common/Layout";
 import BreadcrumbOne from "../../elements/breadcrumb/BreadcrumbOne";
 import BlogPropLiterature from "./itemProp/BlogPropLiterature";
+import useSWR from "swr";
 
+const fetcher = (url) => fetch(url).then((res) => res.json());
 const Literature = () => {
+  const { data, error, isLoading } = useSWR(`${process.env.REACT_APP_API_URL}/api/get-literature-content`, fetcher);
   return (
     <>
       <SEO title="Новини " />
@@ -16,7 +19,10 @@ const Literature = () => {
           <div className="rn-blog-area rn-section-gap">
             <div className="container">
               <div className="row mt_dec--30">
-                <BlogPropLiterature column="col-lg-6 mt--30" StyleVarProp="box-card-style-default card-list-view" />
+                {isLoading && <div>Loading...</div>}
+                {error && <div>{error}</div>}
+                {data && (
+                  <BlogPropLiterature column="col-lg-6 mt--30" StyleVarProp="box-card-style-default card-list-view" data={data.results} />)}
               </div>
             </div>
           </div>

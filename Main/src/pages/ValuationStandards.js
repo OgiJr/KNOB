@@ -5,26 +5,15 @@ import Copyright from "../common/footer/Copyright";
 import { Card, Image } from "@nextui-org/react";
 import NormativeData from "../data/acts/normativeList.json";
 import "../assets/scss/elements/normative.scss";
+import useSWR from "swr";
+
+const fetcher = (url) => fetch(url).then((res) => res.json());
 
 const ValuationStandards = () => {
-  const fileNameEnglish =
-    " Bulgarian Valuation Standards are mandatory for implementation in the country from 01 June 2018";
-  const fileUrlEnglish = "/uploaded/Normative/ValuationStandards.pdf";
-  const dateEnglish = "02.05.2018";
-
-  const fileNameBulgarian = "БЪЛГАРСКИ СТАНДАРТИ ЗА ОЦЕНЯВАНЕ /БСО/ 2018 г. - в сила от 1 юни 2018 г.";
-  const fileUrlBulgarian = "/uploaded/Normative/Стандарти.pdf";
-  const dateBulgarian = "02.05.2018";
-
-  const alldataRev = NormativeData;
-  const [getAllItems] = useState(alldataRev);
-  const [visibleItems, setVisibleItems] = useState([]);
-
-  console.log(visibleItems);
-
-  useEffect(() => {
-    setVisibleItems(getAllItems.filter((item) => item.id));
-  }, [getAllItems, setVisibleItems]);
+  const { data, error, isLoading } = useSWR(
+    `${process.env.REACT_APP_API_URL}/api/get-bulgarian-standards`,
+    fetcher
+  );
 
   return (
     <>
@@ -47,16 +36,22 @@ const ValuationStandards = () => {
                   Chamber of Independent Appraisers in Bulgaria (CIAB) on 17-18 March in the town of Shumen
                 </Card.Header>
                 <Card.Body>
-                  Published: {dateEnglish}
-                  <br />
-                  <br />
                   Files:
-                  <a
-                    href={fileUrlEnglish}
-                    style={{ textDecoration: "underline", color: "red", display: "flex", flexDirection: "row" }}
-                  >
-                    <img src="images/icons/file.png" style={{ width: 30, height: 30 }} alt="" /> {fileNameEnglish}
-                  </a>
+                  {
+                    data && data.results.map((item) => (
+                      <>
+                        {item.language === "en" ? (
+                          <a
+                            href={`${process.env.REACT_APP_API_URL}/${item.title}`}
+                            style={{ display: "flex", flexDirection: "row" }}
+                          >
+                            <img src="images/icons/file.png" style={{ width: 30, height: 30 }} alt="" /><span style={{ color: "red", textDecoration: "underline" }}> {item.title}</span><span style={{ color: "black", textDecoration: "none" }}>&nbsp;({new Date(item.files[0].timestamp).toLocaleString("en-US", {
+                              year: "numeric",
+                              month: "long",
+                              day: "numeric",
+                            })})</span>
+                          </a>) : (<></>)}</>
+                    ))}
                 </Card.Body>
               </Card>
               <Card isHoverable style={{ marginTop: 10, display: "flex", alignSelf: "center" }}>
@@ -66,16 +61,23 @@ const ValuationStandards = () => {
                   оценители в България /КНОБ/ на 17-18 март в гр. Шумен
                 </Card.Header>
                 <Card.Body>
-                  Публикувано: {dateBulgarian}
-                  <br />
-                  <br />
                   Файлове:
-                  <a
-                    href={fileUrlBulgarian}
-                    style={{ textDecoration: "underline", color: "red", display: "flex", flexDirection: "row" }}
-                  >
-                    <img src="images/icons/file.png" style={{ width: 30, height: 30 }} alt="" /> {fileNameBulgarian}
-                  </a>
+                  {
+                    data && data.results.map((item) => (
+                      <>
+                        {item.language === "bg" ? (
+                          <a
+                            href={`${process.env.REACT_APP_API_URL}/${item.title}`}
+                            style={{ display: "flex", flexDirection: "row" }}
+                          >
+                            <img src="images/icons/file.png" style={{ width: 30, height: 30 }} alt="" /><span style={{ color: "red", textDecoration: "underline" }}> {item.title}</span><span style={{ color: "black", textDecoration: "none" }}>&nbsp;({new Date(item.files[0].timestamp).toLocaleString("bg-BG", {
+                              year: "numeric",
+                              month: "long",
+                              day: "numeric",
+                            })})</span>
+                          </a>) : (<></>)}</>
+                    ))
+                  }
                 </Card.Body>
               </Card>
             </div>

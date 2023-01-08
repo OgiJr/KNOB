@@ -4,16 +4,8 @@ import { Link } from "react-router-dom";
 const Nav = () => {
   return (
     <ul className="mainmenu">
-      <li>
-        <Link to="/about-us" className="element">
-          За нас
-        </Link>
-      </li>
-      <li>
-        <Link to="/blog-news">Актуални новини</Link>
-      </li>
       <li className="has-droupdown">
-        <Link to="#">Управителни органи</Link>
+        <Link to="/about-us">За нас</Link>
         <ul className="submenu">
           <li>
             <Link to="/board-of-directors">Упрваителен съвет</Link>
@@ -26,16 +18,8 @@ const Nav = () => {
           </li>
         </ul>
       </li>
-      <li className="has-droupdown">
-        <Link to="#">Стандарти</Link>
-        <ul className="submenu">
-          <li>
-            <Link to="/valuation-standards">Български стандарти за оценяване</Link>
-          </li>
-          <li>
-            <Link to="/valuation-standards-eu">Европейски стандарти за оценяване</Link>
-          </li>
-        </ul>
+      <li>
+        <Link to="/blog-news">Актуални новини</Link>
       </li>
       <li className="has-droupdown">
         <Link to="#">Обучения, курсове и квалификация</Link>
@@ -52,8 +36,23 @@ const Nav = () => {
           <li>
             <Link to="/qualification-committee">Съвет по методология и квалификация</Link>
           </li>
-          <p style={{ marginBottom: 0, marginLeft: 10, fontWeight: "bold", fontSize: 14 }}>Ресурси</p>
+        </ul>
+      </li>
+      <li className="has-droupdown">
+        <Link to="#">Стандарти</Link>
+        <ul className="submenu">
           <li>
+            <Link to="/valuation-standards">Български стандарти за оценяване</Link>
+          </li>
+          <li>
+            <Link to="/valuation-standards-eu">Европейски стандарти за оценяване</Link>
+          </li>
+        </ul>
+      </li>
+      <li className="has-droupdown">
+        <Link to="#">Ресурси</Link>
+        <ul className="submenu">
+        <li>
             <Link to="/literature">Литература</Link>
           </li>
           <li>
@@ -61,6 +60,19 @@ const Nav = () => {
           </li>
         </ul>
       </li>
+      <li className="has-droupdown">
+        <Link to="#">Международна дейност</Link>
+        <ul className="submenu">
+          <li>
+            <a href="https://tegova.org/" target="_blank" rel="norefferer noreferrer">
+              TEGoVa
+            </a>
+          </li>
+          <li>
+            <Link to="/rev">Новини</Link>
+          </li>
+        </ul>
+      </li>  
       <li className="has-droupdown">
         <Link to="#">Регионални колегии</Link>
         <ul className="submenu">
@@ -87,19 +99,6 @@ const Nav = () => {
           </li>
           <li>
             <Link to="/shumen">Шумен, Търговище, Разград</Link>
-          </li>
-        </ul>
-      </li>
-      <li className="has-droupdown">
-        <Link to="#">Международна дейност</Link>
-        <ul className="submenu">
-          <li>
-            <a href="https://tegova.org/" target="_blank" rel="norefferer noreferrer">
-              TEGoVa
-            </a>
-          </li>
-          <li>
-            <Link to="/rev">Новини</Link>
           </li>
         </ul>
       </li>

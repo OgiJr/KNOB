@@ -2,9 +2,13 @@ import React from "react";
 import SEO from "../../common/SEO";
 import Layout from "../../common/Layout";
 import BreadcrumbOne from "../../elements/breadcrumb/BreadcrumbOne";
-import BlogPropQuiz from "./itemProp/BlogPropQualification";
+import useSWR from "swr";
+import BlogPropQuiz from "./itemProp/BlogPropSeminar";
+
+const fetcher = (url) => fetch(url).then((res) => res.json());
 
 const BlogQualifications = () => {
+  const { data, error, isLoading } = useSWR(`${process.env.REACT_APP_API_URL}/api/get-qualifications`, fetcher);
   return (
     <>
       <SEO title="Новини " />
@@ -14,9 +18,13 @@ const BlogQualifications = () => {
           {/* Start Blog Area  */}
           <div className="rn-blog-area rn-section-gap">
             <div className="container">
-              <div className="row mt_dec--30">
-                <BlogPropQuiz column="col-lg-6 mt--30" StyleVarProp="box-card-style-default card-list-view" />
-              </div>
+            {isLoading && <div>Loading...</div>}
+                {error && <div>{error}</div>}
+                {data && (
+                  <BlogPropQuiz
+                    data={data.results}
+                    column="col-lg-6 mt--30" StyleVarProp="box-card-style-default card-list-view" />
+                )}
             </div>
           </div>
           {/* End Blog Area  */}

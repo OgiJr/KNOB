@@ -5,17 +5,12 @@ import Copyright from "../common/footer/Copyright";
 import SplitTwo from "../elements/split/SplitTwo";
 import BreadcrumbOne from "../elements/breadcrumb/BreadcrumbOne";
 import { Card, Text } from "@nextui-org/react";
+import useSWR from "swr";
+
+const fetcher = (url) => fetch(url).then((res) => res.json());
 
 const Directors = () => {
-  const committeeChair = [{ name: "Георги Владимиров Георгиев" }];
-  const committee = [
-    { key: 1, name: "Венета Колева Желева" },
-    { key: 2, name: "Атанас Неделчев Атанасов" },
-    { key: 3, name: "Борис Кирилов Гиздаков" },
-    { key: 4, name: "Борислав Петров Стоицев" },
-    { key: 5, name: "Красимир Иванов Братанов " },
-    { key: 6, name: "Симеон Радев Захариев" },
-  ];
+  const { data, error, isLoading } = useSWR(`${process.env.REACT_APP_API_URL}/api/get-us-committee`, fetcher);
 
   return (
     <>
@@ -23,7 +18,6 @@ const Directors = () => {
       <main className="page-wrapper">
         <Header btnStyle="btn-small round btn-icon" HeaderSTyle="" />
         <BreadcrumbOne title="Управителен съвет" />
-
         {/* Start Main Area  */}
         <SplitTwo />
         {/* End Main Area  */}
@@ -37,29 +31,40 @@ const Directors = () => {
             <Card.Body css={{ py: "$2" }}>
               <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
                 <b>Председател:</b>
-                <div style={{ display: "flex", flexDirection: "row" }}>
-                  <Text style={{ textAlign: "center" }}>
-                    {committeeChair.map((item) => item.name)}, Представляващ КНОБ -{" "}
-                    <a href="mailto:office@ciab-bg.com" style={{ color: "#ff6d00" }}>
-                      office@ciab-bg.com
-                    </a>
-                  </Text>
+                <div style={{ display: "flex", flexDirection: "column" }}>
+                  {
+                    data && data.results.map((item) => (
+                      <>
+                        {
+                          item.is_representative ? (
+                            <Text style={{ textAlign: "center", marginBottom: 5, marginTop: 5 }}>
+                              {item.full_name}, Представляващ КНОБ -{" "}
+                              <a href={"mailto:"+item.email} style={{ color: "#ff6d00" }}>
+                                {item.email}
+                              </a>
+                            </Text>) : (<></>)}
+                      </>
+                    ))
+                  }
                 </div>
               </div>
               <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
                 <b>Членове:</b>
-                <div style={{ display: "flex", flexDirection: "row" }}>
-                  <Text style={{ textAlign: "center" }}>
-                    {committee.map((item) => (
-                      <div>
-                        {item.name} -{" "}
-                        <a href="mailto:office@ciab-bg.com" style={{ color: "#ff6d00" }}>
-                          office@ciab-bg.com
-                        </a>
-                        <br />{" "}
-                      </div>
-                    ))}
-                  </Text>
+                <div style={{ display: "flex", flexDirection: "column" }}>
+                {
+                    data && data.results.map((item) => (
+                      <>
+                        {
+                          !item.is_representative ? (
+                            <Text style={{ textAlign: "center", marginBottom: 5, marginTop: 5 }}>
+                              {item.full_name} -{" "}
+                              <a href={"mailto:"+item.email} style={{ color: "#ff6d00" }}>
+                                {item.email}
+                              </a>
+                            </Text>) : (<></>)}
+                      </>
+                    ))
+                  }
                 </div>
               </div>
             </Card.Body>

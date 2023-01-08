@@ -2,15 +2,10 @@ import React, { useEffect, useState } from "react";
 import SEO from "../common/SEO";
 import Header from "../common/header/Header";
 import Copyright from "../common/footer/Copyright";
-import { Card, Pagination } from "@nextui-org/react";
-import RevData from "../data/rev/RevList.json";
 import "../assets/scss/elements/rev.scss";
 import BreadcrumbOne from "../elements/breadcrumb/BreadcrumbOne";
 
 const Us = () => {
-  const alldataRev = RevData;
-  const [getAllItems] = useState(alldataRev);
-  const [setVisibleItems] = useState([]);
   const protocols = [
     {
       key: 1,
@@ -32,9 +27,6 @@ const Us = () => {
     },
   ];
 
-  useEffect(() => {
-    setVisibleItems(getAllItems.filter((item) => item.id));
-  }, [getAllItems, setVisibleItems]);
 
   return (
     <>
@@ -48,7 +40,7 @@ const Us = () => {
             className="cardsRev"
             style={{ justifyContent: "center", justifyItems: "center", alignSelf: "center", gap: 20 }}
           >
-            {protocols.map((item) => (
+            {/* {protocols.map((item) => (
               <Card style={{}}>
                 <Card.Header style={{ fontWeight: "bold" }}>{item.title}</Card.Header>
                 <Card.Body>
@@ -66,9 +58,8 @@ const Us = () => {
                   <p>{item.description}</p>
                 </Card.Body>
               </Card>
-            ))}
+            ))} */}
           </div>
-          <Pagination total={20} style={{ marginTop: 20, alignSelf: "center" }} color="warning" size="xl" />
         </div>
         <div style={{ marginTop: "3%" }}>
           <Copyright style={{ marginTop: "0px" }} />

@@ -5,16 +5,13 @@ import Copyright from "../common/footer/Copyright";
 import { Button, Card, Input, Pagination } from "@nextui-org/react";
 import RevData from "../data/rev/RevList.json";
 import "../assets/scss/elements/rev.scss";
+import useSWR from "swr";
+
+const fetcher = (url) => fetch(url).then((res) => res.json());
 
 const RevRegistry = () => {
-  const alldataRev = RevData;
-  const [getAllItems] = useState(alldataRev);
-  const [visibleItems, setVisibleItems] = useState([]);
-
-  useEffect(() => {
-    setVisibleItems(getAllItems.filter((item) => item.id));
-  }, [getAllItems, setVisibleItems]);
-
+  const { data, error, isLoading } = useSWR(`${process.env.REACT_APP_API_URL}/api/get-rev-registry`, fetcher);
+  console.log(data);
   return (
     <>
       <SEO title="REV" />
@@ -40,46 +37,44 @@ const RevRegistry = () => {
             Филтрирайте
           </Button>
         </div>
-        <div style={{ display: "flex", flexDirection: "column" }}>
-          {visibleItems.map((item) =>
-            item.id < 2 ? (
-              <div key={item.id} className="cardsRev" style={{ marginTop: 20 }}>
-                <Card className="card1" isPressable>
-                  <Card.Header>{item.c1}</Card.Header>
-                  <Card.Body>
-                    {item.dates1}
-                    <br />
-                    <br />
-                    {item.name1}
-                    <br />
-                    {item.bgName1}
-                    <br />
-                    <br />
-                    {item.city1}
-                    <br />
-                    {item.phone1}
-                  </Card.Body>
-                </Card>
-                <Card className="card2" isPressable>
-                  <Card.Header> {item.c2}</Card.Header>
-                  <Card.Body>
-                    {item.dates2}
-                    <br />
-                    <br />
-                    {item.name2}
-                    <br />
-                    {item.bgName2}
-                    <br />
-                    <br />
-                    {item.city2}
-                    <br />
-                    {item.phone2}
-                  </Card.Body>
-                </Card>
-              </div>
-            ) : (
-              <></>
-            )
+        <div style={{ display: "flex", flexDirection: "row" }}>
+          {data && data.results.map((item) =>
+          (
+            <div key={item.id} className="cardsRev" style={{ marginTop: 20 }}>
+              <Card className="card1" isPressable>
+                <Card.Header>{item.c1}</Card.Header>
+                <Card.Body>
+                  {item.dates1}
+                  <br />
+                  <br />
+                  {item.name1}
+                  <br />
+                  {item.bgName1}
+                  <br />
+                  <br />
+                  {item.city1}
+                  <br />
+                  {item.phone1}
+                </Card.Body>
+              </Card>
+              <Card className="card2" isPressable>
+                <Card.Header> {item.c2}</Card.Header>
+                <Card.Body>
+                  {item.dates2}
+                  <br />
+                  <br />
+                  {item.name2}
+                  <br />
+                  {item.bgName2}
+                  <br />
+                  <br />
+                  {item.city2}
+                  <br />
+                  {item.phone2}
+                </Card.Body>
+              </Card>
+            </div>
+          )
           )}
           <Card style={{ marginTop: 20, marginLeft: "7%", width: "85%" }} isPressable>
             <Card.Header>Certificate / Сертификат: REV-BG/CIAB/2026/1</Card.Header>

@@ -44,6 +44,7 @@ import DashboardRegistry from "./pages/Dashboard/DashboardRegistry";
 import DashboardCompanies from "./pages/Dashboard/DashboardCompanies";
 import BlogSeminars from "./components/blog/BlogSeminars";
 import Custom404 from "./pages/404";
+import BlogDetailsEu from "./pages/BlogDetailsEU";
 
 import BlogCourses from "./components/blog/BlogCourses";
 import BlogQualifications from "./components/blog/BlogQualification";
@@ -85,7 +86,8 @@ const public_routes = [
   { path: "/seminars", element: <BlogSeminars /> },
   { path: "/courses", element: <BlogCourses /> },
   { path: "/blog-archive", element: <BlogArchive /> },
-  { path: "/blog-details/:id", element: <BlogDetails /> },
+  { path: "/blog-details", element: <BlogDetails /> },
+  { path: "/blog-european", element: <BlogDetailsEu /> },
   { path: "/board-of-directors", element: <Directors /> },
   { path: "/ethics", element: <Ethics /> },
   { path: "/control-board", element: <ControlBoard /> },
