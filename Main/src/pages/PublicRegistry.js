@@ -9,16 +9,15 @@ import useSWR from "swr";
 const fetcher = (url) => fetch(url).then((res) => res.json());
 
 const PublicRegistry = () => {
-
-  const {data:users} = useSWR(`${process.env.REACT_APP_API_URL}/api/get-users`, fetcher);
-  const {data:companies} = useSWR(`${process.env.REACT_APP_API_URL}/api/get-companies`, fetcher);
+  const { data: users } = useSWR(`${process.env.REACT_APP_API_URL}/api/get-users`, fetcher);
+  const { data: companies } = useSWR(`${process.env.REACT_APP_API_URL}/api/get-companies`, fetcher);
 
   return (
     <>
       <SEO title="Публичен регистър" />
       <main className="page-wrapper">
-        <Header btnStyle="btn-small round btn-icon" HeaderSTyle="" />
-        {users && companies && (<BarTable users={users.results} companies={companies} />)}
+        <Header btnStyle="btn-small round btn-icon" HeaderStyle="" />
+        {users && companies && <BarTable users={users.results} companies={companies.results} />}
         {/* End Search Area */}
         <div style={{ marginTop: "3%" }}>
           <Copyright style={{ marginTop: "0px" }} />

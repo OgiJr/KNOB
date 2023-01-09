@@ -295,7 +295,7 @@ const capacities = [
 //Start people variables
 const columnsPeople = [
   {
-    key: "id",
+    key: "number",
     label: "№",
   },
   {
@@ -303,7 +303,7 @@ const columnsPeople = [
     label: "Име",
   },
   {
-    key: "member",
+    key: "is_member",
     label: "Членство",
   },
   {
@@ -311,58 +311,21 @@ const columnsPeople = [
     label: "Град",
   },
   {
-    key: "mobile",
-    label: "Моб.",
+    key: "mobile_phone",
+    label: "Моб. тел.",
   },
   {
-    key: "phone",
+    key: "landline",
     label: "Телефон",
   },
 ];
-// const rowsPeople = [
-//   {
-//     key: "1",
-//     id: "1",
-//     name: "Атанас Иванов Димов",
-//     member: "Да",
-//     city: "Ямбол",
-//     mobile: "0898634582",
-//     phone: "046663637",
-//     capacity: "Поземлени имоти в горски територии",
-//     certificateNumber: "820100133 (6.2.2012 г.)",
-//     address: "Ямбол 8600, ул. Христо Смирненски",
-//     speciality: "Горско стопанство",
-//     expirience: "ЗГ-1999",
-//     education: "висше(ВЛТИ-София)",
-//   },
-//   {
-//     key: "2",
-//     id: "2",
-//     name: "Иван Димитров Димов",
-//     member: "Да",
-//     city: "Бургас",
-//     mobile: "0888276526",
-//     phone: "",
-//     capacity:
-//       "Земеделски земи и трайни насаждения, Машини и съоръжения, Недвижими имоти, Търговски предприятия и вземания",
-//     certificateNumber:
-//       "810100079 (30.12.2010 г.) , 300100303 (14.12.2009 г.) , 100100786 (14.12.2009 г.) , 500100271 (14.12.2009 г.)",
-//     address: "Бургас 8001, ж.к. Братя Миладинови",
-//     speciality: "Счетоводство и контрол",
-//     expirience: "НИ-2005 МС-2005 ТП-2008 ЗЗ-2009",
-//     education: "висше (БСУ - Бургас)",
-//   },
-// ];
-//End people variables
-
-//Start company variables
 const columnsCompanies = [
   {
-    key: "id",
+    key: "number",
     label: "№",
   },
   {
-    key: "company",
+    key: "name",
     label: "Фирма",
   },
   {
@@ -370,35 +333,15 @@ const columnsCompanies = [
     label: "Град",
   },
   {
-    key: "mobile",
-    label: "Моб.",
+    key: "mobile_phone",
+    label: "Моб. тел.",
   },
   {
-    key: "phone",
+    key: "landline",
     label: "Телефон",
   },
 ];
-// const rowsCompanies = [
-//   {
-//     key: "1",
-//     id: "1",
-//     company: "АБАКУС КОНСУЛТИНГ ЕООД",
-//     city: "София",
-//     mobile: "0888289007",
-//     phone: "",
-//     capacityCompany: "Недвижими имоти",
-//     certificateNumberCompany: "900100223 (07.10.2016 г.)",
-//     bulstat: "203468650",
-//     address: "София 1415, ж.к. Драгалевци ул.Момино венче",
-//     speciality: "Горско стопанство",
-//     name: "Галина Йорданова Зоин",
-//     capacityPerson: "Недвижими имоти",
-//     certificatePerson: "100102176 (17.11.2014 г.)",
-//   },
-// ];
-//End company variables
 
-//Start invalid variables
 const columnsInvalidPeople = [
   {
     key: "id",
@@ -425,17 +368,6 @@ const columnsInvalidPeople = [
     label: "Основание",
   },
 ];
-const rowsInvalidPeople = [
-  {
-    key: "1",
-    id: "1",
-    name: "Лили Георгиева Маринова",
-    type: "НИ",
-    oldNumber: "100101146(14.12.2009)",
-    newNumber: "101101146(22.12.2010)",
-    reason: "Смяна на фамилията",
-  },
-];
 
 const columnsInvalidCompanies = [
   {
@@ -459,95 +391,91 @@ const columnsInvalidCompanies = [
     label: "Основание",
   },
 ];
-const rowsInvalidCompanies = [
-  {
-    key: "1",
-    id: "1",
-    name: "АДВАНС АДРЕС ЕКСПЕРТНИ ОЦЕНКИ ЕООД",
-    oldNumber: "900300023(20.07.2010)",
-    newNumber: "901400023(6.07.2011)",
-    reason: "Промяна в специализирания състав на дружеството и добавяне на нова правоспособност",
-  },
-];
 
 //End invalid variables
 
-const BarTable = (users, companies) => {
+const BarTable = ({ users, companies }) => {
   const [selected, setSelected] = React.useState(new Set(["50"]));
   const [visible, setVisible] = React.useState(false);
   const [tableType, setTableType] = React.useState("people");
   const [invalidType, setinvalidType] = React.useState("people");
 
-  //Start people variables
-  const [name, setName] = React.useState("");
-  const [capacity, setCapacity] = React.useState(new Set([""]));
-  const [address, setAddress] = React.useState(new Set([""]));
-  const [certificateNumber, setCertificateNumber] = React.useState(new Set([""]));
-  const [member, setMember] = React.useState(new Set([""]));
-  const [mobile, setMobile] = React.useState(new Set([""]));
-  const [phone, setPhone] = React.useState(new Set([""]));
-  const [speciality, setSpeciality] = React.useState(new Set([""]));
-  const [expirience, setExperience] = React.useState(new Set([""]));
-  const [education, setEducation] = React.useState(new Set([""]));
-  //End people variables
+  const [current_person, set_current_person] = React.useState(null);
+  const [current_company, set_current_company] = React.useState(null);
 
-  //Start companies variables
-  const [companyName, setCompanyName] = React.useState("");
-  const [companyCapacity, setCompanyCapacity] = React.useState("");
-  const [companyCertificate, setCompanyCertificate] = React.useState("");
-  const [bulstat, setBulstat] = React.useState("");
-  //End companies variables
-
-  console.log(users.users);
-  var rowsPeople = users.users.map((item) => ({
-    key: item._id,
-    id: item.number,
-    name: item.first_name + " " + item.middle_name + " " + item.last_name,
-    member: item.is_knob_member ? "Да" : "Не",
-    city: item.city,
-    mobile: item.mobile_phone,
-    phone: item.phone ? item.phone : "",
-    capacity: "Поземлени имоти в горски територии",
-    certificateNumber: "820100133 (6.2.2012 г.)",
-    address: item.address,
-    speciality: "Горско стопанство",
-    expirience: "ЗГ-1999",
-    education: "висше(ВЛТИ-София)",
-  }));
-  function returnName(person) {
-    return person.name;
-  }
-  function returnCapacity(person) {
-    return person.capacity;
-  }
-  function returnCertificate(person) {
-    return person.certificateNumber;
-  }
-  var rowsCompanies = users.companies.results.map((item) => ({
-    key: item._id,
-    id: item.number,
-    company: item.name,
-    city: item.city,
-    mobile: item.mobile,
-    phone: item.phone ? item.phone : "",
-    capacityCompany: "Недвижими имоти",
-    certificateNumberCompany: "900100223 (07.10.2016 г.)",
-    bulstat: item.eik,
-    address: item.address,
-    speciality: "Горско стопанство",
-    name: returnName(rowsPeople.find((person) => person.key === "63b855cb8292297b36cdecba")),
-    capacityPerson: returnCapacity(rowsPeople.find((person) => person.key === "63b855cb8292297b36cdecba")),
-    certificatePerson: returnCertificate(rowsPeople.find((person) => person.key === "63b855cb8292297b36cdecba")),
-  }));
   const selectedValue = React.useMemo(() => Array.from(selected).join(", ").replaceAll("_", " "), [selected]);
+
+  const mapped_users = users.map((user) => ({
+    name: `${user.first_name} ${user.middle_name} ${user.last_name}`,
+    is_member: user.is_knob_member && user.current_valid_certificate ? "Да" : "Не",
+    ...user,
+  }));
 
   return (
     <>
       {/* Start Modal Area */}
       {tableType === "people" ? (
+        current_person ? (
+          <Modal closeButton width="85%" open={visible} onClose={() => setVisible(false)}>
+            <Modal.Header>
+              <h5>{current_person.name}</h5>
+            </Modal.Header>
+            <Modal.Body
+              style={{
+                marginLeft: 15,
+                marginRight: 15,
+                marginTop: 15,
+                marginBottom: 15,
+              }}
+            >
+              <div className="modalResponsive">
+                <span style={{ fontWeight: "bold" }}>Оценителска правоспособност:</span>
+                {current_person.capacity ? current_person.capacity.map((c) => <>&nbsp;{c.value}</>) : "Няма"}
+                {console.log(current_person)}
+              </div>
+              <div className="modalResponsive">
+                <span style={{ fontWeight: "bold" }}>Членува в КНОБ:</span>
+                {current_person.is_member}
+              </div>
+              <div className="modalResponsive">
+                <span style={{ fontWeight: "bold" }}>Сертификати номера:</span>
+                {current_person.current_valid_certificate
+                  ? current_person.current_valid_certificate.certificate_number
+                  : "Няма"}
+              </div>
+              <div className="modalResponsive">
+                <span style={{ fontWeight: "bold" }}>Адрес:</span>
+                {current_person.address ? current_person.address : "Няма"}
+              </div>
+              <div className="modalResponsive">
+                <span style={{ fontWeight: "bold" }}>Телефон:</span>
+                {current_person.landline ? current_person.landline : "Няма"}
+              </div>
+              <div className="modalResponsive">
+                <span style={{ fontWeight: "bold" }}>Мобилен:</span>
+                {current_person.mobile_phone ? current_person.mobile_phone : "Няма"}
+              </div>
+              <div className="modalResponsive">
+                <span style={{ fontWeight: "bold" }}>Специалност:</span>
+                {current_person.speciality ? current_person.speciality : "Няма"}
+              </div>
+              <div className="modalResponsive">
+                <span style={{ fontWeight: "bold" }}>Стаж:</span>
+                {current_person.expirience ? current_person.expirience : "Няма"}
+              </div>
+              <div className="modalResponsive">
+                <span style={{ fontWeight: "bold" }}>Образование:</span>
+                {current_person.education ? current_person.education : "Няма"}
+              </div>
+            </Modal.Body>
+          </Modal>
+        ) : (
+          <> </>
+        )
+      ) : current_company ? (
         <Modal closeButton width="85%" open={visible} onClose={() => setVisible(false)}>
           <Modal.Header>
-            <h5>{name}</h5>
+            <h5>{current_company.name}</h5>
           </Modal.Header>
           <Modal.Body
             style={{
@@ -559,91 +487,52 @@ const BarTable = (users, companies) => {
           >
             <div className="modalResponsive">
               <span style={{ fontWeight: "bold" }}>Оценителска правоспособност:</span>
-              {capacity}
-            </div>
-            <div className="modalResponsive">
-              <span style={{ fontWeight: "bold" }}>Членува в КНОБ:</span>
-              {member}
-            </div>
-            <div className="modalResponsive">
-              <span style={{ fontWeight: "bold" }}>Сертификати номера:</span>
-              {certificateNumber}
-            </div>
-            <div className="modalResponsive">
-              <span style={{ fontWeight: "bold" }}>Адрес:</span>
-              {address}
-            </div>
-            <div className="modalResponsive">
-              <span style={{ fontWeight: "bold" }}>Телефон:</span>
-              {phone}
-            </div>
-            <div className="modalResponsive">
-              <span style={{ fontWeight: "bold" }}>Мобилен:</span>
-              {mobile}
-            </div>
-            <div className="modalResponsive">
-              <span style={{ fontWeight: "bold" }}>Специалност:</span>
-              {speciality}
-            </div>
-            <div className="modalResponsive">
-              <span style={{ fontWeight: "bold" }}>Стаж:</span>
-              {expirience}
-            </div>
-            <div className="modalResponsive">
-              <span style={{ fontWeight: "bold" }}>Образование:</span>
-              {education}
-            </div>
-          </Modal.Body>
-        </Modal>
-      ) : (
-        <Modal closeButton width="85%" open={visible} onClose={() => setVisible(false)}>
-          <Modal.Header>
-            <h5>{companyName}</h5>
-          </Modal.Header>
-          <Modal.Body
-            style={{
-              marginLeft: 15,
-              marginRight: 15,
-              marginTop: 15,
-              marginBottom: 15,
-            }}
-          >
-            <div className="modalResponsive">
-              <span style={{ fontWeight: "bold" }}>Оценителска правоспособност:</span>
-              {companyCapacity}
+              {current_company.capacity.value ? current_company.capacity.value : "Няма"}
             </div>
             <div className="modalResponsive">
               <span style={{ fontWeight: "bold" }}>Сертификат номер:</span>
-              {companyCertificate}
+              {current_company.current_valid_certificate
+                ? current_company.current_valid_certificate.certificate_number
+                : "Няма"}
             </div>
             <div className="modalResponsive">
               <span style={{ fontWeight: "bold" }}>ЕИК / Булстат:</span>
-              {bulstat}
+              {current_company.eik ? current_company.eik : "Няма"}
             </div>
             <div className="modalResponsive">
               <span style={{ fontWeight: "bold" }}>Адрес на управление:</span>
-              {address}
+              {current_company.address ? current_company.address : "Няма"}
             </div>
             <div className="modalResponsive">
               <span style={{ fontWeight: "bold" }}>Мобилен:</span>
-              {mobile}
+              {current_company.mobile_phone}
             </div>
             <Row justify="space-between">
               <span style={{ fontWeight: "bold", fontSize: 24 }}>Оценители:</span>
             </Row>
-            <Row justify="space-between">
-              <span style={{ fontWeight: "bold", color: "orange", fontSize: 20 }}>{name}</span>
-            </Row>
-            <div className="modalResponsive">
-              <span style={{ fontWeight: "bold" }}>Правоспособности: </span>
-              <span style={{ marginLeft: 12 }}>{capacity}</span>
-            </div>
-            <div className="modalResponsive" style={{}}>
-              <span style={{ fontWeight: "bold" }}>Сертификати №, дата: </span>
-              <span style={{ marginLeft: 12 }}>{certificateNumber}</span>
-            </div>
+            {current_company.valuers.map((valuer) => (
+              <>
+                <Row justify="space-between">
+                  <span style={{ fontWeight: "bold", color: "orange", fontSize: 20 }}>
+                    {valuer.first_name} {valuer.middle_name} {valuer.last_name}
+                  </span>
+                </Row>
+                <div className="modalResponsive">
+                  <span style={{ fontWeight: "bold" }}>Правоспособности: </span>
+                  <span style={{ marginLeft: 12 }}>{valuer.capacity.value ? valuer.capacity.value : "Няма"}</span>
+                </div>
+                <div className="modalResponsive" style={{}}>
+                  <span style={{ fontWeight: "bold" }}>Сертификати №: </span>
+                  <span style={{ marginLeft: 12 }}>
+                    {valuer.current_valid_certificate ? valuer.current_valid_certificate.certificate_number : "Няма"}
+                  </span>
+                </div>
+              </>
+            ))}
           </Modal.Body>
         </Modal>
+      ) : (
+        <> </>
       )}
       {/* End Modal Area */}
 
@@ -887,24 +776,15 @@ const BarTable = (users, companies) => {
                   </Table.Column>
                 )}
               </Table.Header>
-              <Table.Body items={rowsPeople}>
+              <Table.Body items={mapped_users}>
                 {(item) => (
-                  <Table.Row key={item.key}>
+                  <Table.Row key={item._id}>
                     {(columnKey) => (
                       <Table.Cell>
                         <span
                           style={{ cursor: "pointer" }}
                           onClick={() => {
-                            setName(item.name);
-                            setCapacity(item.capacity);
-                            setAddress(item.address);
-                            setCertificateNumber(item.certificateNumber);
-                            setMember(item.member);
-                            setMobile(item.mobile);
-                            setPhone(item.phone);
-                            setSpeciality(item.speciality);
-                            setExperience(item.expirience);
-                            setEducation(item.education);
+                            set_current_person(item);
                             setVisible(true);
                           }}
                         >
@@ -938,23 +818,15 @@ const BarTable = (users, companies) => {
                   </Table.Column>
                 )}
               </Table.Header>
-              <Table.Body items={rowsCompanies}>
+              <Table.Body items={companies}>
                 {(item) => (
-                  <Table.Row key={item.key}>
+                  <Table.Row key={item._id}>
                     {(columnKey) => (
                       <Table.Cell>
                         <span
                           style={{ cursor: "pointer" }}
                           onClick={() => {
-                            setCompanyCapacity(item.capacityCompany);
-                            setCompanyName(item.company);
-                            setCompanyCertificate(item.certificateNumberCompany);
-                            setBulstat(item.bulstat);
-                            setAddress(item.address);
-                            setMobile(item.mobile);
-                            setName(item.name);
-                            setCapacity(item.capacityPerson);
-                            setCertificateNumber(item.certificatePerson);
+                            set_current_company(item);
                             setVisible(true);
                           }}
                         >
@@ -988,7 +860,7 @@ const BarTable = (users, companies) => {
                   </Table.Column>
                 )}
               </Table.Header>
-              <Table.Body items={rowsInvalidPeople}>
+              {/* <Table.Body items={rowsInvalidPeople}>
                 {(item) => (
                   <Table.Row key={item.key}>
                     {(columnKey) => (
@@ -1006,7 +878,7 @@ const BarTable = (users, companies) => {
                     )}
                   </Table.Row>
                 )}
-              </Table.Body>
+              </Table.Body> */}
             </Table>
           ) : (
             <Table
@@ -1022,7 +894,7 @@ const BarTable = (users, companies) => {
                   </Table.Column>
                 )}
               </Table.Header>
-              <Table.Body items={rowsInvalidCompanies}>
+              {/* <Table.Body items={rowsInvalidCompanies}>
                 {(item) => (
                   <Table.Row key={item.key}>
                     {(columnKey) => (
@@ -1040,7 +912,7 @@ const BarTable = (users, companies) => {
                     )}
                   </Table.Row>
                 )}
-              </Table.Body>
+              </Table.Body> */}
             </Table>
           )}
         </div>
