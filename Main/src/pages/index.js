@@ -3,9 +3,6 @@ import SEO from "../common/SEO";
 import Header from "../common/header/Header";
 import Copyright from "../common/footer/Copyright";
 import BlogHomePage from "../components/blog/BlogHomePage";
-import useSWR from "swr";
-
-const fetcher = (url) => fetch(url).then((res) => res.json());
 
 const HomeDefault = () => {
   return (

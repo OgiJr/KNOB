@@ -4,8 +4,14 @@ import Header from "../common/header/Header";
 import Copyright from "../common/footer/Copyright";
 import "../assets/scss/elements/rev.scss";
 import BreadcrumbOne from "../elements/breadcrumb/BreadcrumbOne";
+import { Card } from "@nextui-org/react";
+import useSWR from "swr";
+
+const fetcher = (url) => fetch(url).then((res) => res.json());
 
 const Us = () => {
+  const { data, error, isLoading } = useSWR(`${process.env.REACT_APP_API_URL}/api/get-us-protocols`, fetcher);
+
   const protocols = [
     {
       key: 1,
@@ -40,7 +46,7 @@ const Us = () => {
             className="cardsRev"
             style={{ justifyContent: "center", justifyItems: "center", alignSelf: "center", gap: 20 }}
           >
-            {/* {protocols.map((item) => (
+            {data && data.results.map((item) => (
               <Card style={{}}>
                 <Card.Header style={{ fontWeight: "bold" }}>{item.title}</Card.Header>
                 <Card.Body>
@@ -58,7 +64,7 @@ const Us = () => {
                   <p>{item.description}</p>
                 </Card.Body>
               </Card>
-            ))} */}
+            ))}
           </div>
         </div>
         <div style={{ marginTop: "3%" }}>

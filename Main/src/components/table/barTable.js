@@ -319,40 +319,40 @@ const columnsPeople = [
     label: "Телефон",
   },
 ];
-const rowsPeople = [
-  {
-    key: "1",
-    id: "1",
-    name: "Атанас Иванов Димов",
-    member: "Да",
-    city: "Ямбол",
-    mobile: "0898634582",
-    phone: "046663637",
-    capacity: "Поземлени имоти в горски територии",
-    certificateNumber: "820100133 (6.2.2012 г.)",
-    address: "Ямбол 8600, ул. Христо Смирненски",
-    speciality: "Горско стопанство",
-    expirience: "ЗГ-1999",
-    education: "висше(ВЛТИ-София)",
-  },
-  {
-    key: "2",
-    id: "2",
-    name: "Иван Димитров Димов",
-    member: "Да",
-    city: "Бургас",
-    mobile: "0888276526",
-    phone: "",
-    capacity:
-      "Земеделски земи и трайни насаждения, Машини и съоръжения, Недвижими имоти, Търговски предприятия и вземания",
-    certificateNumber:
-      "810100079 (30.12.2010 г.) , 300100303 (14.12.2009 г.) , 100100786 (14.12.2009 г.) , 500100271 (14.12.2009 г.)",
-    address: "Бургас 8001, ж.к. Братя Миладинови",
-    speciality: "Счетоводство и контрол",
-    expirience: "НИ-2005 МС-2005 ТП-2008 ЗЗ-2009",
-    education: "висше (БСУ - Бургас)",
-  },
-];
+// const rowsPeople = [
+//   {
+//     key: "1",
+//     id: "1",
+//     name: "Атанас Иванов Димов",
+//     member: "Да",
+//     city: "Ямбол",
+//     mobile: "0898634582",
+//     phone: "046663637",
+//     capacity: "Поземлени имоти в горски територии",
+//     certificateNumber: "820100133 (6.2.2012 г.)",
+//     address: "Ямбол 8600, ул. Христо Смирненски",
+//     speciality: "Горско стопанство",
+//     expirience: "ЗГ-1999",
+//     education: "висше(ВЛТИ-София)",
+//   },
+//   {
+//     key: "2",
+//     id: "2",
+//     name: "Иван Димитров Димов",
+//     member: "Да",
+//     city: "Бургас",
+//     mobile: "0888276526",
+//     phone: "",
+//     capacity:
+//       "Земеделски земи и трайни насаждения, Машини и съоръжения, Недвижими имоти, Търговски предприятия и вземания",
+//     certificateNumber:
+//       "810100079 (30.12.2010 г.) , 300100303 (14.12.2009 г.) , 100100786 (14.12.2009 г.) , 500100271 (14.12.2009 г.)",
+//     address: "Бургас 8001, ж.к. Братя Миладинови",
+//     speciality: "Счетоводство и контрол",
+//     expirience: "НИ-2005 МС-2005 ТП-2008 ЗЗ-2009",
+//     education: "висше (БСУ - Бургас)",
+//   },
+// ];
 //End people variables
 
 //Start company variables
@@ -472,7 +472,7 @@ const rowsInvalidCompanies = [
 
 //End invalid variables
 
-const BarTable = () => {
+const BarTable = (users, companies) => {
   const [selected, setSelected] = React.useState(new Set(["50"]));
   const [visible, setVisible] = React.useState(false);
   const [tableType, setTableType] = React.useState("people");
@@ -498,13 +498,59 @@ const BarTable = () => {
   const [bulstat, setBulstat] = React.useState("");
   //End companies variables
 
+  console.log(users.users)
+  var rowsPeople = users.users.map((item) => (
+    {
+      key: item._id,
+      id: item.number,
+      name: item.first_name + " " + item.middle_name + " " + item.last_name,
+      member: item.is_knob_member? "Да" : "Не",
+      city: item.city,
+      mobile: item.mobile_phone,
+      phone: item.phone? item.phone : "",
+      capacity: "Поземлени имоти в горски територии",
+      certificateNumber: "820100133 (6.2.2012 г.)",
+      address: item.address,
+      speciality: "Горско стопанство",
+      expirience: "ЗГ-1999",
+      education: "висше(ВЛТИ-София)",
+    }
+  )
+  );
+  function returnName(person){
+    return person.name;
+  }
+  function returnCapacity(person){
+    return person.capacity;
+  }
+  function returnCertificate(person){
+    return person.certificateNumber;
+  }
+  var rowsCompanies = users.companies.results.map((item) => (
+    {
+      key: item._id,
+      id: item.number,
+      company: item.name,
+      city: item.city,
+      mobile: item.mobile,
+      phone: item.phone?item.phone:"",
+      capacityCompany: "Недвижими имоти",
+      certificateNumberCompany: "900100223 (07.10.2016 г.)",
+      bulstat: item.eik,
+      address: item.address,
+      speciality: "Горско стопанство",
+      name: returnName(rowsPeople.find(person => person.key === "63b855cb8292297b36cdecba")),
+      capacityPerson: returnCapacity(rowsPeople.find(person => person.key === "63b855cb8292297b36cdecba")),
+      certificatePerson: returnCertificate(rowsPeople.find(person => person.key === "63b855cb8292297b36cdecba")),
+    }
+  ));
   const selectedValue = React.useMemo(() => Array.from(selected).join(", ").replaceAll("_", " "), [selected]);
-
+  
   return (
     <>
       {/* Start Modal Area */}
       {tableType === "people" ? (
-        <Modal closeButton aria-labelledby="modal-title" width="85%" open={visible} onClose={() => setVisible(false)}>
+        <Modal closeButton width="85%" open={visible} onClose={() => setVisible(false)}>
           <Modal.Header>
             <h5>{name}</h5>
           </Modal.Header>
@@ -555,7 +601,7 @@ const BarTable = () => {
           </Modal.Body>
         </Modal>
       ) : (
-        <Modal closeButton aria-labelledby="modal-title" width="85%" open={visible} onClose={() => setVisible(false)}>
+        <Modal closeButton width="85%" open={visible} onClose={() => setVisible(false)}>
           <Modal.Header>
             <h5>{companyName}</h5>
           </Modal.Header>
@@ -689,7 +735,7 @@ const BarTable = () => {
                   <Dropdown.Button color="warning" flat style={{ marginBottom: 30 }}>
                     Оценителска правоспособност
                   </Dropdown.Button>
-                  <Dropdown.Menu aria-label="Dynamic Actions" items={capacities}>
+                  <Dropdown.Menu items={capacities}>
                     {(item) => (
                       <Dropdown.Item key={item.name}>
                         <span style={{ fontSize: 8 }}>{item.name}</span>
@@ -803,7 +849,6 @@ const BarTable = () => {
                 {selectedValue}
               </Dropdown.Button>
               <Dropdown.Menu
-                aria-label="Single selection actions"
                 color="warning"
                 disallowEmptySelection
                 selectionMode="single"

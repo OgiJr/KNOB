@@ -6,12 +6,22 @@ import { Button, Card, Input, Pagination } from "@nextui-org/react";
 import RevData from "../data/rev/RevList.json";
 import "../assets/scss/elements/rev.scss";
 import useSWR from "swr";
+import { useSWRConfig } from "swr";
 
-const fetcher = (url) => fetch(url).then((res) => res.json());
+const fetcher = (url, queryParams = "") => {
+    return fetch(`${url}${queryParams}`).then((res) => {
+      return res.json();
+    });
+};
 
 const RevRegistry = () => {
-  const { data, error, isLoading } = useSWR(`${process.env.REACT_APP_API_URL}/api/get-rev-registry`, fetcher);
-  console.log(data);
+
+  const [name, setName] = React.useState("");
+  const [city, setCity] = React.useState("");
+  const [certificate_number, setCertificate_number] = React.useState("");
+  const { data } = useSWR(["/api/get-users", `?name=${name}&city=${city}&certificate_number=${certificate_number}`], fetcher); 
+  const { mutate } = useSWRConfig();
+
   return (
     <>
       <SEO title="REV" />
@@ -30,69 +40,44 @@ const RevRegistry = () => {
           }}
         >
           <span style={{ color: "black", fontWeight: "bold" }}>Филтрирайте по име, град и номер на сертификата</span>
-          <Input placeholder="Име" style={{ margin: 0, background: "white" }} width={300} />
-          <Input placeholder="Град" style={{ margin: 0, background: "white" }} width={300} />
-          <Input placeholder="№ на сертификата" style={{ margin: 0, background: "white" }} width={300} />
-          <Button color="warning" size="lg" shadow>
+          <Input placeholder="Име" style={{ margin: 0, background: "white" }} width={300}  onChange={(evt) => { setName(evt.target.value) }} />
+          <Input placeholder="Град" style={{ margin: 0, background: "white" }} width={300} onChange={(evt) => { setCity(evt.target.value) }} />
+          <Input placeholder="№ на сертификата" style={{ margin: 0, background: "white" }} width={300} onChange={(evt) => { setCertificate_number(evt.target.value) }} />
+          <Button color="warning" size="lg" shadow onClick={() => mutate(["/api/get-users", `?name=${name}&city=${city}&certificate_number=${certificate_number}`])}>
             Филтрирайте
           </Button>
         </div>
-        <div style={{ display: "flex", flexDirection: "row" }}>
+        <div style={{ display: "flex", flexDirection: "column" }}>
           {data && data.results.map((item) =>
           (
             <div key={item.id} className="cardsRev" style={{ marginTop: 20 }}>
               <Card className="card1" isPressable>
-                <Card.Header>{item.c1}</Card.Header>
+                <Card.Header>Certificate/Сертификат: {" " + item.certificate_number}</Card.Header>
                 <Card.Body>
-                  {item.dates1}
+                  Issued on / Издаден на: {new Date(item.issued_on).toLocaleString("en-GB", {
+                    year: "numeric",
+                    month: "numeric",
+                    day: "numeric",
+                  })} Valid until / Валиден до: {new Date(item.valid_until).toLocaleString("en-GB", {
+                    year: "numeric",
+                    month: "numeric",
+                    day: "numeric",
+                  })}
                   <br />
                   <br />
-                  {item.name1}
+                  Name: {item.latin_name}
                   <br />
-                  {item.bgName1}
-                  <br />
-                  <br />
-                  {item.city1}
-                  <br />
-                  {item.phone1}
-                </Card.Body>
-              </Card>
-              <Card className="card2" isPressable>
-                <Card.Header> {item.c2}</Card.Header>
-                <Card.Body>
-                  {item.dates2}
+                  Име: {item.cyrilic_name}
                   <br />
                   <br />
-                  {item.name2}
+                  City/Град: {item.latin_city} / {item.cyrilic_city}
                   <br />
-                  {item.bgName2}
-                  <br />
-                  <br />
-                  {item.city2}
-                  <br />
-                  {item.phone2}
+                  Phone/Телефон:{item.phone}
                 </Card.Body>
               </Card>
             </div>
           )
           )}
-          <Card style={{ marginTop: 20, marginLeft: "7%", width: "85%" }} isPressable>
-            <Card.Header>Certificate / Сертификат: REV-BG/CIAB/2026/1</Card.Header>
-            <Card.Body>
-              Issued on / Издаден на: 01/06/2021 Valid until / Валиден до: 31/05/2026
-              <br />
-              <br />
-              Name: Ivanchev, Nikolay
-              <br />
-              Имена на български език: Николай Иванов Иванчев
-              <br />
-              <br />
-              City / Град: Botevgrad / Ботевград
-              <br />
-              Phone / Телефон: +359 89 860 09 07
-            </Card.Body>
-          </Card>
-          <Pagination total={20} style={{ marginTop: 20, alignSelf: "center" }} color="warning" size="xl" />
         </div>
         <div style={{ marginTop: "3%" }}>
           <Copyright style={{ marginTop: "0px" }} />

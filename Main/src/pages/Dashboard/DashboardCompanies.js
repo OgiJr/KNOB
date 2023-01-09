@@ -218,7 +218,7 @@ const DashboardCompanies = () => {
                 <Dropdown.Button color="warning" flat style={{ marginBottom: 30 }}>
                   Оценителска правоспособност
                 </Dropdown.Button>
-                <Dropdown.Menu aria-label="Dynamic Actions" items={capacities}>
+                <Dropdown.Menu items={capacities}>
                   {(item) => (
                     <Dropdown.Item key={item.name}>
                       <span style={{ fontSize: 8 }}>{item.name}</span>
@@ -266,7 +266,6 @@ const DashboardCompanies = () => {
                   {selectedValue}
                 </Dropdown.Button>
                 <Dropdown.Menu
-                  aria-label="Single selection actions"
                   color="warning"
                   disallowEmptySelection
                   selectionMode="single"
