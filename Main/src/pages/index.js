@@ -43,7 +43,13 @@ const HomeDefault = () => {
                       <a className="btn-default btn-medium round btn-icon" href="/rev-registry" style={{ width: 210 }}>
                         Регистър REV
                       </a>
-                      <a className="btn-default btn-medium round btn-icon" href="https://annualreport-ciab.com/" target="_blank" style={{ width: 210 }}>
+                      <a
+                        className="btn-default btn-medium round btn-icon"
+                        href="https://annualreport-ciab.com/"
+                        target="_blank"
+                        style={{ width: 210 }}
+                        rel="noreferrer"
+                      >
                         Годишен отчет
                       </a>
                     </div>

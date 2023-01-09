@@ -10,7 +10,7 @@ import useSWR from "swr";
 const fetcher = (url) => fetch(url).then((res) => res.json());
 
 const ControlBoard = () => {
-  const { data, error, isLoading } = useSWR(`${process.env.REACT_APP_API_URL}/api/get-ks-committee`, fetcher);
+  const { data } = useSWR(`${process.env.REACT_APP_API_URL}/api/get-ks-committee`, fetcher);
 
   return (
     <>
@@ -33,39 +33,41 @@ const ControlBoard = () => {
               <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
                 <b>Председател:</b>
                 <div style={{ display: "flex", flexDirection: "column" }}>
-                  {
-                    data && data.results.map((item) => (
+                  {data &&
+                    data.results.map((item) => (
                       <>
-                        {
-                          item.is_representative ? (
-                            <Text style={{ textAlign: "center", marginBottom: 5, marginTop: 5 }}>
-                              {item.full_name}, Представляващ КНОБ -{" "}
-                              <a href={"mailto:"+item.email} style={{ color: "#ff6d00" }}>
-                                {item.email}
-                              </a>
-                            </Text>) : (<></>)}
+                        {item.is_representative ? (
+                          <Text style={{ textAlign: "center", marginBottom: 5, marginTop: 5 }}>
+                            {item.full_name}, Представляващ КНОБ -{" "}
+                            <a href={"mailto:" + item.email} style={{ color: "#ff6d00" }}>
+                              {item.email}
+                            </a>
+                          </Text>
+                        ) : (
+                          <></>
+                        )}
                       </>
-                    ))
-                  }
+                    ))}
                 </div>
               </div>
               <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
                 <b>Членове:</b>
                 <div style={{ display: "flex", flexDirection: "column" }}>
-                {
-                    data && data.results.map((item) => (
+                  {data &&
+                    data.results.map((item) => (
                       <>
-                        {
-                          !item.is_representative ? (
-                            <Text style={{ textAlign: "center", marginBottom: 5, marginTop: 5 }}>
-                              {item.full_name} -{" "}
-                              <a href={"mailto:"+item.email} style={{ color: "#ff6d00" }}>
-                                {item.email}
-                              </a>
-                            </Text>) : (<></>)}
+                        {!item.is_representative ? (
+                          <Text style={{ textAlign: "center", marginBottom: 5, marginTop: 5 }}>
+                            {item.full_name} -{" "}
+                            <a href={"mailto:" + item.email} style={{ color: "#ff6d00" }}>
+                              {item.email}
+                            </a>
+                          </Text>
+                        ) : (
+                          <></>
+                        )}
                       </>
-                    ))
-                  }
+                    ))}
                 </div>
               </div>
             </Card.Body>

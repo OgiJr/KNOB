@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import ResourceList from "./ResourceList";
 
 const BlogPropLiterature = ({ column, StyleVarProp, data }) => {
@@ -6,12 +6,12 @@ const BlogPropLiterature = ({ column, StyleVarProp, data }) => {
     <>
       <div className="col-lg-12">
         <div className="row row--15">
-          {data&&
-          data.map((item) => (
-            <div key={item.id} className={column}>
-              <ResourceList StyleVar={StyleVarProp} data={item} />
-            </div>
-          ))}
+          {data &&
+            data.map((item) => (
+              <div key={item.id} className={column}>
+                <ResourceList StyleVar={StyleVarProp} data={item} />
+              </div>
+            ))}
         </div>
       </div>
     </>

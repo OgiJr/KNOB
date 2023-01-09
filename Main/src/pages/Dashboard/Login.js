@@ -2,7 +2,7 @@ import React from "react";
 import SEO from "../../common/SEO";
 import Header from "../../common/header/Header";
 import Copyright from "../../common/footer/Copyright";
-import { Card, Dropdown, Row } from "@nextui-org/react";
+import { Card, Row } from "@nextui-org/react";
 import { Button } from "@nextui-org/react";
 import { Input, Grid } from "@nextui-org/react";
 import { Navigate, useNavigate } from "react-router-dom";
@@ -42,7 +42,6 @@ const Login = () => {
                   });
 
                   // TODO: error checking
-
                   const { token } = await resp.json();
 
                   await login({ token });

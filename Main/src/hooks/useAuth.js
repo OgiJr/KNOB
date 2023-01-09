@@ -9,27 +9,32 @@ export const AuthProvider = ({ children }) => {
 
   React.useEffect(() => {
     (async () => {
-      if (user) {
-        const l_r = await fetch(`${process.env.REACT_APP_API_URL}/api/is-user-logged-in`, {
-          method: "GET",
-          headers: {
-            Authorization: `Bearer ${user.token}`,
-          },
-        });
-        const { result } = await l_r.json();
-        if (!result) {
-          setUser(null);
-        } else {
-          const t_r = await fetch(`${process.env.REACT_APP_API_URL}/api/get-user-type`, {
-            method: "GET",
-            headers: {
-              Authorization: `Bearer ${user.token}`,
-            },
-          });
-          const { result: type } = await t_r.json();
-          user.type = type;
-        }
+      if (!user || !user.token) {
+        return;
       }
+
+      const l_r = await fetch(`${process.env.REACT_APP_API_URL}/api/is-user-logged-in`, {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${user.token}`,
+        },
+      });
+      const { result } = await l_r.json();
+
+      if (!result) {
+        setUser(null);
+        return;
+      }
+
+      const l_t = await fetch(`${process.env.REACT_APP_API_URL}/api/get-user-type`, {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${user.token}`,
+        },
+      });
+      const { result: result_t } = await l_t.json();
+
+      setUser({ token: user.token, type: result_t });
     })();
   }, [user, setUser]);
 
@@ -45,6 +50,7 @@ export const AuthProvider = ({ children }) => {
       setUser(null);
       navigate("/", { replace: true });
     };
+
     return {
       user,
       login,

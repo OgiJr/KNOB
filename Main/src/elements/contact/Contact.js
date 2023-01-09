@@ -2,10 +2,8 @@ import React from "react";
 import SEO from "../../common/SEO";
 import Layout from "../../common/Layout";
 import SectionTitle from "../sectionTitle/SectionTitle";
-import ContactOne from "./ContactOne";
 import { Card, Text } from "@nextui-org/react";
 import { FiHeadphones, FiMail, FiMapPin } from "react-icons/fi";
-import GoogleMapStyle from "./GoogleMapStyle";
 import ContactForm from "./ContactForm";
 
 const Contact = () => {
@@ -85,19 +83,33 @@ const Contact = () => {
                 </div>
               </div>
               <div className="row mt--40 row--16">
-                <div style={{display:"flex", flex:4, flexDirection:"column"}}>
+                <div style={{ display: "flex", flex: 4, flexDirection: "column" }}>
                   <ContactForm formStyle="contact-form-1" />
                 </div>
 
-                <div style={{display:"flex", flex:4, flexDirection:"column", alignItems:"center", justifyContent:"center"}}>
-                  <img src="/images/about/map.png"/>
+                <div
+                  style={{
+                    display: "flex",
+                    flex: 4,
+                    flexDirection: "column",
+                    alignItems: "center",
+                    justifyContent: "center",
+                  }}
+                >
+                  <img src="/images/about/map.png" alt="" />
                 </div>
               </div>
               <div style={{ marginTop: 20, marginBottom: 20 }}>
                 <div className="mt--40 cardsAccent">
                   <Card isHoverable isPressable>
                     <Card.Header>
-                      <img alt="nextui logo" src="images/icons/map.png" style={{borderRadius:"40px important!"}} width="34px" height="34px" />
+                      <img
+                        alt="nextui logo"
+                        src="images/icons/map.png"
+                        style={{ borderRadius: "40px important!" }}
+                        width="34px"
+                        height="34px"
+                      />
                       <Text style={{ fontWeight: "bold", marginTop: "27px" }}>За членски внос</Text>
                     </Card.Header>
                     <Card.Body css={{ py: "$2" }}>
@@ -121,7 +133,9 @@ const Contact = () => {
                   <Card isHoverable isPressable>
                     <Card.Header>
                       <img alt="nextui logo" src="images/icons/map.png" width="34px" height="34px" />
-                      <Text style={{ fontWeight: "bold", marginTop: "27px" }}>Такса за вписване в регистъра на КНОБ</Text>
+                      <Text style={{ fontWeight: "bold", marginTop: "27px" }}>
+                        Такса за вписване в регистъра на КНОБ
+                      </Text>
                     </Card.Header>
                     <Card.Body css={{ py: "$2" }}>
                       <Text>
@@ -192,7 +206,8 @@ const Contact = () => {
                     </Card.Body>
                   </Card>
                 </div>
-              </div>            </div>
+              </div>{" "}
+            </div>
           </div>
           {/* End Contact Area  */}
         </div>

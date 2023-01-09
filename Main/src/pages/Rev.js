@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import SEO from "../common/SEO";
 import Header from "../common/header/Header";
 import Copyright from "../common/footer/Copyright";
@@ -41,8 +41,7 @@ const Rev = () => {
         {/* End Slider Area  */}
         {isLoading && <div>Loading...</div>}
         {error && <div>{error}</div>}
-        {data && (
-          <BlogRev data={data} />)}
+        {data && <BlogRev data={data} />}
         {/* Start Problems  */}
         <div className="row mt--40 row--30" style={{ marginLeft: "5%", marginRight: "5%" }}>
           <div className="col-lg-6">

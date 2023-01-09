@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import SEO from "../common/SEO";
 import Header from "../common/header/Header";
 import Copyright from "../common/footer/Copyright";
@@ -7,32 +7,15 @@ import BreadcrumbOne from "../elements/breadcrumb/BreadcrumbOne";
 import { Card } from "@nextui-org/react";
 import useSWR from "swr";
 
-const fetcher = (url) => fetch(url).then((res) => res.json());
-
 const Us = () => {
-  const { data, error, isLoading } = useSWR(`${process.env.REACT_APP_API_URL}/api/get-us-protocols`, fetcher);
+  const fetcher = (url) =>
+    fetch(url, {
+      headers: {
+        Authorization: `Bearer ${JSON.parse(localStorage.getItem("user")).token}`,
+      },
+    }).then((res) => res.json());
 
-  const protocols = [
-    {
-      key: 1,
-      title: "Примерен протокол",
-      description: "Описание на примерен протокол. Описание на примерен протокол. Описание на примерен протокол.",
-      fileName: "Примерен файл",
-      fileUrl: "#",
-      imageUrl: "/images/blog/blog-11.jpg",
-      date: "12.12.2022г.",
-    },
-    {
-      key: 2,
-      title: "Примерен протокол",
-      description: "Описание на примерен протокол. Описание на примерен протокол. Описание на примерен протокол.",
-      fileName: "Примерен файл",
-      fileUrl: "#",
-      imageUrl: "/images/blog/blog-02.jpg",
-      date: "12.12.2022г.",
-    },
-  ];
-
+  const { data } = useSWR(`${process.env.REACT_APP_API_URL}/api/get-us-protocols`, fetcher);
 
   return (
     <>
@@ -46,25 +29,35 @@ const Us = () => {
             className="cardsRev"
             style={{ justifyContent: "center", justifyItems: "center", alignSelf: "center", gap: 20 }}
           >
-            {data && data.results.map((item) => (
-              <Card style={{}}>
-                <Card.Header style={{ fontWeight: "bold" }}>{item.title}</Card.Header>
-                <Card.Body>
-                  <img
-                    src={item.imageUrl}
-                    style={{ width: "100%", height: 250, objectFit: "cover", borderRadius: 16 }}
-                    alt=""
-                  />
-                  <p style={{ marginTop: 12, color: "black" }}>
-                    {item.date} | <img src="/images/icons/file.png" width={20} height={20} alt="" />
-                    <a href={item.fileUrl} style={{ color: "orange", marginLeft: 5 }}>
-                      {item.fileName}
-                    </a>
-                  </p>
-                  <p>{item.description}</p>
-                </Card.Body>
-              </Card>
-            ))}
+            {data &&
+              data.results &&
+              data.results.map((item) => (
+                <Card style={{}}>
+                  <Card.Header style={{ fontWeight: "bold" }}>{item.title}</Card.Header>
+                  <Card.Body>
+                    <img
+                      src={`${process.env.REACT_APP_API_URL}/${item.picture.path}`}
+                      style={{ width: "100%", height: 250, objectFit: "cover", borderRadius: 16 }}
+                      alt=""
+                    />
+                    <p style={{ marginTop: 12, color: "black" }}>
+                      {new Date(item.timestamp).toLocaleString("bg-BG", {
+                        year: "numeric",
+                        month: "long",
+                        day: "numeric",
+                      })}{" "}
+                      | <img src="/images/icons/file.png" width={20} height={20} alt="" />
+                      <a
+                        href={`${process.env.REACT_APP_API_URL}/${item.file.path}`}
+                        style={{ color: "orange", marginLeft: 5 }}
+                      >
+                        {item.file.name}
+                      </a>
+                    </p>
+                    <p>{item.description}</p>
+                  </Card.Body>
+                </Card>
+              ))}
           </div>
         </div>
         <div style={{ marginTop: "3%" }}>

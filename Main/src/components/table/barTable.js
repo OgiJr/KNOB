@@ -378,24 +378,24 @@ const columnsCompanies = [
     label: "Телефон",
   },
 ];
-const rowsCompanies = [
-  {
-    key: "1",
-    id: "1",
-    company: "АБАКУС КОНСУЛТИНГ ЕООД",
-    city: "София",
-    mobile: "0888289007",
-    phone: "",
-    capacityCompany: "Недвижими имоти",
-    certificateNumberCompany: "900100223 (07.10.2016 г.)",
-    bulstat: "203468650",
-    address: "София 1415, ж.к. Драгалевци ул.Момино венче",
-    speciality: "Горско стопанство",
-    name: "Галина Йорданова Зоин",
-    capacityPerson: "Недвижими имоти",
-    certificatePerson: "100102176 (17.11.2014 г.)",
-  },
-];
+// const rowsCompanies = [
+//   {
+//     key: "1",
+//     id: "1",
+//     company: "АБАКУС КОНСУЛТИНГ ЕООД",
+//     city: "София",
+//     mobile: "0888289007",
+//     phone: "",
+//     capacityCompany: "Недвижими имоти",
+//     certificateNumberCompany: "900100223 (07.10.2016 г.)",
+//     bulstat: "203468650",
+//     address: "София 1415, ж.к. Драгалевци ул.Момино венче",
+//     speciality: "Горско стопанство",
+//     name: "Галина Йорданова Зоин",
+//     capacityPerson: "Недвижими имоти",
+//     certificatePerson: "100102176 (17.11.2014 г.)",
+//   },
+// ];
 //End company variables
 
 //Start invalid variables
@@ -498,54 +498,49 @@ const BarTable = (users, companies) => {
   const [bulstat, setBulstat] = React.useState("");
   //End companies variables
 
-  console.log(users.users)
-  var rowsPeople = users.users.map((item) => (
-    {
-      key: item._id,
-      id: item.number,
-      name: item.first_name + " " + item.middle_name + " " + item.last_name,
-      member: item.is_knob_member? "Да" : "Не",
-      city: item.city,
-      mobile: item.mobile_phone,
-      phone: item.phone? item.phone : "",
-      capacity: "Поземлени имоти в горски територии",
-      certificateNumber: "820100133 (6.2.2012 г.)",
-      address: item.address,
-      speciality: "Горско стопанство",
-      expirience: "ЗГ-1999",
-      education: "висше(ВЛТИ-София)",
-    }
-  )
-  );
-  function returnName(person){
+  console.log(users.users);
+  var rowsPeople = users.users.map((item) => ({
+    key: item._id,
+    id: item.number,
+    name: item.first_name + " " + item.middle_name + " " + item.last_name,
+    member: item.is_knob_member ? "Да" : "Не",
+    city: item.city,
+    mobile: item.mobile_phone,
+    phone: item.phone ? item.phone : "",
+    capacity: "Поземлени имоти в горски територии",
+    certificateNumber: "820100133 (6.2.2012 г.)",
+    address: item.address,
+    speciality: "Горско стопанство",
+    expirience: "ЗГ-1999",
+    education: "висше(ВЛТИ-София)",
+  }));
+  function returnName(person) {
     return person.name;
   }
-  function returnCapacity(person){
+  function returnCapacity(person) {
     return person.capacity;
   }
-  function returnCertificate(person){
+  function returnCertificate(person) {
     return person.certificateNumber;
   }
-  var rowsCompanies = users.companies.results.map((item) => (
-    {
-      key: item._id,
-      id: item.number,
-      company: item.name,
-      city: item.city,
-      mobile: item.mobile,
-      phone: item.phone?item.phone:"",
-      capacityCompany: "Недвижими имоти",
-      certificateNumberCompany: "900100223 (07.10.2016 г.)",
-      bulstat: item.eik,
-      address: item.address,
-      speciality: "Горско стопанство",
-      name: returnName(rowsPeople.find(person => person.key === "63b855cb8292297b36cdecba")),
-      capacityPerson: returnCapacity(rowsPeople.find(person => person.key === "63b855cb8292297b36cdecba")),
-      certificatePerson: returnCertificate(rowsPeople.find(person => person.key === "63b855cb8292297b36cdecba")),
-    }
-  ));
+  var rowsCompanies = users.companies.results.map((item) => ({
+    key: item._id,
+    id: item.number,
+    company: item.name,
+    city: item.city,
+    mobile: item.mobile,
+    phone: item.phone ? item.phone : "",
+    capacityCompany: "Недвижими имоти",
+    certificateNumberCompany: "900100223 (07.10.2016 г.)",
+    bulstat: item.eik,
+    address: item.address,
+    speciality: "Горско стопанство",
+    name: returnName(rowsPeople.find((person) => person.key === "63b855cb8292297b36cdecba")),
+    capacityPerson: returnCapacity(rowsPeople.find((person) => person.key === "63b855cb8292297b36cdecba")),
+    certificatePerson: returnCertificate(rowsPeople.find((person) => person.key === "63b855cb8292297b36cdecba")),
+  }));
   const selectedValue = React.useMemo(() => Array.from(selected).join(", ").replaceAll("_", " "), [selected]);
-  
+
   return (
     <>
       {/* Start Modal Area */}

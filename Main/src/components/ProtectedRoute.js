@@ -8,10 +8,12 @@ export const ProtectedRoute = ({ children, type = "Guest" }) => {
   if (!user) {
     return <Navigate to="/login" />;
   }
-  if (type === "Admin" && user.type !== "Admin") {
+
+  if (type === "Curator" && user.type !== "Admin" && user.type !== "Curator") {
     return <Navigate to="/login" />;
   }
-  if (type === "Curator" && user.type !== "Admin" && user.type !== "Curator") {
+
+  if (type === "Admin" && user.type !== "Admin") {
     return <Navigate to="/login" />;
   }
 

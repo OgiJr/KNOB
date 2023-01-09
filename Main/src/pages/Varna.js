@@ -10,7 +10,7 @@ import useSWR from "swr";
 const fetcher = (url) => fetch(url).then((res) => res.json());
 
 const Varna = () => {
-  const { data, error, isLoading } = useSWR(`${process.env.REACT_APP_API_URL}/api/get-regional-committee?city=Varna`, fetcher);
+  const { data } = useSWR(`${process.env.REACT_APP_API_URL}/api/get-regional-committee?city=Varna`, fetcher);
 
   return (
     <>
@@ -97,39 +97,41 @@ const Varna = () => {
                             <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
                               <b>Председател:</b>
                               <div style={{ display: "flex", flexDirection: "column" }}>
-                                {
-                                  data && data.members.map((item) => (
+                                {data &&
+                                  data.members.map((item) => (
                                     <>
-                                      {
-                                        item.is_representative ? (
-                                          <Text style={{ textAlign: "center", marginBottom: 5, marginTop: 5 }}>
-                                            {item.full_name}, Представляващ КНОБ -{" "}
-                                            <a href={"mailto:" + item.email} style={{ color: "#ff6d00" }}>
-                                              {item.email}
-                                            </a>
-                                          </Text>) : (<></>)}
+                                      {item.is_representative ? (
+                                        <Text style={{ textAlign: "center", marginBottom: 5, marginTop: 5 }}>
+                                          {item.full_name}, Представляващ КНОБ -{" "}
+                                          <a href={"mailto:" + item.email} style={{ color: "#ff6d00" }}>
+                                            {item.email}
+                                          </a>
+                                        </Text>
+                                      ) : (
+                                        <></>
+                                      )}
                                     </>
-                                  ))
-                                }
+                                  ))}
                               </div>
                             </div>
                             <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
                               <b>Членове:</b>
                               <div style={{ display: "flex", flexDirection: "column" }}>
-                                {
-                                  data && data.members.map((item) => (
+                                {data &&
+                                  data.members.map((item) => (
                                     <>
-                                      {
-                                        !item.is_representative ? (
-                                          <Text style={{ textAlign: "center", marginBottom: 5, marginTop: 5 }}>
-                                            {item.full_name} -{" "}
-                                            <a href={"mailto:" + item.email} style={{ color: "#ff6d00" }}>
-                                              {item.email}
-                                            </a>
-                                          </Text>) : (<></>)}
+                                      {!item.is_representative ? (
+                                        <Text style={{ textAlign: "center", marginBottom: 5, marginTop: 5 }}>
+                                          {item.full_name} -{" "}
+                                          <a href={"mailto:" + item.email} style={{ color: "#ff6d00" }}>
+                                            {item.email}
+                                          </a>
+                                        </Text>
+                                      ) : (
+                                        <></>
+                                      )}
                                     </>
-                                  ))
-                                }
+                                  ))}
                               </div>
                             </div>
                           </Card.Body>
