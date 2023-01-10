@@ -46,7 +46,7 @@ const BlogDetailsContent = ({ data }) => {
                   <li>
                     <img
                       src={`${process.env.REACT_APP_API_URL}/${data.picture.path}`}
-                      style={{ borderRadius: 100, width: 300, height: 300 }}
+                      style={{ borderRadius: 20, width: 300, height: 300 }}
                       alt="blog"
                     ></img>
                   </li>

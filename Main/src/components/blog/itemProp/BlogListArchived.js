@@ -12,14 +12,14 @@ const BlogListArchived = ({ data, StyleVar, international = false }) => {
               <>
                 {
                   !international ? (
-                    <Link to={`/blog-details?id=${data._id}`} className="image" style={{ height: 400 }}>
+                    <Link to={`/blog-details?id=${data._id}`} className="image" style={{ height: 200 }}>
                       <img
                         src={`${process.env.REACT_APP_API_URL}/${data.picture.path}`}
                         alt="Blog"
                         style={{ width: "100%", height: "100%", borderRadius: 0 }}
                       />
                     </Link>) : (
-                    <Link to={`/blog-european?id=${data._id}`} className="image" style={{ height: 400 }}>
+                    <Link to={`/blog-european?id=${data._id}`} className="image" style={{ height: 200 }}>
                       <img
                         src={`${process.env.REACT_APP_API_URL}/${data.picture.path}`}
                         alt="Blog"
