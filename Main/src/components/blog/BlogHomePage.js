@@ -14,15 +14,15 @@ const BlogHomePage = () => {
         <div className="rn-blog-area rn-section-gap">
           <div className="container">
             <div className="row mt_dec--30">
-            {isLoading && <div>Loading...</div>}
-                {error && <div>{error}</div>}
-                {data && (
-                  <BlogPropMain
-                    data={data.results}
-                    column="col-lg-6 mt--30"
-                    StyleVarProp="box-card-style-default card-list-view"
-                  />
-                )}
+              {isLoading && <div>Loading...</div>}
+              {error && <div>{JSON.stringify(error)}</div>}
+              {data && (
+                <BlogPropMain
+                  data={data.results}
+                  column="col-lg-6 mt--30"
+                  StyleVarProp="box-card-style-default card-list-view"
+                />
+              )}
             </div>
           </div>
         </div>
