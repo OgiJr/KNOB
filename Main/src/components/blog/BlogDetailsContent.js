@@ -46,7 +46,7 @@ const BlogDetailsContent = ({ data }) => {
                   <li>
                     <img
                       src={`${process.env.REACT_APP_API_URL}/${data.picture.path}`}
-                      style={{ borderRadius: 20, width: 300, height: 300 }}
+                      style={{ borderRadius: 20, height: 300 }}
                       alt="blog"
                     ></img>
                   </li>
@@ -62,15 +62,7 @@ const BlogDetailsContent = ({ data }) => {
             <div className="col-lg-10" style={{ alignSelf: "center" }}>
               <Card isHoverable isPressable>
                 <div className="content" style={{ margin: "30px" }}>
-                  {data.description}
-                  {/* {data.body.map((value, i) => {
-                    return <div key={i} dangerouslySetInnerHTML={{ __html: value }} />;
-                  })} */}
-                  {/* 
-                <div className="category-meta">
-                  <span className="text">Tags:</span>
-                  //<SidebarTag />
-                </div> */}
+                  <div dangerouslySetInnerHTML={{ __html: data.description }} />
                 </div>
               </Card>
             </div>

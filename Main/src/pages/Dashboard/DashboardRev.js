@@ -4,14 +4,17 @@ import Copyright from "../../common/footer/Copyright";
 import { Button, Input, Modal, Table } from "@nextui-org/react";
 import { Form } from "react-bootstrap";
 import React from "react";
+import useSWR from "swr";
+
+const fetcher = (url) => fetch(url).then((res) => res.json());
 
 const columns = [
   {
-    key: "name",
+    key: "cyrilic_name",
     label: "Имена",
   },
   {
-    key: "certificate",
+    key: "certificate_number",
     label: "Сертификат",
   },
 ];
@@ -21,42 +24,73 @@ const rows = [{ key: "1", name: "Цанко Спасовски", certificate: "R
 const DashboardRev = () => {
   const [visibleAdd, setVisibleAdd] = React.useState(false);
   const [visibleEdit, setVisibleEdit] = React.useState(false);
+  const { data } = useSWR(`${process.env.REACT_APP_API_URL}/api/get-rev-registry`, fetcher);
+  const [validUntil, setValidUnitl] = React.useState("");
+  const [validFrom, setValidFrom] = React.useState("");
 
   return (
     <>
       {/* Modal add start */}
       <Modal scroll open={visibleAdd} onClose={() => setVisibleAdd(false)}>
-        <Form>
+        <Form
+          onSubmit={async (e) => {
+            e.preventDefault();
+
+            const body = new FormData();
+            body.append("certificate_number", e.target.certificate.value);
+            body.append("cyrilic_name", e.target.cyr_name.value);
+            body.append("latin_name", e.target.latin_name.value);
+            body.append("latin_city", e.target.latin_city.value);
+            body.append("cyrilic_city", e.target.latin_city.value);
+            body.append("issued_on", validFrom);
+            body.append("valid_until", validUntil);
+            body.append("telephone", e.target.phone.value);
+
+            const res = await fetch(`${process.env.REACT_APP_API_URL}/api/post-rev`, {
+              method: "POST",
+              body: body,
+              headers: {
+                Authorization: `Bearer ${JSON.parse(localStorage.getItem("user")).token}`,
+              },
+            });
+
+            // TODO CHECK FOR ERRORS
+            console.log(await res.json());
+
+            setVisibleAdd(false);
+            // window.location.reload(false);
+          }}>
           <Modal.Header>
             <div style={{ marginTop: 20 }}>
-              <Input placeholder="Сертификат №" style={{ background: "white", margin: 0 }} />
+              <Input placeholder="Сертификат №" style={{ background: "white", margin: 0 }} id="certificate" name="certificate" required />
             </div>
           </Modal.Header>
-          <Modal.Body>
-            <div style={{ display: "flex", flexDirection: "column", alignSelf: "center" }}>
-              <div style={{ marginTop: 20 }}>
-                <Input placeholder="Имена на български" style={{ background: "white", margin: 0 }} />
+            <Modal.Body>
+              <div style={{ display: "flex", flexDirection: "column", alignSelf: "center" }}>
+                <div style={{ marginTop: 20 }}>
+                  <Input placeholder="Имена на български" style={{ background: "white", margin: 0 }} required id="cyr_name" name="cyr_name"/>
+                </div>
+                <div style={{ marginTop: 20 }}>
+                  <Input placeholder="Имена на английски" style={{ background: "white", margin: 0 }} required name="latin_name" id="latin_name"/>
+                </div>
+                <div style={{ marginTop: 20, display: "flex", flexDirection: "row", justifyContent: "space-between" }}>
+                  <Input onChange={(event) => setValidFrom(event.target.value)} type="date" label="Дата на издаване" style={{ background: "white", margin: 0 }} required name="date_from" id="date_from"/>
+                  <Input onChange={(event) => setValidUnitl(event.target.value)}  type="date" label="Валиден до" style={{ background: "white", margin: 0 }}  required name="date_until" id="date_until" />
+                </div>
+                <div style={{gap:20, marginTop: 20, display: "flex", flexDirection: "column", justifyContent: "space-between" }}>
+                  <Input placeholder="Град на български" style={{ background: "white", margin: 0 }} required name="cyr_city" id="cyr_city" />
+                  <Input placeholder="Град на английски" style={{ background: "white", margin: 0 }} required name="latin_city" id="latin_city"/>
+                </div>
+                <div style={{ marginTop: 20 }}>
+                  <Input placeholder="Телефон" style={{ background: "white", margin: 0 }} required name="phone"  id="phone" />
+                </div>
               </div>
-              <div style={{ marginTop: 20 }}>
-                <Input placeholder="Имена на английски" style={{ background: "white", margin: 0 }} />
-              </div>
-              <div style={{ marginTop: 20, display: "flex", flexDirection: "row", justifyContent: "space-between" }}>
-                <Input type="date" label="Дата на издаване" style={{ background: "white", margin: 0 }} />
-                <Input type="date" label="Валиден до" style={{ background: "white", margin: 0 }} />
-              </div>
-              <div style={{ marginTop: 20 }}>
-                <Input placeholder="Град" style={{ background: "white", margin: 0 }} />
-              </div>
-              <div style={{ marginTop: 20 }}>
-                <Input placeholder="Телефон" style={{ background: "white", margin: 0 }} />
-              </div>
-            </div>
-          </Modal.Body>
-          <Modal.Footer>
-            <Button auto type="submit" color="warning">
-              Качи
-            </Button>
-          </Modal.Footer>
+            </Modal.Body>
+            <Modal.Footer>
+              <Button auto type="submit" color="warning">
+                Качи
+              </Button>
+            </Modal.Footer>
         </Form>
       </Modal>
       {/* Modal add end */}
@@ -115,38 +149,41 @@ const DashboardRev = () => {
             Добавете сертификат
           </Button>
           <div style={{ display: "flex", width: "100%", justifyContent: "center", marginTop: 50, marginBottom: 50 }}>
-            <Table
-              css={{
-                height: "auto",
-                minWidth: "100%",
-              }}
-            >
-              <Table.Header columns={columns}>
-                {(column) => (
-                  <Table.Column key={column.key}>
-                    <span style={{ fontSize: 14, marginLeft: 5, marginRight: 5 }}>{column.label}</span>
-                  </Table.Column>
-                )}
-              </Table.Header>
-              <Table.Body items={rows}>
-                {(item) => (
-                  <Table.Row key={item.key}>
-                    {(columnKey) => (
-                      <Table.Cell>
-                        <span
-                          style={{ cursor: "pointer" }}
-                          onClick={() => {
-                            setVisibleEdit(true);
-                          }}
-                        >
-                          <span style={{ color: "black", fontSize: 14, fontWeight: "normal" }}>{item[columnKey]}</span>
-                        </span>
-                      </Table.Cell>
-                    )}
-                  </Table.Row>
-                )}
-              </Table.Body>
-            </Table>
+            {
+              data &&
+              <Table
+                css={{
+                  height: "auto",
+                  minWidth: "100%",
+                }}
+              >
+                <Table.Header columns={columns}>
+                  {(column) => (
+                    <Table.Column key={column.key}>
+                      <span style={{ fontSize: 14, marginLeft: 5, marginRight: 5 }}>{column.label}</span>
+                    </Table.Column>
+                  )}
+                </Table.Header>
+                <Table.Body items={data.results}>
+                  {(item) => (
+                    <Table.Row key={item._id}>
+                      {(columnKey) => (
+                        <Table.Cell>
+                          {console.log(item)}
+                          <span
+                            style={{ cursor: "pointer" }}
+                            onClick={() => {
+                              setVisibleEdit(true);
+                            }}
+                          >
+                            <span style={{ color: "black", fontSize: 14, fontWeight: "normal" }}>{item[columnKey]}</span>
+                          </span>
+                        </Table.Cell>
+                      )}
+                    </Table.Row>
+                  )}
+                </Table.Body>
+              </Table>}
           </div>
         </div>
         <Copyright />
