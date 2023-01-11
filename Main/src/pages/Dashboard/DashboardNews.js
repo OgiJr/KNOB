@@ -22,25 +22,79 @@ const DashboardNews = () => {
   const [visibleAdd, setVisibleAdd] = React.useState(false);
   const [visibleEdit, setVisibleEdit] = React.useState(false);
 
+  const [photo, set_photo] = React.useState(null);
+  const [file, set_file] = React.useState(null);
+
   return (
     <>
       {/* Modal add start */}
       <Modal fullScreen scroll width="600px" open={visibleAdd} onClose={() => setVisibleAdd(false)}>
-        <Form>
+        <Form
+          onSubmit={async (e) => {
+            e.preventDefault();
+
+            if (!file) {
+              // TODO MAKE ERROR BITCH
+            }
+
+            if (!photo) {
+              // TODO MAKE ERROR BITCH
+            }
+
+            // TODO CHECK PPL ACTUALLY INPUTTED THOSE VALUES
+
+            const body = new FormData();
+            body.append("title", e.target.title.value);
+            body.append("description", e.target.description.value);
+            body.append("short_description", e.target.short_description.value);
+            body.append("picture", photo);
+            body.append("file", file);
+
+            const res = await fetch(`${process.env.REACT_APP_API_URL}/api/post-knob-content`, {
+              method: "POST",
+              body: body,
+              headers: {
+                Authorization: `Bearer ${JSON.parse(localStorage.getItem("user")).token}`,
+              },
+            });
+
+            // TODO CHECK FOR ERRORS
+            console.log(await res.json());
+
+            setVisibleAdd(false);
+          }}
+        >
           <Modal.Header>
             <div style={{ marginTop: 20 }}>
-              <Input placeholder="Заглавие" style={{ background: "white", margin: 0 }} />
+              <Input name="title" placeholder="Заглавие" style={{ background: "white", margin: 0 }} />
             </div>
           </Modal.Header>
           <Modal.Body>
             <div style={{ display: "flex", flexDirection: "column", alignSelf: "center" }}>
               <p style={{ marginBottom: 5, fontSize: 14 }}>Снимка</p>
-              <input type="file" style={{ marginBottom: 15 }} />
-              <Input labelPlaceholder="Кратко описание" style={{ color: "black", margin: 0, background: "white" }} />
+              <input
+                type="file"
+                style={{ marginBottom: 15 }}
+                onChange={(e) => {
+                  set_photo(e.target.files[0]);
+                }}
+              />
+              <Input
+                name="short_description"
+                labelPlaceholder="Кратко описание"
+                style={{ color: "black", margin: 0, background: "white" }}
+              />
               <br />
-              <Textarea labelPlaceholder="Описание (HTML)" style={{ color: "black" }} rows={5} />
+              <Textarea name="description" labelPlaceholder="Описание (HTML)" style={{ color: "black" }} rows={5} />
               <p style={{ marginBottom: 5, fontSize: 14, marginTop: 15 }}>Прикачен файл</p>
-              <input type="file" style={{ marginBottom: 15 }} />
+              <input
+                name="file"
+                type="file"
+                style={{ marginBottom: 15 }}
+                onChange={(e) => {
+                  set_file(e.target.files[0]);
+                }}
+              />
             </div>
           </Modal.Body>
           <Modal.Footer>
