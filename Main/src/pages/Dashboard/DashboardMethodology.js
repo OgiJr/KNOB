@@ -1,59 +1,76 @@
 import SEO from "../../common/SEO";
 import HeaderAdmin from "../../common/header/HeaderAdmin";
 import Copyright from "../../common/footer/Copyright";
-import { Button, Dropdown, Input, Modal, Table } from "@nextui-org/react";
+import { Button, Dropdown, Input, Modal, Radio, Table } from "@nextui-org/react";
 import { Form } from "react-bootstrap";
 import React from "react";
+import useSWR from "swr";
 
-const columns = [
-  {
-    key: "name",
-    label: "Имена",
-  },
-  {
-    key: "email",
-    label: "Имейл",
-  },
-  {
-    key: "chair",
-    label: "Председател",
-  },
-];
+const fetcher = (url) =>
+  fetch(url, {
+    headers: {
+      Authorization: `Bearer ${JSON.parse(localStorage.getItem("user")).token}`,
+    },
+  }).then((res) => res.json());
 
-const rows = [
-  { key: "1", name: "Цанко Спасовски", email: "office@ciab-bg.com", chair: "Да" },
-  { key: "2", name: "Иван Иванов", email: "office@ciab-bg.com", chair: "Не" },
-];
+  const columns = [
+    {
+      key: "full_name",
+      label: "Имена",
+    },
+    {
+      key: "email",
+      label: "Имейл",
+    },
+    {
+      key: "is_representative",
+      label: "Председател",
+    },
+  ];
+
+
 
 const DashboardMethodology = () => {
   const [visibleAdd, setVisibleAdd] = React.useState(false);
   const [visibleEdit, setVisibleEdit] = React.useState(false);
+  const { data } = useSWR(`${process.env.REACT_APP_API_URL}/api/get-methodology-committee`, fetcher);
 
   return (
     <>
       {/* Modal add start */}
       <Modal scroll open={visibleAdd} onClose={() => setVisibleAdd(false)}>
-        <Form>
+        <Form
+          onSubmit={async (e) => {
+            e.preventDefault();
+            const body = new FormData();
+            body.append("full_name", e.target.full_name.value);
+            body.append("email", e.target.email.value);
+            body.append("is_representative", e.target.isChair.value === "chair" ? true : false);
+            const resp = await fetch(`${process.env.REACT_APP_API_URL}/api/post-methodology-committee-member`, {
+              method: "POST",
+              body: body,
+              headers: {
+                Authorization: `Bearer ${JSON.parse(localStorage.getItem("user")).token}`,
+              },
+            });
+            window.location.reload(false);
+          }}
+        >
           <Modal.Header>
             <div style={{ marginTop: 20 }}>
-              <Input placeholder="Имена" style={{ background: "white", margin: 0 }} />
+              <Input placeholder="Имена" style={{ background: "white", margin: 0 }} id = "full_name" name="full_name"/>
             </div>
           </Modal.Header>
           <Modal.Body>
             <div style={{ display: "flex", flexDirection: "column", alignSelf: "center" }}>
               <div style={{ marginTop: 20 }}>
-                <Input placeholder="Email" style={{ background: "white", margin: 0 }} />
+                <Input placeholder="Email" style={{ background: "white", margin: 0 }} name="email" id="email" aria-label="Email" aria-labelledby="email" />
               </div>
               <div style={{ marginTop: 20 }}>
-                <Dropdown>
-                  <Dropdown.Button color="warning" shadow>
-                    Председател
-                  </Dropdown.Button>
-                  <Dropdown.Menu>
-                    <Dropdown.Item key="chair">Да</Dropdown.Item>
-                    <Dropdown.Item key="notChair">Не</Dropdown.Item>
-                  </Dropdown.Menu>
-                </Dropdown>
+                <Radio.Group label="Председател" defaultValue="chair" name="isChair" id="isChair" color="warning">
+                  <Radio value="chair">Да</Radio>
+                  <Radio value="notChair">Не</Radio>
+                </Radio.Group>
               </div>
             </div>
           </Modal.Body>
@@ -120,46 +137,48 @@ const DashboardMethodology = () => {
             Добавете член
           </Button>
           <div style={{ display: "flex", width: "100%", justifyContent: "center", marginTop: 50, marginBottom: 50 }}>
-            <Table
-              css={{
-                height: "auto",
-                minWidth: "100%",
-              }}
-            >
-              <Table.Header columns={columns}>
-                {(column) => (
-                  <Table.Column key={column.key}>
-                    <span style={{ fontSize: 14, marginLeft: 5, marginRight: 5 }}>{column.label}</span>
-                  </Table.Column>
-                )}
-              </Table.Header>
-              <Table.Body items={rows}>
-                {(item) => (
-                  <Table.Row key={item.key}>
-                    {(columnKey) => (
-                      <Table.Cell>
-                        <span
-                          style={{ cursor: "pointer" }}
-                          onClick={() => {
-                            setVisibleEdit(true);
-                          }}
-                        >
-                          {item.chair === "Не" ? (
-                            <span style={{ color: "black", fontSize: 14, fontWeight: "normal" }}>
-                              {item[columnKey]}
-                            </span>
-                          ) : (
-                            <span style={{ color: "orange", fontSize: 14, fontWeight: "normal" }}>
-                              {item[columnKey]}
-                            </span>
-                          )}
-                        </span>
-                      </Table.Cell>
-                    )}
-                  </Table.Row>
-                )}
-              </Table.Body>
-            </Table>
+            {data &&
+              <Table
+                css={{
+                  height: "auto",
+                  minWidth: "100%",
+                }}
+              >
+                <Table.Header columns={columns}>
+                  {(column) => (
+                    <Table.Column key={column.key}>
+                      <span style={{ fontSize: 14, marginLeft: 5, marginRight: 5 }}>{column.label}</span>
+                    </Table.Column>
+                  )}
+                </Table.Header>
+                <Table.Body items={data.results}>
+                  {(item) => (
+                    <Table.Row key={(item._id)}>
+                      {(columnKey) => (
+                        <Table.Cell>
+                          <span
+                            style={{ cursor: "pointer" }}
+                            onClick={() => {
+                              setVisibleEdit(true);
+                            }}
+                          >
+                            {item.is_representative === false ? (
+                              <span style={{ color: "black", fontSize: 14, fontWeight: "normal" }}>
+                                {item[columnKey] !== false ? item[columnKey] : "Не"}
+                              </span>
+                            ) : (
+                              <span style={{ color: "orange", fontSize: 14, fontWeight: "normal" }}>
+                                {item[columnKey] !== true ? item[columnKey] : "Да"}
+                              </span>
+                            )}
+                          </span>
+                        </Table.Cell>
+                      )}
+                    </Table.Row>
+                  )}
+                </Table.Body>
+              </Table>
+            }
           </div>
         </div>
         <Copyright />
