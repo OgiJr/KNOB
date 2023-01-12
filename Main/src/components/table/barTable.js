@@ -294,6 +294,18 @@ const capacities = [
   { name: "Поземлени имоти в горски територии" },
 ];
 
+const capacities_map = {
+  "Недвижими имоти": "НН",
+  "Недвижими културни ценности": "НКЦ",
+  "Машини и съоражения": "МС",
+  "Права на интелектуална и индустриална собственост": "ПИИС",
+  "Търговски предприятия и вземания": "ТПВ",
+  "Финансови активи и фанансови институции": "ФА",
+  "Други активи": "ДРУГИ",
+  "Земеделски земи и трайни насъждения": "ЗЗ",
+  "Поземлени имоти в горски територии": "ЗГ",
+};
+
 //Start people variables
 const columnsPeople = [
   {
@@ -346,7 +358,7 @@ const columnsCompanies = [
 
 const columnsInvalidPeople = [
   {
-    key: "id",
+    key: "number",
     label: "№",
   },
   {
@@ -373,7 +385,7 @@ const columnsInvalidPeople = [
 
 const columnsInvalidCompanies = [
   {
-    key: "id",
+    key: "number",
     label: "№",
   },
   {
@@ -408,6 +420,8 @@ const BarTable = () => {
 
   const [mapped_users, set_mapped_users] = React.useState([]);
   const [mapped_companies, set_mapped_companies] = React.useState([]);
+  const [mapped_invalid_users, set_mapped_invalid_users] = React.useState([]);
+  const [mapped_invalid_companies, set_mapped_invalid_companies] = React.useState([]);
 
   const [visible, setVisible] = React.useState(false);
   const [tableType, setTableType] = React.useState("people");
@@ -424,6 +438,48 @@ const BarTable = () => {
 
   const { data: users } = useSWR(`${process.env.REACT_APP_API_URL}/api/get-users`, fetcher);
   const { data: companies } = useSWR(`${process.env.REACT_APP_API_URL}/api/get-companies`, fetcher);
+  const { data: invalid_people } = useSWR(
+    `${process.env.REACT_APP_API_URL}/api/get-invalid-certificates?owner_type=User`,
+    fetcher
+  );
+  const { data: invalid_companies } = useSWR(
+    `${process.env.REACT_APP_API_URL}/api/get-invalid-certificates?owner_type=Company`,
+    fetcher
+  );
+
+  React.useEffect(() => {
+    if (invalid_people) {
+      set_mapped_invalid_users(
+        invalid_people.results
+          .slice((page - 1) * entries_per_page, (page - 1) * entries_per_page + entries_per_page)
+          .map((u) => ({
+            number: u.number,
+            name: `${u.owner.first_name} ${u.owner.middle_name} ${u.owner.last_name}`,
+            type: capacities_map[u.certificate_type],
+            oldNumber: u.certificate_number,
+            newNumber: u.new_certificate ? u.new_certificate.certificate_number : "Няма",
+            reason: u.reason_for_invalidation,
+          }))
+      );
+    }
+  }, [invalid_people, page, entries_per_page, set_mapped_invalid_users]);
+
+  React.useEffect(() => {
+    if (invalid_companies) {
+      set_mapped_invalid_companies(
+        invalid_companies.results
+          .slice((page - 1) * entries_per_page, (page - 1) * entries_per_page + entries_per_page)
+          .map((c) => ({
+            numer: c.number,
+            name: c.owner.name,
+            type: capacities_map[c.certificate_type],
+            oldNumber: c.certificate_number,
+            newNumber: c.new_certificate ? c.new_certificate.certificate_number : "Няма",
+            reason: c.reason_for_invalidation,
+          }))
+      );
+    }
+  }, [invalid_companies, page, entries_per_page, set_mapped_invalid_companies]);
 
   React.useEffect(() => {
     if (users) {
@@ -799,10 +855,10 @@ const BarTable = () => {
                         marginRight: 10,
                       }}
                     >
-                      <span style={{ display: "flex", flex: 1 }}>НИ-недвижими имоти</span>
-                      <span style={{ display: "flex", flex: 1 }}>МС-машини и съоръжения</span>
+                      <span style={{ display: "flex", flex: 1 }}>НИ - недвижими имоти</span>
+                      <span style={{ display: "flex", flex: 1 }}>МС - машини и съоръжения</span>
                       <span style={{ display: "flex", flex: 1 }}>
-                        ПИИС-права на интелектуалната и индустриалната собственост
+                        ПИИС - права на интелектуалната и индустриалната собственост
                       </span>
                     </div>
                     <div
@@ -814,9 +870,9 @@ const BarTable = () => {
                         marginRight: 10,
                       }}
                     >
-                      <span style={{ display: "flex", flex: 1 }}>ТПВ-търговски предприятия и вземания </span>
-                      <span style={{ display: "flex", flex: 1 }}>ФА-финансови активи и финансови институции </span>
-                      <span style={{ display: "flex", flex: 1 }}>ДРУГИ-други активи</span>
+                      <span style={{ display: "flex", flex: 1 }}>ТПВ - търговски предприятия и вземания </span>
+                      <span style={{ display: "flex", flex: 1 }}>ФА - финансови активи и финансови институции </span>
+                      <span style={{ display: "flex", flex: 1 }}>ДРУГИ - други активи</span>
                     </div>
                     <div
                       className="guide"
@@ -827,8 +883,8 @@ const BarTable = () => {
                         marginRight: 10,
                       }}
                     >
-                      <span style={{ display: "flex", flex: 1 }}>ЗЗ-земеделски земи и трайни насаждения </span>
-                      <span style={{ display: "flex", flex: 1 }}>ЗГ-поземлени имоти в горски територии</span>
+                      <span style={{ display: "flex", flex: 1 }}>ЗЗ - земеделски земи и трайни насаждения </span>
+                      <span style={{ display: "flex", flex: 1 }}>ЗГ - поземлени имоти в горски територии</span>
                       <div style={{ display: "flex", flex: 1 }}></div>
                     </div>
                   </Card.Body>
@@ -843,12 +899,10 @@ const BarTable = () => {
                 </Button.Group>
               </div>
             )}
-            {tableType !== "invalid" ? (
+            {tableType !== "invalid" && (
               <span style={{ marginTop: 20, marginLeft: 0, fontSize: 12 }}>
                 За подробна информация натиснете името на оценителя
               </span>
-            ) : (
-              <></>
             )}
             <div
               style={{
@@ -1022,25 +1076,25 @@ const BarTable = () => {
                       </Table.Column>
                     )}
                   </Table.Header>
-                  {/* <Table.Body items={rowsInvalidPeople}>
-              {(item) => (
-                <Table.Row key={item.key}>
-                  {(columnKey) => (
-                    <Table.Cell>
-                      <span
-                        style={{
-                          color: "black",
-                          fontSize: 14,
-                          fontWeight: "normal",
-                        }}
-                      >
-                        {item[columnKey]}
-                      </span>
-                    </Table.Cell>
-                  )}
-                </Table.Row>
-              )}
-            </Table.Body> */}
+                  <Table.Body items={mapped_invalid_users}>
+                    {(item) => (
+                      <Table.Row key={item.number}>
+                        {(columnKey) => (
+                          <Table.Cell>
+                            <span
+                              style={{
+                                color: "black",
+                                fontSize: 14,
+                                fontWeight: "normal",
+                              }}
+                            >
+                              {item[columnKey]}
+                            </span>
+                          </Table.Cell>
+                        )}
+                      </Table.Row>
+                    )}
+                  </Table.Body>
                 </Table>
               ) : (
                 <Table
@@ -1056,25 +1110,25 @@ const BarTable = () => {
                       </Table.Column>
                     )}
                   </Table.Header>
-                  {/* <Table.Body items={rowsInvalidCompanies}>
-              {(item) => (
-                <Table.Row key={item.key}>
-                  {(columnKey) => (
-                    <Table.Cell>
-                      <span
-                        style={{
-                          color: "black",
-                          fontSize: 13,
-                          fontWeight: "normal",
-                        }}
-                      >
-                        {item[columnKey]}
-                      </span>
-                    </Table.Cell>
-                  )}
-                </Table.Row>
-              )}
-            </Table.Body> */}
+                  <Table.Body items={mapped_invalid_companies}>
+                    {(item) => (
+                      <Table.Row key={item.key}>
+                        {(columnKey) => (
+                          <Table.Cell>
+                            <span
+                              style={{
+                                color: "black",
+                                fontSize: 13,
+                                fontWeight: "normal",
+                              }}
+                            >
+                              {item[columnKey]}
+                            </span>
+                          </Table.Cell>
+                        )}
+                      </Table.Row>
+                    )}
+                  </Table.Body>
                 </Table>
               )}
             </div>
