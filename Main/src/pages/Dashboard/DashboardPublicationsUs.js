@@ -5,6 +5,14 @@ import { Button, Input, Modal, Table, Textarea } from "@nextui-org/react";
 import { Form } from "react-bootstrap";
 import React from "react";
 import BreadcrumbOne from "../../elements/breadcrumb/BreadcrumbOne";
+import useSWR from "swr";
+
+const fetcher = (url) =>
+  fetch(url, {
+    headers: {
+      Authorization: `Bearer ${JSON.parse(localStorage.getItem("user")).token}`,
+    },
+  }).then((res) => res.json());
 
 const columns = [
   {
@@ -12,7 +20,7 @@ const columns = [
     label: "Заглавие",
   },
   {
-    key: "date",
+    key: "timestamp",
     label: "Дата",
   },
 ];
@@ -20,26 +28,51 @@ const columns = [
 const rows = [{ key: "1", title: "Примерен протокол", date: "17.11.2022г.", archived: "Не" }];
 
 const DashboardPublicationsUs = () => {
+  const { data } = useSWR(`${process.env.REACT_APP_API_URL}/api/get-us-protocols`, fetcher);
   const [visibleAdd, setVisibleAdd] = React.useState(false);
   const [visibleEdit, setVisibleEdit] = React.useState(false);
+  const [photo, setPhoto] = React.useState(null);
+  const [file, setFile] = React.useState(null);
 
   return (
     <>
       {/* Modal add start */}
       <Modal scroll width="600px" open={visibleAdd} onClose={() => setVisibleAdd(false)}>
-        <Form>
-          <Modal.Header>
+        <Form
+          onSubmit={async (e) => {
+            e.preventDefault();
+            const body = new FormData();
+            body.append("title", e.target.title.value);
+            body.append("description", e.target.description.value);
+            body.append("picture", photo);
+            if (file) {
+              body.append("file", file);
+            }
+            const resp = await fetch(`${process.env.REACT_APP_API_URL}/api/post-us-protocol`, {
+              method: "POST",
+              body: body,
+              headers: {
+                Authorization: `Bearer ${JSON.parse(localStorage.getItem("user")).token}`,
+              },
+            });
+            window.location.reload(false);
+          }}
+        >          <Modal.Header>
             <div style={{ marginTop: 20 }}>
-              <Input placeholder="Заглавие" style={{ background: "white", margin: 0 }} />
+              <Input placeholder="Заглавие" style={{ background: "white", margin: 0 }} name="title" id="title" />
             </div>
           </Modal.Header>
           <Modal.Body>
             <div style={{ display: "flex", flexDirection: "column", alignSelf: "center" }}>
-              <Textarea labelPlaceholder="Описание" style={{ color: "black" }} rows={5} />
-              <br />
-              <Input style={{ margin: 0, background: "white" }} label="Име на файла" />
+              <Textarea labelPlaceholder="Описание (HTML)" style={{ color: "black" }} rows={5} required name="description" id="description" />
+              <p style={{ marginBottom: 5, fontSize: 14, marginTop: 15 }}>Снимка</p>
+              <input type="file" style={{ marginBottom: 15 }} onChange={(e) => {
+                setPhoto(e.target.files[0]);
+              }} required />
               <p style={{ marginBottom: 5, fontSize: 14, marginTop: 15 }}>Прикачен файл</p>
-              <input type="file" style={{ marginBottom: 15 }} />
+              <input type="file" style={{ marginBottom: 15 }} onChange={(e) => {
+                setFile(e.target.files[0]);
+              }} />
             </div>
           </Modal.Body>
           <Modal.Footer>
@@ -61,7 +94,7 @@ const DashboardPublicationsUs = () => {
           </Modal.Header>
           <Modal.Body>
             <div style={{ display: "flex", flexDirection: "column", alignSelf: "center" }}>
-              <Textarea labelPlaceholder="Описание" style={{ color: "black" }} rows={5} />
+              <Textarea labelPlaceholder="Описание HTML" style={{ color: "black" }} rows={5} />
               <br />
               <Input style={{ margin: 0, background: "white" }} label="Име на файла" />
               <p style={{ marginBottom: 5, fontSize: 14, marginTop: 15 }}>Прикачен файл</p>
@@ -87,7 +120,7 @@ const DashboardPublicationsUs = () => {
         <div
           style={{
             display: "flex",
-            height: "90vh",
+            minHeight: "90vh",
             flexDirection: "column",
             alignItems: "center",
             justifyItems: "center",
@@ -98,7 +131,7 @@ const DashboardPublicationsUs = () => {
             Добавете протокол
           </Button>
           <div style={{ display: "flex", width: "100%", justifyContent: "center", marginTop: 50, marginBottom: 50 }}>
-            <Table
+            {data && <Table
               css={{
                 height: "auto",
                 minWidth: "100%",
@@ -112,9 +145,9 @@ const DashboardPublicationsUs = () => {
                   </Table.Column>
                 )}
               </Table.Header>
-              <Table.Body items={rows}>
+              <Table.Body items={data.results}>
                 {(item) => (
-                  <Table.Row key={item.key}>
+                  <Table.Row key={item._id}>
                     {(columnKey) => (
                       <Table.Cell>
                         <span
@@ -123,14 +156,20 @@ const DashboardPublicationsUs = () => {
                             setVisibleEdit(true);
                           }}
                         >
-                          <span style={{ color: "black", fontSize: 14, fontWeight: "normal" }}>{item[columnKey]}</span>
+
+                          <span style={{ color: "black", fontSize: 14, fontWeight: "normal" }}>
+                            {columnKey !== "timestamp" ? item[columnKey] : new Date(item[columnKey]).toLocaleString("bg-BG", {
+                              year: "numeric",
+                              month: "long",
+                              day: "numeric",
+                            })}</span>
                         </span>
                       </Table.Cell>
                     )}
                   </Table.Row>
                 )}
               </Table.Body>
-            </Table>
+            </Table>}
           </div>
         </div>
         <Copyright />

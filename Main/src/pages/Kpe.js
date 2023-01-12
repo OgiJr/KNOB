@@ -28,7 +28,7 @@ const Kpe = () => {
         <div style={{ display: "flex", flexDirection: "column" }}>
           <div
             className="cardsRev"
-            style={{ justifyContent: "center", justifyItems: "center", alignSelf: "center", gap: 20 }}
+            style={{ justifyContent: "center", justifyItems: "center", alignSelf: "center", display:"flex", flexDirection:"column", gap: 20 }}
           >
             {data &&
               data.results &&
@@ -55,7 +55,7 @@ const Kpe = () => {
                         {item.file.name}
                       </a>
                     </p>
-                    <p>{item.description}</p>
+                    <p dangerouslySetInnerHTML={{ __html: item.description }}></p>
                   </Card.Body>
                 </Card>
               ))}

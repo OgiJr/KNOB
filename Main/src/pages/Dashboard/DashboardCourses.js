@@ -4,6 +4,14 @@ import Copyright from "../../common/footer/Copyright";
 import { Button, Input, Modal, Table, Textarea } from "@nextui-org/react";
 import { Form } from "react-bootstrap";
 import React from "react";
+import useSWR from "swr";
+
+const fetcher = (url) =>
+  fetch(url, {
+    headers: {
+      Authorization: `Bearer ${JSON.parse(localStorage.getItem("user")).token}`,
+    },
+  }).then((res) => res.json());
 
 const columns = [
   {
@@ -11,45 +19,79 @@ const columns = [
     label: "Заглавие",
   },
   {
-    key: "date",
+    key: "timestamp",
     label: "Дата",
   },
 ];
 
-const rows = [
-  {
-    key: "1",
-    title:
-      "Вписване в „Регистъра на независимите оценители” на успешно издържалите изпита по „Земеделски земи и трайни насаждения”",
-    date: "17.11.2022г.",
-  },
-];
-
 const DashboardCourses = () => {
+  const { data } = useSWR(`${process.env.REACT_APP_API_URL}/api/get-courses`, fetcher);
   const [visibleAdd, setVisibleAdd] = React.useState(false);
   const [visibleEdit, setVisibleEdit] = React.useState(false);
+  const [photo, setPhoto] = React.useState(null);
+  const [fileOne, setFileOne] = React.useState(null);
+  const [fileTwo, setFileTwo] = React.useState(null);
+  const [fileThree, setFileThree] = React.useState(null);
+  const [files, setFiles] = React.useState(null);
 
   return (
     <>
       {/* Modal add start */}
-      <Modal scroll fullScreen open={visibleAdd} onClose={() => setVisibleAdd(false)}>
-        <Form>
+      <Modal scroll open={visibleAdd} onClose={() => setVisibleAdd(false)}>
+        <Form onSubmit={async (e) => {
+          e.preventDefault();
+          const body = new FormData();
+          body.append("title", e.target.title.value);
+          body.append("description", e.target.description.value);
+          body.append("picture", photo);
+          if(fileOne){
+            body.append("file", fileOne);
+          }
+          if(fileTwo){
+            body.append("file", fileTwo);
+          }
+          if(fileThree){
+            body.append("file", fileThree);
+          }
+
+          const res = await fetch(`${process.env.REACT_APP_API_URL}/api/post-course-item`, {
+            method: "POST",
+            body: body,
+            headers: {
+              Authorization: `Bearer ${JSON.parse(localStorage.getItem("user")).token}`,
+            },
+          });
+
+          // TODO CHECK FOR ERRORS
+          console.log(await res.json());
+
+          setVisibleAdd(false);
+          window.location.reload(false);
+        }}>
           <Modal.Header>
             <div style={{ marginTop: 20 }}>
-              <Input placeholder="Заглавие" style={{ background: "white", margin: 0 }} />
+              <Input placeholder="Заглавие" style={{ background: "white", margin: 0 }} name="title" id="title"/>
             </div>
           </Modal.Header>
           <Modal.Body>
             <div style={{ display: "flex", flexDirection: "column", alignSelf: "center" }}>
               <p style={{ marginBottom: 5, fontSize: 14 }}>Снимка</p>
-              <input type="file" style={{ marginBottom: 15 }} />
-              <Textarea labelPlaceholder="Описание (HTML)" style={{ color: "black" }} rows={5} />
+              <input type="file" style={{ marginBottom: 15 }}  onChange={(e) => {
+                setPhoto(e.target.files[0]);
+              }} required/>
+              <Textarea labelPlaceholder="Описание (HTML)" style={{ color: "black" }} rows={5} name="description" id="description"/>
               <p style={{ marginBottom: 5, fontSize: 14, marginTop: 15 }}>Прикачен файл едно</p>
-              <input type="file" style={{ marginBottom: 15 }} />
+              <input type="file" style={{ marginBottom: 15 }} onChange={(e) => {
+                setFileOne(e.target.files[0]);
+              }} />
               <p style={{ marginBottom: 5, fontSize: 14, marginTop: 15 }}>Прикачен файл две</p>
-              <input type="file" style={{ marginBottom: 15 }} />
+              <input type="file" style={{ marginBottom: 15 }} onChange={(e) => {
+                setFileTwo(e.target.files[0]);
+              }} />
               <p style={{ marginBottom: 5, fontSize: 14, marginTop: 15 }}>Прикачен файл три</p>
-              <input type="file" style={{ marginBottom: 15 }} />
+              <input type="file" style={{ marginBottom: 15 }} onChange={(e) => {
+                setFileThree(e.target.files[0]);
+              }} />
             </div>
           </Modal.Body>
           <Modal.Footer>
@@ -66,14 +108,14 @@ const DashboardCourses = () => {
         <Form>
           <Modal.Header>
             <div style={{ marginTop: 20 }}>
-              <Input placeholder="Заглавие" style={{ background: "white", margin: 0 }} />
+              <Input placeholder="Заглавие" style={{ background: "white", margin: 0 }} required />
             </div>
           </Modal.Header>
           <Modal.Body>
             <div style={{ display: "flex", flexDirection: "column", alignSelf: "center" }}>
               <p style={{ marginBottom: 5, fontSize: 14 }}>Снимка</p>
-              <input type="file" style={{ marginBottom: 15 }} />
-              <Textarea labelPlaceholder="Описание (HTML)" style={{ color: "black" }} rows={5} />
+              <input type="file" style={{ marginBottom: 15 }} required />
+              <Textarea labelPlaceholder="Описание (HTML)" style={{ color: "black" }} rows={5} required />
               <p style={{ marginBottom: 5, fontSize: 14, marginTop: 15 }}>Прикачен файл едно</p>
               <input type="file" style={{ marginBottom: 15 }} />
               <p style={{ marginBottom: 5, fontSize: 14, marginTop: 15 }}>Прикачен файл две</p>
@@ -103,45 +145,51 @@ const DashboardCourses = () => {
             flexDirection: "column",
             alignItems: "center",
             justifyContent: "center",
-            height: "90vh",
+            minHeight: "90vh",
           }}
         >
           <Button size="xl" color="warning" style={{ width: 200 }} onPress={() => setVisibleAdd(true)}>
             Добавете курс
           </Button>
           <div style={{ display: "flex", width: "100%", justifyContent: "center", marginTop: 50, marginBottom: 50 }}>
-            <Table
-              css={{
-                height: "auto",
-                minWidth: "100%",
-              }}
-            >
-              <Table.Header columns={columns}>
-                {(column) => (
-                  <Table.Column key={column.key}>
-                    <span style={{ fontSize: 14, marginLeft: 5, marginRight: 5 }}>{column.label}</span>
-                  </Table.Column>
-                )}
-              </Table.Header>
-              <Table.Body items={rows}>
-                {(item) => (
-                  <Table.Row key={item.key}>
-                    {(columnKey) => (
-                      <Table.Cell>
-                        <span
-                          style={{ cursor: "pointer" }}
-                          onClick={() => {
-                            setVisibleEdit(true);
-                          }}
-                        >
-                          <span style={{ color: "black", fontSize: 14, fontWeight: "normal" }}>{item[columnKey]}</span>
-                        </span>
-                      </Table.Cell>
-                    )}
-                  </Table.Row>
-                )}
-              </Table.Body>
-            </Table>
+            {data &&
+              <Table
+                css={{
+                  height: "auto",
+                  minWidth: "100%",
+                }}
+              >
+                <Table.Header columns={columns}>
+                  {(column) => (
+                    <Table.Column key={column.key}>
+                      <span style={{ fontSize: 14, marginLeft: 5, marginRight: 5 }}>{column.label}</span>
+                    </Table.Column>
+                  )}
+                </Table.Header>
+                <Table.Body items={data.results}>
+                  {(item) => (
+                    <Table.Row key={item._id}>
+                      {(columnKey) => (
+                        <Table.Cell>
+                          <span
+                            style={{ cursor: "pointer" }}
+                            onClick={() => {
+                              setVisibleEdit(true);
+                            }}
+                          >
+                            <span style={{ color: "black", fontSize: 14, fontWeight: "normal" }}>
+                              {columnKey !== "timestamp" ? item[columnKey] : new Date(item[columnKey]).toLocaleString("bg-BG", {
+                                year: "numeric",
+                                month: "long",
+                                day: "numeric",
+                              })}</span>
+                          </span>
+                        </Table.Cell>
+                      )}
+                    </Table.Row>
+                  )}
+                </Table.Body>
+              </Table>}
           </div>
         </div>
         <Copyright />

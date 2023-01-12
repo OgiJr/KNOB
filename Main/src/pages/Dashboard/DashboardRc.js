@@ -1,7 +1,7 @@
 import SEO from "../../common/SEO";
 import HeaderAdmin from "../../common/header/HeaderAdmin";
 import Copyright from "../../common/footer/Copyright";
-import { Button, Dropdown, Input, Modal, Radio, Table } from "@nextui-org/react";
+import { Button, Input, Modal, Radio } from "@nextui-org/react";
 import { Form } from "react-bootstrap";
 import React from "react";
 import useSWR from "swr";

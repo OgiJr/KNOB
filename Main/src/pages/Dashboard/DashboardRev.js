@@ -19,8 +19,6 @@ const columns = [
   },
 ];
 
-const rows = [{ key: "1", name: "Цанко Спасовски", certificate: "REV-BG/CIAB/2023/3" }];
-
 const DashboardRev = () => {
   const [visibleAdd, setVisibleAdd] = React.useState(false);
   const [visibleEdit, setVisibleEdit] = React.useState(false);
@@ -58,7 +56,7 @@ const DashboardRev = () => {
             console.log(await res.json());
 
             setVisibleAdd(false);
-            // window.location.reload(false);
+            window.location.reload(false);
           }}>
           <Modal.Header>
             <div style={{ marginTop: 20 }}>

@@ -1,53 +1,21 @@
 import SEO from "../../common/SEO";
 import HeaderAdmin from "../../common/header/HeaderAdmin";
 import Copyright from "../../common/footer/Copyright";
-import { Button, Card, Dropdown, Input, Modal } from "@nextui-org/react";
+import { Button, Card, Input, Radio } from "@nextui-org/react";
 import { Form } from "react-bootstrap";
 import React from "react";
+import useSWR from "swr";
+
+const fetcher = (url) => fetch(url).then((res) => res.json());
 
 const DashboardStandards = () => {
-  const [visibleEdit, setVisibleEdit] = React.useState(false);
+  const [file, set_file] = React.useState(null);
+  const [bg_file, set_bg_file] = React.useState(null);
+  const { data: international } = useSWR(`${process.env.REACT_APP_API_URL}/api/get-european-standards`, fetcher);
+  const { data: bulgarian } = useSWR(`${process.env.REACT_APP_API_URL}/api/get-bulgarian-standards`, fetcher);
 
   return (
     <>
-      {/* Modal edit start */}
-      <Modal scroll open={visibleEdit} onClose={() => setVisibleEdit(false)}>
-        <Form>
-          <Modal.Header>
-            <div style={{ marginTop: 20 }}>
-              <Input placeholder="Имена" style={{ background: "white", margin: 0 }} />
-            </div>
-          </Modal.Header>
-          <Modal.Body>
-            <div style={{ display: "flex", flexDirection: "column", alignSelf: "center" }}>
-              <div style={{ marginTop: 20 }}>
-                <Input placeholder="Email" style={{ background: "white", margin: 0 }} />
-              </div>
-              <div style={{ marginTop: 20 }}>
-                <Dropdown>
-                  <Dropdown.Button color="warning" shadow>
-                    Председател
-                  </Dropdown.Button>
-                  <Dropdown.Menu>
-                    <Dropdown.Item key="chair">Да</Dropdown.Item>
-                    <Dropdown.Item key="notChair">Не</Dropdown.Item>
-                  </Dropdown.Menu>
-                </Dropdown>
-              </div>
-            </div>
-          </Modal.Body>
-          <Modal.Footer>
-            <Button auto type="submit" color="error">
-              Изтрий
-            </Button>
-            <Button auto type="submit" color="warning">
-              Запази
-            </Button>
-          </Modal.Footer>
-        </Form>
-      </Modal>
-      {/* Modal edit end */}
-
       <SEO title="Административен панел" />
       <main className="page-wrapper">
         <HeaderAdmin btnStyle="btn-small round btn-icon" />
@@ -56,35 +24,133 @@ const DashboardStandards = () => {
             display: "flex",
             flexDirection: "column",
             alignItems: "center",
-            height: "90vh",
+            minHeight: "90vh",
             justifyContent: "center",
           }}
         >
           <div style={{ display: "flex", width: "100%", justifyContent: "center", marginTop: 50, marginBottom: 50 }}>
-            <Card style={{ marginLeft: 50, marginRight: 50 }}>
-              <Card.Header>Европейски стандарти</Card.Header>
-              <Card.Body>
-                <Input label="Заглавие" style={{ margin: 0, background: "white" }} />
-                <div style={{ marginBottom: 10 }} />
-                <Input type="file" style={{ fontSize: 14, background: "white", margin: 0 }} label="Файл" />
-                <br />
-                <Button color="warning" style={{ selfAlign: "center", width: 200 }}>
-                  Добавете файл
-                </Button>
-              </Card.Body>
-            </Card>
-            <Card style={{ marginLeft: 50, marginRight: 50 }}>
-              <Card.Header>Български стандарти</Card.Header>
-              <Card.Body>
-                <Input label="Заглавие" style={{ margin: 0, background: "white" }} />
-                <div style={{ marginBottom: 10 }} />
-                <Input type="file" style={{ fontSize: 14, background: "white", margin: 0 }} label="Файл" />
-                <br />
-                <Button color="warning" style={{ selfAlign: "center", width: 200 }}>
-                  Добавете файл
-                </Button>
-              </Card.Body>
-            </Card>
+            {international &&
+              <Card style={{ marginLeft: 50, marginRight: 50 }}>
+                <Form
+                  onSubmit={async (e) => {
+                    e.preventDefault();
+                    const body = new FormData();
+                    body.append("title", e.target.title.value);
+                    body.append("file", file);
+                    body.append("language", e.target.language.value);
+                    body.append("last_changed", Date.now());
+
+                    const res = await fetch(`${process.env.REACT_APP_API_URL}/api/post-european-standard`, {
+                      method: "POST",
+                      body: body,
+                      headers: {
+                        Authorization: `Bearer ${JSON.parse(localStorage.getItem("user")).token}`,
+                      },
+                    });
+
+                    if (res.status === 200) {
+                      var id = "";
+
+                      (international.results).forEach(element => {
+                        if (element.language === e.target.language.value) {
+                          id = element._id;
+                        }
+                      });
+
+                      const new_body = new FormData();
+                      new_body.append("id", id);
+                      const new_res = await fetch(`${process.env.REACT_APP_API_URL}/api/delete-european-standard`, {
+                        method: "DELETE",
+                        body: new_body,
+                        headers: {
+                          Authorization: `Bearer ${JSON.parse(localStorage.getItem("user")).token}`,
+                        },
+                      });
+                      console.log(await new_res.json());
+                    }
+                    window.location.reload(false);
+                  }}>
+                  <Card.Header>Европейски стандарти</Card.Header>
+                  <Card.Body>
+                    <Input label="Заглавие" style={{ margin: 0, background: "white" }} name="title" id="title" required />
+                    <br />
+                    <Radio.Group label="Език" defaultValue="chair" name="language" id="language" color="warning" required>
+                      <Radio value="en">Английски</Radio>
+                      <Radio value="bg">Български</Radio>
+                    </Radio.Group>
+                    <div style={{ marginBottom: 10 }} />
+                    <Input type="file" style={{ fontSize: 14, background: "white", margin: 0 }} label="Файл" id="file" name="file" onChange={(e) => {
+                      set_file(e.target.files[0]);
+                    }} required />
+                    <br />
+                    <Button color="warning" style={{ selfAlign: "center", width: 200 }} type="submit">
+                      Добавете файл
+                    </Button>
+                  </Card.Body>
+                </Form>
+              </Card>
+            }
+            {bulgarian &&
+              <Card style={{ marginLeft: 50, marginRight: 50 }}>
+                <Form
+                  onSubmit={async (e) => {
+                    e.preventDefault();
+                    const body = new FormData();
+                    body.append("title", e.target.title.value);
+                    body.append("file", bg_file);
+                    body.append("language", e.target.language.value);
+                    body.append("last_changed", Date.now());
+
+                    const res = await fetch(`${process.env.REACT_APP_API_URL}/api/post-bulgarian-standard`, {
+                      method: "POST",
+                      body: body,
+                      headers: {
+                        Authorization: `Bearer ${JSON.parse(localStorage.getItem("user")).token}`,
+                      },
+                    });
+
+                    if (res.status === 200) {
+                      var id = "";
+
+                      (bulgarian.results).forEach(element => {
+                        if (element.language === e.target.language.value) {
+                          id = element._id;
+                        }
+                      });
+
+                      const new_body = new FormData();
+                      new_body.append("id", id);
+                      const new_res = await fetch(`${process.env.REACT_APP_API_URL}/api/delete-bulgarian-standard`, {
+                        method: "DELETE",
+                        body: new_body,
+                        headers: {
+                          Authorization: `Bearer ${JSON.parse(localStorage.getItem("user")).token}`,
+                        },
+                      });
+                      console.log(await new_res.json());
+                    }
+                    window.location.reload(false);
+                  }}>
+                  <Card.Header>Европейски стандарти</Card.Header>
+                  <Card.Body>
+                    <Input label="Заглавие" style={{ margin: 0, background: "white" }} name="title" id="title" required />
+                    <br />
+                    <Radio.Group label="Език" defaultValue="chair" name="language" id="language" color="warning" required>
+                      <Radio value="en">Английски</Radio>
+                      <Radio value="bg">Български</Radio>
+                    </Radio.Group>
+                    <div style={{ marginBottom: 10 }} />
+                    <Input type="file" style={{ fontSize: 14, background: "white", margin: 0 }} label="Файл" id="file" name="file" onChange={(e) => {
+                      set_bg_file(e.target.files[0]);
+                    }} required />
+                    <br />
+                    <Button color="warning" style={{ selfAlign: "center", width: 200 }} type="submit">
+                      Добавете файл
+                    </Button>
+                  </Card.Body>
+                </Form>
+              </Card>
+            }
           </div>
         </div>
         <Copyright />

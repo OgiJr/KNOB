@@ -138,7 +138,7 @@ const DashboardNews = () => {
         <div
           style={{
             display: "flex",
-            height: "90vh",
+           minHeight: "90vh",
             flexDirection: "column",
             alignItems: "center",
             justifyItems: "center",

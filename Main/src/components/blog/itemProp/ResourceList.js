@@ -45,7 +45,7 @@ const ResourceList = ({ data, StyleVar}) => {
                 })}
               </li>
             </ul>
-            <p className="descriptiion">{data.short_description}...</p>
+            <p className="descriptiion" dangerouslySetInnerHTML={{ __html: data.description }}></p>
           </div>
         </div>
       </div>

@@ -129,7 +129,7 @@ const DashboardMethodology = () => {
             display: "flex",
             flexDirection: "column",
             alignItems: "center",
-            height: "90vh",
+           minHeight: "90vh",
             justifyContent: "center",
           }}
         >
