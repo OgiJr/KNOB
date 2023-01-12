@@ -34,6 +34,9 @@ const DashboardPublicationsKs = () => {
   const [photo, setPhoto] = React.useState(null);
   const [file, setFile] = React.useState(null);
   const [error, setError] = React.useState("");
+  const [id, setId] = React.useState("");
+  const [title, setTitle] = React.useState("");
+  const [description, setDescription] = React.useState("");
 
   return (
     <>
@@ -98,20 +101,27 @@ const DashboardPublicationsKs = () => {
         <Form>
           <Modal.Header>
             <div style={{ marginTop: 20 }}>
-              <Input placeholder="Заглавие" style={{ background: "white", margin: 0 }} />
+              <Input placeholder="Заглавие" style={{ background: "white", margin: 0 }} value={title} required />
             </div>
           </Modal.Header>
           <Modal.Body>
             <div style={{ display: "flex", flexDirection: "column", alignSelf: "center" }}>
-              <Textarea labelPlaceholder="Описание HTML" style={{ color: "black" }} rows={5} />
-              <br />
-              <Input style={{ margin: 0, background: "white" }} label="Име на файла" />
-              <p style={{ marginBottom: 5, fontSize: 14, marginTop: 15 }}>Прикачен файл</p>
-              <input type="file" style={{ marginBottom: 15 }} />
+              <Textarea labelPlaceholder="Описание (HTML)" style={{ color: "black" }} rows={5} width={400} value={description} required />
             </div>
           </Modal.Body>
           <Modal.Footer>
-            <Button auto type="submit" color="error">
+            <Button auto onClick={async () => {
+              const new_body = new FormData();
+              new_body.append("id", id);
+              const new_res = await fetch(`${process.env.REACT_APP_API_URL}/api/delete-ks-protocol`, {
+                method: "DELETE",
+                body: new_body,
+                headers: {
+                  Authorization: `Bearer ${JSON.parse(localStorage.getItem("user")).token}`,
+                },
+              });
+              window.location.reload(false);
+            }} color="error">
               Изтрий
             </Button>
             <Button auto color="success">
@@ -162,7 +172,10 @@ const DashboardPublicationsKs = () => {
                         <span
                           style={{ cursor: "pointer" }}
                           onClick={() => {
+                            setId(item._id);
                             setVisibleEdit(true);
+                            setTitle(item.title);
+                            setDescription(item.description);
                           }}
                         >
 

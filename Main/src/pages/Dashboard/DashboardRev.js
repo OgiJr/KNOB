@@ -26,6 +26,16 @@ const DashboardRev = () => {
   const [validUntil, setValidUnitl] = React.useState("");
   const [validFrom, setValidFrom] = React.useState("");
   const [error, setError] = React.useState("");
+  const [certificate, setCertificate] = React.useState("");
+  const [cyrName, setCyrName] = React.useState("");
+  const [latinName, setLatinName] = React.useState("");
+  const [cyrCity, setCyrCity] = React.useState("");
+  const [latinCity, setLatinCity] = React.useState("");
+  const [validFromGet, setValidFromGet] = React.useState(null);
+  const [validUntilGet, setvalidUntilGet] = React.useState(null);
+  const [city, setCity] = React.useState("");
+  const [phone, setPhone] = React.useState("");
+  const [id, setId] = React.useState("");
 
   return (
     <>
@@ -112,28 +122,45 @@ const DashboardRev = () => {
           <Modal.Body>
             <div style={{ display: "flex", flexDirection: "column", alignSelf: "center" }}>
               <div style={{ marginTop: 20 }}>
-                <Input placeholder="Сертификат №" style={{ background: "white", margin: 0 }} />
+                <Input placeholder="Сертификат №" style={{ background: "white", margin: 0 }} required value={certificate} />
               </div>
               <div style={{ marginTop: 20 }}>
-                <Input placeholder="Имена на български" style={{ background: "white", margin: 0 }} />
+                <Input placeholder="Имена на български" style={{ background: "white", margin: 0 }} required value={cyrName} />
               </div>
               <div style={{ marginTop: 20 }}>
-                <Input placeholder="Имена на английски" style={{ background: "white", margin: 0 }} />
+                <Input placeholder="Имена на английски" style={{ background: "white", margin: 0 }} required value={latinName} />
               </div>
               <div style={{ marginTop: 20, display: "flex", flexDirection: "row", justifyContent: "space-between" }}>
-                <Input type="date" label="Дата на издаване" style={{ background: "white", margin: 0 }} />
-                <Input type="date" label="Валиден до" style={{ background: "white", margin: 0 }} />
+                {console.log(validFromGet)}
+                <Input type="date" label="Дата на издаване" style={{ background: "white", margin: 0 }} required value={
+                  validFromGet ? validFromGet.toString().substring(0, 10) : {}} />
+                <Input type="date" label="Валиден до" style={{ background: "white", margin: 0 }} required value={
+                  validUntilGet ? validUntilGet.toString().substring(0, 10) : {}} />
               </div>
               <div style={{ marginTop: 20 }}>
-                <Input placeholder="Град" style={{ background: "white", margin: 0 }} />
+                <Input placeholder="Град (български)" style={{ background: "white", margin: 0 }} required value={cyrCity} />
               </div>
               <div style={{ marginTop: 20 }}>
-                <Input placeholder="Телефон" style={{ background: "white", margin: 0 }} />
+                <Input placeholder="Град (английски)" style={{ background: "white", margin: 0 }} required value={latinCity} />
+              </div>
+              <div style={{ marginTop: 20 }}>
+                <Input placeholder="Телефон" style={{ background: "white", margin: 0 }} required value={phone} />
               </div>
             </div>
           </Modal.Body>
           <Modal.Footer>
-            <Button auto type="submit" color="error">
+            <Button auto color="error" onClick={async ()  => {
+              const new_body = new FormData();
+              new_body.append("id", id);
+              const new_res = await fetch(`${process.env.REACT_APP_API_URL}/api/delete-rev`, {
+                method: "DELETE",
+                body: new_body,
+                headers: {
+                  Authorization: `Bearer ${JSON.parse(localStorage.getItem("user")).token}`,
+                },
+              });
+              window.location.reload(false);
+            }}>
               Изтрий
             </Button>
             <Button auto type="submit" color="warning">
@@ -176,6 +203,16 @@ const DashboardRev = () => {
                           <span
                             style={{ cursor: "pointer" }}
                             onClick={() => {
+                              setId(item._id);
+                              setCertificate(item.certificate_number);
+                              setLatinName(item.latin_name);
+                              setCyrName(item.cyrilic_name);
+                              setCity(item.city);
+                              setPhone(item.telephone);
+                              setLatinCity(item.latin_city);
+                              setCyrCity(item.cyrilic_city);
+                              setValidFromGet(item.issued_on);
+                              setvalidUntilGet(item.valid_until);
                               setVisibleEdit(true);
                             }}
                           >

@@ -33,6 +33,9 @@ const DashboardCourses = () => {
   const [fileTwo, setFileTwo] = React.useState(null);
   const [fileThree, setFileThree] = React.useState(null);
   const [error, setError] = React.useState("");
+  const [id, setId] = React.useState("");
+  const [title, setTitle] = React.useState("");
+  const [description, setDescription] = React.useState("");
 
   return (
     <>
@@ -109,28 +112,33 @@ const DashboardCourses = () => {
       {/* Modal add end */}
 
       {/* Modal edit start */}
-      <Modal scroll fullScreen open={visibleEdit} onClose={() => setVisibleEdit(false)}>
+      <Modal scroll open={visibleEdit} onClose={() => setVisibleEdit(false)}>
         <Form>
           <Modal.Header>
             <div style={{ marginTop: 20 }}>
-              <Input placeholder="Заглавие" style={{ background: "white", margin: 0 }} required />
+              <Input placeholder="Заглавие" style={{ background: "white", margin: 0 }} required value={title} />
             </div>
           </Modal.Header>
           <Modal.Body>
             <div style={{ display: "flex", flexDirection: "column", alignSelf: "center" }}>
-              <p style={{ marginBottom: 5, fontSize: 14 }}>Снимка</p>
-              <input type="file" style={{ marginBottom: 15 }} required />
-              <Textarea labelPlaceholder="Описание (HTML)" style={{ color: "black" }} rows={5} required />
-              <p style={{ marginBottom: 5, fontSize: 14, marginTop: 15 }}>Прикачен файл едно</p>
-              <input type="file" style={{ marginBottom: 15 }} />
-              <p style={{ marginBottom: 5, fontSize: 14, marginTop: 15 }}>Прикачен файл две</p>
-              <input type="file" style={{ marginBottom: 15 }} />
-              <p style={{ marginBottom: 5, fontSize: 14, marginTop: 15 }}>Прикачен файл три</p>
-              <input type="file" style={{ marginBottom: 15 }} />
+              <Textarea labelPlaceholder="Описание (HTML)" style={{ color: "black" }} rows={5} required width={300} value={description} />
             </div>
           </Modal.Body>
           <Modal.Footer>
-            <Button auto type="submit" color="error">
+            <Button auto type="submit" color="error"
+              onClick={async () => {
+                const new_body = new FormData();
+                new_body.append("id", id);
+                const new_res = await fetch(`${process.env.REACT_APP_API_URL}/api/delete-course-item`, {
+                  method: "DELETE",
+                  body: new_body,
+                  headers: {
+                    Authorization: `Bearer ${JSON.parse(localStorage.getItem("user")).token}`,
+                  },
+                });
+                window.location.reload(false);
+              }}
+            >
               Изтрий
             </Button>
             <Button auto color="success">
@@ -179,7 +187,11 @@ const DashboardCourses = () => {
                           <span
                             style={{ cursor: "pointer" }}
                             onClick={() => {
+                              setId(item._id);
+                              setTitle(item.title);
+                              setDescription(item.description);
                               setVisibleEdit(true);
+
                             }}
                           >
                             <span style={{ color: "black", fontSize: 14, fontWeight: "normal" }}>

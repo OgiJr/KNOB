@@ -1,4 +1,4 @@
-import { Button, Dropdown, Input, Modal, Table } from "@nextui-org/react";
+import { Button, Input, Modal, Radio, Table } from "@nextui-org/react";
 import React from "react";
 import { Form } from "react-bootstrap";
 
@@ -30,37 +30,48 @@ const RCTable = (sofia) => {
   ];
 
   const [visibleEdit, setVisibleEdit] = React.useState(false);
-
+  const [id, setId] = React.useState("");
+  const [name, setName] = React.useState("");
+  const [email, setEmail] = React.useState("");
+  const [isRepresentative, setisRepresentative] = React.useState(false);
+  
   return (
     <>
+
       {/* Modal edit start */}
       <Modal scroll open={visibleEdit} onClose={() => setVisibleEdit(false)}>
         <Form>
           <Modal.Header>
             <div style={{ marginTop: 20 }}>
-              <Input placeholder="Имена" style={{ background: "white", margin: 0 }} />
+              <Input placeholder="Имена" style={{ background: "white", margin: 0 }} name="name" id="name" required value={name} />
             </div>
           </Modal.Header>
           <Modal.Body>
             <div style={{ display: "flex", flexDirection: "column", alignSelf: "center" }}>
               <div style={{ marginTop: 20 }}>
-                <Input placeholder="Email" style={{ background: "white", margin: 0 }} />
+                <Input placeholder="Email" style={{ background: "white", margin: 0 }} name="email" id="email" required value={email} />
               </div>
               <div style={{ marginTop: 20 }}>
-                <Dropdown>
-                  <Dropdown.Button color="warning" shadow>
-                    Председател
-                  </Dropdown.Button>
-                  <Dropdown.Menu>
-                    <Dropdown.Item key="chair">Да</Dropdown.Item>
-                    <Dropdown.Item key="notChair">Не</Dropdown.Item>
-                  </Dropdown.Menu>
-                </Dropdown>
+                <Radio.Group label="Председател" defaultValue={isRepresentative ? "chair" : "notChair"} name="isChair" id="isChair" color="warning" required>
+                  <Radio value="chair">Да</Radio>
+                  <Radio value="notChair">Не</Radio>
+                </Radio.Group>
               </div>
             </div>
           </Modal.Body>
           <Modal.Footer>
-            <Button auto type="submit" color="error">
+            <Button auto color="error" onClick={async () => {
+              const new_body = new FormData();
+              new_body.append("id", id);
+              const new_res = await fetch(`${process.env.REACT_APP_API_URL}/api/delete-regional-committee-member`, {
+                method: "DELETE",
+                body: new_body,
+                headers: {
+                  Authorization: `Bearer ${JSON.parse(localStorage.getItem("user")).token}`,
+                },
+              });
+              window.location.reload(false);
+            }}>
               Изтрий
             </Button>
             <Button auto type="submit" color="warning">
@@ -103,10 +114,13 @@ const RCTable = (sofia) => {
                         <span
                           style={{ cursor: "pointer" }}
                           onClick={() => {
+                            setId(item._id);
                             setVisibleEdit(true);
+                            setEmail(item.email);
+                            setName(item.full_name);
+                            setisRepresentative(item.is_representative);                            
                           }}
                         >
-                          {console.log(item.info)}
                           {item.is_representative === false ? (
                             <span style={{ color: "black", fontSize: 14, fontWeight: "normal" }}>
                               {item[columnKey] !== false ? item[columnKey] : "Не"}

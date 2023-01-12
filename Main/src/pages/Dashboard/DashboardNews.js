@@ -27,6 +27,10 @@ const DashboardNews = () => {
   const [file, set_file] = React.useState(null);
   const { data } = useSWR(`${process.env.REACT_APP_API_URL}/api/get-knob-content`, fetcher);
   const [error, setError] = React.useState("");
+  const [id, setId] = React.useState("");
+  const [title, setTitle] = React.useState("");
+  const [description, setDescription] = React.useState("");
+  const [shortDescription, setShortDescription] = React.useState("");
 
   return (
     <>
@@ -112,22 +116,31 @@ const DashboardNews = () => {
         <Form>
           <Modal.Header>
             <div style={{ marginTop: 20 }}>
-              <Input placeholder="Заглавие" style={{ background: "white", margin: 0 }} />
+              <Input placeholder="Заглавие" style={{ background: "white", margin: 0 }} value={title}/>
             </div>
           </Modal.Header>
           <Modal.Body>
             <div style={{ display: "flex", flexDirection: "column", alignSelf: "center" }}>
-              <p style={{ marginBottom: 5, fontSize: 14 }}>Снимка</p>
-              <input type="file" style={{ marginBottom: 15 }} />
-              <Input labelPlaceholder="Кратко описание" style={{ color: "black", margin: 0, background: "white" }} />
+              <Input labelPlaceholder="Кратко описание" style={{ color: "black", margin: 0, background: "white" }} name="short_description" id="short_description" value={shortDescription}/>
               <br />
-              <Textarea labelPlaceholder="Описание (HTML)" style={{ color: "black" }} rows={5} />
-              <p style={{ marginBottom: 5, fontSize: 14, marginTop: 15 }}>Прикачен файл</p>
-              <input type="file" style={{ marginBottom: 15 }} />
+              <Textarea labelPlaceholder="Описание (HTML)" style={{ color: "black" }} rows={5}  name="description" id="description" value={description}/>
             </div>
           </Modal.Body>
           <Modal.Footer>
-            <Button auto type="submit" color="error">
+            <Button auto type="submit" color="error"
+            onClick={async () => {
+              const new_body = new FormData();
+              new_body.append("id", id);
+              const new_res = await fetch(`${process.env.REACT_APP_API_URL}/api/delete-knob-content`, {
+                method: "DELETE",
+                body: new_body,
+                headers: {
+                  Authorization: `Bearer ${JSON.parse(localStorage.getItem("user")).token}`,
+                },
+              });
+              window.location.reload(false);
+            }}
+            >
               Изтрий
             </Button>
             <Button auto color="success">
@@ -178,6 +191,10 @@ const DashboardNews = () => {
                             style={{ cursor: "pointer" }}
                             onClick={() => {
                               setVisibleEdit(true);
+                              setTitle(item.title);
+                              setShortDescription(item.short_description);
+                              setDescription(item.description);
+                              setId(item._id);
                             }}
                           >
                             <span style={{ color: "black", fontSize: 14, fontWeight: "normal" }}>{columnKey !== "timestamp" ? item[columnKey] : new Date(item[columnKey]).toLocaleString("bg-BG", {

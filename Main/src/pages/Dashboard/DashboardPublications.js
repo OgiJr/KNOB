@@ -24,13 +24,17 @@ const columns = [
   },
 ];
 
-const DashboardPublications = () => {
+const DashboardPublication = () => {
   const { data } = useSWR(`${process.env.REACT_APP_API_URL}/api/get-publication-content`, fetcher);
   const [visibleAdd, setVisibleAdd] = React.useState(false);
   const [visibleEdit, setVisibleEdit] = React.useState(false);
   const [photo, setPhoto] = React.useState(null);
   const [file, setFile] = React.useState(null);
   const [error, setError] = React.useState("");
+  const [id, setId] = React.useState("");
+  const [title, setTitle] = React.useState("");
+  const [description, setDescription] = React.useState("");
+  const [shortDescription, setShortDescription] = React.useState("");
 
   return (
     <>
@@ -98,22 +102,30 @@ const DashboardPublications = () => {
         <Form>
           <Modal.Header>
             <div style={{ marginTop: 20 }}>
-              <Input placeholder="Заглавие" style={{ background: "white", margin: 0 }} />
+              <Input placeholder="Заглавие" style={{ background: "white", margin: 0 }} required name="title" id="title" value={title} />
             </div>
           </Modal.Header>
           <Modal.Body>
+            <br />
             <div style={{ display: "flex", flexDirection: "column", alignSelf: "center" }}>
-              <p style={{ marginBottom: 5, fontSize: 14 }}>Снимка</p>
-              <input type="file" style={{ marginBottom: 15 }} />
-              <Input labelPlaceholder="Кратко описание" style={{ color: "black", margin: 0, background: "white" }} />
+              <Input labelPlaceholder="Кратко описание" style={{ color: "black", margin: 0, background: "white" }} name="short_description" id="short_description" value={shortDescription} />
               <br />
-              <Textarea labelPlaceholder="Описание (HTML)" style={{ color: "black" }} rows={5} />
-              <p style={{ marginBottom: 5, fontSize: 14, marginTop: 15 }}>Прикачен файл</p>
-              <input type="file" style={{ marginBottom: 15 }} />
+              <Textarea labelPlaceholder="Описание (HTML)" style={{ color: "black" }} rows={5} width={400} name="description" id="description" value={description} />
             </div>
           </Modal.Body>
           <Modal.Footer>
-            <Button auto type="submit" color="error">
+            <Button auto onClick={async () => {
+              const new_body = new FormData();
+              new_body.append("id", id);
+              const new_res = await fetch(`${process.env.REACT_APP_API_URL}/api/delete-publication-content`, {
+                method: "DELETE",
+                body: new_body,
+                headers: {
+                  Authorization: `Bearer ${JSON.parse(localStorage.getItem("user")).token}`,
+                },
+              });
+              window.location.reload(false);
+            }} color="error">
               Изтрий
             </Button>
             <Button auto color="success">
@@ -162,7 +174,11 @@ const DashboardPublications = () => {
                         <span
                           style={{ cursor: "pointer" }}
                           onClick={() => {
+                            setId(item._id);
                             setVisibleEdit(true);
+                            setTitle(item.title);
+                            setDescription(item.description);
+                            setShortDescription(item.short_description);
                           }}
                         >
                           <span style={{ color: "black", fontSize: 14, fontWeight: "normal" }}>
@@ -170,8 +186,7 @@ const DashboardPublications = () => {
                               year: "numeric",
                               month: "long",
                               day: "numeric",
-                            })}</span>
-                        </span>
+                            })}</span>                        </span>
                       </Table.Cell>
                     )}
                   </Table.Row>
@@ -185,4 +200,4 @@ const DashboardPublications = () => {
     </>
   );
 };
-export default DashboardPublications;
+export default DashboardPublication;
