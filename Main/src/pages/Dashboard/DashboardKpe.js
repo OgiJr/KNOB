@@ -32,6 +32,7 @@ const DashboardKpe = () => {
   const { data } = useSWR(`${process.env.REACT_APP_API_URL}/api/get-ethics-committee`, fetcher);
   const [visibleAdd, setVisibleAdd] = React.useState(false);
   const [visibleEdit, setVisibleEdit] = React.useState(false);
+  const [error, setError] = React.useState("");
 
   return (
     <>
@@ -51,11 +52,20 @@ const DashboardKpe = () => {
                 Authorization: `Bearer ${JSON.parse(localStorage.getItem("user")).token}`,
               },
             });
-            window.location.reload(false);
+            if (resp.status !== 200) {
+              const error = await resp.json();
+              console.log(error);
+              setError(error.error);
+            }
+            else {
+              setVisibleAdd(false);
+              window.location.reload(false);
+            }
           }}
         >
           <Modal.Header>
             <div style={{ marginTop: 20 }}>
+              <p style={{ color: "red", fontWeight: "bold" }}>{error}</p>
               <Input placeholder="Имена" style={{ background: "white", margin: 0 }} name="full_name" id="full_name" aria-label="Names" aria-labelledby="email" />
             </div>
           </Modal.Header>
@@ -65,7 +75,7 @@ const DashboardKpe = () => {
                 <Input placeholder="Email" style={{ background: "white", margin: 0 }} name="email" id="email" aria-label="Email" aria-labelledby="email" />
               </div>
               <div style={{ marginTop: 20 }}>
-                <Radio.Group label="Председател" defaultValue="chair" name="isChair" id="isChair"  color="warning">
+                <Radio.Group label="Председател" defaultValue="chair" name="isChair" id="isChair" color="warning">
                   <Radio value="chair">Да</Radio>
                   <Radio value="notChair">Не</Radio>
                 </Radio.Group>

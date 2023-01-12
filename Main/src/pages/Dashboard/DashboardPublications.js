@@ -30,6 +30,7 @@ const DashboardPublications = () => {
   const [visibleEdit, setVisibleEdit] = React.useState(false);
   const [photo, setPhoto] = React.useState(null);
   const [file, setFile] = React.useState(null);
+  const [error, setError] = React.useState("");
 
   return (
     <>
@@ -54,15 +55,18 @@ const DashboardPublications = () => {
             },
           });
 
-          // TODO CHECK FOR ERRORS
-          console.log(await res.json());
-          console.log(data.results);
-
-          setVisibleAdd(false);
-          window.location.reload(false);
+          if (res.status !== 200) {
+            const error = await res.json();
+            setError(error.error);
+          }
+          else {
+            setVisibleAdd(false);
+            window.location.reload(false);
+          }
         }}>
           <Modal.Header>
             <div style={{ marginTop: 20 }}>
+              <p style={{ color: "red", fontWeight: "bold" }}>{error}</p>
               <Input placeholder="Заглавие" style={{ background: "white", margin: 0 }} required name="title" id="title" />
             </div>
           </Modal.Header>

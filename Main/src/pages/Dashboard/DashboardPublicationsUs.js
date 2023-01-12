@@ -33,6 +33,7 @@ const DashboardPublicationsUs = () => {
   const [visibleEdit, setVisibleEdit] = React.useState(false);
   const [photo, setPhoto] = React.useState(null);
   const [file, setFile] = React.useState(null);
+  const [error, setError] = React.useState("");
 
   return (
     <>
@@ -55,10 +56,18 @@ const DashboardPublicationsUs = () => {
                 Authorization: `Bearer ${JSON.parse(localStorage.getItem("user")).token}`,
               },
             });
-            window.location.reload(false);
+            if (resp.status !== 200) {
+              const error = await resp.json();
+              setError(error.error);
+            }
+            else {
+              setVisibleAdd(false);
+              window.location.reload(false);
+            }
           }}
         >          <Modal.Header>
             <div style={{ marginTop: 20 }}>
+              <p style={{ color: "red", fontWeight: "bold" }}>{error}</p>
               <Input placeholder="Заглавие" style={{ background: "white", margin: 0 }} name="title" id="title" />
             </div>
           </Modal.Header>

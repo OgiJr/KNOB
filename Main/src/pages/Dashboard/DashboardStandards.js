@@ -13,6 +13,8 @@ const DashboardStandards = () => {
   const [bg_file, set_bg_file] = React.useState(null);
   const { data: international } = useSWR(`${process.env.REACT_APP_API_URL}/api/get-european-standards`, fetcher);
   const { data: bulgarian } = useSWR(`${process.env.REACT_APP_API_URL}/api/get-bulgarian-standards`, fetcher);
+  const [errorBg, setErrorBg] = React.useState("");
+  const [errorEu, setErrorEu] = React.useState("");
 
   return (
     <>
@@ -66,12 +68,16 @@ const DashboardStandards = () => {
                           Authorization: `Bearer ${JSON.parse(localStorage.getItem("user")).token}`,
                         },
                       });
-                      console.log(await new_res.json());
+                      window.location.reload(false);
                     }
-                    window.location.reload(false);
+                    else {
+                      const error = await res.json();
+                      setErrorEu(error.error);
+                    }
                   }}>
                   <Card.Header>Европейски стандарти</Card.Header>
                   <Card.Body>
+                    <p style={{ color: "red", fontWeight: "bold" }}>{errorEu}</p>
                     <Input label="Заглавие" style={{ margin: 0, background: "white" }} name="title" id="title" required />
                     <br />
                     <Radio.Group label="Език" defaultValue="chair" name="language" id="language" color="warning" required>
@@ -127,12 +133,16 @@ const DashboardStandards = () => {
                           Authorization: `Bearer ${JSON.parse(localStorage.getItem("user")).token}`,
                         },
                       });
-                      console.log(await new_res.json());
+                      window.location.reload(false);
                     }
-                    window.location.reload(false);
+                    else {
+                      const error = await res.json();
+                      setErrorBg(error.error);
+                    }
                   }}>
                   <Card.Header>Европейски стандарти</Card.Header>
                   <Card.Body>
+                    <p style={{ color: "red", fontWeight: "bold" }}>{errorBg}</p>
                     <Input label="Заглавие" style={{ margin: 0, background: "white" }} name="title" id="title" required />
                     <br />
                     <Radio.Group label="Език" defaultValue="chair" name="language" id="language" color="warning" required>

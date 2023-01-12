@@ -18,6 +18,7 @@ const DashboardRc = () => {
   const { data: ruse } = useSWR(`${process.env.REACT_APP_API_URL}/api/get-regional-committee?city=Ruse`, fetcher);
   const { data: zagora } = useSWR(`${process.env.REACT_APP_API_URL}/api/get-regional-committee?city=Zagora`, fetcher);
   const { data: shumen } = useSWR(`${process.env.REACT_APP_API_URL}/api/get-regional-committee?city=Tutrakan`, fetcher);
+  const [error, setError] = React.useState("");
 
   const [visibleAdd, setVisibleAdd] = React.useState(false);
   return (
@@ -40,10 +41,19 @@ const DashboardRc = () => {
                   Authorization: `Bearer ${JSON.parse(localStorage.getItem("user")).token}`,
                 },
               });
-              window.location.reload(false);
+              if (resp.status !== 200) {
+                const error = await resp.json();
+                console.log(error);
+                setError(error.error);
+              }
+              else {
+                setVisibleAdd(false);
+                window.location.reload(false);
+              }
             }}>
               <Modal.Header>
                 <div style={{ marginTop: 20 }}>
+                  <p style={{ color: "red", fontWeight: "bold" }}>{error}</p>
                   <Input placeholder="Имена" style={{ background: "white", margin: 0 }} id="full_name" name="full_name" />
                 </div>
               </Modal.Header>

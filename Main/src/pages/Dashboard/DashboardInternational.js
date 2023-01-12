@@ -26,6 +26,7 @@ const DashboardInternational = () => {
   const [photo, set_photo] = React.useState(null);
   const [file, set_file] = React.useState(null);
   const { data } = useSWR(`${process.env.REACT_APP_API_URL}/api/get-international-content`, fetcher);
+  const [error, setError] = React.useState("");
 
   return (
     <>
@@ -50,15 +51,20 @@ const DashboardInternational = () => {
               },
             });
 
-            // TODO CHECK FOR ERRORS
-            console.log(await res.json());
-
-            setVisibleAdd(false);
-            window.location.reload(false);
+            if (res.status !== 200) {
+              const error = await res.json();
+              console.log(error);
+              setError(error.error);
+            }
+            else {
+              setVisibleAdd(false);
+              window.location.reload(false);
+            }
           }}
         >
           <Modal.Header>
             <div style={{ marginTop: 20 }}>
+              <p style={{ color: "red", fontWeight: "bold" }}>{error}</p>
               <Input name="title" placeholder="Заглавие" style={{ background: "white", margin: 0 }} required />
             </div>
           </Modal.Header>
@@ -138,7 +144,7 @@ const DashboardInternational = () => {
         <div
           style={{
             display: "flex",
-           minHeight: "90vh",
+            minHeight: "90vh",
             flexDirection: "column",
             alignItems: "center",
             justifyItems: "center",

@@ -13,20 +13,20 @@ const fetcher = (url) =>
     },
   }).then((res) => res.json());
 
-  const columns = [
-    {
-      key: "full_name",
-      label: "Имена",
-    },
-    {
-      key: "email",
-      label: "Имейл",
-    },
-    {
-      key: "is_representative",
-      label: "Председател",
-    },
-  ];
+const columns = [
+  {
+    key: "full_name",
+    label: "Имена",
+  },
+  {
+    key: "email",
+    label: "Имейл",
+  },
+  {
+    key: "is_representative",
+    label: "Председател",
+  },
+];
 
 
 
@@ -34,6 +34,7 @@ const DashboardMethodology = () => {
   const [visibleAdd, setVisibleAdd] = React.useState(false);
   const [visibleEdit, setVisibleEdit] = React.useState(false);
   const { data } = useSWR(`${process.env.REACT_APP_API_URL}/api/get-methodology-committee`, fetcher);
+  const [error, setError] = React.useState("");
 
   return (
     <>
@@ -53,21 +54,30 @@ const DashboardMethodology = () => {
                 Authorization: `Bearer ${JSON.parse(localStorage.getItem("user")).token}`,
               },
             });
-            window.location.reload(false);
+            if (resp.status !== 200) {
+              const error = await resp.json();
+              console.log(error);
+              setError(error.error);
+            }
+            else {
+              setVisibleAdd(false);
+              window.location.reload(false);
+            }
           }}
         >
           <Modal.Header>
             <div style={{ marginTop: 20 }}>
-              <Input placeholder="Имена" style={{ background: "white", margin: 0 }} id = "full_name" name="full_name"/>
+              <p style={{ color: "red", fontWeight: "bold" }}>{error}</p>
+              <Input placeholder="Имена" style={{ background: "white", margin: 0 }} id="full_name" name="full_name" required />
             </div>
           </Modal.Header>
           <Modal.Body>
             <div style={{ display: "flex", flexDirection: "column", alignSelf: "center" }}>
               <div style={{ marginTop: 20 }}>
-                <Input placeholder="Email" style={{ background: "white", margin: 0 }} name="email" id="email" aria-label="Email" aria-labelledby="email" />
+                <Input placeholder="Email" style={{ background: "white", margin: 0 }} name="email" id="email" aria-label="Email" aria-labelledby="email" required />
               </div>
               <div style={{ marginTop: 20 }}>
-                <Radio.Group label="Председател" defaultValue="chair" name="isChair" id="isChair" color="warning">
+                <Radio.Group label="Председател" defaultValue="chair" name="isChair" id="isChair" color="warning" required>
                   <Radio value="chair">Да</Radio>
                   <Radio value="notChair">Не</Radio>
                 </Radio.Group>
@@ -129,7 +139,7 @@ const DashboardMethodology = () => {
             display: "flex",
             flexDirection: "column",
             alignItems: "center",
-           minHeight: "90vh",
+            minHeight: "90vh",
             justifyContent: "center",
           }}
         >

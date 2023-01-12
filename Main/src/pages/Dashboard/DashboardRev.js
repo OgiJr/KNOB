@@ -25,6 +25,7 @@ const DashboardRev = () => {
   const { data } = useSWR(`${process.env.REACT_APP_API_URL}/api/get-rev-registry`, fetcher);
   const [validUntil, setValidUnitl] = React.useState("");
   const [validFrom, setValidFrom] = React.useState("");
+  const [error, setError] = React.useState("");
 
   return (
     <>
@@ -52,43 +53,47 @@ const DashboardRev = () => {
               },
             });
 
-            // TODO CHECK FOR ERRORS
-            console.log(await res.json());
-
-            setVisibleAdd(false);
-            window.location.reload(false);
+            if (res.status !== 200) {
+              const error = await res.json();
+              setError(error.error);
+            }
+            else {
+              setVisibleAdd(false);
+              window.location.reload(false);
+            }
           }}>
           <Modal.Header>
             <div style={{ marginTop: 20 }}>
+              <p style={{ color: "red", fontWeight: "bold" }}>{error}</p>
               <Input placeholder="Сертификат №" style={{ background: "white", margin: 0 }} id="certificate" name="certificate" required />
             </div>
           </Modal.Header>
-            <Modal.Body>
-              <div style={{ display: "flex", flexDirection: "column", alignSelf: "center" }}>
-                <div style={{ marginTop: 20 }}>
-                  <Input placeholder="Имена на български" style={{ background: "white", margin: 0 }} required id="cyr_name" name="cyr_name"/>
-                </div>
-                <div style={{ marginTop: 20 }}>
-                  <Input placeholder="Имена на английски" style={{ background: "white", margin: 0 }} required name="latin_name" id="latin_name"/>
-                </div>
-                <div style={{ marginTop: 20, display: "flex", flexDirection: "row", justifyContent: "space-between" }}>
-                  <Input onChange={(event) => setValidFrom(event.target.value)} type="date" label="Дата на издаване" style={{ background: "white", margin: 0 }} required name="date_from" id="date_from"/>
-                  <Input onChange={(event) => setValidUnitl(event.target.value)}  type="date" label="Валиден до" style={{ background: "white", margin: 0 }}  required name="date_until" id="date_until" />
-                </div>
-                <div style={{gap:20, marginTop: 20, display: "flex", flexDirection: "column", justifyContent: "space-between" }}>
-                  <Input placeholder="Град на български" style={{ background: "white", margin: 0 }} required name="cyr_city" id="cyr_city" />
-                  <Input placeholder="Град на английски" style={{ background: "white", margin: 0 }} required name="latin_city" id="latin_city"/>
-                </div>
-                <div style={{ marginTop: 20 }}>
-                  <Input placeholder="Телефон" style={{ background: "white", margin: 0 }} required name="phone"  id="phone" />
-                </div>
+          <Modal.Body>
+            <div style={{ display: "flex", flexDirection: "column", alignSelf: "center" }}>
+              <div style={{ marginTop: 20 }}>
+                <Input placeholder="Имена на български" style={{ background: "white", margin: 0 }} required id="cyr_name" name="cyr_name" />
               </div>
-            </Modal.Body>
-            <Modal.Footer>
-              <Button auto type="submit" color="warning">
-                Качи
-              </Button>
-            </Modal.Footer>
+              <div style={{ marginTop: 20 }}>
+                <Input placeholder="Имена на английски" style={{ background: "white", margin: 0 }} required name="latin_name" id="latin_name" />
+              </div>
+              <div style={{ marginTop: 20, display: "flex", flexDirection: "row", justifyContent: "space-between" }}>
+                <Input onChange={(event) => setValidFrom(event.target.value)} type="date" label="Дата на издаване" style={{ background: "white", margin: 0 }} required name="date_from" id="date_from" />
+                <Input onChange={(event) => setValidUnitl(event.target.value)} type="date" label="Валиден до" style={{ background: "white", margin: 0 }} required name="date_until" id="date_until" />
+              </div>
+              <div style={{ gap: 20, marginTop: 20, display: "flex", flexDirection: "column", justifyContent: "space-between" }}>
+                <Input placeholder="Град на български" style={{ background: "white", margin: 0 }} required name="cyr_city" id="cyr_city" />
+                <Input placeholder="Град на английски" style={{ background: "white", margin: 0 }} required name="latin_city" id="latin_city" />
+              </div>
+              <div style={{ marginTop: 20 }}>
+                <Input placeholder="Телефон" style={{ background: "white", margin: 0 }} required name="phone" id="phone" />
+              </div>
+            </div>
+          </Modal.Body>
+          <Modal.Footer>
+            <Button auto type="submit" color="warning">
+              Качи
+            </Button>
+          </Modal.Footer>
         </Form>
       </Modal>
       {/* Modal add end */}

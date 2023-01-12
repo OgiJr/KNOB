@@ -32,6 +32,7 @@ const DashboardQualifications = () => {
   const [fileOne, setFileOne] = React.useState(null);
   const [fileTwo, setFileTwo] = React.useState(null);
   const [fileThree, setFileThree] = React.useState(null);
+  const [error, setError] = React.useState("");
 
   return (
     <>
@@ -43,13 +44,13 @@ const DashboardQualifications = () => {
           body.append("title", e.target.title.value);
           body.append("description", e.target.description.value);
           body.append("picture", photo);
-          if(fileOne){
+          if (fileOne) {
             body.append("file", fileOne);
           }
-          if(fileTwo){
+          if (fileTwo) {
             body.append("file", fileTwo);
           }
-          if(fileThree){
+          if (fileThree) {
             body.append("file", fileThree);
           }
 
@@ -61,24 +62,29 @@ const DashboardQualifications = () => {
             },
           });
 
-          // TODO CHECK FOR ERRORS
-          console.log(await res.json());
-
-          setVisibleAdd(false);
-          window.location.reload(false);
+          if (res.status !== 200) {
+            const error = await res.json();
+            console.log(error);
+            setError(error.error);
+          }
+          else {
+            setVisibleAdd(false);
+            window.location.reload(false);
+          }
         }}>
           <Modal.Header>
             <div style={{ marginTop: 20 }}>
-              <Input placeholder="Заглавие" style={{ background: "white", margin: 0 }} name="title" id="title"/>
+              <p style={{ color: "red", fontWeight: "bold" }}>{error}</p>
+              <Input placeholder="Заглавие" style={{ background: "white", margin: 0 }} name="title" id="title" required />
             </div>
           </Modal.Header>
           <Modal.Body>
             <div style={{ display: "flex", flexDirection: "column", alignSelf: "center" }}>
               <p style={{ marginBottom: 5, fontSize: 14 }}>Снимка</p>
-              <input type="file" style={{ marginBottom: 15 }}  onChange={(e) => {
+              <input type="file" style={{ marginBottom: 15 }} onChange={(e) => {
                 setPhoto(e.target.files[0]);
-              }} required/>
-              <Textarea labelPlaceholder="Описание (HTML)" style={{ color: "black" }} rows={5} name="description" id="description"/>
+              }} required />
+              <Textarea labelPlaceholder="Описание (HTML)" style={{ color: "black" }} rows={5} name="description" id="description" required />
               <p style={{ marginBottom: 5, fontSize: 14, marginTop: 15 }}>Прикачен файл едно</p>
               <input type="file" style={{ marginBottom: 15 }} onChange={(e) => {
                 setFileOne(e.target.files[0]);
@@ -148,7 +154,7 @@ const DashboardQualifications = () => {
           }}
         >
           <Button size="xl" color="warning" style={{ width: 200 }} onPress={() => setVisibleAdd(true)}>
-            Добавете квалификация
+            Добавете курс
           </Button>
           <div style={{ display: "flex", width: "100%", justifyContent: "center", marginTop: 50, marginBottom: 50 }}>
             {data &&
