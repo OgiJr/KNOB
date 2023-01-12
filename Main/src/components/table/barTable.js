@@ -4,6 +4,7 @@ import "../../assets/scss/table.scss";
 import useSWR from "swr";
 
 const cities = [
+  { name: "Всички" },
   { name: "с. Дряново" },
   { name: "Айтос" },
   { name: "Аксаково" },
@@ -169,7 +170,6 @@ const cities = [
   { name: "с. Бутово" },
   { name: "с. Бързия" },
   { name: "с. Бяла" },
-  { name: "с. Бяла" },
   { name: "с. Васил Левски" },
   { name: "с. Венелин" },
   { name: "с. Вишнево" },
@@ -282,6 +282,7 @@ const cities = [
   { name: "Ямбол" },
 ];
 const capacities = [
+  { name: "Всички" },
   { name: "Недвижими имоти" },
   { name: "Недвижими културни ценности" },
   { name: "Машини и съоражения" },
@@ -402,10 +403,12 @@ const BarTable = () => {
   // capacity dropdown -> set_capacity()
   // entries per page dropdown -> set_entries_per_page()
 
+  const [selected_city, set_selected_city] = React.useState(null);
+  const [selected_capacity, set_selected_capacity] = React.useState(null);
+
   const [mapped_users, set_mapped_users] = React.useState([]);
   const [mapped_companies, set_mapped_companies] = React.useState([]);
 
-  const [selected, setSelected] = React.useState(new Set(["50"]));
   const [visible, setVisible] = React.useState(false);
   const [tableType, setTableType] = React.useState("people");
   const [invalidType, setinvalidType] = React.useState("people");
@@ -414,14 +417,10 @@ const BarTable = () => {
   const [current_company, set_current_company] = React.useState(null);
 
   const [name, set_name] = React.useState("");
-  const [capacity, set_capacity] = React.useState("");
-  const [city, set_city] = React.useState("");
   const [certificate_number, set_certificate_number] = React.useState("");
 
   const [entries_per_page, set_entries_per_page] = React.useState(50);
   const [page, set_page] = React.useState(1);
-
-  const selectedValue = React.useMemo(() => Array.from(selected).join(", ").replaceAll("_", " "), [selected]);
 
   const { data: users } = useSWR(`${process.env.REACT_APP_API_URL}/api/get-users`, fetcher);
   const { data: companies } = useSWR(`${process.env.REACT_APP_API_URL}/api/get-companies`, fetcher);
@@ -449,14 +448,14 @@ const BarTable = () => {
               }
             }
 
-            if (city) {
-              if (u.city !== city) {
+            if (selected_city) {
+              if (selected_city.name !== "Всички" && u.city !== selected_city.name) {
                 return false;
               }
             }
 
-            if (capacity) {
-              if (u.capacity.value !== capacity) {
+            if (selected_capacity) {
+              if (selected_capacity.name !== "Всички" && u.capacity.value !== selected_capacity.name) {
                 return false;
               }
             }
@@ -471,7 +470,7 @@ const BarTable = () => {
     } else {
       set_mapped_users([]);
     }
-  }, [users, set_mapped_users, name, certificate_number, city, capacity, entries_per_page, page]);
+  }, [users, set_mapped_users, name, certificate_number, selected_city, selected_capacity, entries_per_page, page]);
 
   React.useEffect(() => {
     if (companies) {
@@ -494,14 +493,14 @@ const BarTable = () => {
               }
             }
 
-            if (city) {
-              if (c.city !== city) {
+            if (selected_city) {
+              if (selected_city.name !== "Всички" && c.city !== selected_city.name) {
                 return false;
               }
             }
 
-            if (capacity) {
-              if (c.capacity.value !== capacity) {
+            if (selected_capacity) {
+              if (selected_capacity.name !== "Всички" && c.capacity.value !== selected_capacity.name) {
                 return false;
               }
             }
@@ -509,7 +508,16 @@ const BarTable = () => {
           })
       );
     }
-  }, [companies, name, set_mapped_companies, certificate_number, city, capacity, entries_per_page, page]);
+  }, [
+    companies,
+    name,
+    set_mapped_companies,
+    certificate_number,
+    selected_city,
+    selected_capacity,
+    entries_per_page,
+    page,
+  ]);
 
   return (
     <>
@@ -656,9 +664,9 @@ const BarTable = () => {
                   setTableType("people");
                   set_name("");
                   set_certificate_number("");
-                  set_capacity("");
+                  set_selected_capacity(null);
                   set_certificate_number("");
-                  set_city("");
+                  set_selected_city(null);
                 }}
               >
                 Физически лица
@@ -675,9 +683,9 @@ const BarTable = () => {
                   setTableType("companies");
                   set_name("");
                   set_certificate_number("");
-                  set_capacity("");
+                  set_selected_capacity(null);
                   set_certificate_number("");
-                  set_city("");
+                  set_selected_city(null);
                 }}
               >
                 Юридически лица
@@ -729,9 +737,13 @@ const BarTable = () => {
                     )}
                     <Dropdown placement="bottom-left">
                       <Dropdown.Button flat style={{ marginTop: 30 }} color="warning">
-                        Град
+                        {selected_city ? selected_city.name : "Град"}
                       </Dropdown.Button>
-                      <Dropdown.Menu items={cities}>
+                      <Dropdown.Menu
+                        items={cities}
+                        selectionMode="single"
+                        onSelectionChange={(e) => set_selected_city({ name: e.currentKey })}
+                      >
                         {(item) => (
                           <Dropdown.Item key={item.name}>
                             <span style={{ fontSize: 12 }}>{item.name}</span>
@@ -743,9 +755,13 @@ const BarTable = () => {
                   <div style={{ display: "flex", flexDirection: "column" }}>
                     <Dropdown placement="bottom-left">
                       <Dropdown.Button color="warning" flat style={{ marginBottom: 30 }}>
-                        Оценителска правоспособност
+                        {selected_capacity ? selected_capacity.name : "Оценителска правоспособност"}
                       </Dropdown.Button>
-                      <Dropdown.Menu items={capacities}>
+                      <Dropdown.Menu
+                        items={capacities}
+                        selectionMode="single"
+                        onSelectionChange={(e) => set_selected_capacity({ name: e.currentKey })}
+                      >
                         {(item) => (
                           <Dropdown.Item key={item.name}>
                             <span style={{ fontSize: 8 }}>{item.name}</span>
@@ -853,14 +869,15 @@ const BarTable = () => {
               >
                 <Dropdown>
                   <Dropdown.Button flat color="warning" size="xl">
-                    {selectedValue}
+                    {entries_per_page}
                   </Dropdown.Button>
                   <Dropdown.Menu
                     color="warning"
                     disallowEmptySelection
                     selectionMode="single"
-                    selectedKeys={selected}
-                    onSelectionChange={setSelected}
+                    onSelectionChange={(e) => {
+                      set_entries_per_page(parseInt(e.currentKey));
+                    }}
                   >
                     <Dropdown.Item key="10">
                       <span style={{ fontSize: 14 }}>10</span>
@@ -874,8 +891,14 @@ const BarTable = () => {
                     <Dropdown.Item key="100">
                       <span style={{ fontSize: 14 }}>100</span>
                     </Dropdown.Item>
-                    <Dropdown.Item key="всички">
-                      <span style={{ fontSize: 14 }}>Всички</span>
+                    <Dropdown.Item key="500">
+                      <span style={{ fontSize: 14 }}>500</span>
+                    </Dropdown.Item>
+                    <Dropdown.Item key="1000">
+                      <span style={{ fontSize: 14 }}>1000</span>
+                    </Dropdown.Item>
+                    <Dropdown.Item key="2000">
+                      <span style={{ fontSize: 14 }}>2000</span>
                     </Dropdown.Item>
                   </Dropdown.Menu>
                 </Dropdown>

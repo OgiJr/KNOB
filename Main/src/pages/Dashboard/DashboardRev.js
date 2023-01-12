@@ -66,36 +66,96 @@ const DashboardRev = () => {
             if (res.status !== 200) {
               const error = await res.json();
               setError(error.error);
-            }
-            else {
+            } else {
               setVisibleAdd(false);
               window.location.reload(false);
             }
-          }}>
+          }}
+        >
           <Modal.Header>
             <div style={{ marginTop: 20 }}>
               <p style={{ color: "red", fontWeight: "bold" }}>{error}</p>
-              <Input placeholder="Сертификат №" style={{ background: "white", margin: 0 }} id="certificate" name="certificate" required />
+              <Input
+                placeholder="Сертификат №"
+                style={{ background: "white", margin: 0 }}
+                id="certificate"
+                name="certificate"
+                required
+              />
             </div>
           </Modal.Header>
           <Modal.Body>
             <div style={{ display: "flex", flexDirection: "column", alignSelf: "center" }}>
               <div style={{ marginTop: 20 }}>
-                <Input placeholder="Имена на български" style={{ background: "white", margin: 0 }} required id="cyr_name" name="cyr_name" />
+                <Input
+                  placeholder="Имена на български"
+                  style={{ background: "white", margin: 0 }}
+                  required
+                  id="cyr_name"
+                  name="cyr_name"
+                />
               </div>
               <div style={{ marginTop: 20 }}>
-                <Input placeholder="Имена на английски" style={{ background: "white", margin: 0 }} required name="latin_name" id="latin_name" />
+                <Input
+                  placeholder="Имена на английски"
+                  style={{ background: "white", margin: 0 }}
+                  required
+                  name="latin_name"
+                  id="latin_name"
+                />
               </div>
               <div style={{ marginTop: 20, display: "flex", flexDirection: "row", justifyContent: "space-between" }}>
-                <Input onChange={(event) => setValidFrom(event.target.value)} type="date" label="Дата на издаване" style={{ background: "white", margin: 0 }} required name="date_from" id="date_from" />
-                <Input onChange={(event) => setValidUnitl(event.target.value)} type="date" label="Валиден до" style={{ background: "white", margin: 0 }} required name="date_until" id="date_until" />
+                <Input
+                  onChange={(event) => setValidFrom(event.target.value)}
+                  type="date"
+                  label="Дата на издаване"
+                  style={{ background: "white", margin: 0 }}
+                  required
+                  name="date_from"
+                  id="date_from"
+                />
+                <Input
+                  onChange={(event) => setValidUnitl(event.target.value)}
+                  type="date"
+                  label="Валиден до"
+                  style={{ background: "white", margin: 0 }}
+                  required
+                  name="date_until"
+                  id="date_until"
+                />
               </div>
-              <div style={{ gap: 20, marginTop: 20, display: "flex", flexDirection: "column", justifyContent: "space-between" }}>
-                <Input placeholder="Град на български" style={{ background: "white", margin: 0 }} required name="cyr_city" id="cyr_city" />
-                <Input placeholder="Град на английски" style={{ background: "white", margin: 0 }} required name="latin_city" id="latin_city" />
+              <div
+                style={{
+                  gap: 20,
+                  marginTop: 20,
+                  display: "flex",
+                  flexDirection: "column",
+                  justifyContent: "space-between",
+                }}
+              >
+                <Input
+                  placeholder="Град на български"
+                  style={{ background: "white", margin: 0 }}
+                  required
+                  name="cyr_city"
+                  id="cyr_city"
+                />
+                <Input
+                  placeholder="Град на английски"
+                  style={{ background: "white", margin: 0 }}
+                  required
+                  name="latin_city"
+                  id="latin_city"
+                />
               </div>
               <div style={{ marginTop: 20 }}>
-                <Input placeholder="Телефон" style={{ background: "white", margin: 0 }} required name="phone" id="phone" />
+                <Input
+                  placeholder="Телефон"
+                  style={{ background: "white", margin: 0 }}
+                  required
+                  name="phone"
+                  id="phone"
+                />
               </div>
             </div>
           </Modal.Body>
@@ -122,26 +182,61 @@ const DashboardRev = () => {
           <Modal.Body>
             <div style={{ display: "flex", flexDirection: "column", alignSelf: "center" }}>
               <div style={{ marginTop: 20 }}>
-                <Input placeholder="Сертификат №" style={{ background: "white", margin: 0 }} required value={certificate} />
+                <Input
+                  placeholder="Сертификат №"
+                  style={{ background: "white", margin: 0 }}
+                  required
+                  value={certificate}
+                />
               </div>
               <div style={{ marginTop: 20 }}>
-                <Input placeholder="Имена на български" style={{ background: "white", margin: 0 }} required value={cyrName} />
+                <Input
+                  placeholder="Имена на български"
+                  style={{ background: "white", margin: 0 }}
+                  required
+                  value={cyrName}
+                />
               </div>
               <div style={{ marginTop: 20 }}>
-                <Input placeholder="Имена на английски" style={{ background: "white", margin: 0 }} required value={latinName} />
+                <Input
+                  placeholder="Имена на английски"
+                  style={{ background: "white", margin: 0 }}
+                  required
+                  value={latinName}
+                />
               </div>
               <div style={{ marginTop: 20, display: "flex", flexDirection: "row", justifyContent: "space-between" }}>
                 {console.log(validFromGet)}
-                <Input type="date" label="Дата на издаване" style={{ background: "white", margin: 0 }} required value={
-                  validFromGet ? validFromGet.toString().substring(0, 10) : {}} />
-                <Input type="date" label="Валиден до" style={{ background: "white", margin: 0 }} required value={
-                  validUntilGet ? validUntilGet.toString().substring(0, 10) : {}} />
+                <Input
+                  type="date"
+                  label="Дата на издаване"
+                  style={{ background: "white", margin: 0 }}
+                  required
+                  value={validFromGet ? validFromGet.toString().substring(0, 10) : {}}
+                />
+                <Input
+                  type="date"
+                  label="Валиден до"
+                  style={{ background: "white", margin: 0 }}
+                  required
+                  value={validUntilGet ? validUntilGet.toString().substring(0, 10) : {}}
+                />
               </div>
               <div style={{ marginTop: 20 }}>
-                <Input placeholder="Град (български)" style={{ background: "white", margin: 0 }} required value={cyrCity} />
+                <Input
+                  placeholder="Град (български)"
+                  style={{ background: "white", margin: 0 }}
+                  required
+                  value={cyrCity}
+                />
               </div>
               <div style={{ marginTop: 20 }}>
-                <Input placeholder="Град (английски)" style={{ background: "white", margin: 0 }} required value={latinCity} />
+                <Input
+                  placeholder="Град (английски)"
+                  style={{ background: "white", margin: 0 }}
+                  required
+                  value={latinCity}
+                />
               </div>
               <div style={{ marginTop: 20 }}>
                 <Input placeholder="Телефон" style={{ background: "white", margin: 0 }} required value={phone} />
@@ -149,18 +244,22 @@ const DashboardRev = () => {
             </div>
           </Modal.Body>
           <Modal.Footer>
-            <Button auto color="error" onClick={async ()  => {
-              const new_body = new FormData();
-              new_body.append("id", id);
-              const new_res = await fetch(`${process.env.REACT_APP_API_URL}/api/delete-rev`, {
-                method: "DELETE",
-                body: new_body,
-                headers: {
-                  Authorization: `Bearer ${JSON.parse(localStorage.getItem("user")).token}`,
-                },
-              });
-              window.location.reload(false);
-            }}>
+            <Button
+              auto
+              color="error"
+              onClick={async () => {
+                const new_body = new FormData();
+                new_body.append("id", id);
+                await fetch(`${process.env.REACT_APP_API_URL}/api/delete-rev`, {
+                  method: "DELETE",
+                  body: new_body,
+                  headers: {
+                    Authorization: `Bearer ${JSON.parse(localStorage.getItem("user")).token}`,
+                  },
+                });
+                window.location.reload(false);
+              }}
+            >
               Изтрий
             </Button>
             <Button auto type="submit" color="warning">
@@ -179,8 +278,7 @@ const DashboardRev = () => {
             Добавете сертификат
           </Button>
           <div style={{ display: "flex", width: "100%", justifyContent: "center", marginTop: 50, marginBottom: 50 }}>
-            {
-              data &&
+            {data && (
               <Table
                 css={{
                   height: "auto",
@@ -216,14 +314,17 @@ const DashboardRev = () => {
                               setVisibleEdit(true);
                             }}
                           >
-                            <span style={{ color: "black", fontSize: 14, fontWeight: "normal" }}>{item[columnKey]}</span>
+                            <span style={{ color: "black", fontSize: 14, fontWeight: "normal" }}>
+                              {item[columnKey]}
+                            </span>
                           </span>
                         </Table.Cell>
                       )}
                     </Table.Row>
                   )}
                 </Table.Body>
-              </Table>}
+              </Table>
+            )}
           </div>
         </div>
         <Copyright />

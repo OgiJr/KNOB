@@ -28,8 +28,6 @@ const columns = [
   },
 ];
 
-
-
 const DashboardKpe = () => {
   const [visibleAdd, setVisibleAdd] = React.useState(false);
   const [visibleEdit, setVisibleEdit] = React.useState(false);
@@ -62,8 +60,7 @@ const DashboardKpe = () => {
               const error = await resp.json();
               console.log(error);
               setError(error.error);
-            }
-            else {
+            } else {
               setVisibleAdd(false);
               window.location.reload(false);
             }
@@ -72,16 +69,37 @@ const DashboardKpe = () => {
           <Modal.Header>
             <div style={{ marginTop: 20 }}>
               <p style={{ color: "red", fontWeight: "bold" }}>{error}</p>
-              <Input placeholder="Имена" style={{ background: "white", margin: 0 }} id="full_name" name="full_name" required />
+              <Input
+                placeholder="Имена"
+                style={{ background: "white", margin: 0 }}
+                id="full_name"
+                name="full_name"
+                required
+              />
             </div>
           </Modal.Header>
           <Modal.Body>
             <div style={{ display: "flex", flexDirection: "column", alignSelf: "center" }}>
               <div style={{ marginTop: 20 }}>
-                <Input placeholder="Email" style={{ background: "white", margin: 0 }} name="email" id="email" aria-label="Email" aria-labelledby="email" required />
+                <Input
+                  placeholder="Email"
+                  style={{ background: "white", margin: 0 }}
+                  name="email"
+                  id="email"
+                  aria-label="Email"
+                  aria-labelledby="email"
+                  required
+                />
               </div>
               <div style={{ marginTop: 20 }}>
-                <Radio.Group label="Председател" defaultValue="chair" name="isChair" id="isChair" color="warning" required>
+                <Radio.Group
+                  label="Председател"
+                  defaultValue="chair"
+                  name="isChair"
+                  id="isChair"
+                  color="warning"
+                  required
+                >
                   <Radio value="chair">Да</Radio>
                   <Radio value="notChair">Не</Radio>
                 </Radio.Group>
@@ -102,16 +120,37 @@ const DashboardKpe = () => {
         <Form>
           <Modal.Header>
             <div style={{ marginTop: 20 }}>
-              <Input placeholder="Имена" style={{ background: "white", margin: 0 }} name="name" id="name" required value={name} />
+              <Input
+                placeholder="Имена"
+                style={{ background: "white", margin: 0 }}
+                name="name"
+                id="name"
+                required
+                value={name}
+              />
             </div>
           </Modal.Header>
           <Modal.Body>
             <div style={{ display: "flex", flexDirection: "column", alignSelf: "center" }}>
               <div style={{ marginTop: 20 }}>
-                <Input placeholder="Email" style={{ background: "white", margin: 0 }} name="email" id="email" required value={email} />
+                <Input
+                  placeholder="Email"
+                  style={{ background: "white", margin: 0 }}
+                  name="email"
+                  id="email"
+                  required
+                  value={email}
+                />
               </div>
               <div style={{ marginTop: 20 }}>
-                <Radio.Group label="Председател" defaultValue={isRepresentative ? "chair" : "notChair"} name="isChair" id="isChair" color="warning" required>
+                <Radio.Group
+                  label="Председател"
+                  defaultValue={isRepresentative ? "chair" : "notChair"}
+                  name="isChair"
+                  id="isChair"
+                  color="warning"
+                  required
+                >
                   <Radio value="chair">Да</Radio>
                   <Radio value="notChair">Не</Radio>
                 </Radio.Group>
@@ -119,18 +158,22 @@ const DashboardKpe = () => {
             </div>
           </Modal.Body>
           <Modal.Footer>
-            <Button auto color="error" onClick={async () => {
-              const new_body = new FormData();
-              new_body.append("id", id);
-              const new_res = await fetch(`${process.env.REACT_APP_API_URL}/api/delete-ethics-committee-member`, {
-                method: "DELETE",
-                body: new_body,
-                headers: {
-                  Authorization: `Bearer ${JSON.parse(localStorage.getItem("user")).token}`,
-                },
-              });
-              window.location.reload(false);
-            }}>
+            <Button
+              auto
+              color="error"
+              onClick={async () => {
+                const new_body = new FormData();
+                new_body.append("id", id);
+                await fetch(`${process.env.REACT_APP_API_URL}/api/delete-ethics-committee-member`, {
+                  method: "DELETE",
+                  body: new_body,
+                  headers: {
+                    Authorization: `Bearer ${JSON.parse(localStorage.getItem("user")).token}`,
+                  },
+                });
+                window.location.reload(false);
+              }}
+            >
               Изтрий
             </Button>
             <Button auto type="submit" color="warning">
@@ -157,7 +200,7 @@ const DashboardKpe = () => {
             Добавете член
           </Button>
           <div style={{ display: "flex", width: "100%", justifyContent: "center", marginTop: 50, marginBottom: 50 }}>
-            {data &&
+            {data && (
               <Table
                 css={{
                   height: "auto",
@@ -173,7 +216,7 @@ const DashboardKpe = () => {
                 </Table.Header>
                 <Table.Body items={data.results}>
                   {(item) => (
-                    <Table.Row key={(item._id)}>
+                    <Table.Row key={item._id}>
                       {(columnKey) => (
                         <Table.Cell>
                           <span
@@ -202,7 +245,7 @@ const DashboardKpe = () => {
                   )}
                 </Table.Body>
               </Table>
-            }
+            )}
           </div>
         </div>
         <Copyright />

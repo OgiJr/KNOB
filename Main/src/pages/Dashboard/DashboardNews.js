@@ -59,8 +59,7 @@ const DashboardNews = () => {
               const error = await res.json();
               console.log(error);
               setError(error.error);
-            }
-            else {
+            } else {
               setVisibleAdd(false);
               window.location.reload(false);
             }
@@ -68,7 +67,7 @@ const DashboardNews = () => {
         >
           <Modal.Header>
             <div style={{ marginTop: 20 }}>
-              <p style={{color:"red", fontWeight:"bold"}}>{error}</p>
+              <p style={{ color: "red", fontWeight: "bold" }}>{error}</p>
               <Input name="title" placeholder="Заглавие" style={{ background: "white", margin: 0 }} required />
             </div>
           </Modal.Header>
@@ -90,7 +89,13 @@ const DashboardNews = () => {
                 style={{ color: "black", margin: 0, background: "white" }}
               />
               <br />
-              <Textarea name="description" labelPlaceholder="Описание (HTML)" style={{ color: "black" }} rows={5} required />
+              <Textarea
+                name="description"
+                labelPlaceholder="Описание (HTML)"
+                style={{ color: "black" }}
+                rows={5}
+                required
+              />
               <p style={{ marginBottom: 5, fontSize: 14, marginTop: 15 }}>Прикачен файл</p>
               <input
                 name="file"
@@ -116,30 +121,46 @@ const DashboardNews = () => {
         <Form>
           <Modal.Header>
             <div style={{ marginTop: 20 }}>
-              <Input placeholder="Заглавие" style={{ background: "white", margin: 0 }} value={title}/>
+              <Input placeholder="Заглавие" style={{ background: "white", margin: 0 }} value={title} />
             </div>
           </Modal.Header>
           <Modal.Body>
             <div style={{ display: "flex", flexDirection: "column", alignSelf: "center" }}>
-              <Input labelPlaceholder="Кратко описание" style={{ color: "black", margin: 0, background: "white" }} name="short_description" id="short_description" value={shortDescription}/>
+              <Input
+                labelPlaceholder="Кратко описание"
+                style={{ color: "black", margin: 0, background: "white" }}
+                name="short_description"
+                id="short_description"
+                value={shortDescription}
+              />
               <br />
-              <Textarea labelPlaceholder="Описание (HTML)" style={{ color: "black" }} rows={5}  name="description" id="description" value={description}/>
+              <Textarea
+                labelPlaceholder="Описание (HTML)"
+                style={{ color: "black" }}
+                rows={5}
+                name="description"
+                id="description"
+                value={description}
+              />
             </div>
           </Modal.Body>
           <Modal.Footer>
-            <Button auto type="submit" color="error"
-            onClick={async () => {
-              const new_body = new FormData();
-              new_body.append("id", id);
-              const new_res = await fetch(`${process.env.REACT_APP_API_URL}/api/delete-knob-content`, {
-                method: "DELETE",
-                body: new_body,
-                headers: {
-                  Authorization: `Bearer ${JSON.parse(localStorage.getItem("user")).token}`,
-                },
-              });
-              window.location.reload(false);
-            }}
+            <Button
+              auto
+              type="submit"
+              color="error"
+              onClick={async () => {
+                const new_body = new FormData();
+                new_body.append("id", id);
+                await fetch(`${process.env.REACT_APP_API_URL}/api/delete-knob-content`, {
+                  method: "DELETE",
+                  body: new_body,
+                  headers: {
+                    Authorization: `Bearer ${JSON.parse(localStorage.getItem("user")).token}`,
+                  },
+                });
+                window.location.reload(false);
+              }}
             >
               Изтрий
             </Button>
@@ -168,7 +189,7 @@ const DashboardNews = () => {
             Добавете новина
           </Button>
           <div style={{ display: "flex", width: "100%", justifyContent: "center", marginTop: 50, marginBottom: 50 }}>
-            {data &&
+            {data && (
               <Table
                 css={{
                   height: "auto",
@@ -197,18 +218,23 @@ const DashboardNews = () => {
                               setId(item._id);
                             }}
                           >
-                            <span style={{ color: "black", fontSize: 14, fontWeight: "normal" }}>{columnKey !== "timestamp" ? item[columnKey] : new Date(item[columnKey]).toLocaleString("bg-BG", {
-                              year: "numeric",
-                              month: "long",
-                              day: "numeric",
-                            })}</span>
+                            <span style={{ color: "black", fontSize: 14, fontWeight: "normal" }}>
+                              {columnKey !== "timestamp"
+                                ? item[columnKey]
+                                : new Date(item[columnKey]).toLocaleString("bg-BG", {
+                                    year: "numeric",
+                                    month: "long",
+                                    day: "numeric",
+                                  })}
+                            </span>
                           </span>
                         </Table.Cell>
                       )}
                     </Table.Row>
                   )}
                 </Table.Body>
-              </Table>}
+              </Table>
+            )}
           </div>
         </div>
         <Copyright />

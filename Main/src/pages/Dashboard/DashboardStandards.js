@@ -31,7 +31,7 @@ const DashboardStandards = () => {
           }}
         >
           <div style={{ display: "flex", width: "100%", justifyContent: "center", marginTop: 50, marginBottom: 50 }}>
-            {international &&
+            {international && (
               <Card style={{ marginLeft: 50, marginRight: 50 }}>
                 <Form
                   onSubmit={async (e) => {
@@ -53,7 +53,7 @@ const DashboardStandards = () => {
                     if (res.status === 200) {
                       var id = "";
 
-                      (international.results).forEach(element => {
+                      international.results.forEach((element) => {
                         if (element.language === e.target.language.value) {
                           id = element._id;
                         }
@@ -61,7 +61,7 @@ const DashboardStandards = () => {
 
                       const new_body = new FormData();
                       new_body.append("id", id);
-                      const new_res = await fetch(`${process.env.REACT_APP_API_URL}/api/delete-european-standard`, {
+                      await fetch(`${process.env.REACT_APP_API_URL}/api/delete-european-standard`, {
                         method: "DELETE",
                         body: new_body,
                         headers: {
@@ -69,25 +69,46 @@ const DashboardStandards = () => {
                         },
                       });
                       window.location.reload(false);
-                    }
-                    else {
+                    } else {
                       const error = await res.json();
                       setErrorEu(error.error);
                     }
-                  }}>
+                  }}
+                >
                   <Card.Header>Европейски стандарти</Card.Header>
                   <Card.Body>
                     <p style={{ color: "red", fontWeight: "bold" }}>{errorEu}</p>
-                    <Input label="Заглавие" style={{ margin: 0, background: "white" }} name="title" id="title" required />
+                    <Input
+                      label="Заглавие"
+                      style={{ margin: 0, background: "white" }}
+                      name="title"
+                      id="title"
+                      required
+                    />
                     <br />
-                    <Radio.Group label="Език" defaultValue="chair" name="language" id="language" color="warning" required>
+                    <Radio.Group
+                      label="Език"
+                      defaultValue="chair"
+                      name="language"
+                      id="language"
+                      color="warning"
+                      required
+                    >
                       <Radio value="en">Английски</Radio>
                       <Radio value="bg">Български</Radio>
                     </Radio.Group>
                     <div style={{ marginBottom: 10 }} />
-                    <Input type="file" style={{ fontSize: 14, background: "white", margin: 0 }} label="Файл" id="file" name="file" onChange={(e) => {
-                      set_file(e.target.files[0]);
-                    }} required />
+                    <Input
+                      type="file"
+                      style={{ fontSize: 14, background: "white", margin: 0 }}
+                      label="Файл"
+                      id="file"
+                      name="file"
+                      onChange={(e) => {
+                        set_file(e.target.files[0]);
+                      }}
+                      required
+                    />
                     <br />
                     <Button color="warning" style={{ selfAlign: "center", width: 200 }} type="submit">
                       Добавете файл
@@ -95,8 +116,8 @@ const DashboardStandards = () => {
                   </Card.Body>
                 </Form>
               </Card>
-            }
-            {bulgarian &&
+            )}
+            {bulgarian && (
               <Card style={{ marginLeft: 50, marginRight: 50 }}>
                 <Form
                   onSubmit={async (e) => {
@@ -118,7 +139,7 @@ const DashboardStandards = () => {
                     if (res.status === 200) {
                       var id = "";
 
-                      (bulgarian.results).forEach(element => {
+                      bulgarian.results.forEach((element) => {
                         if (element.language === e.target.language.value) {
                           id = element._id;
                         }
@@ -126,7 +147,7 @@ const DashboardStandards = () => {
 
                       const new_body = new FormData();
                       new_body.append("id", id);
-                      const new_res = await fetch(`${process.env.REACT_APP_API_URL}/api/delete-bulgarian-standard`, {
+                      await fetch(`${process.env.REACT_APP_API_URL}/api/delete-bulgarian-standard`, {
                         method: "DELETE",
                         body: new_body,
                         headers: {
@@ -134,25 +155,46 @@ const DashboardStandards = () => {
                         },
                       });
                       window.location.reload(false);
-                    }
-                    else {
+                    } else {
                       const error = await res.json();
                       setErrorBg(error.error);
                     }
-                  }}>
+                  }}
+                >
                   <Card.Header>Европейски стандарти</Card.Header>
                   <Card.Body>
                     <p style={{ color: "red", fontWeight: "bold" }}>{errorBg}</p>
-                    <Input label="Заглавие" style={{ margin: 0, background: "white" }} name="title" id="title" required />
+                    <Input
+                      label="Заглавие"
+                      style={{ margin: 0, background: "white" }}
+                      name="title"
+                      id="title"
+                      required
+                    />
                     <br />
-                    <Radio.Group label="Език" defaultValue="chair" name="language" id="language" color="warning" required>
+                    <Radio.Group
+                      label="Език"
+                      defaultValue="chair"
+                      name="language"
+                      id="language"
+                      color="warning"
+                      required
+                    >
                       <Radio value="en">Английски</Radio>
                       <Radio value="bg">Български</Radio>
                     </Radio.Group>
                     <div style={{ marginBottom: 10 }} />
-                    <Input type="file" style={{ fontSize: 14, background: "white", margin: 0 }} label="Файл" id="file" name="file" onChange={(e) => {
-                      set_bg_file(e.target.files[0]);
-                    }} required />
+                    <Input
+                      type="file"
+                      style={{ fontSize: 14, background: "white", margin: 0 }}
+                      label="Файл"
+                      id="file"
+                      name="file"
+                      onChange={(e) => {
+                        set_bg_file(e.target.files[0]);
+                      }}
+                      required
+                    />
                     <br />
                     <Button color="warning" style={{ selfAlign: "center", width: 200 }} type="submit">
                       Добавете файл
@@ -160,7 +202,7 @@ const DashboardStandards = () => {
                   </Card.Body>
                 </Form>
               </Card>
-            }
+            )}
           </div>
         </div>
         <Copyright />

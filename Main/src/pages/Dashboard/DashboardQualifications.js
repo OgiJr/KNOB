@@ -41,65 +41,96 @@ const DashboardQualifications = () => {
     <>
       {/* Modal add start */}
       <Modal scroll open={visibleAdd} onClose={() => setVisibleAdd(false)}>
-        <Form onSubmit={async (e) => {
-          e.preventDefault();
-          const body = new FormData();
-          body.append("title", e.target.title.value);
-          body.append("description", e.target.description.value);
-          body.append("picture", photo);
-          if (fileOne) {
-            body.append("file", fileOne);
-          }
-          if (fileTwo) {
-            body.append("file", fileTwo);
-          }
-          if (fileThree) {
-            body.append("file", fileThree);
-          }
+        <Form
+          onSubmit={async (e) => {
+            e.preventDefault();
+            const body = new FormData();
+            body.append("title", e.target.title.value);
+            body.append("description", e.target.description.value);
+            body.append("picture", photo);
+            if (fileOne) {
+              body.append("file", fileOne);
+            }
+            if (fileTwo) {
+              body.append("file", fileTwo);
+            }
+            if (fileThree) {
+              body.append("file", fileThree);
+            }
 
-          const res = await fetch(`${process.env.REACT_APP_API_URL}/api/post-qualification-item`, {
-            method: "POST",
-            body: body,
-            headers: {
-              Authorization: `Bearer ${JSON.parse(localStorage.getItem("user")).token}`,
-            },
-          });
+            const res = await fetch(`${process.env.REACT_APP_API_URL}/api/post-qualification-item`, {
+              method: "POST",
+              body: body,
+              headers: {
+                Authorization: `Bearer ${JSON.parse(localStorage.getItem("user")).token}`,
+              },
+            });
 
-          if (res.status !== 200) {
-            const error = await res.json();
-            console.log(error);
-            setError(error.error);
-          }
-          else {
-            setVisibleAdd(false);
-            window.location.reload(false);
-          }
-        }}>
+            if (res.status !== 200) {
+              const error = await res.json();
+              console.log(error);
+              setError(error.error);
+            } else {
+              setVisibleAdd(false);
+              window.location.reload(false);
+            }
+          }}
+        >
           <Modal.Header>
             <div style={{ marginTop: 20 }}>
               <p style={{ color: "red", fontWeight: "bold" }}>{error}</p>
-              <Input placeholder="Заглавие" style={{ background: "white", margin: 0 }} name="title" id="title" required />
+              <Input
+                placeholder="Заглавие"
+                style={{ background: "white", margin: 0 }}
+                name="title"
+                id="title"
+                required
+              />
             </div>
           </Modal.Header>
           <Modal.Body>
             <div style={{ display: "flex", flexDirection: "column", alignSelf: "center" }}>
               <p style={{ marginBottom: 5, fontSize: 14 }}>Снимка</p>
-              <input type="file" style={{ marginBottom: 15 }} onChange={(e) => {
-                setPhoto(e.target.files[0]);
-              }} required />
-              <Textarea labelPlaceholder="Описание (HTML)" style={{ color: "black" }} rows={5} name="description" id="description" required />
+              <input
+                type="file"
+                style={{ marginBottom: 15 }}
+                onChange={(e) => {
+                  setPhoto(e.target.files[0]);
+                }}
+                required
+              />
+              <Textarea
+                labelPlaceholder="Описание (HTML)"
+                style={{ color: "black" }}
+                rows={5}
+                name="description"
+                id="description"
+                required
+              />
               <p style={{ marginBottom: 5, fontSize: 14, marginTop: 15 }}>Прикачен файл едно</p>
-              <input type="file" style={{ marginBottom: 15 }} onChange={(e) => {
-                setFileOne(e.target.files[0]);
-              }} />
+              <input
+                type="file"
+                style={{ marginBottom: 15 }}
+                onChange={(e) => {
+                  setFileOne(e.target.files[0]);
+                }}
+              />
               <p style={{ marginBottom: 5, fontSize: 14, marginTop: 15 }}>Прикачен файл две</p>
-              <input type="file" style={{ marginBottom: 15 }} onChange={(e) => {
-                setFileTwo(e.target.files[0]);
-              }} />
+              <input
+                type="file"
+                style={{ marginBottom: 15 }}
+                onChange={(e) => {
+                  setFileTwo(e.target.files[0]);
+                }}
+              />
               <p style={{ marginBottom: 5, fontSize: 14, marginTop: 15 }}>Прикачен файл три</p>
-              <input type="file" style={{ marginBottom: 15 }} onChange={(e) => {
-                setFileThree(e.target.files[0]);
-              }} />
+              <input
+                type="file"
+                style={{ marginBottom: 15 }}
+                onChange={(e) => {
+                  setFileThree(e.target.files[0]);
+                }}
+              />
             </div>
           </Modal.Body>
           <Modal.Footer>
@@ -121,15 +152,25 @@ const DashboardQualifications = () => {
           </Modal.Header>
           <Modal.Body>
             <div style={{ display: "flex", flexDirection: "column", alignSelf: "center" }}>
-              <Textarea labelPlaceholder="Описание (HTML)" style={{ color: "black" }} rows={5} required width={300} value={description} />
+              <Textarea
+                labelPlaceholder="Описание (HTML)"
+                style={{ color: "black" }}
+                rows={5}
+                required
+                width={300}
+                value={description}
+              />
             </div>
           </Modal.Body>
           <Modal.Footer>
-            <Button auto type="submit" color="error"
+            <Button
+              auto
+              type="submit"
+              color="error"
               onClick={async () => {
                 const new_body = new FormData();
                 new_body.append("id", id);
-                const new_res = await fetch(`${process.env.REACT_APP_API_URL}/api/delete-qualification-item`, {
+                await fetch(`${process.env.REACT_APP_API_URL}/api/delete-qualification-item`, {
                   method: "DELETE",
                   body: new_body,
                   headers: {
@@ -165,7 +206,7 @@ const DashboardQualifications = () => {
             Добавете квалификация
           </Button>
           <div style={{ display: "flex", width: "100%", justifyContent: "center", marginTop: 50, marginBottom: 50 }}>
-            {data &&
+            {data && (
               <Table
                 css={{
                   height: "auto",
@@ -191,22 +232,25 @@ const DashboardQualifications = () => {
                               setTitle(item.title);
                               setDescription(item.description);
                               setVisibleEdit(true);
-
                             }}
                           >
                             <span style={{ color: "black", fontSize: 14, fontWeight: "normal" }}>
-                              {columnKey !== "timestamp" ? item[columnKey] : new Date(item[columnKey]).toLocaleString("bg-BG", {
-                                year: "numeric",
-                                month: "long",
-                                day: "numeric",
-                              })}</span>
+                              {columnKey !== "timestamp"
+                                ? item[columnKey]
+                                : new Date(item[columnKey]).toLocaleString("bg-BG", {
+                                    year: "numeric",
+                                    month: "long",
+                                    day: "numeric",
+                                  })}
+                            </span>
                           </span>
                         </Table.Cell>
                       )}
                     </Table.Row>
                   )}
                 </Table.Body>
-              </Table>}
+              </Table>
+            )}
           </div>
         </div>
         <Copyright />
