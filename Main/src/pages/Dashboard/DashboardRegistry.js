@@ -1,11 +1,291 @@
 import React from "react";
+import { Modal, Button, Dropdown, Input, Pagination, Table, Radio } from "@nextui-org/react";
+import "../../assets/scss/table.scss";
+import useSWR from "swr";
 import SEO from "../../common/SEO";
 import HeaderAdmin from "../../common/header/HeaderAdmin";
-import Copyright from "../../common/footer/Copyright";
-import { Button, Dropdown, Input, Modal, Pagination, Table } from "@nextui-org/react";
 
-const cities = [{ name: "с. Дряново" }, { name: "Айтос" }, { name: "Аксаково" }, { name: "Априлци" }];
+const cities = [
+  { name: "Всички" },
+  { name: "с. Дряново" },
+  { name: "Айтос" },
+  { name: "Аксаково" },
+  { name: "Априлци" },
+  { name: "Ардино" },
+  { name: "Асеновград" },
+  { name: "Балчик" },
+  { name: "Банкя" },
+  { name: "Банско" },
+  { name: "Батак" },
+  { name: "Белене" },
+  { name: "Белица" },
+  { name: "Белово" },
+  { name: "Белоградчик" },
+  { name: "Белослав" },
+  { name: "Берковица" },
+  { name: "Благоевград" },
+  { name: "Бобов Дол" },
+  { name: "Божурище" },
+  { name: "Ботевград" },
+  { name: "Бриниполе" },
+  { name: "Барцигово" },
+  { name: "Брезник" },
+  { name: "Брезово" },
+  { name: "Бургас" },
+  { name: "Бутово" },
+  { name: "Бяла" },
+  { name: "Бяла Слатина" },
+  { name: "Варна" },
+  { name: "Васил Левски" },
+  { name: "Велики Преслав" },
+  { name: "Велико Търново" },
+  { name: "Велинград" },
+  { name: "Ветово" },
+  { name: "Ветрино" },
+  { name: "Видин" },
+  { name: "Владая" },
+  { name: "Враца" },
+  { name: "Вълкосел" },
+  { name: "Вълчедръм" },
+  { name: "Вълчи дол" },
+  { name: "Върбица" },
+  { name: "Вършец" },
+  { name: "Габрово" },
+  { name: "Гарван" },
+  { name: "Генерал Тошево" },
+  { name: "Годеч" },
+  { name: "Годлево" },
+  { name: "Горна Оряховица" },
+  { name: "Гоце Делчев" },
+  { name: "Гулянци" },
+  { name: "Гълъбово" },
+  { name: "Две могили" },
+  { name: "Дебелец" },
+  { name: "Девин" },
+  { name: "Девня" },
+  { name: "Димитровград" },
+  { name: "Добринище" },
+  { name: "Добрич" },
+  { name: "Доброглед" },
+  { name: "Долна баня" },
+  { name: "Долни Дъбник" },
+  { name: "Долни чифлик" },
+  { name: "Доспат" },
+  { name: "Драгоман" },
+  { name: "Дряново" },
+  { name: "Дулово" },
+  { name: "Дунавци" },
+  { name: "Дупница" },
+  { name: "Дългопол" },
+  { name: "Елена" },
+  { name: "Елин Пелин" },
+  { name: "Елхово" },
+  { name: "Етрополе" },
+  { name: "Земен" },
+  { name: "Златица" },
+  { name: "Златоград" },
+  { name: "Ивайловград" },
+  { name: "Игнатиево" },
+  { name: "Исперих" },
+  { name: "Ихтиман" },
+  { name: "Каварна" },
+  { name: "Казанлък" },
+  { name: "Камено" },
+  { name: "Карлово" },
+  { name: "Карнобат" },
+  { name: "Кнежа" },
+  { name: "Козлодуй" },
+  { name: "Койнаре" },
+  { name: "Костандово" },
+  { name: "Костенец" },
+  { name: "Костинброд" },
+  { name: "Котел" },
+  { name: "Кочериново" },
+  { name: "Кресна" },
+  { name: "Кричим" },
+  { name: "Крумовград" },
+  { name: "Кубрат" },
+  { name: "Куклен" },
+  { name: "Кърджали" },
+  { name: "Кюстендил" },
+  { name: "Левски" },
+  { name: "Летница" },
+  { name: "Ловеч" },
+  { name: "Лом" },
+  { name: "Луковит" },
+  { name: "Любимец" },
+  { name: "Лясковец" },
+  { name: "Мадан" },
+  { name: "Маджарово" },
+  { name: "Мездра" },
+  { name: "Мелник" },
+  { name: "Момин проход" },
+  { name: "Момчилград" },
+  { name: "Момчиловци" },
+  { name: "Монтана" },
+  { name: "Неделино" },
+  { name: "Несебър" },
+  { name: "Никопол" },
+  { name: "Нова Загора" },
+  { name: "Нови Искър" },
+  { name: "Нови пазар" },
+  { name: "Обзор" },
+  { name: "Омуртаг" },
+  { name: "Ореш" },
+  { name: "Оряхово" },
+  { name: "Павликени" },
+  { name: "Пазарджик" },
+  { name: "Панагюрище" },
+  { name: "Панчерево" },
+  { name: "Перник" },
+  { name: "Перущица" },
+  { name: "Петрич" },
+  { name: "Петрово" },
+  { name: "Пирдоп" },
+  { name: "Плачковци" },
+  { name: "Плевен" },
+  { name: "Пловдив" },
+  { name: "Победа" },
+  { name: "Поликраище" },
+  { name: "Полски Тръмбеш" },
+  { name: "Поморие" },
+  { name: "Попово" },
+  { name: "Правец" },
+  { name: "Приморско" },
+  { name: "Провадия" },
+  { name: "Първомай" },
+  { name: "Раднево" },
+  { name: "Радомир" },
+  { name: "Разград" },
+  { name: "Разлог" },
+  { name: "Ракитово" },
+  { name: "Раковски" },
+  { name: "Рудозем" },
+  { name: "Русе" },
+  { name: "с. Априлово  " },
+  { name: "с. Баните" },
+  { name: "с. Бачково" },
+  { name: "с. Богослов" },
+  { name: "с. Борино" },
+  { name: "с. Боровци" },
+  { name: "с. Браниполе" },
+  { name: "с. Бутово" },
+  { name: "с. Бързия" },
+  { name: "с. Бяла" },
+  { name: "с. Васил Левски" },
+  { name: "с. Венелин" },
+  { name: "с. Вишнево" },
+  { name: "с. Войнягово" },
+  { name: "с. Гара Елин Пелин" },
+  { name: "с. Гарван" },
+  { name: "с. Герман" },
+  { name: "с. Гоцево" },
+  { name: "с. Горна Ковачица" },
+  { name: "с. Граница" },
+  { name: "с. Доброглед" },
+  { name: "с. Доброславци" },
+  { name: "с. Долни Пасарел" },
+  { name: "с. Драговищица" },
+  { name: "с. Загражден" },
+  { name: "с. Калейца" },
+  { name: "с. Калояново" },
+  { name: "с. Кокаляне" },
+  { name: "с. Коларово" },
+  { name: "с. Крумово" },
+  { name: "с. Листец" },
+  { name: "с. Лозен" },
+  { name: "с. Лопян" },
+  { name: "с. Лясково" },
+  { name: "с. Марково" },
+  { name: "с. Медковец" },
+  { name: "с. Мечка" },
+  { name: "с. Момчиловци" },
+  { name: "с. Мрамор" },
+  { name: "с. Мусачево" },
+  { name: "с. Мусомища" },
+  { name: "с. Невестино" },
+  { name: "с. Нова махала" },
+  { name: "с. Новачене" },
+  { name: "с. Огняново" },
+  { name: "с. Окорш" },
+  { name: "с. Павелско" },
+  { name: "с. Петрово" },
+  { name: "с. Пиргово" },
+  { name: "с. Поликраище" },
+  { name: "с. Поповица" },
+  { name: "с. Първенец" },
+  { name: "с. Първомай" },
+  { name: "с. Рудник" },
+  { name: "с. Сеслав" },
+  { name: "с. Сипей" },
+  { name: "с. Старозагорски бани" },
+  { name: "с. Старцево" },
+  { name: "с. Струйно" },
+  { name: "с. Сърнево" },
+  { name: "с. Труд" },
+  { name: "с. Търън" },
+  { name: "с. Хаджидимитрово" },
+  { name: "с. Хаджиево" },
+  { name: "с. Черно море" },
+  { name: "Самоков" },
+  { name: "Сандански" },
+  { name: "Сапарева баня" },
+  { name: "Свиленград" },
+  { name: "Свищов" },
+  { name: "Своге" },
+  { name: "Севлиево" },
+  { name: "Септември" },
+  { name: "Силистра" },
+  { name: "Симеоновград" },
+  { name: "Симитли" },
+  { name: "Славяново" },
+  { name: "Сливен" },
+  { name: "Сливница" },
+  { name: "Смилян" },
+  { name: "Смолян" },
+  { name: "Смядово" },
+  { name: "Созопол" },
+  { name: "Сопот" },
+  { name: "София" },
+  { name: "Средец" },
+  { name: "Стамболийски" },
+  { name: "Стара Загора" },
+  { name: "Стокхолм" },
+  { name: "Стражец" },
+  { name: "Стражица" },
+  { name: "Стралджа" },
+  { name: "Стрелча" },
+  { name: "Суворово" },
+  { name: "Съединение" },
+  { name: "Твърдица" },
+  { name: "Тервел" },
+  { name: "Тетевен" },
+  { name: "Тополовград" },
+  { name: "Троян" },
+  { name: "Тръстеник" },
+  { name: "Трявна" },
+  { name: "Тутракан" },
+  { name: "Търговище" },
+  { name: "Хаджиево" },
+  { name: "Харманли" },
+  { name: "Хасково" },
+  { name: "Хисаря" },
+  { name: "Цар Калоян" },
+  { name: "Царево" },
+  { name: "Чепеларе" },
+  { name: "Червен бряг" },
+  { name: "Черногорово" },
+  { name: "Четирци" },
+  { name: "Чирпан" },
+  { name: "Шабла" },
+  { name: "Шивачево" },
+  { name: "Шумен" },
+  { name: "Якоруда" },
+  { name: "Ямбол" },
+];
+
 const capacities = [
+  { name: "Всички" },
   { name: "Недвижими имоти" },
   { name: "Недвижими културни ценности" },
   { name: "Машини и съоражения" },
@@ -17,10 +297,9 @@ const capacities = [
   { name: "Поземлени имоти в горски територии" },
 ];
 
-//Start people variables
 const columnsPeople = [
   {
-    key: "id",
+    key: "number",
     label: "№",
   },
   {
@@ -28,7 +307,7 @@ const columnsPeople = [
     label: "Име",
   },
   {
-    key: "member",
+    key: "is_member",
     label: "Членство",
   },
   {
@@ -36,369 +315,453 @@ const columnsPeople = [
     label: "Град",
   },
   {
-    key: "mobile",
-    label: "Моб.",
+    key: "mobile_phone",
+    label: "Моб. тел.",
   },
   {
-    key: "phone",
+    key: "landline",
     label: "Телефон",
   },
 ];
-const rowsPeople = [
-  {
-    key: "1",
-    id: "1",
-    name: "Атанас Иванов Димов",
-    member: "Да",
-    city: "Ямбол",
-    mobile: "0898634582",
-    phone: "046663637",
-    capacity: "Поземлени имоти в горски територии",
-    certificateNumber: "820100133 (6.2.2012 г.)",
-    address: "Ямбол 8600, ул. Христо Смирненски",
-    speciality: "Горско стопанство",
-    expirience: "ЗГ-1999",
-    education: "висше(ВЛТИ-София)",
-  },
-  {
-    key: "2",
-    id: "2",
-    name: "Иван Димитров Димов",
-    member: "Да",
-    city: "Бургас",
-    mobile: "0888276526",
-    phone: "",
-    capacity:
-      "Земеделски земи и трайни насаждения, Машини и съоръжения, Недвижими имоти, Търговски предприятия и вземания",
-    certificateNumber:
-      "810100079 (30.12.2010 г.) , 300100303 (14.12.2009 г.) , 100100786 (14.12.2009 г.) , 500100271 (14.12.2009 г.)",
-    address: "Бургас 8001, ж.к. Братя Миладинови",
-    speciality: "Счетоводство и контрол",
-    expirience: "НИ-2005 МС-2005 ТП-2008 ЗЗ-2009",
-    education: "висше (БСУ - Бургас)",
-  },
-];
-//End people variables
+
+const fetcher = (url) => fetch(url).then((res) => res.json());
 
 const DashboardRegistry = () => {
-  const [selected, setSelected] = React.useState(new Set(["50"]));
-  const [visible, setVisible] = React.useState(false);
+
+  const [selected_city, set_selected_city] = React.useState(null);
+  const [selected_capacity, set_selected_capacity] = React.useState(null);
+  const [mapped_users, set_mapped_users] = React.useState([]);
+  const [current_person, set_current_person] = React.useState(null);
+  const [name, set_name] = React.useState("");
+  const [certificate_number, set_certificate_number] = React.useState("");
+  const [entries_per_page, set_entries_per_page] = React.useState(50);
+  const [page, set_page] = React.useState(1);
+  const { data: users } = useSWR(`${process.env.REACT_APP_API_URL}/api/get-users`, fetcher);
+  const { data: companies } = useSWR(`${process.env.REACT_APP_API_URL}/api/get-companies`, fetcher);
+  const [capacity, setCapacity] = React.useState(0);
   const [visibleArchive, setVisibleArchive] = React.useState(false);
-
-  //Start people variables
-  const [name, setName] = React.useState("");
-  const [capacity, setCapacity] = React.useState(new Set([""]));
-  const [address, setAddress] = React.useState(new Set([""]));
-  const [certificateNumber, setCertificateNumber] = React.useState(new Set([""]));
-  const [member, setMember] = React.useState(new Set([""]));
-  const [mobile, setMobile] = React.useState(new Set([""]));
-  const [phone, setPhone] = React.useState(new Set([""]));
-  const [speciality, setSpeciality] = React.useState(new Set([""]));
-  const [expirience, setExperience] = React.useState(new Set([""]));
-  const [education, setEducation] = React.useState(new Set([""]));
-  //End people variables
   const [add, setAdd] = React.useState(false);
+  const [modal, setModal] = React.useState(false);
 
-  const selectedValue = React.useMemo(() => Array.from(selected).join(", ").replaceAll("_", " "), [selected]);
+  React.useEffect(() => {
+    if (users) {
+      set_mapped_users(
+        users.results
+          .slice((page - 1) * entries_per_page, (page - 1) * entries_per_page + entries_per_page)
+          .filter((u) => {
+            if (name) {
+              const full_name = `${u.first_name} ${u.middle_name} ${u.last_name}`;
+              console.log(full_name, name, full_name.includes(name));
+              if (!full_name.toLocaleLowerCase().includes(name.toLowerCase())) {
+                return false;
+              }
+            }
+
+            if (certificate_number) {
+              if (!u.current_valid_certificate) {
+                return false;
+              }
+              if (u.current_valid_certificate.certificate_number !== certificate_number) {
+                return false;
+              }
+            }
+
+            if (selected_city) {
+              if (selected_city.name !== "Всички" && u.city !== selected_city.name) {
+                return false;
+              }
+            }
+
+            if (selected_capacity) {
+              if (selected_capacity.name !== "Всички" && u.capacity.value !== selected_capacity.name) {
+                return false;
+              }
+            }
+            return true;
+          })
+          .map((user) => ({
+            name: `${user.first_name} ${user.middle_name} ${user.last_name}`,
+            is_member: user.is_knob_member && user.current_valid_certificate ? "Да" : "Не",
+            ...user,
+          }))
+      );
+    } else {
+      set_mapped_users([]);
+    }
+  }, [users, set_mapped_users, name, certificate_number, selected_city, selected_capacity, entries_per_page, page]);
 
   return (
     <>
-      <SEO title="Административен панел" />
-      <main className="page-wrapper">
-        <HeaderAdmin btnStyle="btn-small round btn-icon" />
-        {/* Start Modal Area */}
-        <Modal closeButton width="85%" open={visible} onClose={() => setVisible(false)}>
-          <Modal.Header>
-            <Input
-              width={500}
-              placeholder={name}
-              style={{ background: "white", textAlign: "center", marginLeft: 0, marginRight: 0, marginBottom: 10 }}
-            />
-          </Modal.Header>
-          <Modal.Body style={{ marginLeft: 15, marginRight: 15, marginTop: 15, marginBottom: 15 }}>
-            <div className="modalResponsive">
-              <span style={{ fontWeight: "bold" }}>Оценителска правоспособност:</span>
+      {users && companies && (
+        <>
+          {/* Start Modal Area */}
+          <Modal closeButton width="85%" open={modal} onClose={() => setModal(false)}>
+            <Modal.Header>
               <Input
                 width={500}
-                placeholder={capacity}
-                style={{ background: "white", marginLeft: 0, marginRight: 0, marginBottom: 10 }}
+                value={current_person && current_person.name}
+                style={{ background: "white", textAlign: "center", marginLeft: 0, marginRight: 0, marginBottom: 10 }}
               />
-            </div>
-            <div className="modalResponsive">
-              <span style={{ fontWeight: "bold" }}>Членува в КНОБ:</span>
-              <Input
-                width={500}
-                placeholder={member}
-                style={{ background: "white", marginLeft: 0, marginRight: 0, marginBottom: 10 }}
-              />
-            </div>
-            <div className="modalResponsive">
-              <span style={{ fontWeight: "bold" }}>Сертификати номера:</span>
-              <Input
-                width={500}
-                placeholder={certificateNumber}
-                style={{ background: "white", marginLeft: 0, marginRight: 0, marginBottom: 10 }}
-              />
-            </div>
-            <div className="modalResponsive">
-              <span style={{ fontWeight: "bold" }}>Адрес:</span>
-              <Input
-                width={500}
-                placeholder={address}
-                style={{ background: "white", marginLeft: 0, marginRight: 0, marginBottom: 10 }}
-              />
-            </div>
-            <div className="modalResponsive">
-              <span style={{ fontWeight: "bold" }}>Телефон:</span>
-              <Input
-                width={500}
-                placeholder={phone}
-                style={{ background: "white", marginLeft: 0, marginRight: 0, marginBottom: 10 }}
-              />
-            </div>
-            <div className="modalResponsive">
-              <span style={{ fontWeight: "bold" }}>Мобилен:</span>
-              <Input
-                width={500}
-                placeholder={mobile}
-                style={{ background: "white", marginLeft: 0, marginRight: 0, marginBottom: 10 }}
-              />
-            </div>
-            <div className="modalResponsive">
-              <span style={{ fontWeight: "bold" }}>Специалност:</span>
-              <Input
-                width={500}
-                placeholder={speciality}
-                style={{ background: "white", marginLeft: 0, marginRight: 0, marginBottom: 10 }}
-              />
-            </div>
-            <div className="modalResponsive">
-              <span style={{ fontWeight: "bold" }}>Стаж:</span>
-              <Input
-                width={500}
-                placeholder={expirience}
-                style={{ background: "white", marginLeft: 0, marginRight: 0, marginBottom: 10 }}
-              />
-            </div>
-            <div className="modalResponsive">
-              <span style={{ fontWeight: "bold" }}>Образование:</span>
-              <Input
-                width={500}
-                placeholder={education}
-                style={{ background: "white", marginLeft: 0, marginRight: 0, marginBottom: 10 }}
-              />
-            </div>
-          </Modal.Body>
-          <Modal.Footer>
-            {!add ? (
-              <Button
-                color="error"
-                onPress={() => {
-                  setVisible(false);
-                  setVisibleArchive(true);
+            </Modal.Header>
+            <Modal.Body style={{ marginLeft: 15, marginRight: 15, marginTop: 15, marginBottom: 15 }}>
+              <div className="modalResponsive">
+                <span style={{ fontWeight: "bold" }}>Оценителска правоспособност:</span>
+                <span style={{ display: "flex", flexDirection: "column", gap: 20 }}>
+                  {current_person &&
+                    current_person.capacity.map((item) => {
+                      return (
+                        <Input
+                          width={500}
+                          value={item.value}
+                          style={{ background: "white", marginLeft: 0, marginRight: 0, marginBottom: 10 }}
+                        />);
+                    })}
+                  {[...Array(capacity)].map(() => (<Input
+                    width={500}
+                    style={{ background: "white", marginLeft: 0, marginRight: 0, marginBottom: 10 }}
+                  />))}
+                  {!current_person && (
+                    <Input
+                      width={500}
+                      style={{ background: "white", marginLeft: 0, marginRight: 0, marginBottom: 10 }}
+                    />)}
+                  <Button style={{ marginBottom: 10, width: 100 }} color="warning" onPress={() => setCapacity(capacity + 1)}>Добавете</Button>
+                </span>
+              </div>
+              <div className="modalResponsive" style={{ display: "flex" }}>
+                <span style={{ fontWeight: "bold" }}>Членува в КНОБ:</span>
+                <div style={{ width: 500, marginBottom: 10 }}>
+                  <Radio.Group
+                    defaultValue={!current_person ? "false" : current_person.is_member === "Да" ? "true" : "false"}
+                    color="warning"
+                    orientation="horizontal"
+                    required                >
+                    <Radio value="true">Да</Radio>
+                    <Radio value="false">Не</Radio>
+                  </Radio.Group>
+                </div>
+              </div>
+              <div className="modalResponsive">
+                <span style={{ fontWeight: "bold" }}>Сертификати номера:</span>
+                <Input
+                  width={500}
+                  value={current_person && current_person.certificate_number}
+                  style={{ background: "white", marginLeft: 0, marginRight: 0, marginBottom: 10 }}
+                />
+              </div>
+              <div className="modalResponsive">
+                <span style={{ fontWeight: "bold" }}>Адрес:</span>
+                <Input
+                  width={500}
+                  value={current_person && current_person.address}
+                  style={{ background: "white", marginLeft: 0, marginRight: 0, marginBottom: 10 }}
+                />
+              </div>
+              <div className="modalResponsive">
+                <span style={{ fontWeight: "bold" }}>Телефон:</span>
+                <Input
+                  width={500}
+                  value={current_person && current_person.landline}
+                  style={{ background: "white", marginLeft: 0, marginRight: 0, marginBottom: 10 }}
+                />
+              </div>
+              <div className="modalResponsive">
+                <span style={{ fontWeight: "bold" }}>Мобилен:</span>
+                <Input
+                  width={500}
+                  value={current_person && current_person.mobile_phone}
+                  style={{ background: "white", marginLeft: 0, marginRight: 0, marginBottom: 10 }}
+                />
+              </div>
+              <div className="modalResponsive">
+                <span style={{ fontWeight: "bold" }}>Специалност:</span>
+                <Input
+                  width={500}
+                  value={current_person && current_person.speciality}
+                  style={{ background: "white", marginLeft: 0, marginRight: 0, marginBottom: 10 }}
+                />
+              </div>
+              <div className="modalResponsive">
+                <span style={{ fontWeight: "bold" }}>Стаж:</span>
+                <Input
+                  width={500}
+                  value={current_person && current_person.expirience}
+                  style={{ background: "white", marginLeft: 0, marginRight: 0, marginBottom: 10 }}
+                />
+              </div>
+              <div className="modalResponsive">
+                <span style={{ fontWeight: "bold" }}>Образование:</span>
+                <Input
+                  width={500}
+                  value={current_person && current_person.education}
+                  style={{ background: "white", marginLeft: 0, marginRight: 0, marginBottom: 10 }}
+                />
+              </div>
+            </Modal.Body>
+            <Modal.Footer>
+              {!add ? (
+                <Button
+                  color="error"
+                >
+                  Премахни членство
+                </Button>
+              ) : (
+                <></>
+              )}
+              {!add ? (
+                <Button
+                  color="warning"
+                  onPress={() => {
+                    setAdd(false);
+                    setModal(false);
+                    setVisibleArchive(true);
+                  }}
+                >
+                  Деактивирай
+                </Button>
+              ) : (
+                <></>
+              )}
+              <Button color="success">Запази</Button>
+            </Modal.Footer>
+          </Modal>
+          {
+            current_person &&
+            <Modal closeButton width="85%" open={visibleArchive} onClose={() => setVisibleArchive(false)}>
+              <Modal.Header>
+                <h5>Обезсилване на сертификата на: {name}</h5>
+              </Modal.Header>
+              <Modal.Body style={{ marginLeft: 15, marginRight: 15, marginTop: 15, marginBottom: 15 }}>
+                <div className="modalResponsive">
+                  <span style={{ fontWeight: "bold" }}>Тип:</span>
+                  <Input
+                    width={500}
+                    style={{ background: "white", marginLeft: 0, marginRight: 0, marginBottom: 10 }}
+                  />
+                </div>
+                <div className="modalResponsive">
+                  <span style={{ fontWeight: "bold" }}>Оценителска правоспособност:</span>
+                  <Input
+                    width={500}
+                    style={{ background: "white", marginLeft: 0, marginRight: 0, marginBottom: 10 }}
+                  />
+                </div>
+                <div className="modalResponsive">
+                  <span style={{ fontWeight: "bold" }}>Обезсилен:</span>
+                  <Input
+                    width={500}
+                    value={current_person && current_person.certificate_number}
+                    style={{ background: "white", marginLeft: 0, marginRight: 0, marginBottom: 10 }}
+                  />
+                </div>
+                <div className="modalResponsive">
+                  <span style={{ fontWeight: "bold" }}>Нов:</span>
+                  <Input width={500} style={{ background: "white", marginLeft: 0, marginRight: 0, marginBottom: 10 }} />
+                </div>
+                <div className="modalResponsive">
+                  <span style={{ fontWeight: "bold" }}>Основание:</span>
+                  <Input width={500} style={{ background: "white", marginLeft: 0, marginRight: 0, marginBottom: 10 }} />
+                </div>
+              </Modal.Body>
+              <Modal.Footer>
+                <Button color="warning" onClick={() => { setVisibleArchive(false) }}>Затвори</Button>
+                <Button color="success">Запази</Button>
+              </Modal.Footer>
+            </Modal>}
+          {/* End Modal Area */}
+          <SEO title="Административен панел" />
+          <main className="page-wrapper">
+            <HeaderAdmin btnStyle="btn-small round btn-icon" />
+            {/* Start  Search Area*/}
+            <div style={{ display: "flex", flexDirection: "column", marginLeft: 30 }}>
+              <h3 style={{ color: "orange", marginTop: 30 }}>Публичен регистър на независимите оценители</h3>
+              <p
+                style={{
+                  fontSize: 16,
+                  fontWeight: "bold",
+                  marginTop: 15,
+                  marginLeft: 15,
+                  marginBottom: 10,
                 }}
               >
-                Деактивирай
-              </Button>
-            ) : (
-              <></>
-            )}
-            <Button color="success">Запази</Button>
-          </Modal.Footer>
-        </Modal>
-        <Modal closeButton width="85%" open={visibleArchive} onClose={() => setVisibleArchive(false)}>
-          <Modal.Header>
-            <h5>Обезсилване на сертификата на: {name}</h5>
-          </Modal.Header>
-          <Modal.Body style={{ marginLeft: 15, marginRight: 15, marginTop: 15, marginBottom: 15 }}>
-            <div className="modalResponsive">
-              <span style={{ fontWeight: "bold" }}>Оценителска правоспособност:</span>
-              <Input
-                width={500}
-                placeholder={capacity}
-                style={{ background: "white", marginLeft: 0, marginRight: 0, marginBottom: 10 }}
-              />
-            </div>
-            <div className="modalResponsive">
-              <span style={{ fontWeight: "bold" }}>Обезсилен:</span>
-              <Input
-                width={500}
-                placeholder={certificateNumber}
-                style={{ background: "white", marginLeft: 0, marginRight: 0, marginBottom: 10 }}
-              />
-            </div>
-            <div className="modalResponsive">
-              <span style={{ fontWeight: "bold" }}>Нов:</span>
-              <Input width={500} style={{ background: "white", marginLeft: 0, marginRight: 0, marginBottom: 10 }} />
-            </div>
-            <div className="modalResponsive">
-              <span style={{ fontWeight: "bold" }}>Основание:</span>
-              <Input width={500} style={{ background: "white", marginLeft: 0, marginRight: 0, marginBottom: 10 }} />
-            </div>
-          </Modal.Body>
-          <Modal.Footer>
-            <Button color="warning">Затвори</Button>
-            <Button color="success">Запази</Button>
-          </Modal.Footer>
-        </Modal>
-        {/* End Modal Area */}
+                Филтър
+              </p>
+              <form className="filter" style={{ display: "flex", marginLeft: 15, gap: 30 }}>
+                <div style={{ display: "flex", flexDirection: "column " }}>
+                  <Input
+                    style={{ background: "white", margin: 0, fontSize: 16 }}
+                    size="xl"
+                    labelPlaceholder="Име, презиме и фамилия"
+                    value={name}
+                    onChange={(e) => set_name(e.target.value)}
+                  />
 
-        {/* Start  Search Area*/}
-        <div style={{ display: "flex", flexDirection: "column", marginLeft: 30 }}>
-          <p style={{ fontSize: 16, fontWeight: "bold", marginTop: 15, marginLeft: 15, marginBottom: 10 }}>Филтър</p>
-          <form className="filter" style={{ display: "flex", marginLeft: 15, gap: 30 }}>
-            <div style={{ display: "flex", flexDirection: "column " }}>
-              <Input
-                style={{ background: "white", margin: 0, fontSize: 16 }}
-                size="xl"
-                labelPlaceholder="Име, презиме и фамилия"
-              />
-              <Dropdown placement="bottom-left">
-                <Dropdown.Button flat style={{ marginTop: 30 }} color="warning">
-                  Град
-                </Dropdown.Button>
-                <Dropdown.Menu items={cities}>
-                  {(item) => (
-                    <Dropdown.Item key={item.name}>
-                      <span style={{ fontSize: 12 }}>{item.name}</span>
-                    </Dropdown.Item>
-                  )}
-                </Dropdown.Menu>
-              </Dropdown>
-            </div>
-            <div style={{ display: "flex", flexDirection: "column" }}>
-              <Dropdown placement="bottom-left">
-                <Dropdown.Button color="warning" flat style={{ marginBottom: 30 }}>
-                  Оценителска правоспособност
-                </Dropdown.Button>
-                <Dropdown.Menu items={capacities}>
-                  {(item) => (
-                    <Dropdown.Item key={item.name}>
-                      <span style={{ fontSize: 8 }}>{item.name}</span>
-                    </Dropdown.Item>
-                  )}
-                </Dropdown.Menu>
-              </Dropdown>
-              <Input
-                style={{ background: "white", margin: 0, fontSize: 16 }}
-                size="xl"
-                labelPlaceholder="Сертификат №:"
-              />
-            </div>
-            <div style={{ display: "flex", alignItems: "center" }}>
-              <Button style={{ fontSize: 14, height: 30 }} type="submit" color="warning">
-                Покажи
+                  <Dropdown placement="bottom-left">
+                    <Dropdown.Button flat style={{ marginTop: 30 }} color="warning">
+                      {selected_city ? selected_city.name : "Град"}
+                    </Dropdown.Button>
+                    <Dropdown.Menu
+                      items={cities}
+                      selectionMode="single"
+                      onSelectionChange={(e) => set_selected_city({ name: e.currentKey })}
+                    >
+                      {(item) => (
+                        <Dropdown.Item key={item.name}>
+                          <span style={{ fontSize: 12 }}>{item.name}</span>
+                        </Dropdown.Item>
+                      )}
+                    </Dropdown.Menu>
+                  </Dropdown>
+                </div>
+                <div style={{ display: "flex", flexDirection: "column" }}>
+                  <Dropdown placement="bottom-left">
+                    <Dropdown.Button color="warning" flat style={{ marginBottom: 30 }}>
+                      {selected_capacity ? selected_capacity.name : "Оценителска правоспособност"}
+                    </Dropdown.Button>
+                    <Dropdown.Menu
+                      items={capacities}
+                      selectionMode="single"
+                      onSelectionChange={(e) => set_selected_capacity({ name: e.currentKey })}
+                    >
+                      {(item) => (
+                        <Dropdown.Item key={item.name}>
+                          <span style={{ fontSize: 8 }}>{item.name}</span>
+                        </Dropdown.Item>
+                      )}
+                    </Dropdown.Menu>
+                  </Dropdown>
+                  <Input
+                    style={{ background: "white", margin: 0, fontSize: 16 }}
+                    size="xl"
+                    labelPlaceholder="Сертификат №:"
+                    value={certificate_number}
+                    onChange={(e) => set_certificate_number(e.target.value)}
+                  />
+                </div>
+              </form>
+              <span style={{ marginTop: 20, marginLeft: 0, fontSize: 12 }}>
+                За да редактирате натиснете името на оценителя
+              </span>
+              <Button
+                style={{ width: "20%", marginTop: 15, marginLeft: 10 }}
+                color="success"
+                onPress={() => {
+                  set_current_person(null);
+                  setCapacity(0);
+                  setAdd(true);
+                  setModal(true);
+                }}
+              >
+                Добавяне
               </Button>
-            </div>
-          </form>
-          <span style={{ marginTop: 20, marginLeft: 0, fontSize: 12 }}>
-            За да редактирате натиснете името на оценителя
-          </span>
-          <Button
-            style={{ width: "20%", marginTop: 15, marginLeft: 10 }}
-            color="success"
-            onPress={() => {
-              setName("");
-              setCapacity("");
-              setAddress("");
-              setCertificateNumber("");
-              setMember("");
-              setMobile("");
-              setPhone("");
-              setSpeciality("");
-              setExperience("");
-              setEducation("");
-              setVisible(true);
-              setAdd(true);
-            }}
-          >
-            Добавяне
-          </Button>
-          <div style={{ display: "flex", flexDirection: "row", justifyContent: "end", selfAlign: "end" }}>
-            <div style={{ display: "flex", flexDirection: "row", alignItems: "center", gap: 20, marginTop: 20 }}>
-              <Dropdown>
-                <Dropdown.Button flat color="warning" size="xl">
-                  {selectedValue}
-                </Dropdown.Button>
-                <Dropdown.Menu
-                  color="warning"
-                  disallowEmptySelection
-                  selectionMode="single"
-                  selectedKeys={selected}
-                  onSelectionChange={setSelected}
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "row",
+                  justifyContent: "end",
+                  selfAlign: "end",
+                }}
+              >
+                <div
+                  style={{
+                    display: "flex",
+                    flexDirection: "row",
+                    alignItems: "center",
+                    gap: 20,
+                    marginTop: 20,
+                  }}
                 >
-                  <Dropdown.Item key="10">
-                    <span style={{ fontSize: 14 }}>10</span>
-                  </Dropdown.Item>
-                  <Dropdown.Item key="25">
-                    <span style={{ fontSize: 14 }}>25</span>
-                  </Dropdown.Item>
-                  <Dropdown.Item key="50">
-                    <span style={{ fontSize: 14 }}>50</span>
-                  </Dropdown.Item>
-                  <Dropdown.Item key="100">
-                    <span style={{ fontSize: 14 }}>100</span>
-                  </Dropdown.Item>
-                  <Dropdown.Item key="всички">
-                    <span style={{ fontSize: 14 }}>Всички</span>
-                  </Dropdown.Item>
-                </Dropdown.Menu>
-              </Dropdown>
-              <div style={{ marginRight: 20 }}>
-                <Pagination total={20} initialPage={1} color="warning" size="xl" />
+                  <Dropdown>
+                    <Dropdown.Button flat color="warning" size="xl">
+                      {entries_per_page}
+                    </Dropdown.Button>
+                    <Dropdown.Menu
+                      color="warning"
+                      disallowEmptySelection
+                      selectionMode="single"
+                      onSelectionChange={(e) => {
+                        set_entries_per_page(parseInt(e.currentKey));
+                      }}
+                    >
+                      <Dropdown.Item key="10">
+                        <span style={{ fontSize: 14 }}>10</span>
+                      </Dropdown.Item>
+                      <Dropdown.Item key="25">
+                        <span style={{ fontSize: 14 }}>25</span>
+                      </Dropdown.Item>
+                      <Dropdown.Item key="50">
+                        <span style={{ fontSize: 14 }}>50</span>
+                      </Dropdown.Item>
+                      <Dropdown.Item key="100">
+                        <span style={{ fontSize: 14 }}>100</span>
+                      </Dropdown.Item>
+                      <Dropdown.Item key="500">
+                        <span style={{ fontSize: 14 }}>500</span>
+                      </Dropdown.Item>
+                      <Dropdown.Item key="1000">
+                        <span style={{ fontSize: 14 }}>1000</span>
+                      </Dropdown.Item>
+                      <Dropdown.Item key="2000">
+                        <span style={{ fontSize: 14 }}>2000</span>
+                      </Dropdown.Item>
+                    </Dropdown.Menu>
+                  </Dropdown>
+                  <div style={{ marginRight: 20 }}>
+                    <Pagination
+                      total={Math.ceil(users.results.length / entries_per_page)}
+                      initialPage={1}
+                      color="warning"
+                      size="xl"
+                      onChange={(p) => set_page(p)}
+                    />
+                  </div>
+                </div>
+              </div>
+              <div style={{ marginRight: 30, marginTop: 30 }}>
+                <Table
+                  css={{
+                    height: "auto",
+                    minWidth: "100%",
+                  }}
+                >
+                  <Table.Header columns={columnsPeople}>
+                    {(column) => (
+                      <Table.Column key={column.key}>
+                        <span style={{ fontSize: 14, marginLeft: 5, marginRight: 5 }}>{column.label}</span>
+                      </Table.Column>
+                    )}
+                  </Table.Header>
+                  <Table.Body items={mapped_users}>
+                    {(item) => (
+                      <Table.Row key={item._id}>
+                        {(columnKey) => (
+                          <Table.Cell>
+                            <span
+                              style={{ cursor: "pointer" }}
+                              onClick={() => {
+                                set_current_person(item);
+                                setCapacity(0);
+                                setAdd(false);
+                                setModal(true);
+                              }}
+                            >
+                              <span style={{ color: "black", fontSize: 14, fontWeight: "normal" }}>{item[columnKey]}</span>
+                            </span>
+                          </Table.Cell>
+
+                        )}
+                      </Table.Row>
+                    )}
+                  </Table.Body>
+                </Table>
               </div>
             </div>
-          </div>
-          <div style={{ marginRight: 30, marginTop: 30, marginBottom: 50 }}>
-            <Table
-              css={{
-                height: "auto",
-                minWidth: "100%",
-              }}
-            >
-              <Table.Header columns={columnsPeople}>
-                {(column) => (
-                  <Table.Column key={column.key}>
-                    <span style={{ fontSize: 14, marginLeft: 5, marginRight: 5 }}>{column.label}</span>
-                  </Table.Column>
-                )}
-              </Table.Header>
-              <Table.Body items={rowsPeople}>
-                {(item) => (
-                  <Table.Row key={item.key}>
-                    {(columnKey) => (
-                      <Table.Cell>
-                        <span
-                          style={{ cursor: "pointer" }}
-                          onClick={() => {
-                            setName(item.name);
-                            setCapacity(item.capacity);
-                            setAddress(item.address);
-                            setCertificateNumber(item.certificateNumber);
-                            setMember(item.member);
-                            setMobile(item.mobile);
-                            setPhone(item.phone);
-                            setSpeciality(item.speciality);
-                            setExperience(item.expirience);
-                            setEducation(item.education);
-                            setVisible(true);
-                            setAdd(false);
-                          }}
-                        >
-                          <span style={{ color: "black", fontSize: 14, fontWeight: "normal" }}>{item[columnKey]}</span>
-                        </span>
-                      </Table.Cell>
-                    )}
-                  </Table.Row>
-                )}
-              </Table.Body>
-            </Table>
-          </div>
-        </div>
-        {/* End Search Area */}
-        <Copyright />
-      </main>
+            {/* End Search Area */}
+          </main>
+        </>
+      )}
     </>
   );
 };
+
 export default DashboardRegistry;

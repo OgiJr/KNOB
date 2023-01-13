@@ -489,8 +489,7 @@ const BarTable = () => {
           .filter((u) => {
             if (name) {
               const full_name = `${u.first_name} ${u.middle_name} ${u.last_name}`;
-              console.log(full_name, name, full_name.includes(name));
-              if (!full_name.includes(name)) {
+              if (!full_name.toLocaleLowerCase().includes(name.toLowerCase())) {
                 return false;
               }
             }
@@ -535,7 +534,7 @@ const BarTable = () => {
           .slice((page - 1) * entries_per_page, (page - 1) * entries_per_page + entries_per_page)
           .filter((c) => {
             if (name) {
-              if (!c.name.includes(name)) {
+              if (!c.name.toLowerCase().includes(name.toLowerCase())) {
                 return false;
               }
             }
@@ -772,6 +771,7 @@ const BarTable = () => {
                 >
                   Филтър
                 </p>
+                <br/>
                 <form className="filter" style={{ display: "flex", marginLeft: 15, gap: 30 }}>
                   <div style={{ display: "flex", flexDirection: "column " }}>
                     {tableType === "people" ? (
