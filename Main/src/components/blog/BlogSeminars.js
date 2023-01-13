@@ -8,7 +8,6 @@ import useSWR from "swr";
 const fetcher = (url) => fetch(url).then((res) => res.json());
 
 const BlogSeminars = () => {
-
   const { data, error, isLoading } = useSWR(`${process.env.REACT_APP_API_URL}/api/get-seminars`, fetcher);
 
   return (
@@ -26,7 +25,9 @@ const BlogSeminars = () => {
                 {data && (
                   <BlogPropQuiz
                     data={data.results}
-                    column="col-lg-6 mt--30" StyleVarProp="box-card-style-default card-list-view" />
+                    column="col-lg-6 mt--30"
+                    StyleVarProp="box-card-style-default card-list-view"
+                  />
                 )}
               </div>
             </div>

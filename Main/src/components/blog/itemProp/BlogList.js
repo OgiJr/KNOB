@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import { Button, Card, Modal, useModal } from "@nextui-org/react";
 
 const BlogList = ({ data, StyleVar }) => {
+  console.log(data);
   const { setVisible, bindings } = useModal();
   return (
     <Card isHoverable isPressable onClick={() => setVisible(true)}>
@@ -30,13 +31,14 @@ const BlogList = ({ data, StyleVar }) => {
         </Card.Header>
         <Card.Body>
           <img
-            src={`${process.env.REACT_APP_API_URL}/${data.picture.path}`} alt="Blog"
+            src={`${process.env.REACT_APP_API_URL}/${data.picture.path}`}
+            alt="Blog"
             style={{ height: 300, width: 300, alignSelf: "center", borderRadius: 50 }}
           />
           <br />
           <ul className="rn-meta-list">
             {data.files && (
-              <div style={{display:"flex", flexDirection:"row", gap: 8}}>
+              <div style={{ display: "flex", flexDirection: "row", gap: 8 }}>
                 {data.files.map((item) => (
                   <div style={{ display: "flex", flexDirection: "row" }}>
                     <img src="images/icons/file.png" alt="File" style={{ width: 20, height: 20, marginTop: 2 }} />
@@ -47,10 +49,10 @@ const BlogList = ({ data, StyleVar }) => {
                         color: item.name.includes(".doc")
                           ? "#021691"
                           : item.name.includes(".xl") || item.name.includes(".csv")
-                            ? "green"
-                            : item.name.includes(".pdf")
-                              ? "#8b0000"
-                              : "orange",
+                          ? "green"
+                          : item.name.includes(".pdf")
+                          ? "#8b0000"
+                          : "orange",
                       }}
                     >
                       {item.name}
@@ -59,7 +61,7 @@ const BlogList = ({ data, StyleVar }) => {
                 ))}
               </div>
             )}
-            <br/>
+            <br />
             <li>
               {new Date(data.timestamp).toLocaleString("bg-BG", {
                 year: "numeric",

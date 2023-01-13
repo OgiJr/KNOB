@@ -8,7 +8,6 @@ import BreadcrumbOne from "../elements/breadcrumb/BreadcrumbOne";
 import useSWR from "swr";
 
 const Ks = () => {
-
   const fetcher = (url) =>
     fetch(url, {
       headers: {
@@ -28,7 +27,14 @@ const Ks = () => {
         <div style={{ display: "flex", flexDirection: "column" }}>
           <div
             className="cardsRev"
-            style={{ justifyContent: "center", justifyItems: "center", alignSelf: "center", display:"flex", flexDirection:"column", gap: 20 }}
+            style={{
+              justifyContent: "center",
+              justifyItems: "center",
+              alignSelf: "center",
+              display: "flex",
+              flexDirection: "column",
+              gap: 20,
+            }}
           >
             {data &&
               data.results &&
@@ -47,13 +53,17 @@ const Ks = () => {
                         month: "long",
                         day: "numeric",
                       })}{" "}
-                      | <img src="/images/icons/file.png" width={20} height={20} alt="" />
-                      <a
-                        href={`${process.env.REACT_APP_API_URL}/${item.file.path}`}
-                        style={{ color: "orange", marginLeft: 5 }}
-                      >
-                        {item.file.name}
-                      </a>
+                      {item.file && (
+                        <>
+                          | <img src="/images/icons/file.png" width={20} height={20} alt="" />
+                          <a
+                            href={`${process.env.REACT_APP_API_URL}/${item.file.path}`}
+                            style={{ color: "orange", marginLeft: 5 }}
+                          >
+                            {item.file.name}
+                          </a>
+                        </>
+                      )}
                     </p>
                     <p dangerouslySetInnerHTML={{ __html: item.description }}></p>
                   </Card.Body>
