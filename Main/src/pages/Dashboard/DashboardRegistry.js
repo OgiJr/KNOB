@@ -285,7 +285,6 @@ const cities = [
 ];
 
 const capacities = [
-  { name: "Всички" },
   { name: "Недвижими имоти" },
   { name: "Недвижими културни ценности" },
   { name: "Машини и съоражения" },
@@ -327,7 +326,6 @@ const columnsPeople = [
 const fetcher = (url) => fetch(url).then((res) => res.json());
 
 const DashboardRegistry = () => {
-
   const [selected_city, set_selected_city] = React.useState(null);
   const [selected_capacity, set_selected_capacity] = React.useState(null);
   const [mapped_users, set_mapped_users] = React.useState([]);
@@ -338,10 +336,11 @@ const DashboardRegistry = () => {
   const [page, set_page] = React.useState(1);
   const { data: users } = useSWR(`${process.env.REACT_APP_API_URL}/api/get-users`, fetcher);
   const { data: companies } = useSWR(`${process.env.REACT_APP_API_URL}/api/get-companies`, fetcher);
-  const [capacity, setCapacity] = React.useState(0);
   const [visibleArchive, setVisibleArchive] = React.useState(false);
   const [add, setAdd] = React.useState(false);
   const [modal, setModal] = React.useState(false);
+
+  const [capacities_selected, set_capacities_selected] = React.useState([]);
 
   React.useEffect(() => {
     if (users) {
@@ -406,26 +405,72 @@ const DashboardRegistry = () => {
             <Modal.Body style={{ marginLeft: 15, marginRight: 15, marginTop: 15, marginBottom: 15 }}>
               <div className="modalResponsive">
                 <span style={{ fontWeight: "bold" }}>Оценителска правоспособност:</span>
-                <span style={{ display: "flex", flexDirection: "column", gap: 20 }}>
+                <span style={{ display: "flex", flexDirection: "column" }}>
                   {current_person &&
-                    current_person.capacity.map((item) => {
-                      return (
-                        <Input
-                          width={500}
-                          value={item.value}
-                          style={{ background: "white", marginLeft: 0, marginRight: 0, marginBottom: 10 }}
-                        />);
-                    })}
-                  {[...Array(capacity)].map(() => (<Input
-                    width={500}
-                    style={{ background: "white", marginLeft: 0, marginRight: 0, marginBottom: 10 }}
-                  />))}
-                  {!current_person && (
-                    <Input
-                      width={500}
-                      style={{ background: "white", marginLeft: 0, marginRight: 0, marginBottom: 10 }}
-                    />)}
-                  <Button style={{ marginBottom: 10, width: 100 }} color="warning" onPress={() => setCapacity(capacity + 1)}>Добавете</Button>
+                    current_person.capacity.map((v, i) => (
+                      <Dropdown placement="bottom-left" css={{ width: 500 }}>
+                        <Dropdown.Button flat style={{ marginTop: 30 }} color="warning" css={{ width: 500 }}>
+                          {capacities_selected[i] ? capacities_selected[i] : "Изберете оценителска правоспособност"}
+                        </Dropdown.Button>
+                        <Dropdown.Menu
+                          css={{ width: 500 }}
+                          containerCss={{ width: 500 }}
+                          items={capacities}
+                          selectionMode="single"
+                          onSelectionChange={(e) => {
+                            let new_capacities = [...capacities_selected];
+                            new_capacities[i] = e.currentKey;
+                            set_capacities_selected(new_capacities);
+                          }}
+                        >
+                          {(item) => (
+                            <Dropdown.Item key={item.name} css={{ width: 500 }}>
+                              <span style={{ fontSize: 12 }}>{item.name}</span>
+                            </Dropdown.Item>
+                          )}
+                        </Dropdown.Menu>
+                      </Dropdown>
+                    ))}
+                  {capacities_selected.map((v, i) => (
+                    <Dropdown placement="bottom-left" css={{ width: 500 }}>
+                      <Dropdown.Button flat style={{ marginTop: 30 }} color="warning" css={{ width: 500 }}>
+                        {capacities_selected[i] ? capacities_selected[i] : "Изберете оценителска правоспособност"}
+                      </Dropdown.Button>
+                      <Dropdown.Menu
+                        css={{ width: 500 }}
+                        containerCss={{ width: 500 }}
+                        items={capacities}
+                        selectionMode="single"
+                        onSelectionChange={(e) => {
+                          let new_capacities = [...capacities_selected];
+                          new_capacities[i] = e.currentKey;
+                          set_capacities_selected(new_capacities);
+                        }}
+                      >
+                        {(item) => (
+                          <Dropdown.Item key={item.name} css={{ width: 500 }}>
+                            <span style={{ fontSize: 12 }}>{item.name}</span>
+                          </Dropdown.Item>
+                        )}
+                      </Dropdown.Menu>
+                    </Dropdown>
+                  ))}
+                  <div style={{ display: "flex", gap: "1rem", marginTop: "1rem" }}>
+                    <Button
+                      style={{ marginBottom: 10, width: 100 }}
+                      color="warning"
+                      onPress={() => set_capacities_selected([...capacities_selected, ""])}
+                    >
+                      Добавете
+                    </Button>
+                    <Button
+                      style={{ marginBottom: 10, width: 100 }}
+                      color="error"
+                      onPress={() => set_capacities_selected(capacities_selected.slice(0, -1))}
+                    >
+                      Премахнете
+                    </Button>
+                  </div>
                 </span>
               </div>
               <div className="modalResponsive" style={{ display: "flex" }}>
@@ -435,7 +480,8 @@ const DashboardRegistry = () => {
                     defaultValue={!current_person ? "false" : current_person.is_member === "Да" ? "true" : "false"}
                     color="warning"
                     orientation="horizontal"
-                    required                >
+                    required
+                  >
                     <Radio value="true">Да</Radio>
                     <Radio value="false">Не</Radio>
                   </Radio.Group>
@@ -499,15 +545,7 @@ const DashboardRegistry = () => {
               </div>
             </Modal.Body>
             <Modal.Footer>
-              {!add ? (
-                <Button
-                  color="error"
-                >
-                  Премахни членство
-                </Button>
-              ) : (
-                <></>
-              )}
+              {!add ? <Button color="error">Премахни членство</Button> : <></>}
               {!add ? (
                 <Button
                   color="warning"
@@ -525,8 +563,7 @@ const DashboardRegistry = () => {
               <Button color="success">Запази</Button>
             </Modal.Footer>
           </Modal>
-          {
-            current_person &&
+          {current_person && (
             <Modal closeButton width="85%" open={visibleArchive} onClose={() => setVisibleArchive(false)}>
               <Modal.Header>
                 <h5>Обезсилване на сертификата на: {name}</h5>
@@ -534,17 +571,11 @@ const DashboardRegistry = () => {
               <Modal.Body style={{ marginLeft: 15, marginRight: 15, marginTop: 15, marginBottom: 15 }}>
                 <div className="modalResponsive">
                   <span style={{ fontWeight: "bold" }}>Тип:</span>
-                  <Input
-                    width={500}
-                    style={{ background: "white", marginLeft: 0, marginRight: 0, marginBottom: 10 }}
-                  />
+                  <Input width={500} style={{ background: "white", marginLeft: 0, marginRight: 0, marginBottom: 10 }} />
                 </div>
                 <div className="modalResponsive">
                   <span style={{ fontWeight: "bold" }}>Оценителска правоспособност:</span>
-                  <Input
-                    width={500}
-                    style={{ background: "white", marginLeft: 0, marginRight: 0, marginBottom: 10 }}
-                  />
+                  <Input width={500} style={{ background: "white", marginLeft: 0, marginRight: 0, marginBottom: 10 }} />
                 </div>
                 <div className="modalResponsive">
                   <span style={{ fontWeight: "bold" }}>Обезсилен:</span>
@@ -564,10 +595,18 @@ const DashboardRegistry = () => {
                 </div>
               </Modal.Body>
               <Modal.Footer>
-                <Button color="warning" onClick={() => { setVisibleArchive(false) }}>Затвори</Button>
+                <Button
+                  color="warning"
+                  onClick={() => {
+                    setVisibleArchive(false);
+                  }}
+                >
+                  Затвори
+                </Button>
                 <Button color="success">Запази</Button>
               </Modal.Footer>
-            </Modal>}
+            </Modal>
+          )}
           {/* End Modal Area */}
           <SEO title="Административен панел" />
           <main className="page-wrapper">
@@ -647,7 +686,7 @@ const DashboardRegistry = () => {
                 color="success"
                 onPress={() => {
                   set_current_person(null);
-                  setCapacity(0);
+                  set_capacities_selected([]);
                   setAdd(true);
                   setModal(true);
                 }}
@@ -740,15 +779,16 @@ const DashboardRegistry = () => {
                               style={{ cursor: "pointer" }}
                               onClick={() => {
                                 set_current_person(item);
-                                setCapacity(0);
+                                set_capacities_selected([]);
                                 setAdd(false);
                                 setModal(true);
                               }}
                             >
-                              <span style={{ color: "black", fontSize: 14, fontWeight: "normal" }}>{item[columnKey]}</span>
+                              <span style={{ color: "black", fontSize: 14, fontWeight: "normal" }}>
+                                {item[columnKey]}
+                              </span>
                             </span>
                           </Table.Cell>
-
                         )}
                       </Table.Row>
                     )}

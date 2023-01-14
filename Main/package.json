@@ -4,7 +4,7 @@
   "private": true,
   "homepage": "https://КНОБ.rainbowit.net/",
   "dependencies": {
-    "@nextui-org/react": "^1.0.0-beta.10",
+    "@nextui-org/react": "^1.0.0-beta.12",
     "@testing-library/jest-dom": "^5.12.0",
     "@testing-library/react": "^11.2.7",
     "@testing-library/user-event": "^12.8.3",
