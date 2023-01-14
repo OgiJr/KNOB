@@ -4,6 +4,7 @@ import "../../assets/scss/table.scss";
 import useSWR from "swr";
 import SEO from "../../common/SEO";
 import HeaderAdmin from "../../common/header/HeaderAdmin";
+import { Form } from "react-router-dom";
 
 const cities = [
   { name: "Всички" },
@@ -339,7 +340,7 @@ const DashboardRegistry = () => {
   const [visibleArchive, setVisibleArchive] = React.useState(false);
   const [add, setAdd] = React.useState(false);
   const [modal, setModal] = React.useState(false);
-
+  const [error, setError] = React.useState("");
   const [capacities_selected, set_capacities_selected] = React.useState([]);
 
   React.useEffect(() => {
@@ -395,19 +396,90 @@ const DashboardRegistry = () => {
         <>
           {/* Start Modal Area */}
           <Modal closeButton width="85%" open={modal} onClose={() => setModal(false)}>
-            <Modal.Header>
-              <Input
-                width={500}
-                value={current_person && current_person.name}
-                style={{ background: "white", textAlign: "center", marginLeft: 0, marginRight: 0, marginBottom: 10 }}
-              />
-            </Modal.Header>
-            <Modal.Body style={{ marginLeft: 15, marginRight: 15, marginTop: 15, marginBottom: 15 }}>
-              <div className="modalResponsive">
-                <span style={{ fontWeight: "bold" }}>Оценителска правоспособност:</span>
-                <span style={{ display: "flex", flexDirection: "column" }}>
-                  {current_person &&
-                    current_person.capacity.map((v, i) => (
+            <form onSubmit={async (e) => {
+              e.preventDefault();
+              const body = new FormData();
+              const first_name = e.target.full_name.value.split(' ')[0];
+              const middle_name = e.target.full_name.value.split(' ')[1];
+              const last_name = e.target.full_name.value.split(' ')[2];
+              capacities_selected.forEach((c) => {
+                body.append("capacity[]", c);
+              });
+              body.append("first_name", first_name);
+              body.append("middle_name", middle_name);
+              body.append("last_name", last_name);
+              body.append("is_knob_member", e.target.is_member.value === "false" ? false : true);
+              body.append("certificate_number", e.target.certificate_number.value);
+              body.append("address", e.target.address.value);
+              body.append("landline", e.target.landline.value);
+              body.append("mobile_phone", e.target.landline.value);
+              body.append("speciality", e.target.speciality.value);
+              body.append("experience", e.target.experience.value);
+              body.append("education", e.target.education.value);
+              body.append("certificate_type", capacities_selected[0]);
+              body.append("city", e.target.city.value);
+              body.append("email", e.target.email.value);
+
+              const resp = await fetch(`${process.env.REACT_APP_API_URL}/api/post-user`, {
+                method: "POST",
+                body: body,
+                headers: {
+                  Authorization: `Bearer ${JSON.parse(localStorage.getItem("user")).token}`,
+                },
+              });
+              if (resp.status !== 200) {
+                const error = await resp.json();
+                setError(error.error);
+                if (first_name === undefined || middle_name === undefined || last_name === undefined) {
+                  setError("Моля въведете име, презиме и фамилия");
+                }
+              }
+              else {
+                window.location.reload(false);
+              }
+            }}>
+              <Modal.Header>
+                <div style={{ display: 'flex', flexDirection: "column" }}>
+                  <p style={{ color: "red", fontWeight: "bold" }}>{error}</p>
+                  <Input
+                    width={500}
+                    value={current_person && current_person.name}
+                    name="full_name"
+                    id="full_name"
+                    style={{ background: "white", textAlign: "center", marginLeft: 0, marginRight: 0, marginBottom: 10 }}
+                  />
+                </div>
+              </Modal.Header>
+              <Modal.Body style={{ marginLeft: 15, marginRight: 15, marginTop: 15, marginBottom: 15 }}>
+                <div className="modalResponsive">
+                  <span style={{ fontWeight: "bold" }}>Оценителска правоспособност:</span>
+                  <span style={{ display: "flex", flexDirection: "column" }}>
+                    {current_person &&
+                      current_person.capacity.map((v, i) => (
+                        <Dropdown placement="bottom-left" css={{ width: 500 }}>
+                          <Dropdown.Button flat style={{ marginTop: 30 }} color="warning" css={{ width: 500 }}>
+                            {capacities_selected[i] ? capacities_selected[i] : "Изберете оценителска правоспособност"}
+                          </Dropdown.Button>
+                          <Dropdown.Menu
+                            css={{ width: 500 }}
+                            containerCss={{ width: 500 }}
+                            items={capacities}
+                            selectionMode="single"
+                            onSelectionChange={(e) => {
+                              let new_capacities = [...capacities_selected];
+                              new_capacities[i] = e.currentKey;
+                              set_capacities_selected(new_capacities);
+                            }}
+                          >
+                            {(item) => (
+                              <Dropdown.Item key={item.name} css={{ width: 500 }}>
+                                <span style={{ fontSize: 12 }}>{item.name}</span>
+                              </Dropdown.Item>
+                            )}
+                          </Dropdown.Menu>
+                        </Dropdown>
+                      ))}
+                    {capacities_selected.map((v, i) => (
                       <Dropdown placement="bottom-left" css={{ width: 500 }}>
                         <Dropdown.Button flat style={{ marginTop: 30 }} color="warning" css={{ width: 500 }}>
                           {capacities_selected[i] ? capacities_selected[i] : "Изберете оценителска правоспособност"}
@@ -431,137 +503,150 @@ const DashboardRegistry = () => {
                         </Dropdown.Menu>
                       </Dropdown>
                     ))}
-                  {capacities_selected.map((v, i) => (
-                    <Dropdown placement="bottom-left" css={{ width: 500 }}>
-                      <Dropdown.Button flat style={{ marginTop: 30 }} color="warning" css={{ width: 500 }}>
-                        {capacities_selected[i] ? capacities_selected[i] : "Изберете оценителска правоспособност"}
-                      </Dropdown.Button>
-                      <Dropdown.Menu
-                        css={{ width: 500 }}
-                        containerCss={{ width: 500 }}
-                        items={capacities}
-                        selectionMode="single"
-                        onSelectionChange={(e) => {
-                          let new_capacities = [...capacities_selected];
-                          new_capacities[i] = e.currentKey;
-                          set_capacities_selected(new_capacities);
-                        }}
+                    <div style={{ display: "flex", gap: "1rem", marginTop: "1rem" }}>
+                      <Button
+                        style={{ marginBottom: 10, width: 100 }}
+                        color="warning"
+                        onPress={() => set_capacities_selected([...capacities_selected, ""])}
                       >
-                        {(item) => (
-                          <Dropdown.Item key={item.name} css={{ width: 500 }}>
-                            <span style={{ fontSize: 12 }}>{item.name}</span>
-                          </Dropdown.Item>
-                        )}
-                      </Dropdown.Menu>
-                    </Dropdown>
-                  ))}
-                  <div style={{ display: "flex", gap: "1rem", marginTop: "1rem" }}>
-                    <Button
-                      style={{ marginBottom: 10, width: 100 }}
-                      color="warning"
-                      onPress={() => set_capacities_selected([...capacities_selected, ""])}
-                    >
-                      Добавете
-                    </Button>
-                    <Button
-                      style={{ marginBottom: 10, width: 100 }}
-                      color="error"
-                      onPress={() => set_capacities_selected(capacities_selected.slice(0, -1))}
-                    >
-                      Премахнете
-                    </Button>
-                  </div>
-                </span>
-              </div>
-              <div className="modalResponsive" style={{ display: "flex" }}>
-                <span style={{ fontWeight: "bold" }}>Членува в КНОБ:</span>
-                <div style={{ width: 500, marginBottom: 10 }}>
-                  <Radio.Group
-                    defaultValue={!current_person ? "false" : current_person.is_member === "Да" ? "true" : "false"}
-                    color="warning"
-                    orientation="horizontal"
-                    required
-                  >
-                    <Radio value="true">Да</Radio>
-                    <Radio value="false">Не</Radio>
-                  </Radio.Group>
+                        Добавете
+                      </Button>
+                      <Button
+                        style={{ marginBottom: 10, width: 100 }}
+                        color="error"
+                        onPress={() => set_capacities_selected(capacities_selected.slice(0, -1))}
+                      >
+                        Премахнете
+                      </Button>
+                    </div>
+                  </span>
                 </div>
-              </div>
-              <div className="modalResponsive">
-                <span style={{ fontWeight: "bold" }}>Сертификати номера:</span>
-                <Input
-                  width={500}
-                  value={current_person && current_person.certificate_number}
-                  style={{ background: "white", marginLeft: 0, marginRight: 0, marginBottom: 10 }}
-                />
-              </div>
-              <div className="modalResponsive">
-                <span style={{ fontWeight: "bold" }}>Адрес:</span>
-                <Input
-                  width={500}
-                  value={current_person && current_person.address}
-                  style={{ background: "white", marginLeft: 0, marginRight: 0, marginBottom: 10 }}
-                />
-              </div>
-              <div className="modalResponsive">
-                <span style={{ fontWeight: "bold" }}>Телефон:</span>
-                <Input
-                  width={500}
-                  value={current_person && current_person.landline}
-                  style={{ background: "white", marginLeft: 0, marginRight: 0, marginBottom: 10 }}
-                />
-              </div>
-              <div className="modalResponsive">
-                <span style={{ fontWeight: "bold" }}>Мобилен:</span>
-                <Input
-                  width={500}
-                  value={current_person && current_person.mobile_phone}
-                  style={{ background: "white", marginLeft: 0, marginRight: 0, marginBottom: 10 }}
-                />
-              </div>
-              <div className="modalResponsive">
-                <span style={{ fontWeight: "bold" }}>Специалност:</span>
-                <Input
-                  width={500}
-                  value={current_person && current_person.speciality}
-                  style={{ background: "white", marginLeft: 0, marginRight: 0, marginBottom: 10 }}
-                />
-              </div>
-              <div className="modalResponsive">
-                <span style={{ fontWeight: "bold" }}>Стаж:</span>
-                <Input
-                  width={500}
-                  value={current_person && current_person.expirience}
-                  style={{ background: "white", marginLeft: 0, marginRight: 0, marginBottom: 10 }}
-                />
-              </div>
-              <div className="modalResponsive">
-                <span style={{ fontWeight: "bold" }}>Образование:</span>
-                <Input
-                  width={500}
-                  value={current_person && current_person.education}
-                  style={{ background: "white", marginLeft: 0, marginRight: 0, marginBottom: 10 }}
-                />
-              </div>
-            </Modal.Body>
-            <Modal.Footer>
-              {!add ? <Button color="error">Премахни членство</Button> : <></>}
-              {!add ? (
-                <Button
-                  color="warning"
-                  onPress={() => {
-                    setAdd(false);
-                    setModal(false);
-                    setVisibleArchive(true);
-                  }}
-                >
-                  Деактивирай
-                </Button>
-              ) : (
-                <></>
-              )}
-              <Button color="success">Запази</Button>
-            </Modal.Footer>
+                <div className="modalResponsive" style={{ display: "flex" }}>
+                  <span style={{ fontWeight: "bold" }}>Членува в КНОБ:</span>
+                  <div style={{ width: 500, marginBottom: 10 }}>
+                    <Radio.Group
+                      defaultValue={!current_person ? "false" : current_person.is_member === "Да" ? "true" : "false"}
+                      color="warning"
+                      orientation="horizontal"
+                      required
+                      name="is_member"
+                      id="is_member"
+                    >
+                      <Radio value="true">Да</Radio>
+                      <Radio value="false">Не</Radio>
+                    </Radio.Group>
+                  </div>
+                </div>
+                <div className="modalResponsive">
+                  <span style={{ fontWeight: "bold" }}>Сертификати номера:</span>
+                  <Input
+                    width={500}
+                    value={current_person && current_person.certificate_number}
+                    name="certificate_number"
+                    id="certificate_number"
+                    style={{ background: "white", marginLeft: 0, marginRight: 0, marginBottom: 10 }}
+                  />
+                </div>
+                <div className="modalResponsive">
+                  <span style={{ fontWeight: "bold" }}>Адрес:</span>
+                  <Input
+                    width={500}
+                    value={current_person && current_person.address}
+                    name="address"
+                    id="address"
+                    style={{ background: "white", marginLeft: 0, marginRight: 0, marginBottom: 10 }}
+                  />
+                </div>
+                <div className="modalResponsive">
+                  <span style={{ fontWeight: "bold" }}>Телефон:</span>
+                  <Input
+                    width={500}
+                    value={current_person && current_person.landline}
+                    name="landline"
+                    id="landline"
+                    style={{ background: "white", marginLeft: 0, marginRight: 0, marginBottom: 10 }}
+                  />
+                </div>
+                <div className="modalResponsive">
+                  <span style={{ fontWeight: "bold" }}>Мобилен:</span>
+                  <Input
+                    width={500}
+                    value={current_person && current_person.mobile_phone}
+                    name="mobile_phone"
+                    id="mobile_phone"
+                    style={{ background: "white", marginLeft: 0, marginRight: 0, marginBottom: 10 }}
+                  />
+                </div>
+                <div className="modalResponsive">
+                  <span style={{ fontWeight: "bold" }}>Email:</span>
+                  <Input
+                    width={500}
+                    value={current_person && current_person.email}
+                    name="email"
+                    id="email"
+                    style={{ background: "white", marginLeft: 0, marginRight: 0, marginBottom: 10 }}
+                  />
+                </div>
+                <div className="modalResponsive">
+                  <span style={{ fontWeight: "bold" }}>Специалност:</span>
+                  <Input
+                    width={500}
+                    value={current_person && current_person.speciality}
+                    name="speciality"
+                    id="speciality"
+                    style={{ background: "white", marginLeft: 0, marginRight: 0, marginBottom: 10 }}
+                  />
+                </div>
+                <div className="modalResponsive">
+                  <span style={{ fontWeight: "bold" }}>Град:</span>
+                  <Input
+                    width={500}
+                    value={current_person && current_person.city}
+                    name="city"
+                    id="city"
+                    style={{ background: "white", marginLeft: 0, marginRight: 0, marginBottom: 10 }}
+                  />
+                </div>
+                <div className="modalResponsive">
+                  <span style={{ fontWeight: "bold" }}>Стаж:</span>
+                  <Input
+                    width={500}
+                    value={current_person && current_person.expirience}
+                    name="experience"
+                    id="experience"
+                    style={{ background: "white", marginLeft: 0, marginRight: 0, marginBottom: 10 }}
+                  />
+                </div>
+                <div className="modalResponsive">
+                  <span style={{ fontWeight: "bold" }}>Образование:</span>
+                  <Input
+                    width={500}
+                    value={current_person && current_person.education}
+                    name="education"
+                    id="education"
+                    style={{ background: "white", marginLeft: 0, marginRight: 0, marginBottom: 10 }}
+                  />
+                </div>
+              </Modal.Body>
+              <Modal.Footer>
+                {!add ? <Button color="error">Премахни членство</Button> : <></>}
+                {!add ? (
+                  <Button
+                    color="warning"
+                    onPress={() => {
+                      setAdd(false);
+                      setModal(false);
+                      setVisibleArchive(true);
+                    }}
+                  >
+                    Деактивирай
+                  </Button>
+                ) : (
+                  <></>
+                )}
+                <Button color="success" type="submit">Запази</Button>
+              </Modal.Footer>
+            </form>
           </Modal>
           {current_person && (
             <Modal closeButton width="85%" open={visibleArchive} onClose={() => setVisibleArchive(false)}>
