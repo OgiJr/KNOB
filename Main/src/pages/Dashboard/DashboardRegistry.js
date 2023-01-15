@@ -396,57 +396,64 @@ const DashboardRegistry = () => {
         <>
           {/* Start Modal Area */}
           <Modal closeButton width="85%" open={modal} onClose={() => setModal(false)}>
-            <form onSubmit={async (e) => {
-              e.preventDefault();
-              const body = new FormData();
-              const first_name = e.target.full_name.value.split(' ')[0];
-              const middle_name = e.target.full_name.value.split(' ')[1];
-              const last_name = e.target.full_name.value.split(' ')[2];
-              capacities_selected.forEach((c) => {
-                body.append("capacity[]", c);
-              });
-              body.append("first_name", first_name);
-              body.append("middle_name", middle_name);
-              body.append("last_name", last_name);
-              body.append("is_knob_member", e.target.is_member.value === "false" ? false : true);
-              body.append("certificate_number", e.target.certificate_number.value);
-              body.append("address", e.target.address.value);
-              body.append("landline", e.target.landline.value);
-              body.append("mobile_phone", e.target.landline.value);
-              body.append("speciality", e.target.speciality.value);
-              body.append("experience", e.target.experience.value);
-              body.append("education", e.target.education.value);
-              body.append("certificate_type", capacities_selected[0]);
-              body.append("city", e.target.city.value);
-              body.append("email", e.target.email.value);
+            <form
+              onSubmit={async (e) => {
+                e.preventDefault();
+                const body = new FormData();
+                const first_name = e.target.full_name.value.split(" ")[0];
+                const middle_name = e.target.full_name.value.split(" ")[1];
+                const last_name = e.target.full_name.value.split(" ")[2];
+                capacities_selected.forEach((c) => {
+                  body.append("capacity[]", c);
+                });
+                body.append("first_name", first_name);
+                body.append("middle_name", middle_name);
+                body.append("last_name", last_name);
+                body.append("is_knob_member", e.target.is_member.value === "false" ? false : true);
+                body.append("certificate_number", e.target.certificate_number.value);
+                body.append("address", e.target.address.value);
+                body.append("landline", e.target.landline.value);
+                body.append("mobile_phone", e.target.landline.value);
+                body.append("speciality", e.target.speciality.value);
+                body.append("experience", e.target.experience.value);
+                body.append("education", e.target.education.value);
+                body.append("certificate_type", capacities_selected[0]);
+                body.append("city", e.target.city.value);
+                body.append("email", e.target.email.value);
 
-              const resp = await fetch(`${process.env.REACT_APP_API_URL}/api/post-user`, {
-                method: "POST",
-                body: body,
-                headers: {
-                  Authorization: `Bearer ${JSON.parse(localStorage.getItem("user")).token}`,
-                },
-              });
-              if (resp.status !== 200) {
-                const error = await resp.json();
-                setError(error.error);
-                if (first_name === undefined || middle_name === undefined || last_name === undefined) {
-                  setError("Моля въведете име, презиме и фамилия");
+                const resp = await fetch(`${process.env.REACT_APP_API_URL}/api/post-user`, {
+                  method: "POST",
+                  body: body,
+                  headers: {
+                    Authorization: `Bearer ${JSON.parse(localStorage.getItem("user")).token}`,
+                  },
+                });
+                if (resp.status !== 200) {
+                  const error = await resp.json();
+                  setError(error.error);
+                  if (first_name === undefined || middle_name === undefined || last_name === undefined) {
+                    setError("Моля въведете име, презиме и фамилия");
+                  }
+                } else {
+                  window.location.reload(false);
                 }
-              }
-              else {
-                window.location.reload(false);
-              }
-            }}>
+              }}
+            >
               <Modal.Header>
-                <div style={{ display: 'flex', flexDirection: "column" }}>
+                <div style={{ display: "flex", flexDirection: "column" }}>
                   <p style={{ color: "red", fontWeight: "bold" }}>{error}</p>
                   <Input
                     width={500}
                     value={current_person && current_person.name}
                     name="full_name"
                     id="full_name"
-                    style={{ background: "white", textAlign: "center", marginLeft: 0, marginRight: 0, marginBottom: 10 }}
+                    style={{
+                      background: "white",
+                      textAlign: "center",
+                      marginLeft: 0,
+                      marginRight: 0,
+                      marginBottom: 10,
+                    }}
                   />
                 </div>
               </Modal.Header>
@@ -629,7 +636,60 @@ const DashboardRegistry = () => {
                 </div>
               </Modal.Body>
               <Modal.Footer>
-                {!add ? <Button color="error">Премахни членство</Button> : <></>}
+                {!add ? (
+                  <>
+                    {console.log(current_person)}
+                    {current_person && current_person.is_knob_member ? (
+                      <Button
+                        color="error"
+                        onClick={async () => {
+                          const body = new FormData();
+                          body.append("id", current_person._id);
+
+                          const resp = await fetch(`${process.env.REACT_APP_API_URL}/api/post-deactivate-knob`, {
+                            method: "POST",
+                            body: body,
+                            headers: {
+                              Authorization: `Bearer ${JSON.parse(localStorage.getItem("user")).token}`,
+                            },
+                          });
+                          if (resp.status !== 200) {
+                            const error = await resp.json();
+                            setError(error.error);
+                          }
+                          window.location.reload();
+                        }}
+                      >
+                        Премахни членство
+                      </Button>
+                    ) : (
+                      <Button
+                        color="success"
+                        onClick={async () => {
+                          const body = new FormData();
+                          body.append("id", current_person._id);
+
+                          const resp = await fetch(`${process.env.REACT_APP_API_URL}/api/post-activate-knob`, {
+                            method: "POST",
+                            body: body,
+                            headers: {
+                              Authorization: `Bearer ${JSON.parse(localStorage.getItem("user")).token}`,
+                            },
+                          });
+                          if (resp.status !== 200) {
+                            const error = await resp.json();
+                            setError(error.error);
+                          }
+                          window.location.reload();
+                        }}
+                      >
+                        Добави членство
+                      </Button>
+                    )}
+                  </>
+                ) : (
+                  <></>
+                )}
                 {!add ? (
                   <Button
                     color="warning"
@@ -644,7 +704,9 @@ const DashboardRegistry = () => {
                 ) : (
                   <></>
                 )}
-                <Button color="success" type="submit">Запази</Button>
+                <Button color="success" type="submit">
+                  Запази
+                </Button>
               </Modal.Footer>
             </form>
           </Modal>
