@@ -73,14 +73,15 @@ const HomeDefault = () => {
                           Вход
                         </a>
                       ) : jwt_decode(user.token).type === "Guest" ? (
-                        <Button
-                          onPress={() => {
+                        <a
+                          className="btn-default btn-medium round btn-icon"
+                          onClick={() => {
                             logout();
                           }}
                           color="error"
                         >
                           Изход
-                        </Button>
+                        </a>
                       ) : jwt_decode(user.token).type === "Curator" ? (
                         <a
                           className="btn-default btn-medium round btn-icon"
