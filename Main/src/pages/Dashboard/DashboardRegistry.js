@@ -412,7 +412,7 @@ const DashboardRegistry = () => {
                 body.append("is_knob_member", e.target.is_member.value === "false" ? false : true);
                 body.append("certificate_number", e.target.certificate_number.value);
                 body.append("address", e.target.address.value);
-                body.append("landline", e.target.landline.value);
+                body.append("landline", e.target.mobile_phone.value);
                 body.append("mobile_phone", e.target.landline.value);
                 body.append("speciality", e.target.speciality.value);
                 body.append("experience", e.target.experience.value);
@@ -633,6 +633,22 @@ const DashboardRegistry = () => {
                     id="education"
                     style={{ background: "white", marginLeft: 0, marginRight: 0, marginBottom: 10 }}
                   />
+                </div>
+                <div className="modalResponsive">
+                  <span style={{ fontWeight: "bold" }}>Видим в регистъра:</span>
+                  <div style={{ width: 500 }}>
+                    <Radio.Group
+                      // defaultValue={!current_person ? "false" : current_person.visible ? true : false}
+                      color="warning"
+                      orientation="horizontal"
+                      required
+                      name="visible"
+                      id="visible"
+                    >
+                      <Radio value="true">Да</Radio>
+                      <Radio value="false">Не</Radio>
+                    </Radio.Group>
+                  </div>
                 </div>
               </Modal.Body>
               <Modal.Footer>
