@@ -412,7 +412,7 @@ const DashboardRegistry = () => {
                 body.append("is_knob_member", e.target.is_member.value === "false" ? false : true);
                 body.append("certificate_number", e.target.certificate_number.value);
                 body.append("address", e.target.address.value);
-                body.append("landline", e.target.landline.value);
+                body.append("landline", e.target.mobile_phone.value);
                 body.append("mobile_phone", e.target.landline.value);
                 body.append("speciality", e.target.speciality.value);
                 body.append("experience", e.target.experience.value);
