@@ -2,6 +2,8 @@ import React, { useState, useRef } from "react";
 import { FiMenu } from "react-icons/fi";
 import NavAdmin from "./NavAdmin";
 import MobileMenuAdmin from "./MobileMenuAdmin";
+import { useAuth } from "../../hooks/useAuth";
+import { Button } from "@nextui-org/react";
 
 const HeaderAdmin = ({ btnStyle, HeaderSTyle }) => {
   const [ofcanvasShow, setOffcanvasShow] = useState(false);
@@ -10,6 +12,8 @@ const HeaderAdmin = ({ btnStyle, HeaderSTyle }) => {
   };
   const ref = useRef();
   const headerClasses = `header-default`;
+
+  const { logout } = useAuth();
 
   return (
     <>
@@ -26,11 +30,14 @@ const HeaderAdmin = ({ btnStyle, HeaderSTyle }) => {
                 <nav className="mainmenu-nav d-none d-lg-block">
                   <NavAdmin />
                 </nav>
-                <div className="header-btn">
-                  <a className={`btn-default ${btnStyle}`} href="/login">
-                    Изход
-                  </a>
-                </div>
+                <Button
+                  onPress={() => {
+                    logout();
+                  }}
+                  color="error"
+                >
+                  Изход
+                </Button>
                 <div className="mobile-menu-bar ml--5 d-block d-lg-none">
                   <div className="hamberger">
                     <span className="hamberger-button" onClick={onCanvasHandler}>

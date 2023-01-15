@@ -1,7 +1,10 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { useAuth } from "../../hooks/useAuth";
 
 const Nav = () => {
+  const { user } = useAuth();
+
   return (
     <ul className="mainmenu">
       <li className="has-droupdown">
@@ -52,7 +55,7 @@ const Nav = () => {
       <li className="has-droupdown">
         <Link to="#">Ресурси</Link>
         <ul className="submenu">
-        <li>
+          <li>
             <Link to="/literature">Литература</Link>
           </li>
           <li>
@@ -72,7 +75,8 @@ const Nav = () => {
             <Link to="/rev">Новини</Link>
           </li>
         </ul>
-      </li>  
+      </li>
+        
       <li className="has-droupdown">
         <Link to="#">Регионални колегии</Link>
         <ul className="submenu">
@@ -102,23 +106,25 @@ const Nav = () => {
           </li>
         </ul>
       </li>
-      <li className="has-droupdown">
-        <Link to="#">Документи</Link>
-        <ul className="submenu">
-          <li>
-            <Link to="/us">Протоколи УС</Link>
-          </li>
-          <li>
-            <Link to="/ks">Протоколи КС</Link>
-          </li>
-          <li>
-            <Link to="/kpe">Протоколи КПЕ</Link>
-          </li>
-          <li>
-            <Link to="/os">Протоколи ОС</Link>
-          </li>
-        </ul>
-      </li>
+      {user && (
+        <li className="has-droupdown">
+          <Link to="#">Документи</Link>
+          <ul className="submenu">
+            <li>
+              <Link to="/us">Протоколи УС</Link>
+            </li>
+            <li>
+              <Link to="/ks">Протоколи КС</Link>
+            </li>
+            <li>
+              <Link to="/kpe">Протоколи КПЕ</Link>
+            </li>
+            <li>
+              <Link to="/os">Протоколи ОС</Link>
+            </li>
+          </ul>
+        </li>
+      )}
       <li className="has-droupdown">
         <Link to="/contact">Контакти</Link>
       </li>

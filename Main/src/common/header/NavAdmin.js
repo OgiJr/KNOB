@@ -1,7 +1,11 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { useAuth } from "../../hooks/useAuth";
+import jwt_decode from "jwt-decode";
 
 const NavAdmin = () => {
+  const { user } = useAuth();
+
   return (
     <ul className="mainmenu">
       <li className="has-droupdown">
@@ -83,12 +87,16 @@ const NavAdmin = () => {
       <li>
         <Link to="/dashboard-rev">REV</Link>
       </li>
-      <li>
-        <Link to="/dashboard-registry">Публичен регистър</Link>
-      </li>
-      <li>
-        <Link to="/dashboard-companies">Юридически лица</Link>
-      </li>
+      {user && jwt_decode(user.token).type === "Admin" && (
+        <>
+          <li>
+            <Link to="/dashboard-registry">Публичен регистър</Link>
+          </li>
+          <li>
+            <Link to="/dashboard-companies">Юридически лица</Link>
+          </li>
+        </>
+      )}
     </ul>
   );
 };

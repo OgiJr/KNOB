@@ -3,8 +3,13 @@ import SEO from "../common/SEO";
 import Header from "../common/header/Header";
 import Copyright from "../common/footer/Copyright";
 import BlogHomePage from "../components/blog/BlogHomePage";
+import { useAuth } from "../hooks/useAuth";
+import jwt_decode from "jwt-decode";
+import { Button } from "@nextui-org/react";
 
 const HomeDefault = () => {
+  const { user, logout } = useAuth();
+
   return (
     <>
       <SEO title="Начало" />
@@ -59,13 +64,40 @@ const HomeDefault = () => {
                       </a>
                     </div>
                     <div style={{ display: "flex", flexDirection: "row" }}>
-                      <a
-                        className="btn-default btn-medium round btn-icon"
-                        href="/login"
-                        style={{ width: 210, marginTop: 20, marginBottom: 40 }}
-                      >
-                        Вход
-                      </a>
+                      {!user ? (
+                        <a
+                          className="btn-default btn-medium round btn-icon"
+                          href="/login"
+                          style={{ width: 210, marginTop: 20, marginBottom: 40 }}
+                        >
+                          Вход
+                        </a>
+                      ) : jwt_decode(user.token).type === "Guest" ? (
+                        <Button
+                          onPress={() => {
+                            logout();
+                          }}
+                          color="error"
+                        >
+                          Изход
+                        </Button>
+                      ) : jwt_decode(user.token).type === "Curator" ? (
+                        <a
+                          className="btn-default btn-medium round btn-icon"
+                          href="/dashboard-admin"
+                          style={{ width: 210, marginTop: 20, marginBottom: 40 }}
+                        >
+                          Кураторски панел
+                        </a>
+                      ) : (
+                        <a
+                          className="btn-default btn-medium round btn-icon"
+                          href="/dashboard-admin"
+                          style={{ width: 210, marginTop: 20, marginBottom: 40 }}
+                        >
+                          Административен панел
+                        </a>
+                      )}
                     </div>
                   </div>
                 </div>

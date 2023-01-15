@@ -1,41 +1,22 @@
 import React, { createContext, useContext, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 import { useLocalStorage } from "./useLocalStorage";
+import jwt_decode from "jwt-decode";
+
 const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useLocalStorage("user", null);
   const navigate = useNavigate();
 
-  React.useEffect(() => {
-    (async () => {
-      if (!user || !user.token) {
-        return;
-      }
+  React.useState(() => {
+    if (user) {
+      const decodedToken = jwt_decode(user.token);
 
-      const l_r = await fetch(`${process.env.REACT_APP_API_URL}/api/is-user-logged-in`, {
-        method: "GET",
-        headers: {
-          Authorization: `Bearer ${user.token}`,
-        },
-      });
-      const { result } = await l_r.json();
-
-      if (!result) {
+      if (decodedToken.exp < Date.now() / 1000) {
         setUser(null);
-        return;
       }
-
-      const l_t = await fetch(`${process.env.REACT_APP_API_URL}/api/get-user-type`, {
-        method: "GET",
-        headers: {
-          Authorization: `Bearer ${user.token}`,
-        },
-      });
-      const { result: result_t } = await l_t.json();
-
-      setUser({ token: user.token, type: result_t });
-    })();
+    }
   }, [user, setUser]);
 
   const value = useMemo(() => {
@@ -57,6 +38,7 @@ export const AuthProvider = ({ children }) => {
       logout,
     };
   }, [user, navigate, setUser]);
+
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };
 
