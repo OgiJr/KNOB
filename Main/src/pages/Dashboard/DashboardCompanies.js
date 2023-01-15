@@ -595,6 +595,22 @@ const DashboardCompanies = () => {
                     />
                   </div>
                 </div>
+                <div className="modalResponsive">
+                  <span style={{ fontWeight: "bold" }}>Видим в регистъра:</span>
+                  <div style={{ width: 500 }}>
+                    <Radio.Group
+                      // defaultValue={!current_person ? "false" : current_person.visible ? true : false}
+                      color="warning"
+                      orientation="horizontal"
+                      required
+                      name="visible"
+                      id="visible"
+                    >
+                      <Radio value="true">Да</Radio>
+                      <Radio value="false">Не</Radio>
+                    </Radio.Group>
+                  </div>
+                </div>
               </Modal.Body>
               <Modal.Footer>
                 {!add ? (
