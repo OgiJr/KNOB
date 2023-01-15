@@ -40,7 +40,6 @@ const Burgas = () => {
         </div>
 
         {/* End Slider Area  */}
-        {data && console.log(data.members)}
         {/* Start Info Area  */}
         <div className="col-lg-12 margin-responsive">
           <div className="row">

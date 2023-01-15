@@ -58,7 +58,6 @@ const DashboardKpe = () => {
             });
             if (resp.status !== 200) {
               const error = await resp.json();
-              console.log(error);
               setError(error.error);
             } else {
               setVisibleAdd(false);

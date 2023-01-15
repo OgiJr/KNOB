@@ -57,7 +57,7 @@ const DashboardNews = () => {
 
             if (res.status !== 200) {
               const error = await res.json();
-              console.log(error);
+
               setError(error.error);
             } else {
               setVisibleAdd(false);

@@ -24,37 +24,43 @@ const DashboardRc = () => {
   return (
     <>
       {
-        (<>
+        <>
           {/* Modal add start */}
           <Modal scroll open={visibleAdd} onClose={() => setVisibleAdd(false)}>
-            <Form onSubmit={async (e) => {
-              e.preventDefault();
-              const body = new FormData();
-              body.append("full_name", e.target.full_name.value);
-              body.append("email", e.target.email.value);
-              body.append("is_representative", e.target.isChair.value === "chair" ? true : false);
-              body.append("city", e.target.city.value)
-              const resp = await fetch(`${process.env.REACT_APP_API_URL}/api/post-regional-committee-member`, {
-                method: "POST",
-                body: body,
-                headers: {
-                  Authorization: `Bearer ${JSON.parse(localStorage.getItem("user")).token}`,
-                },
-              });
-              if (resp.status !== 200) {
-                const error = await resp.json();
-                console.log(error);
-                setError(error.error);
-              }
-              else {
-                setVisibleAdd(false);
-                window.location.reload(false);
-              }
-            }}>
+            <Form
+              onSubmit={async (e) => {
+                e.preventDefault();
+                const body = new FormData();
+                body.append("full_name", e.target.full_name.value);
+                body.append("email", e.target.email.value);
+                body.append("is_representative", e.target.isChair.value === "chair" ? true : false);
+                body.append("city", e.target.city.value);
+                const resp = await fetch(`${process.env.REACT_APP_API_URL}/api/post-regional-committee-member`, {
+                  method: "POST",
+                  body: body,
+                  headers: {
+                    Authorization: `Bearer ${JSON.parse(localStorage.getItem("user")).token}`,
+                  },
+                });
+                if (resp.status !== 200) {
+                  const error = await resp.json();
+
+                  setError(error.error);
+                } else {
+                  setVisibleAdd(false);
+                  window.location.reload(false);
+                }
+              }}
+            >
               <Modal.Header>
                 <div style={{ marginTop: 20 }}>
                   <p style={{ color: "red", fontWeight: "bold" }}>{error}</p>
-                  <Input placeholder="Имена" style={{ background: "white", margin: 0 }} id="full_name" name="full_name" />
+                  <Input
+                    placeholder="Имена"
+                    style={{ background: "white", margin: 0 }}
+                    id="full_name"
+                    name="full_name"
+                  />
                 </div>
               </Modal.Header>
               <Modal.Body>
@@ -95,16 +101,32 @@ const DashboardRc = () => {
           <main className="page-wrapper">
             <HeaderAdmin btnStyle="btn-small round btn-icon" />
             <div style={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center" }}>
-              <Button size="xl" color="warning" style={{ width: 200, marginTop: 50 }} onPress={() => setVisibleAdd(true)}>
+              <Button
+                size="xl"
+                color="warning"
+                style={{ width: 200, marginTop: 50 }}
+                onPress={() => setVisibleAdd(true)}
+              >
                 Добавете член
               </Button>
-              {
-                sofia && shumen && burgas && varna && pleven && plovdiv && ruse && zagora &&
-                <RCTable sofia={sofia} burgas={burgas} varna={varna} ruse={ruse} pleven={pleven} plovdiv={plovdiv} zagora={zagora} shumen={shumen} />
-              }</div>
+              {sofia && shumen && burgas && varna && pleven && plovdiv && ruse && zagora && (
+                <RCTable
+                  sofia={sofia}
+                  burgas={burgas}
+                  varna={varna}
+                  ruse={ruse}
+                  pleven={pleven}
+                  plovdiv={plovdiv}
+                  zagora={zagora}
+                  shumen={shumen}
+                />
+              )}
+            </div>
             <Copyright />
           </main>
-        </>)}</>
+        </>
+      }
+    </>
   );
 };
 export default DashboardRc;

@@ -322,7 +322,6 @@ const columnsCompanies = [
 const fetcher = (url) => fetch(url).then((res) => res.json());
 
 const DashboardCompanies = () => {
-
   const [selected_city, set_selected_city] = React.useState(null);
   const [selected_capacity, set_selected_capacity] = React.useState(null);
   const [mapped_companies, set_mapped_companies] = React.useState([]);
@@ -409,24 +408,21 @@ const DashboardCompanies = () => {
                 body.append("certificate_type", capacities_selected[0]);
                 body.append("eik", e.target.eik.value);
 
-                const valuers = e.target.valuers.value.split(' ');
+                const valuers = e.target.valuers.value.split(" ");
                 const users_found = [];
                 var error = false;
 
                 valuers.forEach((v) => {
-                  const user = users.results.filter((u) => u.email === v.trim().replace(',', ''));
-                  console.log(user);
+                  const user = users.results.filter((u) => u.email === v.trim().replace(",", ""));
                   if (user.length > 0) {
                     users_found.push(user[0]._id);
-                  }
-                  else {
+                  } else {
                     setError("Не намерихме потребител с имейл:" + v);
                     error = true;
                   }
                 });
                 if (!error) {
                   if (users_found.length > 0) {
-
                     users_found.forEach((u) => {
                       body.append("valuers[]", u);
                     });
@@ -444,8 +440,7 @@ const DashboardCompanies = () => {
                     } else {
                       window.location.reload(false);
                     }
-                  }
-                  else {
+                  } else {
                     setError("Не намерихме потребител(и) с дадените имейли");
                   }
                 }
@@ -459,7 +454,13 @@ const DashboardCompanies = () => {
                     name="name"
                     id="name"
                     value={current_company && current_company.name}
-                    style={{ background: "white", textAlign: "center", marginLeft: 0, marginRight: 0, marginBottom: 10 }}
+                    style={{
+                      background: "white",
+                      textAlign: "center",
+                      marginLeft: 0,
+                      marginRight: 0,
+                      marginBottom: 10,
+                    }}
                   />
                 </div>
               </Modal.Header>
@@ -627,7 +628,9 @@ const DashboardCompanies = () => {
                 ) : (
                   <></>
                 )}
-                <Button color="success" type="submit">Запази</Button>
+                <Button color="success" type="submit">
+                  Запази
+                </Button>
               </Modal.Footer>
             </form>
           </Modal>
@@ -638,10 +641,7 @@ const DashboardCompanies = () => {
             <Modal.Body style={{ marginLeft: 15, marginRight: 15, marginTop: 15, marginBottom: 15 }}>
               <div className="modalResponsive">
                 <span style={{ fontWeight: "bold" }}>Обезсилен:</span>
-                <Input
-                  width={500}
-                  style={{ background: "white", marginLeft: 0, marginRight: 0, marginBottom: 10 }}
-                />
+                <Input width={500} style={{ background: "white", marginLeft: 0, marginRight: 0, marginBottom: 10 }} />
               </div>
               <div className="modalResponsive">
                 <span style={{ fontWeight: "bold" }}>Нов:</span>
@@ -653,13 +653,13 @@ const DashboardCompanies = () => {
               </div>
             </Modal.Body>
             <Modal.Footer>
-              <Button color="warning" onClick={() => setVisibleArchive(false)}>Затвори</Button>
+              <Button color="warning" onClick={() => setVisibleArchive(false)}>
+                Затвори
+              </Button>
               <Button color="success">Запази</Button>
             </Modal.Footer>
           </Modal>
           {/* End Modal Area */}
-
-
 
           <SEO title="Административен панел" />
           <main className="page-wrapper">
@@ -861,8 +861,7 @@ const DashboardCompanies = () => {
             {/* End Search Area */}
           </main>
         </>
-      )
-      }
+      )}
     </>
   );
 };

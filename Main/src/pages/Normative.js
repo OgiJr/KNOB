@@ -11,8 +11,6 @@ const Normative = () => {
   const [getAllItems] = useState(alldataRev);
   const [visibleItems, setVisibleItems] = useState([]);
 
-  console.log(visibleItems);
-
   useEffect(() => {
     setVisibleItems(getAllItems.filter((item) => item.id));
   }, [getAllItems]);

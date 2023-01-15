@@ -10,14 +10,7 @@ function ContactForm({ props, formStyle }) {
 
   const sendEmail = (e) => {
     e.preventDefault();
-    emailjs.sendForm("service_p4x3hv8", "template_jgfr42f", e.target, "user_jrfTH2e0Ely35ZCVFdT9S").then(
-      (result) => {
-        console.log(result.text);
-      },
-      (error) => {
-        console.log(error.text);
-      }
-    );
+    emailjs.sendForm("service_p4x3hv8", "template_jgfr42f", e.target, "user_jrfTH2e0Ely35ZCVFdT9S");
     e.target.reset();
     showresult(true);
   };

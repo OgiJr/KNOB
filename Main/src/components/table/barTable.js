@@ -495,10 +495,18 @@ const BarTable = () => {
             }
 
             if (certificate_number) {
-              if (!u.current_valid_certificate) {
+              if (!u.current_valid_certificates || u.current_valid_certificates.length === 0) {
                 return false;
               }
-              if (u.current_valid_certificate.certificate_number !== certificate_number) {
+
+              let match_cert = false;
+              for (const c of u.current_valid_certificates) {
+                if (c.certificate_number === certificate_number) {
+                  match_cert = true;
+                }
+              }
+
+              if (!match_cert) {
                 return false;
               }
             }
@@ -510,10 +518,24 @@ const BarTable = () => {
             }
 
             if (selected_capacity) {
-              if (selected_capacity.name !== "Всички" && u.capacity.value !== selected_capacity.name) {
-                return false;
+              if (selected_capacity.name !== "Всички") {
+                if (!u.current_valid_certificates || u.current_valid_certificates.length === 0) {
+                  return false;
+                }
+                let match_cert = false;
+
+                for (const c of u.current_valid_certificates) {
+                  if (c.certificate_type === selected_capacity.name) {
+                    match_cert = true;
+                  }
+                }
+
+                if (!match_cert) {
+                  return false;
+                }
               }
             }
+
             return true;
           })
           .map((user) => ({
@@ -594,19 +616,21 @@ const BarTable = () => {
                   }}
                 >
                   <div className="modalResponsive">
-                    <span style={{ fontWeight: "bold" }}>Оценителска правоспособност:</span>
-                    {current_person.capacity ? current_person.capacity.map((c) => <>&nbsp;{c.value}</>) : "Няма"}
-                    {console.log(current_person)}
-                  </div>
-                  <div className="modalResponsive">
                     <span style={{ fontWeight: "bold" }}>Членува в КНОБ:</span>
                     {current_person.is_member}
                   </div>
                   <div className="modalResponsive">
                     <span style={{ fontWeight: "bold" }}>Сертификати номера:</span>
-                    {current_person.current_valid_certificate
-                      ? current_person.current_valid_certificate.certificate_number
-                      : "Няма"}
+                    <span style={{ textAlign: "end" }}>
+                      {current_person.current_valid_certificates.length > 0
+                        ? current_person.current_valid_certificates.map((c) => (
+                            <>
+                              {c.certificate_number}: {c.certificate_type}
+                              <br />
+                            </>
+                          ))
+                        : "Няма"}
+                    </span>
                   </div>
                   <div className="modalResponsive">
                     <span style={{ fontWeight: "bold" }}>Адрес:</span>
@@ -622,11 +646,11 @@ const BarTable = () => {
                   </div>
                   <div className="modalResponsive">
                     <span style={{ fontWeight: "bold" }}>Специалност:</span>
-                    {current_person.speciality ? current_person.speciality : "Няма"}
+                    {current_person.specialty ? current_person.specialty : "Няма"}
                   </div>
                   <div className="modalResponsive">
                     <span style={{ fontWeight: "bold" }}>Стаж:</span>
-                    {current_person.expirience ? current_person.expirience : "Няма"}
+                    {current_person.experience ? current_person.experience : "Няма"}
                   </div>
                   <div className="modalResponsive">
                     <span style={{ fontWeight: "bold" }}>Образование:</span>
@@ -771,7 +795,7 @@ const BarTable = () => {
                 >
                   Филтър
                 </p>
-                <br/>
+                <br />
                 <form className="filter" style={{ display: "flex", marginLeft: 15, gap: 30 }}>
                   <div style={{ display: "flex", flexDirection: "column " }}>
                     {tableType === "people" ? (

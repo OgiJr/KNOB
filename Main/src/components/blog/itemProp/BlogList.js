@@ -3,7 +3,6 @@ import PropTypes from "prop-types";
 import { Button, Card, Modal, useModal } from "@nextui-org/react";
 
 const BlogList = ({ data, StyleVar }) => {
-  console.log(data);
   const { setVisible, bindings } = useModal();
   return (
     <Card isHoverable isPressable onClick={() => setVisible(true)}>
