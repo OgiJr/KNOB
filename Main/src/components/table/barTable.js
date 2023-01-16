@@ -408,12 +408,13 @@ const columnsInvalidCompanies = [
 
 //End invalid variables
 
-const fetcher = (url) => fetch(url).then((res) => res.json());
 const BarTable = () => {
-  //TODO:
-  // city dropdown -> set_city()
-  // capacity dropdown -> set_capacity()
-  // entries per page dropdown -> set_entries_per_page()
+  const fetcher = (url) =>
+    fetch(url, {
+      headers: {
+        Authorization: localStorage.getItem("user").token ? `Bearer ${localStorage.getItem("user").token}` : undefined,
+      },
+    }).then((res) => res.json());
 
   const [selected_city, set_selected_city] = React.useState(null);
   const [selected_capacity, set_selected_capacity] = React.useState(null);
@@ -501,7 +502,7 @@ const BarTable = () => {
 
               let match_cert = false;
               for (const c of u.current_valid_certificates) {
-                if (c.certificate_number === certificate_number) {
+                if (c.certificate_number.includes(certificate_number)) {
                   match_cert = true;
                 }
               }
@@ -562,10 +563,19 @@ const BarTable = () => {
             }
 
             if (certificate_number) {
-              if (!c.current_valid_certificate) {
+              if (!c.current_valid_certificates || c.current_valid_certificates.length === 0) {
                 return false;
               }
-              if (c.current_valid_certificate.certificate_number !== certificate_number) {
+
+              let match_cert = false;
+              for (const cert of c.current_valid_certificates) {
+                if (cert.certificate_number.includes(certificate_number)) {
+                  console.log(cert.certificate_number);
+                  match_cert = true;
+                }
+              }
+
+              if (!match_cert) {
                 return false;
               }
             }
@@ -577,10 +587,24 @@ const BarTable = () => {
             }
 
             if (selected_capacity) {
-              if (selected_capacity.name !== "Всички" && c.capacity.value !== selected_capacity.name) {
-                return false;
+              if (selected_capacity.name !== "Всички") {
+                if (!c.current_valid_certificates || c.current_valid_certificates.length === 0) {
+                  return false;
+                }
+                let match_cert = false;
+
+                for (const cert of c.current_valid_certificates) {
+                  if (cert.certificate_type === selected_capacity.name) {
+                    match_cert = true;
+                  }
+                }
+
+                if (!match_cert) {
+                  return false;
+                }
               }
             }
+
             return true;
           })
       );
@@ -675,14 +699,17 @@ const BarTable = () => {
                 }}
               >
                 <div className="modalResponsive">
-                  <span style={{ fontWeight: "bold" }}>Оценителска правоспособност:</span>
-                  {current_company.capacity.value ? current_company.capacity.value : "Няма"}
-                </div>
-                <div className="modalResponsive">
-                  <span style={{ fontWeight: "bold" }}>Сертификат номер:</span>
-                  {current_company.current_valid_certificate
-                    ? current_company.current_valid_certificate.certificate_number
-                    : "Няма"}
+                  <span style={{ fontWeight: "bold" }}>Сертификати номера:</span>
+                  <span style={{ textAlign: "end" }}>
+                    {current_person.current_valid_certificates.length > 0
+                      ? current_person.current_valid_certificates.map((c) => (
+                          <>
+                            {c.certificate_number}: {c.certificate_type}
+                            <br />
+                          </>
+                        ))
+                      : "Няма"}
+                  </span>
                 </div>
                 <div className="modalResponsive">
                   <span style={{ fontWeight: "bold" }}>ЕИК / Булстат:</span>

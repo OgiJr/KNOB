@@ -285,6 +285,7 @@ const cities = [
 ];
 
 const capacities = [
+  { name: "Всички" },
   { name: "Недвижими имоти" },
   { name: "Недвижими културни ценности" },
   { name: "Машини и съоражения" },
@@ -319,9 +320,14 @@ const columnsCompanies = [
   },
 ];
 
-const fetcher = (url) => fetch(url).then((res) => res.json());
-
 const DashboardCompanies = () => {
+  const fetcher = (url) =>
+    fetch(url, {
+      headers: {
+        Authorization: `Bearer ${JSON.parse(localStorage.getItem("user")).token}`,
+      },
+    }).then((res) => res.json());
+
   const [selected_city, set_selected_city] = React.useState(null);
   const [selected_capacity, set_selected_capacity] = React.useState(null);
   const [mapped_companies, set_mapped_companies] = React.useState([]);
@@ -339,6 +345,7 @@ const DashboardCompanies = () => {
   const [error, setError] = React.useState("");
   const [capacities_selected, set_capacities_selected] = React.useState([]);
   const [valuers, setValuers] = React.useState([]);
+  const [certificates_selected, set_certificates_selected] = React.useState([]);
 
   React.useEffect(() => {
     if (companies) {
@@ -353,10 +360,18 @@ const DashboardCompanies = () => {
             }
 
             if (certificate_number) {
-              if (!c.current_valid_certificate) {
+              if (!c.current_valid_certificates || c.current_valid_certificates.length === 0) {
                 return false;
               }
-              if (c.current_valid_certificate.certificate_number !== certificate_number) {
+
+              let match_cert = false;
+              for (const cert of c.current_valid_certificates) {
+                if (cert.certificate_number.includes(certificate_number)) {
+                  match_cert = true;
+                }
+              }
+
+              if (!match_cert) {
                 return false;
               }
             }
@@ -368,10 +383,24 @@ const DashboardCompanies = () => {
             }
 
             if (selected_capacity) {
-              if (selected_capacity.name !== "Всички" && c.capacity.value !== selected_capacity.name) {
-                return false;
+              if (selected_capacity.name !== "Всички") {
+                if (!c.current_valid_certificates || c.current_valid_certificates.length === 0) {
+                  return false;
+                }
+                let match_cert = false;
+
+                for (const cert of c.current_valid_certificates) {
+                  if (cert.certificate_type === selected_capacity.name) {
+                    match_cert = true;
+                  }
+                }
+
+                if (!match_cert) {
+                  return false;
+                }
               }
             }
+
             return true;
           })
       );
@@ -397,52 +426,32 @@ const DashboardCompanies = () => {
               onSubmit={async (e) => {
                 e.preventDefault();
                 const body = new FormData();
-                capacities_selected.forEach((c) => {
-                  body.append("capacity[]", c);
+                certificates_selected.forEach((c, i) => {
+                  body.append("certificate_number[]", e.target[`certificate_number_${i}`].value);
+                  body.append("certificate_type[]", c.type);
                 });
                 body.append("name", e.target.name.value);
                 body.append("city", e.target.city.value);
-                body.append("certificate_number", e.target.certificate_number.value);
                 body.append("address", e.target.address.value);
                 body.append("mobile_phone", e.target.mobile_phone.value);
-                body.append("certificate_type", capacities_selected[0]);
+                body.append("landline", e.target.landline.value);
                 body.append("eik", e.target.eik.value);
+                body.append("visible", e.target.visible.value === "false" ? false : true);
 
-                const valuers = e.target.valuers.value.split(" ");
-                const users_found = [];
-                var error = false;
+                console.log(body.keys(), body.values());
 
-                valuers.forEach((v) => {
-                  const user = users.results.filter((u) => u.email === v.trim().replace(",", ""));
-                  if (user.length > 0) {
-                    users_found.push(user[0]._id);
-                  } else {
-                    setError("Не намерихме потребител с имейл:" + v);
-                    error = true;
-                  }
+                const resp = await fetch(`${process.env.REACT_APP_API_URL}/api/post-company`, {
+                  method: "POST",
+                  body: body,
+                  headers: {
+                    Authorization: `Bearer ${JSON.parse(localStorage.getItem("user")).token}`,
+                  },
                 });
-                if (!error) {
-                  if (users_found.length > 0) {
-                    users_found.forEach((u) => {
-                      body.append("valuers[]", u);
-                    });
-
-                    const resp = await fetch(`${process.env.REACT_APP_API_URL}/api/post-company`, {
-                      method: "POST",
-                      body: body,
-                      headers: {
-                        Authorization: `Bearer ${JSON.parse(localStorage.getItem("user")).token}`,
-                      },
-                    });
-                    if (resp.status !== 200) {
-                      const error = await resp.json();
-                      setError(error.error);
-                    } else {
-                      window.location.reload(false);
-                    }
-                  } else {
-                    setError("Не намерихме потребител(и) с дадените имейли");
-                  }
+                if (resp.status !== 200) {
+                  const error = await resp.json();
+                  setError(error.error);
+                } else {
+                  window.location.reload(false);
                 }
               }}
             >
@@ -486,14 +495,78 @@ const DashboardCompanies = () => {
                   />
                 </div>
                 <div className="modalResponsive">
-                  <span style={{ fontWeight: "bold" }}>Сертификати номера:</span>
+                  <span style={{ fontWeight: "bold" }}>Телефон:</span>
                   <Input
                     width={500}
-                    name="certificate_number"
-                    id="certificate_number"
-                    value={current_company && current_company.certificate_number}
+                    name="landline"
+                    id="landline"
+                    value={current_company && current_company.landline}
                     style={{ background: "white", marginLeft: 0, marginRight: 0, marginBottom: 10 }}
                   />
+                </div>
+                <div className="modalResponsive">
+                  <span style={{ fontWeight: "bold" }}>Сертификати:</span>
+                  <span style={{ display: "flex", flexDirection: "column" }}>
+                    {certificates_selected.map((v, i) => (
+                      <>
+                        <div style={{ marginBottom: "8px" }}>Номер</div>
+                        <Input
+                          width={500}
+                          name={"certificate_number_" + i}
+                          id={"certificate_number_" + i}
+                          style={{
+                            background: "white",
+                            textAlign: "center",
+                            marginLeft: 0,
+                            marginRight: 0,
+                            marginBottom: 10,
+                          }}
+                        />
+                        <div style={{ marginTop: "8px", marginBottom: "8px" }}>Вид</div>
+                        <Dropdown placement="bottom-left" css={{ width: 500 }}>
+                          <Dropdown.Button flat color="warning" css={{ width: 500 }}>
+                            {certificates_selected[i]
+                              ? certificates_selected[i].type
+                              : "Изберете оценителска правоспособност"}
+                          </Dropdown.Button>
+                          <Dropdown.Menu
+                            css={{ width: 500 }}
+                            containerCss={{ width: 500 }}
+                            items={capacities}
+                            selectionMode="single"
+                            onSelectionChange={(e) => {
+                              let new_capacities = [...certificates_selected];
+                              new_capacities[i].type = e.currentKey;
+                              set_certificates_selected(new_capacities);
+                            }}
+                          >
+                            {(item) => (
+                              <Dropdown.Item key={item.name} css={{ width: 500 }}>
+                                <span style={{ fontSize: 12 }}>{item.name}</span>
+                              </Dropdown.Item>
+                            )}
+                          </Dropdown.Menu>
+                        </Dropdown>
+                        <div style={{ marginTop: "8px", height: "1px", backgroundColor: "gray", width: "100%" }} />
+                      </>
+                    ))}
+                    <div style={{ display: "flex", gap: "1rem", marginTop: "1rem" }}>
+                      <Button
+                        style={{ marginBottom: 10, width: 100 }}
+                        color="warning"
+                        onPress={() => set_certificates_selected([...certificates_selected, {}])}
+                      >
+                        Добавете
+                      </Button>
+                      <Button
+                        style={{ marginBottom: 10, width: 100 }}
+                        color="error"
+                        onPress={() => set_certificates_selected(certificates_selected.slice(0, -1))}
+                      >
+                        Премахнете
+                      </Button>
+                    </div>
+                  </span>
                 </div>
                 <div className="modalResponsive">
                   <span style={{ fontWeight: "bold" }}>Адрес:</span>
@@ -515,77 +588,8 @@ const DashboardCompanies = () => {
                     style={{ background: "white", marginLeft: 0, marginRight: 0, marginBottom: 10 }}
                   />
                 </div>
-                <div className="modalResponsive">
-                  <span style={{ fontWeight: "bold" }}>Оценителска правоспособност:</span>
-                  <span style={{ display: "flex", flexDirection: "column" }}>
-                    {current_company &&
-                      current_company.capacity.map((v, i) => (
-                        <Dropdown placement="bottom-left" css={{ width: 500 }}>
-                          <Dropdown.Button flat style={{ marginTop: 30 }} color="warning" css={{ width: 500 }}>
-                            {capacities_selected[i] ? capacities_selected[i] : "Изберете оценителска правоспособност"}
-                          </Dropdown.Button>
-                          <Dropdown.Menu
-                            css={{ width: 500 }}
-                            containerCss={{ width: 500 }}
-                            items={capacities}
-                            selectionMode="single"
-                            onSelectionChange={(e) => {
-                              let new_capacities = [...capacities_selected];
-                              new_capacities[i] = e.currentKey;
-                              set_capacities_selected(new_capacities);
-                            }}
-                          >
-                            {(item) => (
-                              <Dropdown.Item key={item.name} css={{ width: 500 }}>
-                                <span style={{ fontSize: 12 }}>{item.name}</span>
-                              </Dropdown.Item>
-                            )}
-                          </Dropdown.Menu>
-                        </Dropdown>
-                      ))}
-                    {capacities_selected.map((v, i) => (
-                      <Dropdown placement="bottom-left" css={{ width: 500 }}>
-                        <Dropdown.Button flat style={{ marginTop: 30 }} color="warning" css={{ width: 500 }}>
-                          {capacities_selected[i] ? capacities_selected[i] : "Изберете оценителска правоспособност"}
-                        </Dropdown.Button>
-                        <Dropdown.Menu
-                          css={{ width: 500 }}
-                          containerCss={{ width: 500 }}
-                          items={capacities}
-                          selectionMode="single"
-                          onSelectionChange={(e) => {
-                            let new_capacities = [...capacities_selected];
-                            new_capacities[i] = e.currentKey;
-                            set_capacities_selected(new_capacities);
-                          }}
-                        >
-                          {(item) => (
-                            <Dropdown.Item key={item.name} css={{ width: 500 }}>
-                              <span style={{ fontSize: 12 }}>{item.name}</span>
-                            </Dropdown.Item>
-                          )}
-                        </Dropdown.Menu>
-                      </Dropdown>
-                    ))}
-                    <div style={{ display: "flex", gap: "1rem", marginTop: "1rem" }}>
-                      <Button
-                        style={{ marginBottom: 10, width: 100 }}
-                        color="warning"
-                        onPress={() => set_capacities_selected([...capacities_selected, ""])}
-                      >
-                        Добавете
-                      </Button>
-                      <Button
-                        style={{ marginBottom: 10, width: 100 }}
-                        color="error"
-                        onPress={() => set_capacities_selected(capacities_selected.slice(0, -1))}
-                      >
-                        Премахнете
-                      </Button>
-                    </div>
-                  </span>
-                </div>
-                <div className="modalResponsive">
+
+                {/* <div className="modalResponsive">
                   <span style={{ fontWeight: "bold" }}>Оценители (имейли, разделени със запетайка):</span>
                   <div style={{ display: "flex", flexDirection: "column", gap: 20, width: 500 }}>
                     <Input
@@ -595,12 +599,12 @@ const DashboardCompanies = () => {
                       style={{ background: "white", marginLeft: 0, marginRight: 0, marginBottom: 10 }}
                     />
                   </div>
-                </div>
+                </div> */}
                 <div className="modalResponsive">
                   <span style={{ fontWeight: "bold" }}>Видим в регистъра:</span>
                   <div style={{ width: 500 }}>
                     <Radio.Group
-                      // defaultValue={!current_person ? "false" : current_person.visible ? true : false}
+                      defaultValue={!current_company ? "false" : current_company.visible ? true : false}
                       color="warning"
                       orientation="horizontal"
                       required

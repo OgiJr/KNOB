@@ -285,6 +285,7 @@ const cities = [
 ];
 
 const capacities = [
+  { name: "Всички" },
   { name: "Недвижими имоти" },
   { name: "Недвижими културни ценности" },
   { name: "Машини и съоражения" },
@@ -355,17 +356,24 @@ const DashboardRegistry = () => {
           .filter((u) => {
             if (name) {
               const full_name = `${u.first_name} ${u.middle_name} ${u.last_name}`;
-              console.log(full_name, name, full_name.includes(name));
               if (!full_name.toLocaleLowerCase().includes(name.toLowerCase())) {
                 return false;
               }
             }
 
             if (certificate_number) {
-              if (!u.current_valid_certificate) {
+              if (!u.current_valid_certificates || u.current_valid_certificates.length === 0) {
                 return false;
               }
-              if (u.current_valid_certificate.certificate_number !== certificate_number) {
+
+              let match_cert = false;
+              for (const c of u.current_valid_certificates) {
+                if (c.certificate_number.includes(certificate_number)) {
+                  match_cert = true;
+                }
+              }
+
+              if (!match_cert) {
                 return false;
               }
             }
@@ -377,10 +385,24 @@ const DashboardRegistry = () => {
             }
 
             if (selected_capacity) {
-              if (selected_capacity.name !== "Всички" && u.capacity.value !== selected_capacity.name) {
-                return false;
+              if (selected_capacity.name !== "Всички") {
+                if (!u.current_valid_certificates || u.current_valid_certificates.length === 0) {
+                  return false;
+                }
+                let match_cert = false;
+
+                for (const c of u.current_valid_certificates) {
+                  if (c.certificate_type === selected_capacity.name) {
+                    match_cert = true;
+                  }
+                }
+
+                if (!match_cert) {
+                  return false;
+                }
               }
             }
+
             return true;
           })
           .map((user) => ({
@@ -498,7 +520,6 @@ const DashboardRegistry = () => {
                         <div style={{ marginBottom: "8px" }}>Номер</div>
                         <Input
                           width={500}
-                          value={current_person && current_person.name}
                           name={"certificate_number_" + i}
                           id={"certificate_number_" + i}
                           style={{
