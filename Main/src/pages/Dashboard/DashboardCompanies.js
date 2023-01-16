@@ -285,7 +285,6 @@ const cities = [
 ];
 
 const capacities = [
-  { name: "Всички" },
   { name: "Недвижими имоти" },
   { name: "Недвижими културни ценности" },
   { name: "Машини и съоражения" },
@@ -343,6 +342,7 @@ const DashboardCompanies = () => {
   const [current_company, set_current_company] = React.useState(null);
   const [error, setError] = React.useState("");
   const [certificates_selected, set_certificates_selected] = React.useState([]);
+  const [addCertificateVisible, setAddCertificateVisible] = React.useState(false);
 
   React.useEffect(() => {
     if (companies) {
@@ -443,7 +443,9 @@ const DashboardCompanies = () => {
                     body.append("certificate_type[]", c.type);
                   });
                 }
-
+                else {
+                  body.append("id", current_company._id);
+                }
                 if (e.target.valuers.value) {
                   let valuers = [];
                   e.target.valuers.value
@@ -462,13 +464,18 @@ const DashboardCompanies = () => {
                 body.append("eik", e.target.eik.value);
                 body.append("visible", e.target.visible.value === "false" ? false : true);
 
-                const resp = await fetch(`${process.env.REACT_APP_API_URL}/api/post-company`, {
-                  method: "POST",
-                  body: body,
-                  headers: {
-                    Authorization: `Bearer ${JSON.parse(localStorage.getItem("user")).token}`,
-                  },
-                });
+                const resp = await fetch(
+                  add
+                    ? `${process.env.REACT_APP_API_URL}/api/post-company`
+                    : `${process.env.REACT_APP_API_URL}/api/put-company`,
+                  {
+                    method: add ? "POST" : "PUT",
+                    body: body,
+                    headers: {
+                      Authorization: `Bearer ${JSON.parse(localStorage.getItem("user")).token}`,
+                    },
+                  }
+                );
                 if (resp.status !== 200) {
                   const error = await resp.json();
                   setError(error.error);
@@ -606,7 +613,7 @@ const DashboardCompanies = () => {
                   <span style={{ fontWeight: "bold" }}>Булстат:</span>
                   <Input
                     width={500}
-                    initialValue={current_company && current_company.eik}
+                    placeholder={current_company && current_company.eik}
                     name="eik"
                     id="eik"
                     style={{ background: "white", marginLeft: 0, marginRight: 0, marginBottom: 10 }}
@@ -638,16 +645,26 @@ const DashboardCompanies = () => {
               </Modal.Body>
               <Modal.Footer>
                 {!add ? (
-                  <Button
-                    color="error"
-                    onPress={() => {
-                      setModal(false);
-                      setAdd(false);
-                      setVisibleArchive(true);
-                    }}
-                  >
-                    Деактивирай
-                  </Button>
+                  <div style={{ display: "flex", flexDirection: "row", gap: 5 }}>
+                    <Button
+                      color="warning"
+                      onPress={() => {
+                        setAddCertificateVisible(true);
+                      }}
+                    >
+                      Добави сертификат
+                    </Button>
+                    {current_company && current_company.current_valid_certificates.length > 0 && (<Button
+                      color="error"
+                      onPress={() => {
+                        setModal(false);
+                        setAdd(false);
+                        setVisibleArchive(true);
+                      }}
+                    >
+                      Деактивирай
+                    </Button>)}
+                  </div>
                 ) : (
                   <></>
                 )}
@@ -732,6 +749,91 @@ const DashboardCompanies = () => {
                     style={{ background: "white", marginLeft: 0, marginRight: 0, marginBottom: 10 }}
                   />
                 </div>
+              </Modal.Body>
+              <Modal.Footer>
+                <Button color="warning" onClick={() => setVisibleArchive(false)}>
+                  Затвори
+                </Button>
+                <Button color="success" type="submit">
+                  Запази
+                </Button>
+              </Modal.Footer>
+            </form>
+          </Modal>
+          <Modal closeButton width="85%" open={addCertificateVisible} onClose={() => setAddCertificateVisible(false)}>
+            <form
+              onSubmit={async (e) => {
+                e.preventDefault();
+              }}
+            >
+              <Modal.Header>
+                <div style={{ display: "flex", flexDirection: "column" }}>
+                  <h5>Добавяне на сертификата на {current_company && current_company.name}</h5>
+                  <p style={{ color: "red", fontWeight: "bold" }}>{error}</p>
+                </div>
+              </Modal.Header>
+              <Modal.Body style={{ marginLeft: 15, marginRight: 15, marginTop: 15, marginBottom: 15 }}>
+                <span style={{ display: "flex", flexDirection: "column" }}>
+                  {certificates_selected.map((v, i) => (
+                    <>
+                      <div style={{ marginBottom: "8px" }}>Номер</div>
+                      <Input
+                        width={500}
+                        name={"certificate_number_" + i}
+                        id={"certificate_number_" + i}
+                        style={{
+                          background: "white",
+                          textAlign: "center",
+                          marginLeft: 0,
+                          marginRight: 0,
+                          marginBottom: 10,
+                        }}
+                      />
+                      <div style={{ marginTop: "8px", marginBottom: "8px" }}>Вид</div>
+                      <Dropdown placement="bottom-left" css={{ width: 500 }}>
+                        <Dropdown.Button flat color="warning" css={{ width: 500 }}>
+                          {certificates_selected[i]
+                            ? certificates_selected[i].type
+                            : "Изберете оценителска правоспособност"}
+                        </Dropdown.Button>
+                        <Dropdown.Menu
+                          css={{ width: 500 }}
+                          containerCss={{ width: 500 }}
+                          items={capacities}
+                          selectionMode="single"
+                          onSelectionChange={(e) => {
+                            let new_capacities = [...certificates_selected];
+                            new_capacities[i].type = e.currentKey;
+                            set_certificates_selected(new_capacities);
+                          }}
+                        >
+                          {(item) => (
+                            <Dropdown.Item key={item.name} css={{ width: 500 }}>
+                              <span style={{ fontSize: 12 }}>{item.name}</span>
+                            </Dropdown.Item>
+                          )}
+                        </Dropdown.Menu>
+                      </Dropdown>
+                      <div style={{ marginTop: "8px", height: "1px", backgroundColor: "gray", width: "100%" }} />
+                    </>
+                  ))}
+                  <div style={{ display: "flex", gap: "1rem", marginTop: "1rem" }}>
+                    <Button
+                      style={{ marginBottom: 10, width: 100 }}
+                      color="warning"
+                      onPress={() => set_certificates_selected([...certificates_selected, {}])}
+                    >
+                      Добавете
+                    </Button>
+                    <Button
+                      style={{ marginBottom: 10, width: 100 }}
+                      color="error"
+                      onPress={() => set_certificates_selected(certificates_selected.slice(0, -1))}
+                    >
+                      Премахнете
+                    </Button>
+                  </div>
+                </span>
               </Modal.Body>
               <Modal.Footer>
                 <Button color="warning" onClick={() => setVisibleArchive(false)}>
