@@ -27,10 +27,7 @@ const DashboardNews = () => {
   const [file, set_file] = React.useState(null);
   const { data } = useSWR(`${process.env.REACT_APP_API_URL}/api/get-knob-content`, fetcher);
   const [error, setError] = React.useState("");
-  const [id, setId] = React.useState("");
-  const [title, setTitle] = React.useState("");
-  const [description, setDescription] = React.useState("");
-  const [shortDescription, setShortDescription] = React.useState("");
+  const [selectedNew, setSelectedNew] = React.useState(null);
 
   return (
     <>
@@ -118,40 +115,32 @@ const DashboardNews = () => {
 
       {/* Modal edit start */}
       <Modal scroll width="600px" open={visibleEdit} onClose={() => setVisibleEdit(false)}>
-        <Form>
-          <Modal.Header>
-            <div style={{ marginTop: 20 }}>
-              <Input placeholder="Заглавие" style={{ background: "white", margin: 0 }} value={title} />
-            </div>
-          </Modal.Header>
-          <Modal.Body>
-            <div style={{ display: "flex", flexDirection: "column", alignSelf: "center" }}>
-              <Input
-                labelPlaceholder="Кратко описание"
-                style={{ color: "black", margin: 0, background: "white" }}
-                name="short_description"
-                id="short_description"
-                value={shortDescription}
-              />
-              <br />
-              <Textarea
-                labelPlaceholder="Описание (HTML)"
-                style={{ color: "black" }}
-                rows={5}
-                name="description"
-                id="description"
-                value={description}
-              />
-            </div>
-          </Modal.Body>
-          <Modal.Footer>
-            <Button
-              auto
-              type="submit"
-              color="error"
-              onClick={async () => {
+        {selectedNew && (
+          <Form
+            onSubmit={async (e) => {
+              e.preventDefault();
+
+              const body = new FormData();
+              body.append("title", e.target.title.value);
+              body.append("description", e.target.description.value);
+              body.append("short_description", e.target.short_description.value);
+              body.append("file", file);
+              body.append("picture", photo);
+
+              const res = await fetch(`${process.env.REACT_APP_API_URL}/api/post-knob-content`, {
+                method: "POST",
+                body: body,
+                headers: {
+                  Authorization: `Bearer ${JSON.parse(localStorage.getItem("user")).token}`,
+                },
+              });
+
+              if (res.status !== 200) {
+                const error = await res.json();
+                setError(error.error);
+              } else {
                 const new_body = new FormData();
-                new_body.append("id", id);
+                new_body.append("id", selectedNew._id);
                 await fetch(`${process.env.REACT_APP_API_URL}/api/delete-knob-content`, {
                   method: "DELETE",
                   body: new_body,
@@ -159,16 +148,80 @@ const DashboardNews = () => {
                     Authorization: `Bearer ${JSON.parse(localStorage.getItem("user")).token}`,
                   },
                 });
+                setVisibleAdd(false);
                 window.location.reload(false);
-              }}
-            >
-              Изтрий
-            </Button>
-            <Button auto color="success">
-              Запази
-            </Button>
-          </Modal.Footer>
-        </Form>
+              }
+            }}
+          >
+            <Modal.Header>
+              <div style={{ marginTop: 20, display: "flex", flexDirection: "column" }}>
+                <p style={{ color: "red", fontWeight: "bold" }}>{error}</p>
+                <Input style={{ background: "white", margin: 0 }} name="title" id="title" initialValue={selectedNew.title} />
+              </div>
+            </Modal.Header>
+            <Modal.Body>
+              <div style={{ display: "flex", flexDirection: "column", alignSelf: "center" }}>
+                <p style={{ marginBottom: 5, fontSize: 14 }}>Снимка</p>
+                <input
+                  required
+                  type="file"
+                  style={{ marginBottom: 15 }}
+                  onChange={(e) => {
+                    set_photo(e.target.files[0]);
+                  }}
+                />
+                <Input
+                  labelPlaceholder="Кратко описание"
+                  style={{ color: "black", margin: 0, background: "white" }}
+                  name="short_description"
+                  id="short_description"
+                  initialValue={selectedNew.short_description}
+                />
+                <br />
+                <Textarea
+                  labelPlaceholder="Описание (HTML)"
+                  style={{ color: "black" }}
+                  rows={5}
+                  name="description"
+                  id="description"
+                  initialValue={selectedNew.description}
+                />
+                <p style={{ marginBottom: 5, fontSize: 14, marginTop: 15 }}>Прикачен файл</p>
+                <input
+                  name="file"
+                  type="file"
+                  style={{ marginBottom: 15 }}
+                  onChange={(e) => {
+                    set_file(e.target.files[0]);
+                  }}
+                />
+              </div>
+            </Modal.Body>
+            <Modal.Footer>
+              <Button
+                auto
+                type="submit"
+                color="error"
+                onClick={async () => {
+                  const new_body = new FormData();
+                  new_body.append("id", selectedNew._id);
+                  await fetch(`${process.env.REACT_APP_API_URL}/api/delete-knob-content`, {
+                    method: "DELETE",
+                    body: new_body,
+                    headers: {
+                      Authorization: `Bearer ${JSON.parse(localStorage.getItem("user")).token}`,
+                    },
+                  });
+                  window.location.reload(false);
+                }}
+              >
+                Изтрий
+              </Button>
+              <Button auto color="success" type="submit">
+                Запази
+              </Button>
+            </Modal.Footer>
+          </Form>)}
       </Modal>
       {/* Modal edit end */}
 
@@ -212,20 +265,17 @@ const DashboardNews = () => {
                             style={{ cursor: "pointer" }}
                             onClick={() => {
                               setVisibleEdit(true);
-                              setTitle(item.title);
-                              setShortDescription(item.short_description);
-                              setDescription(item.description);
-                              setId(item._id);
+                              setSelectedNew(item);
                             }}
                           >
                             <span style={{ color: "black", fontSize: 14, fontWeight: "normal" }}>
                               {columnKey !== "timestamp"
                                 ? item[columnKey]
                                 : new Date(item[columnKey]).toLocaleString("bg-BG", {
-                                    year: "numeric",
-                                    month: "long",
-                                    day: "numeric",
-                                  })}
+                                  year: "numeric",
+                                  month: "long",
+                                  day: "numeric",
+                                })}
                             </span>
                           </span>
                         </Table.Cell>

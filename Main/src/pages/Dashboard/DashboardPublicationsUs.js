@@ -113,10 +113,45 @@ const DashboardPublicationsUs = () => {
 
       {/* Modal edit start */}
       <Modal scroll width="600px" open={visibleEdit} onClose={() => setVisibleEdit(false)}>
-        <Form>
+        <Form
+          onSubmit={async (e) => {
+            e.preventDefault();
+            const body = new FormData();
+            body.append("title", e.target.title.value);
+            body.append("description", e.target.description.value);
+            body.append("picture", photo);
+            if (file) {
+              body.append("file", file);
+            }
+            const resp = await fetch(`${process.env.REACT_APP_API_URL}/api/post-us-protocol`, {
+              method: "POST",
+              body: body,
+              headers: {
+                Authorization: `Bearer ${JSON.parse(localStorage.getItem("user")).token}`,
+              },
+            });
+            if (resp.status !== 200) {
+              const error = await resp.json();
+              setError(error.error);
+            } else {
+              const new_body = new FormData();
+              new_body.append("id", id);
+              await fetch(`${process.env.REACT_APP_API_URL}/api/delete-us-protocol`, {
+                method: "DELETE",
+                body: new_body,
+                headers: {
+                  Authorization: `Bearer ${JSON.parse(localStorage.getItem("user")).token}`,
+                },
+              });
+              setVisibleAdd(false);
+              window.location.reload(false);
+            }
+          }}
+        >
           <Modal.Header>
             <div style={{ marginTop: 20 }}>
-              <Input placeholder="Заглавие" style={{ background: "white", margin: 0 }} value={title} required />
+              <p style={{ color: "red", fontWeight: "bold" }}>{error}</p>
+              <Input placeholder="Заглавие" style={{ background: "white", margin: 0 }} initialValue={title} name="title" required />
             </div>
           </Modal.Header>
           <Modal.Body>
@@ -126,9 +161,26 @@ const DashboardPublicationsUs = () => {
                 style={{ color: "black" }}
                 rows={5}
                 width={400}
-                value={description}
+                initialValue={description}
+                name="description"
                 required
               />
+              <p style={{ marginBottom: 5, fontSize: 14, marginTop: 15 }}>Снимка</p>
+              <input
+                type="file"
+                style={{ marginBottom: 15 }}
+                onChange={(e) => {
+                  setPhoto(e.target.files[0]);
+                }}
+                required
+              />
+              <p style={{ marginBottom: 5, fontSize: 14, marginTop: 15 }}>Прикачен файл</p>
+              <input
+                type="file"
+                style={{ marginBottom: 15 }}
+                onChange={(e) => {
+                  setFile(e.target.files[0]);
+                }} />
             </div>
           </Modal.Body>
           <Modal.Footer>
@@ -150,7 +202,7 @@ const DashboardPublicationsUs = () => {
             >
               Изтрий
             </Button>
-            <Button auto color="success">
+            <Button auto color="success" type="submit">
               Запази
             </Button>
           </Modal.Footer>
@@ -209,10 +261,10 @@ const DashboardPublicationsUs = () => {
                               {columnKey !== "timestamp"
                                 ? item[columnKey]
                                 : new Date(item[columnKey]).toLocaleString("bg-BG", {
-                                    year: "numeric",
-                                    month: "long",
-                                    day: "numeric",
-                                  })}
+                                  year: "numeric",
+                                  month: "long",
+                                  day: "numeric",
+                                })}
                             </span>
                           </span>
                         </Table.Cell>

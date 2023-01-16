@@ -33,7 +33,6 @@ const DashboardRev = () => {
   const [latinCity, setLatinCity] = React.useState("");
   const [validFromGet, setValidFromGet] = React.useState(null);
   const [validUntilGet, setvalidUntilGet] = React.useState(null);
-  const [city, setCity] = React.useState("");
   const [phone, setPhone] = React.useState("");
   const [id, setId] = React.useState("");
 
@@ -50,7 +49,7 @@ const DashboardRev = () => {
             body.append("cyrilic_name", e.target.cyr_name.value);
             body.append("latin_name", e.target.latin_name.value);
             body.append("latin_city", e.target.latin_city.value);
-            body.append("cyrilic_city", e.target.latin_city.value);
+            body.append("cyrilic_city", e.target.cyr_city.value);
             body.append("issued_on", validFrom);
             body.append("valid_until", validUntil);
             body.append("telephone", e.target.phone.value);
@@ -170,7 +169,8 @@ const DashboardRev = () => {
 
       {/* Modal edit start */}
       <Modal scroll open={visibleEdit} onClose={() => setVisibleEdit(false)}>
-        <Form>
+        <Form
+        >
           <Modal.Header>
             <span style={{ fontSize: 12 }}>
               Моля въведте информацията на английски и български. Вижте формата в страницата{" "}
@@ -186,6 +186,7 @@ const DashboardRev = () => {
                   placeholder="Сертификат №"
                   style={{ background: "white", margin: 0 }}
                   required
+                  name="certificate"
                   value={certificate}
                 />
               </div>
@@ -194,6 +195,7 @@ const DashboardRev = () => {
                   placeholder="Имена на български"
                   style={{ background: "white", margin: 0 }}
                   required
+                  name="cyr_name"
                   value={cyrName}
                 />
               </div>
@@ -202,12 +204,13 @@ const DashboardRev = () => {
                   placeholder="Имена на английски"
                   style={{ background: "white", margin: 0 }}
                   required
+                  name="latin_name"
                   value={latinName}
                 />
               </div>
               <div style={{ marginTop: 20, display: "flex", flexDirection: "row", justifyContent: "space-between" }}>
-                {console.log(validFromGet)}
                 <Input
+                  onChange={(event) => setValidFrom(event.target.value)}
                   type="date"
                   label="Дата на издаване"
                   style={{ background: "white", margin: 0 }}
@@ -215,6 +218,7 @@ const DashboardRev = () => {
                   value={validFromGet ? validFromGet.toString().substring(0, 10) : {}}
                 />
                 <Input
+                  onChange={(event) => setvalidUntilGet(event.target.value)}
                   type="date"
                   label="Валиден до"
                   style={{ background: "white", margin: 0 }}
@@ -227,6 +231,7 @@ const DashboardRev = () => {
                   placeholder="Град (български)"
                   style={{ background: "white", margin: 0 }}
                   required
+                  name="cyr_city"
                   value={cyrCity}
                 />
               </div>
@@ -235,11 +240,12 @@ const DashboardRev = () => {
                   placeholder="Град (английски)"
                   style={{ background: "white", margin: 0 }}
                   required
+                  name="latin_city"
                   value={latinCity}
                 />
               </div>
               <div style={{ marginTop: 20 }}>
-                <Input placeholder="Телефон" style={{ background: "white", margin: 0 }} required value={phone} />
+                <Input placeholder="Телефон" style={{ background: "white", margin: 0 }} required value={phone} name="phone" />
               </div>
             </div>
           </Modal.Body>
@@ -261,9 +267,6 @@ const DashboardRev = () => {
               }}
             >
               Изтрий
-            </Button>
-            <Button auto type="submit" color="warning">
-              Запази
             </Button>
           </Modal.Footer>
         </Form>
@@ -297,7 +300,6 @@ const DashboardRev = () => {
                     <Table.Row key={item._id}>
                       {(columnKey) => (
                         <Table.Cell>
-                          {console.log(item)}
                           <span
                             style={{ cursor: "pointer" }}
                             onClick={() => {
@@ -305,7 +307,6 @@ const DashboardRev = () => {
                               setCertificate(item.certificate_number);
                               setLatinName(item.latin_name);
                               setCyrName(item.cyrilic_name);
-                              setCity(item.city);
                               setPhone(item.telephone);
                               setLatinCity(item.latin_city);
                               setCyrCity(item.cyrilic_city);

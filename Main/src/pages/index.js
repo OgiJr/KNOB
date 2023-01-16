@@ -5,7 +5,6 @@ import Copyright from "../common/footer/Copyright";
 import BlogHomePage from "../components/blog/BlogHomePage";
 import { useAuth } from "../hooks/useAuth";
 import jwt_decode from "jwt-decode";
-import { Button } from "@nextui-org/react";
 
 const HomeDefault = () => {
   const { user, logout } = useAuth();
