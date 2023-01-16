@@ -19,36 +19,69 @@ const columns = [
 
 const RCTable = (sofia) => {
   var regions = [
-    { key: 1, name: "Бургас", info: sofia.burgas.members },
-    { key: 2, name: "Варна", info: sofia.varna.members },
-    { key: 3, name: "Плевен", info: sofia.pleven.members },
-    { key: 4, name: "Пловдив", info: sofia.plovdiv.members },
-    { key: 4, name: "Русе", info: sofia.ruse.members },
-    { key: 5, name: "Стара Загора", info: sofia.zagora.members },
-    { key: 6, name: "София", info: sofia.sofia.members },
-    { key: 7, name: "Шумен", info: sofia.shumen.members },
+    { key: 1, name: "Бургас", id: "Burgas", info: sofia.burgas.members },
+    { key: 2, name: "Варна", id: "Varna", info: sofia.varna.members },
+    { key: 3, name: "Плевен", id: "Pleven", info: sofia.pleven.members },
+    { key: 4, name: "Пловдив", id: "Plovdiv", info: sofia.plovdiv.members },
+    { key: 4, name: "Русе", id: "Ruse", info: sofia.ruse.members },
+    { key: 5, name: "Стара Загора", id: "Zagora", info: sofia.zagora.members },
+    { key: 6, name: "София", id: "Sofia", info: sofia.sofia.members },
+    { key: 7, name: "Шумен", id: "Tutrakan", info: sofia.shumen.members },
   ];
 
   const [visibleEdit, setVisibleEdit] = React.useState(false);
   const [id, setId] = React.useState("");
   const [name, setName] = React.useState("");
   const [email, setEmail] = React.useState("");
+  const [city, setCity] = React.useState("");
   const [isRepresentative, setisRepresentative] = React.useState(false);
+  const [error, setError] = React.useState("");
 
   return (
     <>
       {/* Modal edit start */}
       <Modal scroll open={visibleEdit} onClose={() => setVisibleEdit(false)}>
-        <Form>
+        <Form onSubmit={async (e) => {
+          e.preventDefault();
+          const body = new FormData();
+          body.append("full_name", e.target.full_name.value);
+          body.append("email", e.target.email.value);
+          body.append("is_representative", e.target.isChair.value === "chair" ? true : false);
+          body.append("city", city);
+          const resp = await fetch(`${process.env.REACT_APP_API_URL}/api/post-regional-committee-member`, {
+            method: "POST",
+            body: body,
+            headers: {
+              Authorization: `Bearer ${JSON.parse(localStorage.getItem("user")).token}`,
+            },
+          });
+          if (resp.status !== 200) {
+            const error = await resp.json();
+            setError(error.error);
+          } else {
+            const new_body = new FormData();
+            new_body.append("id", id);
+            await fetch(`${process.env.REACT_APP_API_URL}/api/delete-regional-committee-member`, {
+              method: "DELETE",
+              body: new_body,
+              headers: {
+                Authorization: `Bearer ${JSON.parse(localStorage.getItem("user")).token}`,
+              },
+            });
+            setVisibleEdit(false);
+            window.location.reload(false);
+          }
+        }}>
           <Modal.Header>
             <div style={{ marginTop: 20 }}>
+              {error && <p style={{ color: "red" }}>{error}</p>}
               <Input
                 placeholder="Имена"
                 style={{ background: "white", margin: 0 }}
-                name="name"
-                id="name"
+                name="full_name"
+                id="full_name"
                 required
-                value={name}
+                initialValue={name}
               />
             </div>
           </Modal.Header>
@@ -61,7 +94,7 @@ const RCTable = (sofia) => {
                   name="email"
                   id="email"
                   required
-                  value={email}
+                  initialValue={email}
                 />
               </div>
               <div style={{ marginTop: 20 }}>
@@ -131,27 +164,29 @@ const RCTable = (sofia) => {
                 )}
               </Table.Header>
               <Table.Body items={item.info}>
-                {(item) => (
-                  <Table.Row key={item._id}>
+                {(person) => (
+                  <Table.Row key={person._id}>
                     {(columnKey) => (
                       <Table.Cell>
                         <span
                           style={{ cursor: "pointer" }}
                           onClick={() => {
-                            setId(item._id);
+                            console.log(item);
+                            setId(person._id);
+                            setCity(item.id);
                             setVisibleEdit(true);
-                            setEmail(item.email);
-                            setName(item.full_name);
-                            setisRepresentative(item.is_representative);
+                            setEmail(person.email);
+                            setName(person.full_name);
+                            setisRepresentative(person.is_representative);
                           }}
                         >
-                          {item.is_representative === false ? (
+                          {person.is_representative === false ? (
                             <span style={{ color: "black", fontSize: 14, fontWeight: "normal" }}>
-                              {item[columnKey] !== false ? item[columnKey] : "Не"}
+                              {person[columnKey] !== false ? person[columnKey] : "Не"}
                             </span>
                           ) : (
                             <span style={{ color: "orange", fontSize: 14, fontWeight: "normal" }}>
-                              {item[columnKey] !== true ? item[columnKey] : "Да"}
+                              {person[columnKey] !== true ? person[columnKey] : "Да"}
                             </span>
                           )}
                         </span>

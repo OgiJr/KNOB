@@ -337,13 +337,11 @@ const DashboardCompanies = () => {
   const [page, set_page] = React.useState(1);
   const { data: companies } = useSWR(`${process.env.REACT_APP_API_URL}/api/get-companies`, fetcher);
   const { data: users } = useSWR(`${process.env.REACT_APP_API_URL}/api/get-users`, fetcher);
-  const [capacity, setCapacity] = React.useState(0);
   const [visibleArchive, setVisibleArchive] = React.useState(false);
   const [add, setAdd] = React.useState(false);
   const [modal, setModal] = React.useState(false);
   const [current_company, set_current_company] = React.useState(null);
   const [error, setError] = React.useState("");
-  const [capacities_selected, set_capacities_selected] = React.useState([]);
   const [valuers, setValuers] = React.useState([]);
   const [certificates_selected, set_certificates_selected] = React.useState([]);
 
@@ -744,9 +742,7 @@ const DashboardCompanies = () => {
                 color="success"
                 onPress={() => {
                   set_current_company(null);
-                  setCapacity(0);
-                  setValuers([]);
-                  set_capacities_selected([]);
+                  set_certificates_selected([]);
                   setAdd(true);
                   setModal(true);
                 }}
@@ -839,7 +835,7 @@ const DashboardCompanies = () => {
                               style={{ cursor: "pointer" }}
                               onClick={() => {
                                 set_current_company(item);
-                                set_capacities_selected([]);
+                                set_certificates_selected([]);
                                 setModal(true);
                                 setAdd(false);
                               }}

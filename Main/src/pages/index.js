@@ -5,7 +5,6 @@ import Copyright from "../common/footer/Copyright";
 import BlogHomePage from "../components/blog/BlogHomePage";
 import { useAuth } from "../hooks/useAuth";
 import jwt_decode from "jwt-decode";
-import { Button } from "@nextui-org/react";
 
 const HomeDefault = () => {
   const { user, logout } = useAuth();
@@ -73,14 +72,15 @@ const HomeDefault = () => {
                           Вход
                         </a>
                       ) : jwt_decode(user.token).type === "Guest" ? (
-                        <Button
-                          onPress={() => {
+                        <a
+                          className="btn-default btn-medium round btn-icon"
+                          onClick={() => {
                             logout();
                           }}
                           color="error"
                         >
                           Изход
-                        </Button>
+                        </a>
                       ) : jwt_decode(user.token).type === "Curator" ? (
                         <a
                           className="btn-default btn-medium round btn-icon"

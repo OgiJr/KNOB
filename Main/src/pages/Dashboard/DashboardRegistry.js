@@ -415,7 +415,6 @@ const DashboardRegistry = () => {
       set_mapped_users([]);
     }
   }, [users, set_mapped_users, name, certificate_number, selected_city, selected_capacity, entries_per_page, page]);
-
   return (
     <>
       {users && companies && (
@@ -490,31 +489,6 @@ const DashboardRegistry = () => {
                 <div className="modalResponsive">
                   <span style={{ fontWeight: "bold" }}>Сертификати:</span>
                   <span style={{ display: "flex", flexDirection: "column" }}>
-                    {/* {current_person &&
-                      current_person.current_valid_certificates.map((v, i) => (
-                        <Dropdown placement="bottom-left" css={{ width: 500 }}>
-                          <Dropdown.Button flat style={{ marginTop: 30 }} color="warning" css={{ width: 500 }}>
-                            {cert[i] ? capacities_selected[i] : "Изберете оценителска правоспособност"}
-                          </Dropdown.Button>
-                          <Dropdown.Menu
-                            css={{ width: 500 }}
-                            containerCss={{ width: 500 }}
-                            items={capacities}
-                            selectionMode="single"
-                            onSelectionChange={(e) => {
-                              let new_capacities = [...capacities_selected];
-                              new_capacities[i] = e.currentKey;
-                              set_capacities_selected(new_capacities);
-                            }}
-                          >
-                            {(item) => (
-                              <Dropdown.Item key={item.name} css={{ width: 500 }}>
-                                <span style={{ fontSize: 12 }}>{item.name}</span>
-                              </Dropdown.Item>
-                            )}
-                          </Dropdown.Menu>
-                        </Dropdown>
-                      ))} */}
                     {certificates_selected.map((v, i) => (
                       <>
                         <div style={{ marginBottom: "8px" }}>Номер</div>
@@ -754,16 +728,22 @@ const DashboardRegistry = () => {
                   <></>
                 )}
                 {!add ? (
-                  <Button
-                    color="warning"
-                    onPress={() => {
-                      setAdd(false);
-                      setModal(false);
-                      setVisibleArchive(true);
-                    }}
-                  >
-                    Деактивирай
-                  </Button>
+                  <>
+                    {current_person && current_person.current_valid_certificates.length !== 0 ? (
+                      <Button
+                        color="warning"
+                        onPress={() => {
+                          setAdd(false);
+                          setModal(false);
+                          setVisibleArchive(true);
+                        }}
+                      >
+                        Деактивирай
+                      </Button>
+                    ) : (
+                      <></>
+                    )}
+                  </>
                 ) : (
                   <></>
                 )}
@@ -779,22 +759,19 @@ const DashboardRegistry = () => {
                 <h5>Обезсилване на сертификата на: {name}</h5>
               </Modal.Header>
               <Modal.Body style={{ marginLeft: 15, marginRight: 15, marginTop: 15, marginBottom: 15 }}>
-                <div className="modalResponsive">
-                  <span style={{ fontWeight: "bold" }}>Тип:</span>
-                  <Input width={500} style={{ background: "white", marginLeft: 0, marginRight: 0, marginBottom: 10 }} />
-                </div>
-                <div className="modalResponsive">
-                  <span style={{ fontWeight: "bold" }}>Оценителска правоспособност:</span>
-                  <Input width={500} style={{ background: "white", marginLeft: 0, marginRight: 0, marginBottom: 10 }} />
-                </div>
-                <div className="modalResponsive">
-                  <span style={{ fontWeight: "bold" }}>Обезсилен:</span>
-                  <Input
-                    width={500}
-                    value={current_person && current_person.certificate_number}
-                    style={{ background: "white", marginLeft: 0, marginRight: 0, marginBottom: 10 }}
-                  />
-                </div>
+                <p>Изберете сертификат, който да бъде обезсилван:</p>
+                <Radio.Group
+                  color="warning"
+                  required
+                  name="deactivate_certificate"
+                  id="deactivate_certificate"
+                  style={{ marginTop: 10, marginBottom: 10 }}
+                >
+                  {current_person &&
+                    current_person.current_valid_certificates.map((v, i) => (
+                      <Radio value={v.certificate_number}>{v.certificate_number}</Radio>
+                    ))}
+                </Radio.Group>
                 <div className="modalResponsive">
                   <span style={{ fontWeight: "bold" }}>Нов:</span>
                   <Input width={500} style={{ background: "white", marginLeft: 0, marginRight: 0, marginBottom: 10 }} />
@@ -835,6 +812,7 @@ const DashboardRegistry = () => {
               >
                 Филтър
               </p>
+              <br />
               <form className="filter" style={{ display: "flex", marginLeft: 15, gap: 30 }}>
                 <div style={{ display: "flex", flexDirection: "column " }}>
                   <Input

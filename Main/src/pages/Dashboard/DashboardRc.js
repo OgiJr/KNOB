@@ -44,7 +44,6 @@ const DashboardRc = () => {
                 });
                 if (resp.status !== 200) {
                   const error = await resp.json();
-
                   setError(error.error);
                 } else {
                   setVisibleAdd(false);

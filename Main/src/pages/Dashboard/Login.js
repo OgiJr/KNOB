@@ -12,6 +12,7 @@ const Login = () => {
   const [loginType, setLoginType] = React.useState("login");
   const { user, login } = useAuth();
   const navigate = useNavigate();
+  const [error, setError] = React.useState("");
 
   if (user) {
     return <Navigate to="/" />;
@@ -23,15 +24,15 @@ const Login = () => {
       <main className="page-wrapper">
         <Header btnStyle="btn-small round btn-icon" />
 
-        <div style={{ display: "flex", alignSelf: "center", justifyContent: "center", alignItems: "center" }}>
+        <div style={{ display: "flex", alignSelf: "center", justifyContent: "center", alignItems: "center", flexDirection: "column", minHeight: "85vh" }}>
+          <p style={{ marginTop: 150, color: "red", fontWeight: "bold" }}>{error}</p>
           {loginType === "login" ? (
-            <Card style={{ marginTop: 100, marginBottom: 150, width: 500, display: "flex", alignItems: "center" }}>
+            <Card style={{ marginBottom: 150, width: 500, display: "flex", alignItems: "center" }}>
               <form
                 onSubmit={async (e) => {
                   e.preventDefault();
 
                   // TODO: CHECK EMAIL AND PASS ARE INPUTED
-
                   const body = new FormData();
                   body.append("email", e.target.email.value);
                   body.append("password", e.target.password.value);
@@ -43,6 +44,8 @@ const Login = () => {
 
                   // TODO: error checking
                   if (resp.status !== 200) {
+                    const { error } = await resp.json();
+                    setError(error);
                     return;
                   }
                   const { token } = await resp.json();

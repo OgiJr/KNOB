@@ -117,16 +117,48 @@ const DashboardMethodology = () => {
 
       {/* Modal edit start */}
       <Modal scroll open={visibleEdit} onClose={() => setVisibleEdit(false)}>
-        <Form>
+        <Form
+          onSubmit={async (e) => {
+            e.preventDefault();
+            const body = new FormData();
+            body.append("full_name", e.target.full_name.value);
+            body.append("email", e.target.email.value);
+            body.append("is_representative", e.target.isChair.value === "chair" ? true : false);
+            const resp = await fetch(`${process.env.REACT_APP_API_URL}/api/post-methodology-committee-member`, {
+              method: "POST",
+              body: body,
+              headers: {
+                Authorization: `Bearer ${JSON.parse(localStorage.getItem("user")).token}`,
+              },
+            });
+            if (resp.status !== 200) {
+              const error = await resp.json();
+              setError(error.error);
+            } else {
+              const new_body = new FormData();
+              new_body.append("id", id);
+              await fetch(`${process.env.REACT_APP_API_URL}/api/delete-methodology-committee-member`, {
+                method: "DELETE",
+                body: new_body,
+                headers: {
+                  Authorization: `Bearer ${JSON.parse(localStorage.getItem("user")).token}`,
+                },
+              });
+              setVisibleAdd(false);
+              window.location.reload(false);
+            }
+          }}
+        >
           <Modal.Header>
             <div style={{ marginTop: 20 }}>
+              <p style={{ color: "red", fontWeight: "bold" }}>{error}</p>
               <Input
                 placeholder="Имена"
                 style={{ background: "white", margin: 0 }}
-                name="name"
-                id="name"
+                name="full_name"
+                id="full_name"
                 required
-                value={name}
+                initialValue={name}
               />
             </div>
           </Modal.Header>
@@ -139,7 +171,7 @@ const DashboardMethodology = () => {
                   name="email"
                   id="email"
                   required
-                  value={email}
+                  initialValue={email}
                 />
               </div>
               <div style={{ marginTop: 20 }}>

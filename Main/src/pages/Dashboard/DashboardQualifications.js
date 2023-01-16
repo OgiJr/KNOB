@@ -68,7 +68,6 @@ const DashboardQualifications = () => {
 
             if (res.status !== 200) {
               const error = await res.json();
-
               setError(error.error);
             } else {
               setVisibleAdd(false);
@@ -144,21 +143,97 @@ const DashboardQualifications = () => {
 
       {/* Modal edit start */}
       <Modal scroll open={visibleEdit} onClose={() => setVisibleEdit(false)}>
-        <Form>
+        <Form
+          onSubmit={async (e) => {
+            e.preventDefault();
+            const body = new FormData();
+            body.append("title", e.target.title.value);
+            body.append("description", e.target.description.value);
+            body.append("picture", photo);
+            if (fileOne) {
+              body.append("file", fileOne);
+            }
+            if (fileTwo) {
+              body.append("file", fileTwo);
+            }
+            if (fileThree) {
+              body.append("file", fileThree);
+            }
+
+            const res = await fetch(`${process.env.REACT_APP_API_URL}/api/post-qualification-item`, {
+              method: "POST",
+              body: body,
+              headers: {
+                Authorization: `Bearer ${JSON.parse(localStorage.getItem("user")).token}`,
+              },
+            });
+
+            if (res.status !== 200) {
+              const error = await res.json();
+              setError(error.error);
+            } else {
+              const new_body = new FormData();
+              new_body.append("id", id);
+              await fetch(`${process.env.REACT_APP_API_URL}/api/delete-qualification-item`, {
+                method: "DELETE",
+                body: new_body,
+                headers: {
+                  Authorization: `Bearer ${JSON.parse(localStorage.getItem("user")).token}`,
+                },
+              });
+              setVisibleAdd(false);
+              window.location.reload(false);
+            }
+          }}
+        >
           <Modal.Header>
             <div style={{ marginTop: 20 }}>
-              <Input placeholder="Заглавие" style={{ background: "white", margin: 0 }} required value={title} />
+              <Input placeholder="Заглавие" style={{ background: "white", margin: 0 }} required initialValue={title} name="title" />
             </div>
           </Modal.Header>
           <Modal.Body>
             <div style={{ display: "flex", flexDirection: "column", alignSelf: "center" }}>
+              <p style={{ marginBottom: 5, fontSize: 14 }}>Снимка</p>
+              <input
+                type="file"
+                style={{ marginBottom: 15 }}
+                onChange={(e) => {
+                  setPhoto(e.target.files[0]);
+                }}
+                required
+              />
               <Textarea
                 labelPlaceholder="Описание (HTML)"
                 style={{ color: "black" }}
                 rows={5}
+                name="description"
+                id="description"
                 required
-                width={300}
-                value={description}
+                initialValue={description}
+              />
+              <p style={{ marginBottom: 5, fontSize: 14, marginTop: 15 }}>Прикачен файл едно</p>
+              <input
+                type="file"
+                style={{ marginBottom: 15 }}
+                onChange={(e) => {
+                  setFileOne(e.target.files[0]);
+                }}
+              />
+              <p style={{ marginBottom: 5, fontSize: 14, marginTop: 15 }}>Прикачен файл две</p>
+              <input
+                type="file"
+                style={{ marginBottom: 15 }}
+                onChange={(e) => {
+                  setFileTwo(e.target.files[0]);
+                }}
+              />
+              <p style={{ marginBottom: 5, fontSize: 14, marginTop: 15 }}>Прикачен файл три</p>
+              <input
+                type="file"
+                style={{ marginBottom: 15 }}
+                onChange={(e) => {
+                  setFileThree(e.target.files[0]);
+                }}
               />
             </div>
           </Modal.Body>
@@ -182,7 +257,7 @@ const DashboardQualifications = () => {
             >
               Изтрий
             </Button>
-            <Button auto color="success">
+            <Button auto color="success" type="submit">
               Запази
             </Button>
           </Modal.Footer>
@@ -238,10 +313,10 @@ const DashboardQualifications = () => {
                               {columnKey !== "timestamp"
                                 ? item[columnKey]
                                 : new Date(item[columnKey]).toLocaleString("bg-BG", {
-                                    year: "numeric",
-                                    month: "long",
-                                    day: "numeric",
-                                  })}
+                                  year: "numeric",
+                                  month: "long",
+                                  day: "numeric",
+                                })}
                             </span>
                           </span>
                         </Table.Cell>

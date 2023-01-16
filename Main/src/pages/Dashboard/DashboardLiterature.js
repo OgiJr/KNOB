@@ -34,7 +34,6 @@ const DashboardLiterature = () => {
   const [id, setId] = React.useState("");
   const [title, setTitle] = React.useState("");
   const [description, setDescription] = React.useState("");
-  const [shortDescription, setShortDescription] = React.useState("");
 
   return (
     <>
@@ -92,7 +91,6 @@ const DashboardLiterature = () => {
                 }}
                 required
               />
-              <br />
               <Textarea
                 labelPlaceholder="Описание (HTML)"
                 style={{ color: "black" }}
@@ -122,30 +120,69 @@ const DashboardLiterature = () => {
 
       {/* Modal edit start */}
       <Modal scroll width="600px" open={visibleEdit} onClose={() => setVisibleEdit(false)}>
-        <Form>
+        <Form
+          onSubmit={async (e) => {
+            e.preventDefault();
+            const body = new FormData();
+            body.append("title", e.target.title.value);
+            body.append("description", e.target.description.value);
+            body.append("short_description", e.target.description.value);
+            body.append("picture", photo);
+            if (file) {
+              body.append("file", file);
+            }
+
+            const res = await fetch(`${process.env.REACT_APP_API_URL}/api/post-literature-content`, {
+              method: "POST",
+              body: body,
+              headers: {
+                Authorization: `Bearer ${JSON.parse(localStorage.getItem("user")).token}`,
+              },
+            });
+
+            if (res.status !== 200) {
+              const error = await res.json();
+              setError(error.error);
+            } else {
+              const new_body = new FormData();
+              new_body.append("id", id);
+              await fetch(`${process.env.REACT_APP_API_URL}/api/delete-literature-content`, {
+                method: "DELETE",
+                body: new_body,
+                headers: {
+                  Authorization: `Bearer ${JSON.parse(localStorage.getItem("user")).token}`,
+                },
+              });
+              setVisibleAdd(false);
+              window.location.reload(false);
+            }
+          }}
+        >
           <Modal.Header>
             <div style={{ marginTop: 20 }}>
+              <p style={{ color: "red", fontWeight: "bold" }}>{error}</p>
               <Input
                 placeholder="Заглавие"
                 style={{ background: "white", margin: 0 }}
                 required
                 name="title"
                 id="title"
-                value={title}
+                initialValue={title}
               />
             </div>
           </Modal.Header>
           <Modal.Body>
+            <p style={{ marginBottom: 5, fontSize: 14 }}>Снимка</p>
+            <input
+              type="file"
+              style={{ marginBottom: 15 }}
+              onChange={(e) => {
+                setPhoto(e.target.files[0]);
+              }}
+              required
+            />
             <br />
             <div style={{ display: "flex", flexDirection: "column", alignSelf: "center" }}>
-              <Input
-                labelPlaceholder="Кратко описание"
-                style={{ color: "black", margin: 0, background: "white" }}
-                name="short_description"
-                id="short_description"
-                value={shortDescription}
-              />
-              <br />
               <Textarea
                 labelPlaceholder="Описание (HTML)"
                 style={{ color: "black" }}
@@ -153,9 +190,17 @@ const DashboardLiterature = () => {
                 width={400}
                 name="description"
                 id="description"
-                value={description}
+                initialValue={description}
               />
             </div>
+            <p style={{ marginBottom: 5, fontSize: 14, marginTop: 15 }}>Прикачен файл</p>
+            <input
+              type="file"
+              style={{ marginBottom: 15 }}
+              onChange={(e) => {
+                setFile(e.target.files[0]);
+              }}
+            />
           </Modal.Body>
           <Modal.Footer>
             <Button
@@ -176,7 +221,7 @@ const DashboardLiterature = () => {
             >
               Изтрий
             </Button>
-            <Button auto color="success">
+            <Button auto color="success" type="submit">
               Запази
             </Button>
           </Modal.Footer>
@@ -227,17 +272,16 @@ const DashboardLiterature = () => {
                               setVisibleEdit(true);
                               setTitle(item.title);
                               setDescription(item.description);
-                              setShortDescription(item.short_description);
                             }}
                           >
                             <span style={{ color: "black", fontSize: 14, fontWeight: "normal" }}>
                               {columnKey !== "timestamp"
                                 ? item[columnKey]
                                 : new Date(item[columnKey]).toLocaleString("bg-BG", {
-                                    year: "numeric",
-                                    month: "long",
-                                    day: "numeric",
-                                  })}
+                                  year: "numeric",
+                                  month: "long",
+                                  day: "numeric",
+                                })}
                             </span>{" "}
                           </span>
                         </Table.Cell>
