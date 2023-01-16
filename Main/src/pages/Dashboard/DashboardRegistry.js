@@ -755,43 +755,94 @@ const DashboardRegistry = () => {
           </Modal>
           {current_person && (
             <Modal closeButton width="85%" open={visibleArchive} onClose={() => setVisibleArchive(false)}>
-              <Modal.Header>
-                <h5>Обезсилване на сертификата на: {name}</h5>
-              </Modal.Header>
-              <Modal.Body style={{ marginLeft: 15, marginRight: 15, marginTop: 15, marginBottom: 15 }}>
-                <p>Изберете сертификат, който да бъде обезсилван:</p>
-                <Radio.Group
-                  color="warning"
-                  required
-                  name="deactivate_certificate"
-                  id="deactivate_certificate"
-                  style={{ marginTop: 10, marginBottom: 10 }}
-                >
-                  {current_person &&
-                    current_person.current_valid_certificates.map((v, i) => (
-                      <Radio value={v.certificate_number}>{v.certificate_number}</Radio>
-                    ))}
-                </Radio.Group>
-                <div className="modalResponsive">
-                  <span style={{ fontWeight: "bold" }}>Нов:</span>
-                  <Input width={500} style={{ background: "white", marginLeft: 0, marginRight: 0, marginBottom: 10 }} />
-                </div>
-                <div className="modalResponsive">
-                  <span style={{ fontWeight: "bold" }}>Основание:</span>
-                  <Input width={500} style={{ background: "white", marginLeft: 0, marginRight: 0, marginBottom: 10 }} />
-                </div>
-              </Modal.Body>
-              <Modal.Footer>
-                <Button
-                  color="warning"
-                  onClick={() => {
-                    setVisibleArchive(false);
-                  }}
-                >
-                  Затвори
-                </Button>
-                <Button color="success">Запази</Button>
-              </Modal.Footer>
+              <form
+                onSubmit={async (e) => {
+                  e.preventDefault();
+
+                  if (!e.target.deactivate_certificate.value) {
+                    setError("Изберете сертификат, който да бъде обезсилван!");
+                    return;
+                  }
+
+                  const body = new FormData();
+                  body.append("id", e.target.deactivate_certificate.value);
+                  body.append("reason_for_invalidation", e.target.reason.value);
+
+                  if (e.target.new_certificate.value) {
+                    body.append("certificate_number", e.target.new_certificate.value);
+                  }
+
+                  const resp = await fetch(`${process.env.REACT_APP_API_URL}/api/post-deactivate-certificate`, {
+                    method: "POST",
+                    body: body,
+                    headers: {
+                      Authorization: `Bearer ${JSON.parse(localStorage.getItem("user")).token}`,
+                    },
+                  });
+                  if (resp.status !== 200) {
+                    const error = await resp.json();
+                    setError(error.error);
+                    return;
+                  }
+                  window.location.reload();
+                }}
+              >
+                <Modal.Header>
+                  <div style={{ display: "flex", flexDirection: "column" }}>
+                    <h5>
+                      Обезсилване на сертификата на:{" "}
+                      {`${current_person.first_name} ${current_person.middle_name} ${current_person.last_name}`}
+                    </h5>
+                    <p style={{ color: "red", fontWeight: "bold" }}>{error}</p>
+                  </div>
+                </Modal.Header>
+                <Modal.Body style={{ marginLeft: 15, marginRight: 15, marginTop: 15, marginBottom: 15 }}>
+                  <p>Изберете сертификат, който да бъде обезсилван:</p>
+                  <Radio.Group
+                    color="warning"
+                    required
+                    name="deactivate_certificate"
+                    id="deactivate_certificate"
+                    style={{ marginTop: 10, marginBottom: 10 }}
+                  >
+                    {current_person &&
+                      current_person.current_valid_certificates.map((v, i) => (
+                        <Radio value={v._id}>{v.certificate_number}</Radio>
+                      ))}
+                  </Radio.Group>
+                  <div className="modalResponsive">
+                    <span style={{ fontWeight: "bold" }}>Нов:</span>
+                    <Input
+                      name="new_certificate"
+                      id="new_certificate"
+                      width={500}
+                      style={{ background: "white", marginLeft: 0, marginRight: 0, marginBottom: 10 }}
+                    />
+                  </div>
+                  <div className="modalResponsive">
+                    <span style={{ fontWeight: "bold" }}>Основание:</span>
+                    <Input
+                      name="reason"
+                      id="reason"
+                      width={500}
+                      style={{ background: "white", marginLeft: 0, marginRight: 0, marginBottom: 10 }}
+                    />
+                  </div>
+                </Modal.Body>
+                <Modal.Footer>
+                  <Button
+                    color="warning"
+                    onClick={() => {
+                      setVisibleArchive(false);
+                    }}
+                  >
+                    Затвори
+                  </Button>
+                  <Button color="success" type="submit">
+                    Запази
+                  </Button>
+                </Modal.Footer>
+              </form>
             </Modal>
           )}
           {/* End Modal Area */}

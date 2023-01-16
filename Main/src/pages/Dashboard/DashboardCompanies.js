@@ -342,7 +342,6 @@ const DashboardCompanies = () => {
   const [modal, setModal] = React.useState(false);
   const [current_company, set_current_company] = React.useState(null);
   const [error, setError] = React.useState("");
-  const [valuers, setValuers] = React.useState([]);
   const [certificates_selected, set_certificates_selected] = React.useState([]);
 
   React.useEffect(() => {
@@ -428,6 +427,17 @@ const DashboardCompanies = () => {
                   body.append("certificate_number[]", e.target[`certificate_number_${i}`].value);
                   body.append("certificate_type[]", c.type);
                 });
+
+                if (e.target.valuers.value) {
+                  let valuers = [];
+                  e.target.valuers.value
+                    .replace(/\s/g, "")
+                    .split(",")
+                    .forEach((v) => {
+                      valuers.push(v);
+                    });
+                  valuers.forEach((v) => body.append("valuers[]", v));
+                }
                 body.append("name", e.target.name.value);
                 body.append("city", e.target.city.value);
                 body.append("address", e.target.address.value);
@@ -435,8 +445,6 @@ const DashboardCompanies = () => {
                 body.append("landline", e.target.landline.value);
                 body.append("eik", e.target.eik.value);
                 body.append("visible", e.target.visible.value === "false" ? false : true);
-
-                console.log(body.keys(), body.values());
 
                 const resp = await fetch(`${process.env.REACT_APP_API_URL}/api/post-company`, {
                   method: "POST",
@@ -587,17 +595,18 @@ const DashboardCompanies = () => {
                   />
                 </div>
 
-                {/* <div className="modalResponsive">
-                  <span style={{ fontWeight: "bold" }}>Оценители (имейли, разделени със запетайка):</span>
-                  <div style={{ display: "flex", flexDirection: "column", gap: 20, width: 500 }}>
+                <div className="modalResponsive">
+                  <span style={{ fontWeight: "bold" }}>Оценители:</span>
+                  <div style={{ display: "flex", flexDirection: "column", width: 500 }}>
                     <Input
                       width={500}
                       name={"valuers"}
                       id={"valuers"}
                       style={{ background: "white", marginLeft: 0, marginRight: 0, marginBottom: 10 }}
                     />
+                    <span>Въведете номерате на оценителите, разделени със запетайки</span>
                   </div>
-                </div> */}
+                </div>
                 <div className="modalResponsive">
                   <span style={{ fontWeight: "bold" }}>Видим в регистъра:</span>
                   <div style={{ width: 500 }}>

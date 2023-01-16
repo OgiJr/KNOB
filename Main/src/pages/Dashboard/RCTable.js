@@ -41,37 +41,39 @@ const RCTable = (sofia) => {
     <>
       {/* Modal edit start */}
       <Modal scroll open={visibleEdit} onClose={() => setVisibleEdit(false)}>
-        <Form onSubmit={async (e) => {
-          e.preventDefault();
-          const body = new FormData();
-          body.append("full_name", e.target.full_name.value);
-          body.append("email", e.target.email.value);
-          body.append("is_representative", e.target.isChair.value === "chair" ? true : false);
-          body.append("city", city);
-          const resp = await fetch(`${process.env.REACT_APP_API_URL}/api/post-regional-committee-member`, {
-            method: "POST",
-            body: body,
-            headers: {
-              Authorization: `Bearer ${JSON.parse(localStorage.getItem("user")).token}`,
-            },
-          });
-          if (resp.status !== 200) {
-            const error = await resp.json();
-            setError(error.error);
-          } else {
-            const new_body = new FormData();
-            new_body.append("id", id);
-            await fetch(`${process.env.REACT_APP_API_URL}/api/delete-regional-committee-member`, {
-              method: "DELETE",
-              body: new_body,
+        <Form
+          onSubmit={async (e) => {
+            e.preventDefault();
+            const body = new FormData();
+            body.append("full_name", e.target.full_name.value);
+            body.append("email", e.target.email.value);
+            body.append("is_representative", e.target.isChair.value === "chair" ? true : false);
+            body.append("city", city);
+            const resp = await fetch(`${process.env.REACT_APP_API_URL}/api/post-regional-committee-member`, {
+              method: "POST",
+              body: body,
               headers: {
                 Authorization: `Bearer ${JSON.parse(localStorage.getItem("user")).token}`,
               },
             });
-            setVisibleEdit(false);
-            window.location.reload(false);
-          }
-        }}>
+            if (resp.status !== 200) {
+              const error = await resp.json();
+              setError(error.error);
+            } else {
+              const new_body = new FormData();
+              new_body.append("id", id);
+              await fetch(`${process.env.REACT_APP_API_URL}/api/delete-regional-committee-member`, {
+                method: "DELETE",
+                body: new_body,
+                headers: {
+                  Authorization: `Bearer ${JSON.parse(localStorage.getItem("user")).token}`,
+                },
+              });
+              setVisibleEdit(false);
+              window.location.reload(false);
+            }
+          }}
+        >
           <Modal.Header>
             <div style={{ marginTop: 20 }}>
               {error && <p style={{ color: "red" }}>{error}</p>}
@@ -171,7 +173,6 @@ const RCTable = (sofia) => {
                         <span
                           style={{ cursor: "pointer" }}
                           onClick={() => {
-                            console.log(item);
                             setId(person._id);
                             setCity(item.id);
                             setVisibleEdit(true);

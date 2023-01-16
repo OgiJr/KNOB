@@ -570,7 +570,6 @@ const BarTable = () => {
               let match_cert = false;
               for (const cert of c.current_valid_certificates) {
                 if (cert.certificate_number.includes(certificate_number)) {
-                  console.log(cert.certificate_number);
                   match_cert = true;
                 }
               }
@@ -701,8 +700,8 @@ const BarTable = () => {
                 <div className="modalResponsive">
                   <span style={{ fontWeight: "bold" }}>Сертификати номера:</span>
                   <span style={{ textAlign: "end" }}>
-                    {current_person.current_valid_certificates.length > 0
-                      ? current_person.current_valid_certificates.map((c) => (
+                    {current_company.current_valid_certificates.length > 0
+                      ? current_company.current_valid_certificates.map((c) => (
                           <>
                             {c.certificate_number}: {c.certificate_type}
                             <br />
@@ -723,30 +722,38 @@ const BarTable = () => {
                   <span style={{ fontWeight: "bold" }}>Мобилен:</span>
                   {current_company.mobile_phone}
                 </div>
-                <Row justify="space-between">
-                  <span style={{ fontWeight: "bold", fontSize: 24 }}>Оценители:</span>
-                </Row>
-                {current_company.valuers.map((valuer) => (
+                {current_company && current_company.valuers && current_company.valuers.length > 0 ? (
                   <>
                     <Row justify="space-between">
-                      <span style={{ fontWeight: "bold", color: "orange", fontSize: 20 }}>
-                        {valuer.first_name} {valuer.middle_name} {valuer.last_name}
-                      </span>
+                      <span style={{ fontWeight: "bold", fontSize: 24 }}>Оценители:</span>
                     </Row>
-                    <div className="modalResponsive">
-                      <span style={{ fontWeight: "bold" }}>Правоспособности: </span>
-                      <span style={{ marginLeft: 12 }}>{valuer.capacity.value ? valuer.capacity.value : "Няма"}</span>
-                    </div>
-                    <div className="modalResponsive" style={{}}>
-                      <span style={{ fontWeight: "bold" }}>Сертификати №: </span>
-                      <span style={{ marginLeft: 12 }}>
-                        {valuer.current_valid_certificate
-                          ? valuer.current_valid_certificate.certificate_number
-                          : "Няма"}
-                      </span>
-                    </div>
+                    {current_company.valuers.map((valuer) => (
+                      <>
+                        <Row justify="space-between">
+                          <span style={{ fontWeight: "bold", color: "orange", fontSize: 20 }}>
+                            {valuer.first_name} {valuer.middle_name} {valuer.last_name}
+                          </span>
+                        </Row>
+
+                        <div className="modalResponsive" style={{}}>
+                          <span style={{ fontWeight: "bold" }}>Сертификати №: </span>
+                          <span style={{ marginLeft: 12 }}>
+                            {valuer.current_valid_certificates.length > 0
+                              ? valuer.current_valid_certificates.map((c) => (
+                                  <>
+                                    {c.certificate_number}: {c.certificate_type}
+                                    <br />
+                                  </>
+                                ))
+                              : "Няма"}
+                          </span>
+                        </div>
+                      </>
+                    ))}
                   </>
-                ))}
+                ) : (
+                  <></>
+                )}
               </Modal.Body>
             </Modal>
           ) : (
