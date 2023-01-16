@@ -767,6 +767,10 @@ const DashboardRegistry = () => {
 
                   const body = new FormData();
                   body.append("id", e.target.deactivate_certificate.value);
+                  if (!e.target.reason.value) {
+                    setError("Въведете причина за обезсилване!");
+                    return;
+                  }
                   body.append("reason_for_invalidation", e.target.reason.value);
 
                   if (e.target.new_certificate.value) {

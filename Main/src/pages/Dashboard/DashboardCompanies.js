@@ -400,6 +400,20 @@ const DashboardCompanies = () => {
 
             return true;
           })
+          .map((c) => {
+            let valuer_string = "";
+            for (let i = 0; i < c.valuers.length; i++) {
+              valuer_string += c.valuers[i].number;
+              if (i !== c.valuers.length - 1) {
+                valuer_string += ", ";
+              }
+            }
+
+            let new_c = { ...c };
+            new_c.valuer_string = valuer_string;
+
+            return new_c;
+          })
       );
     }
   }, [
@@ -423,10 +437,12 @@ const DashboardCompanies = () => {
               onSubmit={async (e) => {
                 e.preventDefault();
                 const body = new FormData();
-                certificates_selected.forEach((c, i) => {
-                  body.append("certificate_number[]", e.target[`certificate_number_${i}`].value);
-                  body.append("certificate_type[]", c.type);
-                });
+                if (add) {
+                  certificates_selected.forEach((c, i) => {
+                    body.append("certificate_number[]", e.target[`certificate_number_${i}`].value);
+                    body.append("certificate_type[]", c.type);
+                  });
+                }
 
                 if (e.target.valuers.value) {
                   let valuers = [];
@@ -468,7 +484,7 @@ const DashboardCompanies = () => {
                     width={500}
                     name="name"
                     id="name"
-                    value={current_company && current_company.name}
+                    initialValue={current_company && current_company.name}
                     style={{
                       background: "white",
                       textAlign: "center",
@@ -484,7 +500,7 @@ const DashboardCompanies = () => {
                   <span style={{ fontWeight: "bold" }}>Град:</span>
                   <Input
                     width={500}
-                    value={current_company && current_company.city}
+                    initialValue={current_company && current_company.city}
                     name="city"
                     id="city"
                     style={{ background: "white", marginLeft: 0, marginRight: 0, marginBottom: 10 }}
@@ -496,7 +512,7 @@ const DashboardCompanies = () => {
                     width={500}
                     name="mobile_phone"
                     id="mobile_phone"
-                    value={current_company && current_company.mobile_phone}
+                    initialValue={current_company && current_company.mobile_phone}
                     style={{ background: "white", marginLeft: 0, marginRight: 0, marginBottom: 10 }}
                   />
                 </div>
@@ -506,81 +522,83 @@ const DashboardCompanies = () => {
                     width={500}
                     name="landline"
                     id="landline"
-                    value={current_company && current_company.landline}
+                    initialValue={current_company && current_company.landline}
                     style={{ background: "white", marginLeft: 0, marginRight: 0, marginBottom: 10 }}
                   />
                 </div>
-                <div className="modalResponsive">
-                  <span style={{ fontWeight: "bold" }}>Сертификати:</span>
-                  <span style={{ display: "flex", flexDirection: "column" }}>
-                    {certificates_selected.map((v, i) => (
-                      <>
-                        <div style={{ marginBottom: "8px" }}>Номер</div>
-                        <Input
-                          width={500}
-                          name={"certificate_number_" + i}
-                          id={"certificate_number_" + i}
-                          style={{
-                            background: "white",
-                            textAlign: "center",
-                            marginLeft: 0,
-                            marginRight: 0,
-                            marginBottom: 10,
-                          }}
-                        />
-                        <div style={{ marginTop: "8px", marginBottom: "8px" }}>Вид</div>
-                        <Dropdown placement="bottom-left" css={{ width: 500 }}>
-                          <Dropdown.Button flat color="warning" css={{ width: 500 }}>
-                            {certificates_selected[i]
-                              ? certificates_selected[i].type
-                              : "Изберете оценителска правоспособност"}
-                          </Dropdown.Button>
-                          <Dropdown.Menu
-                            css={{ width: 500 }}
-                            containerCss={{ width: 500 }}
-                            items={capacities}
-                            selectionMode="single"
-                            onSelectionChange={(e) => {
-                              let new_capacities = [...certificates_selected];
-                              new_capacities[i].type = e.currentKey;
-                              set_certificates_selected(new_capacities);
+                {add && (
+                  <div className="modalResponsive">
+                    <span style={{ fontWeight: "bold" }}>Сертификати:</span>
+                    <span style={{ display: "flex", flexDirection: "column" }}>
+                      {certificates_selected.map((v, i) => (
+                        <>
+                          <div style={{ marginBottom: "8px" }}>Номер</div>
+                          <Input
+                            width={500}
+                            name={"certificate_number_" + i}
+                            id={"certificate_number_" + i}
+                            style={{
+                              background: "white",
+                              textAlign: "center",
+                              marginLeft: 0,
+                              marginRight: 0,
+                              marginBottom: 10,
                             }}
-                          >
-                            {(item) => (
-                              <Dropdown.Item key={item.name} css={{ width: 500 }}>
-                                <span style={{ fontSize: 12 }}>{item.name}</span>
-                              </Dropdown.Item>
-                            )}
-                          </Dropdown.Menu>
-                        </Dropdown>
-                        <div style={{ marginTop: "8px", height: "1px", backgroundColor: "gray", width: "100%" }} />
-                      </>
-                    ))}
-                    <div style={{ display: "flex", gap: "1rem", marginTop: "1rem" }}>
-                      <Button
-                        style={{ marginBottom: 10, width: 100 }}
-                        color="warning"
-                        onPress={() => set_certificates_selected([...certificates_selected, {}])}
-                      >
-                        Добавете
-                      </Button>
-                      <Button
-                        style={{ marginBottom: 10, width: 100 }}
-                        color="error"
-                        onPress={() => set_certificates_selected(certificates_selected.slice(0, -1))}
-                      >
-                        Премахнете
-                      </Button>
-                    </div>
-                  </span>
-                </div>
+                          />
+                          <div style={{ marginTop: "8px", marginBottom: "8px" }}>Вид</div>
+                          <Dropdown placement="bottom-left" css={{ width: 500 }}>
+                            <Dropdown.Button flat color="warning" css={{ width: 500 }}>
+                              {certificates_selected[i]
+                                ? certificates_selected[i].type
+                                : "Изберете оценителска правоспособност"}
+                            </Dropdown.Button>
+                            <Dropdown.Menu
+                              css={{ width: 500 }}
+                              containerCss={{ width: 500 }}
+                              items={capacities}
+                              selectionMode="single"
+                              onSelectionChange={(e) => {
+                                let new_capacities = [...certificates_selected];
+                                new_capacities[i].type = e.currentKey;
+                                set_certificates_selected(new_capacities);
+                              }}
+                            >
+                              {(item) => (
+                                <Dropdown.Item key={item.name} css={{ width: 500 }}>
+                                  <span style={{ fontSize: 12 }}>{item.name}</span>
+                                </Dropdown.Item>
+                              )}
+                            </Dropdown.Menu>
+                          </Dropdown>
+                          <div style={{ marginTop: "8px", height: "1px", backgroundColor: "gray", width: "100%" }} />
+                        </>
+                      ))}
+                      <div style={{ display: "flex", gap: "1rem", marginTop: "1rem" }}>
+                        <Button
+                          style={{ marginBottom: 10, width: 100 }}
+                          color="warning"
+                          onPress={() => set_certificates_selected([...certificates_selected, {}])}
+                        >
+                          Добавете
+                        </Button>
+                        <Button
+                          style={{ marginBottom: 10, width: 100 }}
+                          color="error"
+                          onPress={() => set_certificates_selected(certificates_selected.slice(0, -1))}
+                        >
+                          Премахнете
+                        </Button>
+                      </div>
+                    </span>
+                  </div>
+                )}
                 <div className="modalResponsive">
                   <span style={{ fontWeight: "bold" }}>Адрес:</span>
                   <Input
                     width={500}
                     name="address"
                     id="address"
-                    value={current_company && current_company.address}
+                    initialValue={current_company && current_company.address}
                     style={{ background: "white", marginLeft: 0, marginRight: 0, marginBottom: 10 }}
                   />
                 </div>
@@ -588,7 +606,7 @@ const DashboardCompanies = () => {
                   <span style={{ fontWeight: "bold" }}>Булстат:</span>
                   <Input
                     width={500}
-                    value={current_company && current_company.eik}
+                    initialValue={current_company && current_company.eik}
                     name="eik"
                     id="eik"
                     style={{ background: "white", marginLeft: 0, marginRight: 0, marginBottom: 10 }}
@@ -600,6 +618,7 @@ const DashboardCompanies = () => {
                   <div style={{ display: "flex", flexDirection: "column", width: 500 }}>
                     <Input
                       width={500}
+                      initialValue={current_company && current_company.valuer_string}
                       name={"valuers"}
                       id={"valuers"}
                       style={{ background: "white", marginLeft: 0, marginRight: 0, marginBottom: 10 }}
@@ -610,14 +629,7 @@ const DashboardCompanies = () => {
                 <div className="modalResponsive">
                   <span style={{ fontWeight: "bold" }}>Видим в регистъра:</span>
                   <div style={{ width: 500 }}>
-                    <Radio.Group
-                      defaultValue={!current_company ? "false" : current_company.visible ? true : false}
-                      color="warning"
-                      orientation="horizontal"
-                      required
-                      name="visible"
-                      id="visible"
-                    >
+                    <Radio.Group color="warning" orientation="horizontal" required name="visible" id="visible">
                       <Radio value="true">Да</Radio>
                       <Radio value="false">Не</Radio>
                     </Radio.Group>
@@ -646,29 +658,90 @@ const DashboardCompanies = () => {
             </form>
           </Modal>
           <Modal closeButton width="85%" open={visibleArchive} onClose={() => setVisibleArchive(false)}>
-            <Modal.Header>
-              <h5>Обезсилване на сертификата на: {current_company && current_company.name}</h5>
-            </Modal.Header>
-            <Modal.Body style={{ marginLeft: 15, marginRight: 15, marginTop: 15, marginBottom: 15 }}>
-              <div className="modalResponsive">
-                <span style={{ fontWeight: "bold" }}>Обезсилен:</span>
-                <Input width={500} style={{ background: "white", marginLeft: 0, marginRight: 0, marginBottom: 10 }} />
-              </div>
-              <div className="modalResponsive">
-                <span style={{ fontWeight: "bold" }}>Нов:</span>
-                <Input width={500} style={{ background: "white", marginLeft: 0, marginRight: 0, marginBottom: 10 }} />
-              </div>
-              <div className="modalResponsive">
-                <span style={{ fontWeight: "bold" }}>Основание:</span>
-                <Input width={500} style={{ background: "white", marginLeft: 0, marginRight: 0, marginBottom: 10 }} />
-              </div>
-            </Modal.Body>
-            <Modal.Footer>
-              <Button color="warning" onClick={() => setVisibleArchive(false)}>
-                Затвори
-              </Button>
-              <Button color="success">Запази</Button>
-            </Modal.Footer>
+            <form
+              onSubmit={async (e) => {
+                e.preventDefault();
+
+                if (!e.target.deactivate_certificate.value) {
+                  setError("Изберете сертификат, който да бъде обезсилван!");
+                  return;
+                }
+
+                const body = new FormData();
+                body.append("id", e.target.deactivate_certificate.value);
+                if (!e.target.reason.value) {
+                  setError("Въведете причина за обезсилване!");
+                  return;
+                }
+                body.append("reason_for_invalidation", e.target.reason.value);
+
+                if (e.target.new_certificate.value) {
+                  body.append("certificate_number", e.target.new_certificate.value);
+                }
+
+                const resp = await fetch(`${process.env.REACT_APP_API_URL}/api/post-deactivate-certificate`, {
+                  method: "POST",
+                  body: body,
+                  headers: {
+                    Authorization: `Bearer ${JSON.parse(localStorage.getItem("user")).token}`,
+                  },
+                });
+                if (resp.status !== 200) {
+                  const error = await resp.json();
+                  setError(error.error);
+                  return;
+                }
+                window.location.reload();
+              }}
+            >
+              <Modal.Header>
+                <div style={{ display: "flex", flexDirection: "column" }}>
+                  <h5>Обезсилване на сертификата на: {current_company && current_company.name}</h5>
+                  <p style={{ color: "red", fontWeight: "bold" }}>{error}</p>
+                </div>
+              </Modal.Header>
+              <Modal.Body style={{ marginLeft: 15, marginRight: 15, marginTop: 15, marginBottom: 15 }}>
+                <p>Изберете сертификат, който да бъде обезсилван:</p>
+                <Radio.Group
+                  color="warning"
+                  required
+                  name="deactivate_certificate"
+                  id="deactivate_certificate"
+                  style={{ marginTop: 10, marginBottom: 10 }}
+                >
+                  {current_company &&
+                    current_company.current_valid_certificates.map((v, i) => (
+                      <Radio value={v._id}>{v.certificate_number}</Radio>
+                    ))}
+                </Radio.Group>
+                <div className="modalResponsive">
+                  <span style={{ fontWeight: "bold" }}>Нов:</span>
+                  <Input
+                    name="new_certificate"
+                    id="new_certificate"
+                    width={500}
+                    style={{ background: "white", marginLeft: 0, marginRight: 0, marginBottom: 10 }}
+                  />
+                </div>
+                <div className="modalResponsive">
+                  <span style={{ fontWeight: "bold" }}>Основание:</span>
+                  <Input
+                    name="reason"
+                    id="reason"
+                    width={500}
+                    style={{ background: "white", marginLeft: 0, marginRight: 0, marginBottom: 10 }}
+                  />
+                </div>
+              </Modal.Body>
+              <Modal.Footer>
+                <Button color="warning" onClick={() => setVisibleArchive(false)}>
+                  Затвори
+                </Button>
+                <Button color="success" type="submit">
+                  Запази
+                </Button>
+              </Modal.Footer>
+            </form>
           </Modal>
           {/* End Modal Area */}
 

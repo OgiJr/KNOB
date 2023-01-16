@@ -471,7 +471,7 @@ const BarTable = () => {
         invalid_companies.results
           .slice((page - 1) * entries_per_page, (page - 1) * entries_per_page + entries_per_page)
           .map((c) => ({
-            numer: c.number,
+            number: c.number,
             name: c.owner.name,
             type: capacities_map[c.certificate_type],
             oldNumber: c.certificate_number,
@@ -1170,7 +1170,7 @@ const BarTable = () => {
                   </Table.Header>
                   <Table.Body items={mapped_invalid_companies}>
                     {(item) => (
-                      <Table.Row key={item.key}>
+                      <Table.Row key={item.number}>
                         {(columnKey) => (
                           <Table.Cell>
                             <span
