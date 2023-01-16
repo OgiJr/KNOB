@@ -428,14 +428,18 @@ const DashboardRegistry = () => {
                 const first_name = e.target.full_name.value.split(" ")[0];
                 const middle_name = e.target.full_name.value.split(" ")[1];
                 const last_name = e.target.full_name.value.split(" ")[2];
-                certificates_selected.forEach((c, i) => {
-                  body.append("certificate_number[]", e.target[`certificate_number_${i}`].value);
-                  body.append("certificate_type[]", c.type);
-                });
+                if (add) {
+                  certificates_selected.forEach((c, i) => {
+                    body.append("certificate_number[]", e.target[`certificate_number_${i}`].value);
+                    body.append("certificate_type[]", c.type);
+                    body.append("is_knob_member", e.target.is_member.value === "false" ? false : true);
+                  });
+                } else {
+                  body.append("id", current_person._id);
+                }
                 body.append("first_name", first_name);
                 body.append("middle_name", middle_name);
                 body.append("last_name", last_name);
-                body.append("is_knob_member", e.target.is_member.value === "false" ? false : true);
                 body.append("address", e.target.address.value);
                 body.append("landline", e.target.mobile_phone.value);
                 body.append("mobile_phone", e.target.landline.value);
@@ -444,18 +448,21 @@ const DashboardRegistry = () => {
                 body.append("education", e.target.education.value);
                 body.append("city", e.target.city.value);
                 body.append("email", e.target.email.value);
-                if (e.target.egn.value) {
-                  body.append("egn", e.target.egn.value);
-                }
+                body.append("egn", e.target.egn.value);
                 body.append("visible", e.target.visible.value === "false" ? false : true);
 
-                const resp = await fetch(`${process.env.REACT_APP_API_URL}/api/post-user`, {
-                  method: "POST",
-                  body: body,
-                  headers: {
-                    Authorization: `Bearer ${JSON.parse(localStorage.getItem("user")).token}`,
-                  },
-                });
+                const resp = await fetch(
+                  add
+                    ? `${process.env.REACT_APP_API_URL}/api/post-user`
+                    : `${process.env.REACT_APP_API_URL}/api/put-user`,
+                  {
+                    method: add ? "POST" : "PUT",
+                    body: body,
+                    headers: {
+                      Authorization: `Bearer ${JSON.parse(localStorage.getItem("user")).token}`,
+                    },
+                  }
+                );
                 if (resp.status !== 200) {
                   const error = await resp.json();
                   setError(error.error);
@@ -472,7 +479,7 @@ const DashboardRegistry = () => {
                   <p style={{ color: "red", fontWeight: "bold" }}>{error}</p>
                   <Input
                     width={500}
-                    value={current_person && current_person.name}
+                    initialValue={current_person && current_person.name}
                     name="full_name"
                     id="full_name"
                     style={{
@@ -486,91 +493,92 @@ const DashboardRegistry = () => {
                 </div>
               </Modal.Header>
               <Modal.Body style={{ marginLeft: 15, marginRight: 15, marginTop: 15, marginBottom: 15 }}>
-                <div className="modalResponsive">
-                  <span style={{ fontWeight: "bold" }}>Сертификати:</span>
-                  <span style={{ display: "flex", flexDirection: "column" }}>
-                    {certificates_selected.map((v, i) => (
-                      <>
-                        <div style={{ marginBottom: "8px" }}>Номер</div>
-                        <Input
-                          width={500}
-                          name={"certificate_number_" + i}
-                          id={"certificate_number_" + i}
-                          style={{
-                            background: "white",
-                            textAlign: "center",
-                            marginLeft: 0,
-                            marginRight: 0,
-                            marginBottom: 10,
-                          }}
-                        />
-                        <div style={{ marginTop: "8px", marginBottom: "8px" }}>Вид</div>
-                        <Dropdown placement="bottom-left" css={{ width: 500 }}>
-                          <Dropdown.Button flat color="warning" css={{ width: 500 }}>
-                            {certificates_selected[i]
-                              ? certificates_selected[i].type
-                              : "Изберете оценителска правоспособност"}
-                          </Dropdown.Button>
-                          <Dropdown.Menu
-                            css={{ width: 500 }}
-                            containerCss={{ width: 500 }}
-                            items={capacities}
-                            selectionMode="single"
-                            onSelectionChange={(e) => {
-                              let new_capacities = [...certificates_selected];
-                              new_capacities[i].type = e.currentKey;
-                              set_certificates_selected(new_capacities);
-                            }}
+                {add ? (
+                  <>
+                    {" "}
+                    <div className="modalResponsive">
+                      <span style={{ fontWeight: "bold" }}>Сертификати:</span>
+                      <span style={{ display: "flex", flexDirection: "column" }}>
+                        {certificates_selected.map((v, i) => (
+                          <>
+                            <div style={{ marginBottom: "8px" }}>Номер</div>
+                            <Input
+                              width={500}
+                              name={"certificate_number_" + i}
+                              id={"certificate_number_" + i}
+                              style={{
+                                background: "white",
+                                textAlign: "center",
+                                marginLeft: 0,
+                                marginRight: 0,
+                                marginBottom: 10,
+                              }}
+                            />
+                            <div style={{ marginTop: "8px", marginBottom: "8px" }}>Вид</div>
+                            <Dropdown placement="bottom-left" css={{ width: 500 }}>
+                              <Dropdown.Button flat color="warning" css={{ width: 500 }}>
+                                {certificates_selected[i]
+                                  ? certificates_selected[i].type
+                                  : "Изберете оценителска правоспособност"}
+                              </Dropdown.Button>
+                              <Dropdown.Menu
+                                css={{ width: 500 }}
+                                containerCss={{ width: 500 }}
+                                items={capacities}
+                                selectionMode="single"
+                                onSelectionChange={(e) => {
+                                  let new_capacities = [...certificates_selected];
+                                  new_capacities[i].type = e.currentKey;
+                                  set_certificates_selected(new_capacities);
+                                }}
+                              >
+                                {(item) => (
+                                  <Dropdown.Item key={item.name} css={{ width: 500 }}>
+                                    <span style={{ fontSize: 12 }}>{item.name}</span>
+                                  </Dropdown.Item>
+                                )}
+                              </Dropdown.Menu>
+                            </Dropdown>
+                            <div style={{ marginTop: "8px", height: "1px", backgroundColor: "gray", width: "100%" }} />
+                          </>
+                        ))}
+                        <div style={{ display: "flex", gap: "1rem", marginTop: "1rem" }}>
+                          <Button
+                            style={{ marginBottom: 10, width: 100 }}
+                            color="warning"
+                            onPress={() => set_certificates_selected([...certificates_selected, {}])}
                           >
-                            {(item) => (
-                              <Dropdown.Item key={item.name} css={{ width: 500 }}>
-                                <span style={{ fontSize: 12 }}>{item.name}</span>
-                              </Dropdown.Item>
-                            )}
-                          </Dropdown.Menu>
-                        </Dropdown>
-                        <div style={{ marginTop: "8px", height: "1px", backgroundColor: "gray", width: "100%" }} />
-                      </>
-                    ))}
-                    <div style={{ display: "flex", gap: "1rem", marginTop: "1rem" }}>
-                      <Button
-                        style={{ marginBottom: 10, width: 100 }}
-                        color="warning"
-                        onPress={() => set_certificates_selected([...certificates_selected, {}])}
-                      >
-                        Добавете
-                      </Button>
-                      <Button
-                        style={{ marginBottom: 10, width: 100 }}
-                        color="error"
-                        onPress={() => set_certificates_selected(certificates_selected.slice(0, -1))}
-                      >
-                        Премахнете
-                      </Button>
+                            Добавете
+                          </Button>
+                          <Button
+                            style={{ marginBottom: 10, width: 100 }}
+                            color="error"
+                            onPress={() => set_certificates_selected(certificates_selected.slice(0, -1))}
+                          >
+                            Премахнете
+                          </Button>
+                        </div>
+                      </span>
                     </div>
-                  </span>
-                </div>
-                <div className="modalResponsive" style={{ display: "flex" }}>
-                  <span style={{ fontWeight: "bold" }}>Членува в КНОБ:</span>
-                  <div style={{ width: 500, marginBottom: 10 }}>
-                    <Radio.Group
-                      defaultValue={!current_person ? "false" : current_person.is_member === "Да" ? "true" : "false"}
-                      color="warning"
-                      orientation="horizontal"
-                      required
-                      name="is_member"
-                      id="is_member"
-                    >
-                      <Radio value="true">Да</Radio>
-                      <Radio value="false">Не</Radio>
-                    </Radio.Group>
-                  </div>
-                </div>
+                    <div className="modalResponsive" style={{ display: "flex" }}>
+                      <span style={{ fontWeight: "bold" }}>Членува в КНОБ:</span>
+                      <div style={{ width: 500, marginBottom: 10 }}>
+                        <Radio.Group color="warning" orientation="horizontal" required name="is_member" id="is_member">
+                          <Radio value="true">Да</Radio>
+                          <Radio value="false">Не</Radio>
+                        </Radio.Group>
+                      </div>
+                    </div>
+                  </>
+                ) : (
+                  <></>
+                )}
+
                 <div className="modalResponsive">
                   <span style={{ fontWeight: "bold" }}>ЕГН:</span>
                   <Input
                     width={500}
-                    value={current_person && current_person.egn}
+                    initialValue={current_person && current_person.egn}
                     name="egn"
                     id="egn"
                     style={{ background: "white", marginLeft: 0, marginRight: 0, marginBottom: 10 }}
@@ -580,7 +588,7 @@ const DashboardRegistry = () => {
                   <span style={{ fontWeight: "bold" }}>Адрес:</span>
                   <Input
                     width={500}
-                    value={current_person && current_person.address}
+                    initialValue={current_person && current_person.address}
                     name="address"
                     id="address"
                     style={{ background: "white", marginLeft: 0, marginRight: 0, marginBottom: 10 }}
@@ -590,7 +598,7 @@ const DashboardRegistry = () => {
                   <span style={{ fontWeight: "bold" }}>Телефон:</span>
                   <Input
                     width={500}
-                    value={current_person && current_person.landline}
+                    initialValue={current_person && current_person.landline}
                     name="landline"
                     id="landline"
                     style={{ background: "white", marginLeft: 0, marginRight: 0, marginBottom: 10 }}
@@ -600,7 +608,7 @@ const DashboardRegistry = () => {
                   <span style={{ fontWeight: "bold" }}>Мобилен:</span>
                   <Input
                     width={500}
-                    value={current_person && current_person.mobile_phone}
+                    initialValue={current_person && current_person.mobile_phone}
                     name="mobile_phone"
                     id="mobile_phone"
                     style={{ background: "white", marginLeft: 0, marginRight: 0, marginBottom: 10 }}
@@ -610,7 +618,7 @@ const DashboardRegistry = () => {
                   <span style={{ fontWeight: "bold" }}>Email:</span>
                   <Input
                     width={500}
-                    value={current_person && current_person.email}
+                    initialValue={current_person && current_person.email}
                     name="email"
                     id="email"
                     style={{ background: "white", marginLeft: 0, marginRight: 0, marginBottom: 10 }}
@@ -620,7 +628,7 @@ const DashboardRegistry = () => {
                   <span style={{ fontWeight: "bold" }}>Специалност:</span>
                   <Input
                     width={500}
-                    value={current_person && current_person.specialty}
+                    initialValue={current_person && current_person.specialty}
                     name="speciality"
                     id="speciality"
                     style={{ background: "white", marginLeft: 0, marginRight: 0, marginBottom: 10 }}
@@ -630,7 +638,7 @@ const DashboardRegistry = () => {
                   <span style={{ fontWeight: "bold" }}>Град:</span>
                   <Input
                     width={500}
-                    value={current_person && current_person.city}
+                    initialValue={current_person && current_person.city}
                     name="city"
                     id="city"
                     style={{ background: "white", marginLeft: 0, marginRight: 0, marginBottom: 10 }}
@@ -640,7 +648,7 @@ const DashboardRegistry = () => {
                   <span style={{ fontWeight: "bold" }}>Стаж:</span>
                   <Input
                     width={500}
-                    value={current_person && current_person.experience}
+                    initialValue={current_person && current_person.experience}
                     name="experience"
                     id="experience"
                     style={{ background: "white", marginLeft: 0, marginRight: 0, marginBottom: 10 }}
@@ -650,7 +658,7 @@ const DashboardRegistry = () => {
                   <span style={{ fontWeight: "bold" }}>Образование:</span>
                   <Input
                     width={500}
-                    value={current_person && current_person.education}
+                    initialValue={current_person && current_person.education}
                     name="education"
                     id="education"
                     style={{ background: "white", marginLeft: 0, marginRight: 0, marginBottom: 10 }}
@@ -659,14 +667,7 @@ const DashboardRegistry = () => {
                 <div className="modalResponsive">
                   <span style={{ fontWeight: "bold" }}>Видим в регистъра:</span>
                   <div style={{ width: 500 }}>
-                    <Radio.Group
-                      defaultValue={!current_person ? "false" : current_person.visible ? true : false}
-                      color="warning"
-                      orientation="horizontal"
-                      required
-                      name="visible"
-                      id="visible"
-                    >
+                    <Radio.Group color="warning" orientation="horizontal" required name="visible" id="visible">
                       <Radio value="true">Да</Radio>
                       <Radio value="false">Не</Radio>
                     </Radio.Group>
