@@ -24,7 +24,16 @@ const Login = () => {
       <main className="page-wrapper">
         <Header btnStyle="btn-small round btn-icon" />
 
-        <div style={{ display: "flex", alignSelf: "center", justifyContent: "center", alignItems: "center", flexDirection: "column", minHeight: "85vh" }}>
+        <div
+          style={{
+            display: "flex",
+            alignSelf: "center",
+            justifyContent: "center",
+            alignItems: "center",
+            flexDirection: "column",
+            minHeight: "85vh",
+          }}
+        >
           <p style={{ marginTop: 150, color: "red", fontWeight: "bold" }}>{error}</p>
           {loginType === "login" ? (
             <Card style={{ marginBottom: 150, width: 500, display: "flex", alignItems: "center" }}>
@@ -155,15 +164,35 @@ const Login = () => {
                     e.preventDefault();
 
                     // TODO: CHECK EMAIL AND PASS ARE INPUTED
+                    if (
+                      !e.target.email.value ||
+                      !e.target.password.value ||
+                      !e.target.egn.value ||
+                      !e.target.confirm_password.value
+                    ) {
+                      setError("Моля попълнете всички полета");
+                      return;
+                    }
 
                     const body = new FormData();
+                    if (e.target.password.value !== e.target.confirm_password.value) {
+                      setError("Паролите не съвпадат");
+                      return;
+                    }
                     body.append("email", e.target.email.value);
                     body.append("password", e.target.password.value);
+                    body.append("egn", e.target.egn.value);
 
-                    const resp = await fetch(`${process.env.REACT_APP_API_URL}/api/login`, {
+                    const resp = await fetch(`${process.env.REACT_APP_API_URL}/api/post-registration`, {
                       method: "POST",
                       body: body,
                     });
+
+                    if (resp.status !== 200) {
+                      const { error } = await resp.json();
+                      setError(error);
+                      return;
+                    }
 
                     // TODO: error checking
                     const { token } = await resp.json();
@@ -206,7 +235,7 @@ const Login = () => {
                         labelPlaceholder="Потвърдете парола"
                         type="password"
                         status="Default"
-                        name="ConfirmPassword"
+                        name="confirm_password"
                         style={{ background: "white", margin: 0 }}
                       />
                     </Grid>
