@@ -221,7 +221,7 @@ const Login = () => {
                         style={{ background: "white", margin: 0 }}
                       />
                     </Grid>
-                    <Grid style={{ marginTop: 10 }}>
+                    <Grid style={{ marginTop: 30 }}>
                       <Input
                         labelPlaceholder="Парола"
                         type="password"
@@ -230,7 +230,7 @@ const Login = () => {
                         style={{ background: "white", margin: 0 }}
                       />
                     </Grid>
-                    <Grid style={{ marginTop: 10 }}>
+                    <Grid style={{ marginTop: 30 }}>
                       <Input
                         labelPlaceholder="Потвърдете парола"
                         type="password"
