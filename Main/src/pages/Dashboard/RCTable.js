@@ -17,16 +17,16 @@ const columns = [
   },
 ];
 
-const RCTable = (sofia) => {
+const RCTable = ({ sofia, burgas, varna, ruse, pleven, plovdiv, zagora, shumen }) => {
   var regions = [
-    { key: 1, name: "Бургас", id: "Burgas", info: sofia.burgas.members },
-    { key: 2, name: "Варна", id: "Varna", info: sofia.varna.members },
-    { key: 3, name: "Плевен", id: "Pleven", info: sofia.pleven.members },
-    { key: 4, name: "Пловдив", id: "Plovdiv", info: sofia.plovdiv.members },
-    { key: 4, name: "Русе", id: "Ruse", info: sofia.ruse.members },
-    { key: 5, name: "Стара Загора", id: "Zagora", info: sofia.zagora.members },
-    { key: 6, name: "София", id: "Sofia", info: sofia.sofia.members },
-    { key: 7, name: "Шумен", id: "Tutrakan", info: sofia.shumen.members },
+    { key: 1, name: "Бургас", id: "Burgas", info: burgas.members },
+    { key: 2, name: "Варна", id: "Varna", info: varna.members },
+    { key: 3, name: "Плевен", id: "Pleven", info: pleven.members },
+    { key: 4, name: "Пловдив", id: "Plovdiv", info: plovdiv.members },
+    { key: 4, name: "Русе", id: "Ruse", info: ruse.members },
+    { key: 5, name: "Стара Загора", id: "Zagora", info: zagora.members },
+    { key: 6, name: "София", id: "Sofia", info: sofia.members },
+    { key: 7, name: "Шумен", id: "Tutrakan", info: shumen.members },
   ];
 
   const [visibleEdit, setVisibleEdit] = React.useState(false);
@@ -140,64 +140,70 @@ const RCTable = (sofia) => {
         </Form>
       </Modal>
       {/* Modal edit end */}
+
       <div style={{ display: "flex", flexDirection: "column", width: "100%", justifyContent: "center" }}>
         {regions.map((item) => (
-          <div
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              marginLeft: 100,
-              marginRight: 100,
-              marginBottom: 50,
-            }}
-          >
-            <h3>{item.name}</h3>
-            <Table
-              css={{
-                height: "auto",
-                minWidth: "50%",
-              }}
-            >
-              <Table.Header columns={columns}>
-                {(column) => (
-                  <Table.Column key={column.key}>
-                    <span style={{ fontSize: 14, marginLeft: 5, marginRight: 5 }}>{column.label}</span>
-                  </Table.Column>
-                )}
-              </Table.Header>
-              <Table.Body items={item.info}>
-                {(person) => (
-                  <Table.Row key={person._id}>
-                    {(columnKey) => (
-                      <Table.Cell>
-                        <span
-                          style={{ cursor: "pointer" }}
-                          onClick={() => {
-                            setId(person._id);
-                            setCity(item.id);
-                            setVisibleEdit(true);
-                            setEmail(person.email);
-                            setName(person.full_name);
-                            setisRepresentative(person.is_representative);
-                          }}
-                        >
-                          {person.is_representative === false ? (
-                            <span style={{ color: "black", fontSize: 14, fontWeight: "normal" }}>
-                              {person[columnKey] !== false ? person[columnKey] : "Не"}
-                            </span>
-                          ) : (
-                            <span style={{ color: "orange", fontSize: 14, fontWeight: "normal" }}>
-                              {person[columnKey] !== true ? person[columnKey] : "Да"}
-                            </span>
-                          )}
-                        </span>
-                      </Table.Cell>
+          <>
+            {item && item.info && item.info.length > 0 && (
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  marginLeft: 100,
+                  marginRight: 100,
+                  marginBottom: 50,
+                }}
+              >
+                <h3>{item.name}</h3>
+                <Table
+                  css={{
+                    height: "auto",
+                    minWidth: "50%",
+                  }}
+                >
+                  <Table.Header columns={columns}>
+                    {(column) => (
+                      <Table.Column key={column.key}>
+                        <span style={{ fontSize: 14, marginLeft: 5, marginRight: 5 }}>{column.label}</span>
+                      </Table.Column>
                     )}
-                  </Table.Row>
-                )}
-              </Table.Body>
-            </Table>
-          </div>
+                  </Table.Header>
+
+                  <Table.Body items={item.info}>
+                    {(person) => (
+                      <Table.Row key={person._id}>
+                        {(columnKey) => (
+                          <Table.Cell>
+                            <span
+                              style={{ cursor: "pointer" }}
+                              onClick={() => {
+                                setId(person._id);
+                                setCity(item.id);
+                                setVisibleEdit(true);
+                                setEmail(person.email);
+                                setName(person.full_name);
+                                setisRepresentative(person.is_representative);
+                              }}
+                            >
+                              {person.is_representative === false ? (
+                                <span style={{ color: "black", fontSize: 14, fontWeight: "normal" }}>
+                                  {person[columnKey] !== false ? person[columnKey] : "Не"}
+                                </span>
+                              ) : (
+                                <span style={{ color: "orange", fontSize: 14, fontWeight: "normal" }}>
+                                  {person[columnKey] !== true ? person[columnKey] : "Да"}
+                                </span>
+                              )}
+                            </span>
+                          </Table.Cell>
+                        )}
+                      </Table.Row>
+                    )}
+                  </Table.Body>
+                </Table>
+              </div>
+            )}
+          </>
         ))}
       </div>
     </>
