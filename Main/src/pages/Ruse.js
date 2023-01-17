@@ -85,6 +85,7 @@ const Ruse = () => {
                               <b>Председател:</b>
                               <div style={{ display: "flex", flexDirection: "column" }}>
                                 {data &&
+                                  data.members &&
                                   data.members.map((item) => (
                                     <>
                                       {item.is_representative ? (
@@ -105,6 +106,7 @@ const Ruse = () => {
                               <b>Членове:</b>
                               <div style={{ display: "flex", flexDirection: "column" }}>
                                 {data &&
+                                  data.members &&
                                   data.members.map((item) => (
                                     <>
                                       {!item.is_representative ? (
