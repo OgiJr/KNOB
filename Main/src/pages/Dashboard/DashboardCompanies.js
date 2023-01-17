@@ -442,8 +442,7 @@ const DashboardCompanies = () => {
                     body.append("certificate_number[]", e.target[`certificate_number_${i}`].value);
                     body.append("certificate_type[]", c.type);
                   });
-                }
-                else {
+                } else {
                   body.append("id", current_company._id);
                 }
                 if (e.target.valuers.value) {
@@ -654,16 +653,18 @@ const DashboardCompanies = () => {
                     >
                       Добави сертификат
                     </Button>
-                    {current_company && current_company.current_valid_certificates.length > 0 && (<Button
-                      color="error"
-                      onPress={() => {
-                        setModal(false);
-                        setAdd(false);
-                        setVisibleArchive(true);
-                      }}
-                    >
-                      Деактивирай
-                    </Button>)}
+                    {current_company && current_company.current_valid_certificates.length > 0 && (
+                      <Button
+                        color="error"
+                        onPress={() => {
+                          setModal(false);
+                          setAdd(false);
+                          setVisibleArchive(true);
+                        }}
+                      >
+                        Деактивирай
+                      </Button>
+                    )}
                   </div>
                 ) : (
                   <></>
@@ -764,6 +765,28 @@ const DashboardCompanies = () => {
             <form
               onSubmit={async (e) => {
                 e.preventDefault();
+
+                const body = new FormData();
+                body.append("id", current_company._id);
+                body.append("owner_type", "Company");
+                certificates_selected.forEach((v, i) => {
+                  body.append("certificate_number[]", e.target[`certificate_number_${i}`].value);
+                  body.append("certificate_type[]", v.type);
+                });
+
+                const resp = await fetch(`${process.env.REACT_APP_API_URL}/api/post-add-certificate`, {
+                  method: "POST",
+                  body: body,
+                  headers: {
+                    Authorization: `Bearer ${JSON.parse(localStorage.getItem("user")).token}`,
+                  },
+                });
+                if (resp.status !== 200) {
+                  const error = await resp.json();
+                  setError(error.error);
+                } else {
+                  window.location.reload(false);
+                }
               }}
             >
               <Modal.Header>

@@ -858,17 +858,39 @@ const DashboardRegistry = () => {
               </form>
             </Modal>
           )}
-          {current_person &&
+          {current_person && (
             <Modal closeButton width="85%" open={addCertificateVisible} onClose={() => setAddCertificateVisible(false)}>
               <form
                 onSubmit={async (e) => {
                   e.preventDefault();
+
+                  const body = new FormData();
+                  body.append("id", current_person._id);
+                  body.append("owner_type", "User");
+                  certificates_selected.forEach((v, i) => {
+                    body.append("certificate_number[]", e.target[`certificate_number_${i}`].value);
+                    body.append("certificate_type[]", v.type);
+                  });
+
+                  const resp = await fetch(`${process.env.REACT_APP_API_URL}/api/post-add-certificate`, {
+                    method: "POST",
+                    body: body,
+                    headers: {
+                      Authorization: `Bearer ${JSON.parse(localStorage.getItem("user")).token}`,
+                    },
+                  });
+                  if (resp.status !== 200) {
+                    const error = await resp.json();
+                    setError(error.error);
+                  } else {
+                    window.location.reload(false);
+                  }
                 }}
               >
                 <Modal.Header>
                   <div style={{ display: "flex", flexDirection: "column" }}>
                     <h5>
-                      Обезсилване на сертификата на:{" "}
+                      Добавяне на сертификат(и):{" "}
                       {`${current_person.first_name} ${current_person.middle_name} ${current_person.last_name}`}
                     </h5>
                     <p style={{ color: "red", fontWeight: "bold" }}>{error}</p>
@@ -946,7 +968,8 @@ const DashboardRegistry = () => {
                   </Button>
                 </Modal.Footer>
               </form>
-            </Modal>}
+            </Modal>
+          )}
           {/* End Modal Area */}
           <SEO title="Административен панел" />
           <main className="page-wrapper">
