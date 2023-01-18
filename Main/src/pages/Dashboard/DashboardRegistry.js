@@ -407,7 +407,7 @@ const DashboardRegistry = () => {
           })
           .map((user) => ({
             name: `${user.first_name} ${user.middle_name} ${user.last_name}`,
-            is_member: user.is_knob_member && user.current_valid_certificate ? "Да" : "Не",
+            is_member: user.is_knob_member ? "Да" : "Не",
             ...user,
           }))
       );
