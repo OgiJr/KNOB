@@ -432,8 +432,8 @@ const DashboardRegistry = () => {
                   certificates_selected.forEach((c, i) => {
                     body.append("certificate_number[]", e.target[`certificate_number_${i}`].value);
                     body.append("certificate_type[]", c.type);
-                    body.append("is_knob_member", e.target.is_member.value === "false" ? false : true);
                   });
+                  body.append("is_knob_member", e.target.is_member.value === "false" ? false : true);
                 } else {
                   body.append("id", current_person._id);
                 }
