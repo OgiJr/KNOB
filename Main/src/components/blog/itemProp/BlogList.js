@@ -42,7 +42,7 @@ const BlogList = ({ data, StyleVar }) => {
                   <div style={{ display: "flex", flexDirection: "row" }}>
                     <img src="images/icons/file.png" alt="File" style={{ width: 20, height: 20, marginTop: 2 }} />
                     <a
-                      href={`${process.env.REACT_APP_API_URL}/${item.path}`}
+                      href={`${item.path}`}
                       style={{
                         textDecoration: "underline",
                         color: item.name.includes(".doc")
