@@ -32,7 +32,7 @@ const BlogList = ({ data, StyleVar }) => {
           <img
             src={`${process.env.REACT_APP_API_URL}/${data.picture.path}`}
             alt="Blog"
-            style={{ height: 300, width: 300, alignSelf: "center", borderRadius: 50 }}
+            style={{ height: 300, width: 300, alignSelf: "center", borderRadius: 50, objectFit: "cover" }}
           />
           <br />
           <ul className="rn-meta-list">
@@ -48,10 +48,10 @@ const BlogList = ({ data, StyleVar }) => {
                         color: item.name.includes(".doc")
                           ? "#021691"
                           : item.name.includes(".xl") || item.name.includes(".csv")
-                          ? "green"
-                          : item.name.includes(".pdf")
-                          ? "#8b0000"
-                          : "orange",
+                            ? "green"
+                            : item.name.includes(".pdf")
+                              ? "#8b0000"
+                              : "orange",
                       }}
                     >
                       {item.name}

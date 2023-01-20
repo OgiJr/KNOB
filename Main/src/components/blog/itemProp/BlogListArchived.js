@@ -16,14 +16,14 @@ const BlogListArchived = ({ data, StyleVar, international = false }) => {
                       <img
                         src={`${process.env.REACT_APP_API_URL}/${data.picture.path}`}
                         alt="Blog"
-                        style={{ width: "100%", height: "100%", borderRadius: 0 }}
+                        style={{ width: "100%", height: "100%", borderRadius: 0, objecitFit: "cover" }}
                       />
                     </Link>) : (
                     <Link to={`/blog-european?id=${data._id}`} className="image" style={{ height: 200 }}>
                       <img
                         src={`${process.env.REACT_APP_API_URL}/${data.picture.path}`}
                         alt="Blog"
-                        style={{ width: "100%", height: "100%", borderRadius: 0 }}
+                        style={{ width: "100%", height: "100%", borderRadius: 0, objecitFit: "cover" }}
                       />
                     </Link>)}
               </>
@@ -32,7 +32,7 @@ const BlogListArchived = ({ data, StyleVar, international = false }) => {
                 <img
                   src={`${process.env.REACT_APP_API_URL}/${data.picture.path}`}
                   alt="Blog"
-                  style={{ width: "100%", height: "100%", borderRadius: 0 }}
+                  style={{ width: "100%", height: "100%", borderRadius: 0, objecitFit: "cover" }}
                 />
               </div>
             )}
