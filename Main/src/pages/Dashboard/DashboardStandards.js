@@ -161,7 +161,7 @@ const DashboardStandards = () => {
                     }
                   }}
                 >
-                  <Card.Header>Европейски стандарти</Card.Header>
+                  <Card.Header>Български стандарти</Card.Header>
                   <Card.Body>
                     <p style={{ color: "red", fontWeight: "bold" }}>{errorBg}</p>
                     <Input
