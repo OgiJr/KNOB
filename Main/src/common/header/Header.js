@@ -18,7 +18,7 @@ const Header = ({ btnStyle, HeaderSTyle }) => {
           <div className="row align-items-center row--0" style={{ flexWrap: "wrap" }}>
             <div className="col-md-1 col-md-1 col-4">
               <a href="/">
-                <img src="/images/icons/logo.png" alt="Logo" style={{ width: 100 }} />
+                <img src="/images/icons/logo.png" alt="Logo" />
               </a>
             </div>
             <div className="col-lg-11  col-md-6 col-8 position-static" style={{ display: "flex", justifyContent: "end" }}>

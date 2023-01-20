@@ -38,7 +38,7 @@ const ControlBoard = () => {
                       <>
                         {item.is_representative ? (
                           <Text style={{ textAlign: "center", marginBottom: 5, marginTop: 5 }}>
-                            {item.full_name}, Представляващ КНОБ -{" "}
+                            {item.full_name} -{" "}
                             <a href={"mailto:" + item.email} style={{ color: "#ff6d00" }}>
                               {item.email}
                             </a>
