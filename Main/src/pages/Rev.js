@@ -21,7 +21,7 @@ const Rev = () => {
         <div
           className="slider-area slider-style-1 height-850 bg_image"
           data-black-overlay="2"
-          style={{ backgroundImage: `url(/images/banner/international.jpg)` }}
+          style={{ backgroundImage: `url(/images/banner/international.jpg)`, height: 300 }}
         >
           <div className="container">
             <div className="row">

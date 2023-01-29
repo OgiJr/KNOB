@@ -83,20 +83,8 @@ const Contact = () => {
                 </div>
               </div>
               <div className="row mt--40 row--16">
-                <div style={{ display: "flex", flex: 4, flexDirection: "column" }}>
+                <div style={{ display: "flex", flex: 4, flexDirection: "column", marginLeft: 10, marginRight: 10 }}>
                   <ContactForm formStyle="contact-form-1" />
-                </div>
-
-                <div
-                  style={{
-                    display: "flex",
-                    flex: 4,
-                    flexDirection: "column",
-                    alignItems: "center",
-                    justifyContent: "center",
-                  }}
-                >
-                  <img src="/images/about/map.png" alt="" />
                 </div>
               </div>
               <div style={{ marginTop: 20, marginBottom: 20 }}>

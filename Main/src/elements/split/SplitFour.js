@@ -7,7 +7,7 @@ const SplitFour = () => {
         <div className="row no-gutters radius-10 align-items-center">
           <div className="col-lg-12 col-xl-6 col-12">
             <div className="thumbnail image-left-content">
-              <img src="./images/team/team-03.jpg" alt="about" style={{ borderRadius: 50 }} />
+              <img src="./images/team/team-03.jpg" alt="about" style={{ borderRadius: 50, height: 550, objectFit: "cover" }} />
             </div>
           </div>
           <div className="col-lg-12 col-xl-6 col-12">

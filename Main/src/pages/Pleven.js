@@ -22,7 +22,7 @@ const Pleven = () => {
         <div
           className="slider-area slider-style-1 height-850 bg_image"
           data-black-overlay="2"
-          style={{ backgroundImage: `url(/images/banner/pleven.jpg)` }}
+          style={{ backgroundImage: `url(/images/banner/pleven.jpg)`, height: 300 }}
         >
           <div className="container">
             <div className="row">
@@ -83,27 +83,6 @@ const Pleven = () => {
                                   data.members.map((item) => (
                                     <>
                                       {item.is_representative ? (
-                                        <Text style={{ textAlign: "center", marginBottom: 5, marginTop: 5 }}>
-                                          {item.full_name} -{" "}
-                                          <a href={"mailto:" + item.email} style={{ color: "#ff6d00" }}>
-                                            {item.email}
-                                          </a>
-                                        </Text>
-                                      ) : (
-                                        <></>
-                                      )}
-                                    </>
-                                  ))}
-                              </div>
-                            </div>
-                            <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
-                              <b>Членове:</b>
-                              <div style={{ display: "flex", flexDirection: "column" }}>
-                                {data &&
-                                  data.members &&
-                                  data.members.map((item) => (
-                                    <>
-                                      {!item.is_representative ? (
                                         <Text style={{ textAlign: "center", marginBottom: 5, marginTop: 5 }}>
                                           {item.full_name} -{" "}
                                           <a href={"mailto:" + item.email} style={{ color: "#ff6d00" }}>

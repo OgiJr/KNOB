@@ -13,9 +13,9 @@ const AboutUs = () => {
       <main className="page-wrapper">
         {/* Start Slider Area  */}
         <div
-          className="slider-area slider-style-1 height-850 bg_image"
+          className="slider-area slider-style-1 bg_image"
           data-black-overlay="2"
-          style={{ backgroundImage: `url(/images/about/about-6.jpg)` }}
+          style={{ backgroundImage: `url(/images/banner/about.jpg)`, height: 300 }}
         >
           <div className="container">
             <div className="row">
@@ -45,11 +45,11 @@ const AboutUs = () => {
         {/* Start Goals  */}
         <div className="row" style={{ marginLeft: 5, marginRight: 5 }}>
           <div className="col-lg-6 hide-mobile">
-            <div className="content-right">
+            <div className="content-right" style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
               <h4 className="title" style={{ textAlign: "center" }}>
                 Цели
               </h4>
-              <img src="images/about/about-5.jpg" style={{ borderRadius: 100 }} alt="" />
+              <img src="images/about/about-5.jpg" style={{ borderRadius: 50, marginTop: 20, height: 400 }} alt="" />
             </div>
           </div>
           <div className="col-lg-6 mt_md--30 mt_sm--30">
@@ -95,11 +95,11 @@ const AboutUs = () => {
         {/* Start Problems  */}
         <div className="row" style={{ marginLeft: 5, marginRight: 5, marginTop: 50 }}>
           <div className="col-lg-6">
-            <div className="content-left">
+            <div className="content-right" style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
               <h4 className="title" style={{ textAlign: "center" }}>
                 Задачи
               </h4>
-              <img src="images/about/about-2.jpg" style={{ borderRadius: 100, marginTop: 20 }} alt="" />
+              <img src="images/about/about-2.jpg" style={{ borderRadius: 50, marginTop: 20, height: 400 }} alt="" />
             </div>
           </div>
           <div className="col-lg-6 mt_md--30 mt_sm--30">

@@ -15,10 +15,10 @@ const Header = ({ btnStyle, HeaderSTyle }) => {
     <>
       <header ref={ref} className={`rn-header header-default ${HeaderSTyle} ${headerClasses}`}>
         <div style={{ marginRight: "1%", marginLeft: "1%" }} className="position-relative">
-          <div className="row align-items-center row--0" style={{ flexWrap: "wrap" }}>
-            <div className="col-md-1 col-md-1 col-4">
+          <div className="row align-items-center row--0" style={{ flexWrap: "nowrap", marginRight: "10%" }}>
+            <div className="col-md-2 col-4">
               <a href="/">
-                <img src="/images/icons/logo.png" alt="Logo" />
+                <img src="/images/icons/logo-1.png" alt="Logo" />
               </a>
             </div>
             <div className="col-lg-11  col-md-6 col-8 position-static" style={{ display: "flex", justifyContent: "end" }}>
