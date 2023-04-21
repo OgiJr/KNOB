@@ -1,5 +1,14 @@
 import React from "react";
-import { Modal, Button, Dropdown, Input, Pagination, Table, Row, Card } from "@nextui-org/react";
+import {
+  Modal,
+  Button,
+  Dropdown,
+  Input,
+  Pagination,
+  Table,
+  Row,
+  Card,
+} from "@nextui-org/react";
 import "../../assets/scss/table.scss";
 import useSWR from "swr";
 
@@ -290,7 +299,7 @@ const capacities = [
   { name: "Търговски предприятия и вземания" },
   { name: "Финансови активи и фанансови институции" },
   { name: "Други активи" },
-  { name: "Земеделски земи и трайни насъждения" },
+  { name: "Земеделски земи и трайни насаждения" },
   { name: "Поземлени имоти в горски територии" },
 ];
 
@@ -302,7 +311,7 @@ const capacities_map = {
   "Търговски предприятия и вземания": "ТПВ",
   "Финансови активи и фанансови институции": "ФА",
   "Други активи": "ДРУГИ",
-  "Земеделски земи и трайни насъждения": "ЗЗ",
+  "Земеделски земи и трайни насаждения": "ЗЗ",
   "Поземлени имоти в горски територии": "ЗГ",
 };
 
@@ -412,7 +421,9 @@ const BarTable = () => {
   const fetcher = (url) =>
     fetch(url, {
       headers: {
-        Authorization: localStorage.getItem("user").token ? `Bearer ${localStorage.getItem("user").token}` : undefined,
+        Authorization: localStorage.getItem("user").token
+          ? `Bearer ${localStorage.getItem("user").token}`
+          : undefined,
       },
     }).then((res) => res.json());
 
@@ -422,7 +433,8 @@ const BarTable = () => {
   const [mapped_users, set_mapped_users] = React.useState([]);
   const [mapped_companies, set_mapped_companies] = React.useState([]);
   const [mapped_invalid_users, set_mapped_invalid_users] = React.useState([]);
-  const [mapped_invalid_companies, set_mapped_invalid_companies] = React.useState([]);
+  const [mapped_invalid_companies, set_mapped_invalid_companies] =
+    React.useState([]);
 
   const [visible, setVisible] = React.useState(false);
   const [tableType, setTableType] = React.useState("people");
@@ -437,8 +449,14 @@ const BarTable = () => {
   const [entries_per_page, set_entries_per_page] = React.useState(50);
   const [page, set_page] = React.useState(1);
 
-  const { data: users } = useSWR(`${process.env.REACT_APP_API_URL}/api/get-users`, fetcher);
-  const { data: companies } = useSWR(`${process.env.REACT_APP_API_URL}/api/get-companies`, fetcher);
+  const { data: users } = useSWR(
+    `${process.env.REACT_APP_API_URL}/api/get-users`,
+    fetcher
+  );
+  const { data: companies } = useSWR(
+    `${process.env.REACT_APP_API_URL}/api/get-companies`,
+    fetcher
+  );
   const { data: invalid_people } = useSWR(
     `${process.env.REACT_APP_API_URL}/api/get-invalid-certificates?owner_type=User`,
     fetcher
@@ -452,13 +470,18 @@ const BarTable = () => {
     if (invalid_people) {
       set_mapped_invalid_users(
         invalid_people.results
-          .slice((page - 1) * entries_per_page, (page - 1) * entries_per_page + entries_per_page)
+          .slice(
+            (page - 1) * entries_per_page,
+            (page - 1) * entries_per_page + entries_per_page
+          )
           .map((u) => ({
             number: u.number,
             name: `${u.owner.first_name} ${u.owner.middle_name} ${u.owner.last_name}`,
             type: capacities_map[u.certificate_type],
             oldNumber: u.certificate_number,
-            newNumber: u.new_certificate ? u.new_certificate.certificate_number : "Няма",
+            newNumber: u.new_certificate
+              ? u.new_certificate.certificate_number
+              : "Няма",
             reason: u.reason_for_invalidation,
           }))
       );
@@ -469,13 +492,18 @@ const BarTable = () => {
     if (invalid_companies) {
       set_mapped_invalid_companies(
         invalid_companies.results
-          .slice((page - 1) * entries_per_page, (page - 1) * entries_per_page + entries_per_page)
+          .slice(
+            (page - 1) * entries_per_page,
+            (page - 1) * entries_per_page + entries_per_page
+          )
           .map((c) => ({
             number: c.number,
             name: c.owner.name,
             type: capacities_map[c.certificate_type],
             oldNumber: c.certificate_number,
-            newNumber: c.new_certificate ? c.new_certificate.certificate_number : "Няма",
+            newNumber: c.new_certificate
+              ? c.new_certificate.certificate_number
+              : "Няма",
             reason: c.reason_for_invalidation,
           }))
       );
@@ -486,7 +514,10 @@ const BarTable = () => {
     if (users) {
       set_mapped_users(
         users.results
-          .slice((page - 1) * entries_per_page, (page - 1) * entries_per_page + entries_per_page)
+          .slice(
+            (page - 1) * entries_per_page,
+            (page - 1) * entries_per_page + entries_per_page
+          )
           .filter((u) => {
             if (name) {
               const full_name = `${u.first_name} ${u.middle_name} ${u.last_name}`;
@@ -496,7 +527,10 @@ const BarTable = () => {
             }
 
             if (certificate_number) {
-              if (!u.current_valid_certificates || u.current_valid_certificates.length === 0) {
+              if (
+                !u.current_valid_certificates ||
+                u.current_valid_certificates.length === 0
+              ) {
                 return false;
               }
 
@@ -513,14 +547,20 @@ const BarTable = () => {
             }
 
             if (selected_city) {
-              if (selected_city.name !== "Всички" && u.city !== selected_city.name) {
+              if (
+                selected_city.name !== "Всички" &&
+                u.city !== selected_city.name
+              ) {
                 return false;
               }
             }
 
             if (selected_capacity) {
               if (selected_capacity.name !== "Всички") {
-                if (!u.current_valid_certificates || u.current_valid_certificates.length === 0) {
+                if (
+                  !u.current_valid_certificates ||
+                  u.current_valid_certificates.length === 0
+                ) {
                   return false;
                 }
                 let match_cert = false;
@@ -548,13 +588,25 @@ const BarTable = () => {
     } else {
       set_mapped_users([]);
     }
-  }, [users, set_mapped_users, name, certificate_number, selected_city, selected_capacity, entries_per_page, page]);
+  }, [
+    users,
+    set_mapped_users,
+    name,
+    certificate_number,
+    selected_city,
+    selected_capacity,
+    entries_per_page,
+    page,
+  ]);
 
   React.useEffect(() => {
     if (companies) {
       set_mapped_companies(
         companies.results
-          .slice((page - 1) * entries_per_page, (page - 1) * entries_per_page + entries_per_page)
+          .slice(
+            (page - 1) * entries_per_page,
+            (page - 1) * entries_per_page + entries_per_page
+          )
           .filter((c) => {
             if (name) {
               if (!c.name.toLowerCase().includes(name.toLowerCase())) {
@@ -563,7 +615,10 @@ const BarTable = () => {
             }
 
             if (certificate_number) {
-              if (!c.current_valid_certificates || c.current_valid_certificates.length === 0) {
+              if (
+                !c.current_valid_certificates ||
+                c.current_valid_certificates.length === 0
+              ) {
                 return false;
               }
 
@@ -580,14 +635,20 @@ const BarTable = () => {
             }
 
             if (selected_city) {
-              if (selected_city.name !== "Всички" && c.city !== selected_city.name) {
+              if (
+                selected_city.name !== "Всички" &&
+                c.city !== selected_city.name
+              ) {
                 return false;
               }
             }
 
             if (selected_capacity) {
               if (selected_capacity.name !== "Всички") {
-                if (!c.current_valid_certificates || c.current_valid_certificates.length === 0) {
+                if (
+                  !c.current_valid_certificates ||
+                  c.current_valid_certificates.length === 0
+                ) {
                   return false;
                 }
                 let match_cert = false;
@@ -626,7 +687,12 @@ const BarTable = () => {
           {/* Start Modal Area */}
           {tableType === "people" ? (
             current_person ? (
-              <Modal closeButton width="85%" open={visible} onClose={() => setVisible(false)}>
+              <Modal
+                closeButton
+                width="85%"
+                open={visible}
+                onClose={() => setVisible(false)}
+              >
                 <Modal.Header>
                   <h5>{current_person.name}</h5>
                 </Modal.Header>
@@ -643,7 +709,9 @@ const BarTable = () => {
                     {current_person.is_member}
                   </div>
                   <div className="modalResponsive">
-                    <span style={{ fontWeight: "bold" }}>Сертификати номера:</span>
+                    <span style={{ fontWeight: "bold" }}>
+                      Сертификати номера:
+                    </span>
                     <span style={{ textAlign: "end" }}>
                       {current_person.current_valid_certificates.length > 0
                         ? current_person.current_valid_certificates.map((c) => (
@@ -665,19 +733,27 @@ const BarTable = () => {
                   </div>
                   <div className="modalResponsive">
                     <span style={{ fontWeight: "bold" }}>Мобилен:</span>
-                    {current_person.mobile_phone ? current_person.mobile_phone : "Няма"}
+                    {current_person.mobile_phone
+                      ? current_person.mobile_phone
+                      : "Няма"}
                   </div>
                   <div className="modalResponsive">
                     <span style={{ fontWeight: "bold" }}>Специалност:</span>
-                    {current_person.specialty ? current_person.specialty : "Няма"}
+                    {current_person.specialty
+                      ? current_person.specialty
+                      : "Няма"}
                   </div>
                   <div className="modalResponsive">
                     <span style={{ fontWeight: "bold" }}>Стаж:</span>
-                    {current_person.experience ? current_person.experience : "Няма"}
+                    {current_person.experience
+                      ? current_person.experience
+                      : "Няма"}
                   </div>
                   <div className="modalResponsive">
                     <span style={{ fontWeight: "bold" }}>Образование:</span>
-                    {current_person.education ? current_person.education : "Няма"}
+                    {current_person.education
+                      ? current_person.education
+                      : "Няма"}
                   </div>
                 </Modal.Body>
               </Modal>
@@ -685,7 +761,12 @@ const BarTable = () => {
               <> </>
             )
           ) : current_company ? (
-            <Modal closeButton width="85%" open={visible} onClose={() => setVisible(false)}>
+            <Modal
+              closeButton
+              width="85%"
+              open={visible}
+              onClose={() => setVisible(false)}
+            >
               <Modal.Header>
                 <h5>{current_company.name}</h5>
               </Modal.Header>
@@ -698,7 +779,9 @@ const BarTable = () => {
                 }}
               >
                 <div className="modalResponsive">
-                  <span style={{ fontWeight: "bold" }}>Сертификати номера:</span>
+                  <span style={{ fontWeight: "bold" }}>
+                    Сертификати номера:
+                  </span>
                   <span style={{ textAlign: "end" }}>
                     {current_company.current_valid_certificates.length > 0
                       ? current_company.current_valid_certificates.map((c) => (
@@ -715,28 +798,43 @@ const BarTable = () => {
                   {current_company.eik ? current_company.eik : "Няма"}
                 </div>
                 <div className="modalResponsive">
-                  <span style={{ fontWeight: "bold" }}>Адрес на управление:</span>
+                  <span style={{ fontWeight: "bold" }}>
+                    Адрес на управление:
+                  </span>
                   {current_company.address ? current_company.address : "Няма"}
                 </div>
                 <div className="modalResponsive">
                   <span style={{ fontWeight: "bold" }}>Мобилен:</span>
                   {current_company.mobile_phone}
                 </div>
-                {current_company && current_company.valuers && current_company.valuers.length > 0 ? (
+                {current_company &&
+                current_company.valuers &&
+                current_company.valuers.length > 0 ? (
                   <>
                     <Row justify="space-between">
-                      <span style={{ fontWeight: "bold", fontSize: 24 }}>Оценители:</span>
+                      <span style={{ fontWeight: "bold", fontSize: 24 }}>
+                        Оценители:
+                      </span>
                     </Row>
                     {current_company.valuers.map((valuer) => (
                       <>
                         <Row justify="space-between">
-                          <span style={{ fontWeight: "bold", color: "orange", fontSize: 20 }}>
-                            {valuer.first_name} {valuer.middle_name} {valuer.last_name}
+                          <span
+                            style={{
+                              fontWeight: "bold",
+                              color: "orange",
+                              fontSize: 20,
+                            }}
+                          >
+                            {valuer.first_name} {valuer.middle_name}{" "}
+                            {valuer.last_name}
                           </span>
                         </Row>
 
                         <div className="modalResponsive" style={{}}>
-                          <span style={{ fontWeight: "bold" }}>Сертификати №: </span>
+                          <span style={{ fontWeight: "bold" }}>
+                            Сертификати №:{" "}
+                          </span>
                           <span style={{ marginLeft: 12 }}>
                             {valuer.current_valid_certificates.length > 0
                               ? valuer.current_valid_certificates.map((c) => (
@@ -762,9 +860,20 @@ const BarTable = () => {
           {/* End Modal Area */}
 
           {/* Start  Search Area*/}
-          <div style={{ display: "flex", flexDirection: "column", marginLeft: 30 }}>
-            <h3 style={{ color: "orange", marginTop: 30 }}>Публичен регистър на независимите оценители</h3>
-            <div style={{ display: "flex", flexDirection: "column", gap: 10, width: "40rem" }}>
+          <div
+            style={{ display: "flex", flexDirection: "column", marginLeft: 30 }}
+          >
+            <h3 style={{ color: "orange", marginTop: 30 }}>
+              Публичен регистър на независимите оценители
+            </h3>
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                gap: 10,
+                width: "40rem",
+              }}
+            >
               <Button
                 style={{
                   fontSize: 14,
@@ -830,7 +939,10 @@ const BarTable = () => {
                   Филтър
                 </p>
                 <br />
-                <form className="filter" style={{ display: "flex", marginLeft: 15, gap: 30 }}>
+                <form
+                  className="filter"
+                  style={{ display: "flex", marginLeft: 15, gap: 30 }}
+                >
                   <div style={{ display: "flex", flexDirection: "column " }}>
                     {tableType === "people" ? (
                       <Input
@@ -850,13 +962,19 @@ const BarTable = () => {
                       />
                     )}
                     <Dropdown placement="bottom-left">
-                      <Dropdown.Button flat style={{ marginTop: 30 }} color="warning">
+                      <Dropdown.Button
+                        flat
+                        style={{ marginTop: 30 }}
+                        color="warning"
+                      >
                         {selected_city ? selected_city.name : "Град"}
                       </Dropdown.Button>
                       <Dropdown.Menu
                         items={cities}
                         selectionMode="single"
-                        onSelectionChange={(e) => set_selected_city({ name: e.currentKey })}
+                        onSelectionChange={(e) =>
+                          set_selected_city({ name: e.currentKey })
+                        }
                       >
                         {(item) => (
                           <Dropdown.Item key={item.name}>
@@ -868,13 +986,21 @@ const BarTable = () => {
                   </div>
                   <div style={{ display: "flex", flexDirection: "column" }}>
                     <Dropdown placement="bottom-left">
-                      <Dropdown.Button color="warning" flat style={{ marginBottom: 30 }}>
-                        {selected_capacity ? selected_capacity.name : "Оценителска правоспособност"}
+                      <Dropdown.Button
+                        color="warning"
+                        flat
+                        style={{ marginBottom: 30 }}
+                      >
+                        {selected_capacity
+                          ? selected_capacity.name
+                          : "Оценителска правоспособност"}
                       </Dropdown.Button>
                       <Dropdown.Menu
                         items={capacities}
                         selectionMode="single"
-                        onSelectionChange={(e) => set_selected_capacity({ name: e.currentKey })}
+                        onSelectionChange={(e) =>
+                          set_selected_capacity({ name: e.currentKey })
+                        }
                       >
                         {(item) => (
                           <Dropdown.Item key={item.name}>
@@ -913,10 +1039,15 @@ const BarTable = () => {
                         marginRight: 10,
                       }}
                     >
-                      <span style={{ display: "flex", flex: 1 }}>НИ - недвижими имоти</span>
-                      <span style={{ display: "flex", flex: 1 }}>МС - машини и съоръжения</span>
                       <span style={{ display: "flex", flex: 1 }}>
-                        ПИИС - права на интелектуалната и индустриалната собственост
+                        НИ - недвижими имоти
+                      </span>
+                      <span style={{ display: "flex", flex: 1 }}>
+                        МС - машини и съоражения
+                      </span>
+                      <span style={{ display: "flex", flex: 1 }}>
+                        ПИИС - права на интелектуалната и индустриалната
+                        собственост
                       </span>
                     </div>
                     <div
@@ -928,9 +1059,15 @@ const BarTable = () => {
                         marginRight: 10,
                       }}
                     >
-                      <span style={{ display: "flex", flex: 1 }}>ТПВ - търговски предприятия и вземания </span>
-                      <span style={{ display: "flex", flex: 1 }}>ФА - финансови активи и финансови институции </span>
-                      <span style={{ display: "flex", flex: 1 }}>ДРУГИ - други активи</span>
+                      <span style={{ display: "flex", flex: 1 }}>
+                        ТПВ - търговски предприятия и вземания{" "}
+                      </span>
+                      <span style={{ display: "flex", flex: 1 }}>
+                        ФА - финансови активи и финансови институции{" "}
+                      </span>
+                      <span style={{ display: "flex", flex: 1 }}>
+                        ДРУГИ - други активи
+                      </span>
                     </div>
                     <div
                       className="guide"
@@ -941,17 +1078,27 @@ const BarTable = () => {
                         marginRight: 10,
                       }}
                     >
-                      <span style={{ display: "flex", flex: 1 }}>ЗЗ - земеделски земи и трайни насаждения </span>
-                      <span style={{ display: "flex", flex: 1 }}>ЗГ - поземлени имоти в горски територии</span>
+                      <span style={{ display: "flex", flex: 1 }}>
+                        ЗЗ - земеделски земи и трайни насаждения{" "}
+                      </span>
+                      <span style={{ display: "flex", flex: 1 }}>
+                        ЗГ - поземлени имоти в горски територии
+                      </span>
                       <div style={{ display: "flex", flex: 1 }}></div>
                     </div>
                   </Card.Body>
                 </Card>
                 <Button.Group color="warning" style={{ marginTop: 20 }}>
-                  <Button style={{ fontSize: 12 }} onPress={() => setinvalidType("people")}>
+                  <Button
+                    style={{ fontSize: 12 }}
+                    onPress={() => setinvalidType("people")}
+                  >
                     Физически лица
                   </Button>
-                  <Button style={{ fontSize: 12 }} onPress={() => setinvalidType("companies")}>
+                  <Button
+                    style={{ fontSize: 12 }}
+                    onPress={() => setinvalidType("companies")}
+                  >
                     Юридически лица
                   </Button>
                 </Button.Group>
@@ -1025,7 +1172,9 @@ const BarTable = () => {
                     />
                   ) : (
                     <Pagination
-                      total={Math.ceil(companies.results.length / entries_per_page)}
+                      total={Math.ceil(
+                        companies.results.length / entries_per_page
+                      )}
                       initialPage={1}
                       color="warning"
                       size="xl"
@@ -1046,7 +1195,15 @@ const BarTable = () => {
                   <Table.Header columns={columnsPeople}>
                     {(column) => (
                       <Table.Column key={column.key}>
-                        <span style={{ fontSize: 14, marginLeft: 5, marginRight: 5 }}>{column.label}</span>
+                        <span
+                          style={{
+                            fontSize: 14,
+                            marginLeft: 5,
+                            marginRight: 5,
+                          }}
+                        >
+                          {column.label}
+                        </span>
                       </Table.Column>
                     )}
                   </Table.Header>
