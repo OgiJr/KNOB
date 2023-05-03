@@ -455,7 +455,7 @@ const BarTable = () => {
           .slice((page - 1) * entries_per_page, (page - 1) * entries_per_page + entries_per_page)
           .map((u) => ({
             number: u.number,
-            name: `${u.owner.first_name} ${u.owner.middle_name} ${u.owner.last_name}`,
+            name: u.name,
             type: capacities_map[u.certificate_type],
             oldNumber: u.certificate_number,
             newNumber: u.new_certificate ? u.new_certificate.certificate_number : "Няма",
@@ -472,7 +472,7 @@ const BarTable = () => {
           .slice((page - 1) * entries_per_page, (page - 1) * entries_per_page + entries_per_page)
           .map((c) => ({
             number: c.number,
-            name: c.owner.name,
+            name: c.name,
             type: capacities_map[c.certificate_type],
             oldNumber: c.certificate_number,
             newNumber: c.new_certificate ? c.new_certificate.certificate_number : "Няма",
@@ -730,7 +730,13 @@ const BarTable = () => {
                     {current_company.valuers.map((valuer) => (
                       <>
                         <Row justify="space-between">
-                          <span style={{ fontWeight: "bold", color: "orange", fontSize: 20 }}>
+                          <span
+                            style={{
+                              fontWeight: "bold",
+                              color: "orange",
+                              fontSize: 20,
+                            }}
+                          >
                             {valuer.first_name} {valuer.middle_name} {valuer.last_name}
                           </span>
                         </Row>
@@ -764,7 +770,14 @@ const BarTable = () => {
           {/* Start  Search Area*/}
           <div style={{ display: "flex", flexDirection: "column", marginLeft: 30 }}>
             <h3 style={{ color: "orange", marginTop: 30 }}>Публичен регистър на независимите оценители</h3>
-            <div style={{ display: "flex", flexDirection: "column", gap: 10, width: "40rem" }}>
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                gap: 10,
+                width: "40rem",
+              }}
+            >
               <Button
                 style={{
                   fontSize: 14,
@@ -1046,7 +1059,15 @@ const BarTable = () => {
                   <Table.Header columns={columnsPeople}>
                     {(column) => (
                       <Table.Column key={column.key}>
-                        <span style={{ fontSize: 14, marginLeft: 5, marginRight: 5 }}>{column.label}</span>
+                        <span
+                          style={{
+                            fontSize: 14,
+                            marginLeft: 5,
+                            marginRight: 5,
+                          }}
+                        >
+                          {column.label}
+                        </span>
                       </Table.Column>
                     )}
                   </Table.Header>
