@@ -2,9 +2,21 @@ import React from "react";
 import SEO from "../../common/SEO";
 import HeaderAdmin from "../../common/header/HeaderAdmin";
 import Copyright from "../../common/footer/Copyright";
-import { Button, Dropdown, Input, Modal, Pagination, Table } from "@nextui-org/react";
+import {
+  Button,
+  Dropdown,
+  Input,
+  Modal,
+  Pagination,
+  Table,
+} from "@nextui-org/react";
 
-const cities = [{ name: "с. Дряново" }, { name: "Айтос" }, { name: "Аксаково" }, { name: "Априлци" }];
+const cities = [
+  { name: "с. Дряново" },
+  { name: "Айтос" },
+  { name: "Аксаково" },
+  { name: "Априлци" },
+];
 const capacities = [
   { name: "Недвижими имоти" },
   { name: "Недвижими културни ценности" },
@@ -13,7 +25,7 @@ const capacities = [
   { name: "Търговски предприятия и вземания" },
   { name: "Финансови активи и фанансови институции" },
   { name: "Други активи" },
-  { name: "Земеделски земи и трайни насъждения" },
+  { name: "Земеделски земи и трайни насаждения" },
   { name: "Поземлени имоти в горски територии" },
 ];
 
@@ -69,7 +81,7 @@ const rowsPeople = [
     mobile: "0888276526",
     phone: "",
     capacity:
-      "Земеделски земи и трайни насаждения, Машини и съоръжения, Недвижими имоти, Търговски предприятия и вземания",
+      "Земеделски земи и трайни насаждения, Машини и съоражения, Недвижими имоти, Търговски предприятия и вземания",
     certificateNumber:
       "810100079 (30.12.2010 г.) , 300100303 (14.12.2009 г.) , 100100786 (14.12.2009 г.) , 500100271 (14.12.2009 г.)",
     address: "Бургас 8001, ж.к. Братя Миладинови",
@@ -89,7 +101,9 @@ const DashboardMembers = () => {
   const [name, setName] = React.useState("");
   const [capacity, setCapacity] = React.useState(new Set([""]));
   const [address, setAddress] = React.useState(new Set([""]));
-  const [certificateNumber, setCertificateNumber] = React.useState(new Set([""]));
+  const [certificateNumber, setCertificateNumber] = React.useState(
+    new Set([""])
+  );
   const [member, setMember] = React.useState(new Set([""]));
   const [mobile, setMobile] = React.useState(new Set([""]));
   const [phone, setPhone] = React.useState(new Set([""]));
@@ -99,7 +113,10 @@ const DashboardMembers = () => {
   //End people variables
   const [add, setAdd] = React.useState(false);
 
-  const selectedValue = React.useMemo(() => Array.from(selected).join(", ").replaceAll("_", " "), [selected]);
+  const selectedValue = React.useMemo(
+    () => Array.from(selected).join(", ").replaceAll("_", " "),
+    [selected]
+  );
 
   return (
     <>
@@ -107,21 +124,46 @@ const DashboardMembers = () => {
       <main className="page-wrapper">
         <HeaderAdmin btnStyle="btn-small round btn-icon" />
         {/* Start Modal Area */}
-        <Modal closeButton width="85%" open={visible} onClose={() => setVisible(false)}>
+        <Modal
+          closeButton
+          width="85%"
+          open={visible}
+          onClose={() => setVisible(false)}
+        >
           <Modal.Header>
             <Input
               width={500}
               placeholder={name}
-              style={{ background: "white", textAlign: "center", marginLeft: 0, marginRight: 0, marginBottom: 10 }}
+              style={{
+                background: "white",
+                textAlign: "center",
+                marginLeft: 0,
+                marginRight: 0,
+                marginBottom: 10,
+              }}
             />
           </Modal.Header>
-          <Modal.Body style={{ marginLeft: 15, marginRight: 15, marginTop: 15, marginBottom: 15 }}>
+          <Modal.Body
+            style={{
+              marginLeft: 15,
+              marginRight: 15,
+              marginTop: 15,
+              marginBottom: 15,
+            }}
+          >
             <div className="modalResponsive">
-              <span style={{ fontWeight: "bold" }}>Оценителска правоспособност:</span>
+              <span style={{ fontWeight: "bold" }}>
+                Оценителска правоспособност:
+              </span>
               <Input
                 width={500}
                 placeholder={capacity}
-                style={{ background: "white", marginLeft: 0, marginRight: 0, marginBottom: 10 }}
+                style={{
+                  background: "white",
+                  marginLeft: 0,
+                  marginRight: 0,
+                  marginBottom: 10,
+                }}
               />
             </div>
             <div className="modalResponsive">
@@ -129,7 +171,12 @@ const DashboardMembers = () => {
               <Input
                 width={500}
                 placeholder={member}
-                style={{ background: "white", marginLeft: 0, marginRight: 0, marginBottom: 10 }}
+                style={{
+                  background: "white",
+                  marginLeft: 0,
+                  marginRight: 0,
+                  marginBottom: 10,
+                }}
               />
             </div>
             <div className="modalResponsive">
@@ -137,7 +184,12 @@ const DashboardMembers = () => {
               <Input
                 width={500}
                 placeholder={certificateNumber}
-                style={{ background: "white", marginLeft: 0, marginRight: 0, marginBottom: 10 }}
+                style={{
+                  background: "white",
+                  marginLeft: 0,
+                  marginRight: 0,
+                  marginBottom: 10,
+                }}
               />
             </div>
             <div className="modalResponsive">
@@ -145,7 +197,12 @@ const DashboardMembers = () => {
               <Input
                 width={500}
                 placeholder={address}
-                style={{ background: "white", marginLeft: 0, marginRight: 0, marginBottom: 10 }}
+                style={{
+                  background: "white",
+                  marginLeft: 0,
+                  marginRight: 0,
+                  marginBottom: 10,
+                }}
               />
             </div>
             <div className="modalResponsive">
@@ -153,7 +210,12 @@ const DashboardMembers = () => {
               <Input
                 width={500}
                 placeholder={phone}
-                style={{ background: "white", marginLeft: 0, marginRight: 0, marginBottom: 10 }}
+                style={{
+                  background: "white",
+                  marginLeft: 0,
+                  marginRight: 0,
+                  marginBottom: 10,
+                }}
               />
             </div>
             <div className="modalResponsive">
@@ -161,7 +223,12 @@ const DashboardMembers = () => {
               <Input
                 width={500}
                 placeholder={mobile}
-                style={{ background: "white", marginLeft: 0, marginRight: 0, marginBottom: 10 }}
+                style={{
+                  background: "white",
+                  marginLeft: 0,
+                  marginRight: 0,
+                  marginBottom: 10,
+                }}
               />
             </div>
             <div className="modalResponsive">
@@ -169,7 +236,12 @@ const DashboardMembers = () => {
               <Input
                 width={500}
                 placeholder={speciality}
-                style={{ background: "white", marginLeft: 0, marginRight: 0, marginBottom: 10 }}
+                style={{
+                  background: "white",
+                  marginLeft: 0,
+                  marginRight: 0,
+                  marginBottom: 10,
+                }}
               />
             </div>
             <div className="modalResponsive">
@@ -177,7 +249,12 @@ const DashboardMembers = () => {
               <Input
                 width={500}
                 placeholder={expirience}
-                style={{ background: "white", marginLeft: 0, marginRight: 0, marginBottom: 10 }}
+                style={{
+                  background: "white",
+                  marginLeft: 0,
+                  marginRight: 0,
+                  marginBottom: 10,
+                }}
               />
             </div>
             <div className="modalResponsive">
@@ -185,7 +262,12 @@ const DashboardMembers = () => {
               <Input
                 width={500}
                 placeholder={education}
-                style={{ background: "white", marginLeft: 0, marginRight: 0, marginBottom: 10 }}
+                style={{
+                  background: "white",
+                  marginLeft: 0,
+                  marginRight: 0,
+                  marginBottom: 10,
+                }}
               />
             </div>
           </Modal.Body>
@@ -206,17 +288,36 @@ const DashboardMembers = () => {
             <Button color="success">Запази</Button>
           </Modal.Footer>
         </Modal>
-        <Modal closeButton width="85%" open={visibleArchive} onClose={() => setVisibleArchive(false)}>
+        <Modal
+          closeButton
+          width="85%"
+          open={visibleArchive}
+          onClose={() => setVisibleArchive(false)}
+        >
           <Modal.Header>
             <h5>Обезсилване на сертификата на: {name}</h5>
           </Modal.Header>
-          <Modal.Body style={{ marginLeft: 15, marginRight: 15, marginTop: 15, marginBottom: 15 }}>
+          <Modal.Body
+            style={{
+              marginLeft: 15,
+              marginRight: 15,
+              marginTop: 15,
+              marginBottom: 15,
+            }}
+          >
             <div className="modalResponsive">
-              <span style={{ fontWeight: "bold" }}>Оценителска правоспособност:</span>
+              <span style={{ fontWeight: "bold" }}>
+                Оценителска правоспособност:
+              </span>
               <Input
                 width={500}
                 placeholder={capacity}
-                style={{ background: "white", marginLeft: 0, marginRight: 0, marginBottom: 10 }}
+                style={{
+                  background: "white",
+                  marginLeft: 0,
+                  marginRight: 0,
+                  marginBottom: 10,
+                }}
               />
             </div>
             <div className="modalResponsive">
@@ -224,16 +325,37 @@ const DashboardMembers = () => {
               <Input
                 width={500}
                 placeholder={certificateNumber}
-                style={{ background: "white", marginLeft: 0, marginRight: 0, marginBottom: 10 }}
+                style={{
+                  background: "white",
+                  marginLeft: 0,
+                  marginRight: 0,
+                  marginBottom: 10,
+                }}
               />
             </div>
             <div className="modalResponsive">
               <span style={{ fontWeight: "bold" }}>Нов:</span>
-              <Input width={500} style={{ background: "white", marginLeft: 0, marginRight: 0, marginBottom: 10 }} />
+              <Input
+                width={500}
+                style={{
+                  background: "white",
+                  marginLeft: 0,
+                  marginRight: 0,
+                  marginBottom: 10,
+                }}
+              />
             </div>
             <div className="modalResponsive">
               <span style={{ fontWeight: "bold" }}>Основание:</span>
-              <Input width={500} style={{ background: "white", marginLeft: 0, marginRight: 0, marginBottom: 10 }} />
+              <Input
+                width={500}
+                style={{
+                  background: "white",
+                  marginLeft: 0,
+                  marginRight: 0,
+                  marginBottom: 10,
+                }}
+              />
             </div>
           </Modal.Body>
           <Modal.Footer>
@@ -244,9 +366,24 @@ const DashboardMembers = () => {
         {/* End Modal Area */}
 
         {/* Start  Search Area*/}
-        <div style={{ display: "flex", flexDirection: "column", marginLeft: 30 }}>
-          <p style={{ fontSize: 16, fontWeight: "bold", marginTop: 15, marginLeft: 15, marginBottom: 10 }}>Филтър</p>
-          <form className="filter" style={{ display: "flex", marginLeft: 15, gap: 30 }}>
+        <div
+          style={{ display: "flex", flexDirection: "column", marginLeft: 30 }}
+        >
+          <p
+            style={{
+              fontSize: 16,
+              fontWeight: "bold",
+              marginTop: 15,
+              marginLeft: 15,
+              marginBottom: 10,
+            }}
+          >
+            Филтър
+          </p>
+          <form
+            className="filter"
+            style={{ display: "flex", marginLeft: 15, gap: 30 }}
+          >
             <div style={{ display: "flex", flexDirection: "column " }}>
               <Input
                 style={{ background: "white", margin: 0, fontSize: 16 }}
@@ -268,7 +405,11 @@ const DashboardMembers = () => {
             </div>
             <div style={{ display: "flex", flexDirection: "column" }}>
               <Dropdown placement="bottom-left">
-                <Dropdown.Button color="warning" flat style={{ marginBottom: 30 }}>
+                <Dropdown.Button
+                  color="warning"
+                  flat
+                  style={{ marginBottom: 30 }}
+                >
                   Оценителска правоспособност
                 </Dropdown.Button>
                 <Dropdown.Menu items={capacities}>
@@ -286,7 +427,11 @@ const DashboardMembers = () => {
               />
             </div>
             <div style={{ display: "flex", alignItems: "center" }}>
-              <Button style={{ fontSize: 14, height: 30 }} type="submit" color="warning">
+              <Button
+                style={{ fontSize: 14, height: 30 }}
+                type="submit"
+                color="warning"
+              >
                 Покажи
               </Button>
             </div>
@@ -314,8 +459,23 @@ const DashboardMembers = () => {
           >
             Добавяне
           </Button>
-          <div style={{ display: "flex", flexDirection: "row", justifyContent: "end", selfAlign: "end" }}>
-            <div style={{ display: "flex", flexDirection: "row", alignItems: "center", gap: 20, marginTop: 20 }}>
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "row",
+              justifyContent: "end",
+              selfAlign: "end",
+            }}
+          >
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "row",
+                alignItems: "center",
+                gap: 20,
+                marginTop: 20,
+              }}
+            >
               <Dropdown>
                 <Dropdown.Button flat color="warning" size="xl">
                   {selectedValue}
@@ -345,7 +505,12 @@ const DashboardMembers = () => {
                 </Dropdown.Menu>
               </Dropdown>
               <div style={{ marginRight: 20 }}>
-                <Pagination total={20} initialPage={1} color="warning" size="xl" />
+                <Pagination
+                  total={20}
+                  initialPage={1}
+                  color="warning"
+                  size="xl"
+                />
               </div>
             </div>
           </div>
@@ -359,7 +524,11 @@ const DashboardMembers = () => {
               <Table.Header columns={columnsPeople}>
                 {(column) => (
                   <Table.Column key={column.key}>
-                    <span style={{ fontSize: 14, marginLeft: 5, marginRight: 5 }}>{column.label}</span>
+                    <span
+                      style={{ fontSize: 14, marginLeft: 5, marginRight: 5 }}
+                    >
+                      {column.label}
+                    </span>
                   </Table.Column>
                 )}
               </Table.Header>
@@ -385,7 +554,15 @@ const DashboardMembers = () => {
                             setAdd(false);
                           }}
                         >
-                          <span style={{ color: "black", fontSize: 14, fontWeight: "normal" }}>{item[columnKey]}</span>
+                          <span
+                            style={{
+                              color: "black",
+                              fontSize: 14,
+                              fontWeight: "normal",
+                            }}
+                          >
+                            {item[columnKey]}
+                          </span>
                         </span>
                       </Table.Cell>
                     )}

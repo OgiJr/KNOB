@@ -1,5 +1,13 @@
 import React from "react";
-import { Modal, Button, Dropdown, Input, Pagination, Table, Radio } from "@nextui-org/react";
+import {
+  Modal,
+  Button,
+  Dropdown,
+  Input,
+  Pagination,
+  Table,
+  Radio,
+} from "@nextui-org/react";
 import "../../assets/scss/table.scss";
 import useSWR from "swr";
 import SEO from "../../common/SEO";
@@ -292,7 +300,7 @@ const capacities = [
   { name: "Търговски предприятия и вземания" },
   { name: "Финансови активи и фанансови институции" },
   { name: "Други активи" },
-  { name: "Земеделски земи и трайни насъждения" },
+  { name: "Земеделски земи и трайни насаждения" },
   { name: "Поземлени имоти в горски територии" },
 ];
 
@@ -327,7 +335,9 @@ const DashboardRegistry = () => {
   const fetcher = (url) =>
     fetch(url, {
       headers: {
-        Authorization: `Bearer ${JSON.parse(localStorage.getItem("user")).token}`,
+        Authorization: `Bearer ${
+          JSON.parse(localStorage.getItem("user")).token
+        }`,
       },
     }).then((res) => res.json());
 
@@ -339,20 +349,30 @@ const DashboardRegistry = () => {
   const [certificate_number, set_certificate_number] = React.useState("");
   const [entries_per_page, set_entries_per_page] = React.useState(50);
   const [page, set_page] = React.useState(1);
-  const { data: users } = useSWR(`${process.env.REACT_APP_API_URL}/api/get-users`, fetcher);
-  const { data: companies } = useSWR(`${process.env.REACT_APP_API_URL}/api/get-companies`, fetcher);
+  const { data: users } = useSWR(
+    `${process.env.REACT_APP_API_URL}/api/get-users`,
+    fetcher
+  );
+  const { data: companies } = useSWR(
+    `${process.env.REACT_APP_API_URL}/api/get-companies`,
+    fetcher
+  );
   const [visibleArchive, setVisibleArchive] = React.useState(false);
   const [add, setAdd] = React.useState(false);
   const [modal, setModal] = React.useState(false);
   const [error, setError] = React.useState("");
   const [certificates_selected, set_certificates_selected] = React.useState([]);
-  const [addCertificateVisible, setAddCertificateVisible] = React.useState(false);
+  const [addCertificateVisible, setAddCertificateVisible] =
+    React.useState(false);
 
   React.useEffect(() => {
     if (users) {
       set_mapped_users(
         users.results
-          .slice((page - 1) * entries_per_page, (page - 1) * entries_per_page + entries_per_page)
+          .slice(
+            (page - 1) * entries_per_page,
+            (page - 1) * entries_per_page + entries_per_page
+          )
           .filter((u) => {
             if (name) {
               const full_name = `${u.first_name} ${u.middle_name} ${u.last_name}`;
@@ -362,7 +382,10 @@ const DashboardRegistry = () => {
             }
 
             if (certificate_number) {
-              if (!u.current_valid_certificates || u.current_valid_certificates.length === 0) {
+              if (
+                !u.current_valid_certificates ||
+                u.current_valid_certificates.length === 0
+              ) {
                 return false;
               }
 
@@ -379,14 +402,20 @@ const DashboardRegistry = () => {
             }
 
             if (selected_city) {
-              if (selected_city.name !== "Всички" && u.city !== selected_city.name) {
+              if (
+                selected_city.name !== "Всички" &&
+                u.city !== selected_city.name
+              ) {
                 return false;
               }
             }
 
             if (selected_capacity) {
               if (selected_capacity.name !== "Всички") {
-                if (!u.current_valid_certificates || u.current_valid_certificates.length === 0) {
+                if (
+                  !u.current_valid_certificates ||
+                  u.current_valid_certificates.length === 0
+                ) {
                   return false;
                 }
                 let match_cert = false;
@@ -414,13 +443,27 @@ const DashboardRegistry = () => {
     } else {
       set_mapped_users([]);
     }
-  }, [users, set_mapped_users, name, certificate_number, selected_city, selected_capacity, entries_per_page, page]);
+  }, [
+    users,
+    set_mapped_users,
+    name,
+    certificate_number,
+    selected_city,
+    selected_capacity,
+    entries_per_page,
+    page,
+  ]);
   return (
     <>
       {users && companies && (
         <>
           {/* Start Modal Area */}
-          <Modal closeButton width="85%" open={modal} onClose={() => setModal(false)}>
+          <Modal
+            closeButton
+            width="85%"
+            open={modal}
+            onClose={() => setModal(false)}
+          >
             <form
               onSubmit={async (e) => {
                 e.preventDefault();
@@ -430,10 +473,16 @@ const DashboardRegistry = () => {
                 const last_name = e.target.full_name.value.split(" ")[2];
                 if (add) {
                   certificates_selected.forEach((c, i) => {
-                    body.append("certificate_number[]", e.target[`certificate_number_${i}`].value);
+                    body.append(
+                      "certificate_number[]",
+                      e.target[`certificate_number_${i}`].value
+                    );
                     body.append("certificate_type[]", c.type);
                   });
-                  body.append("is_knob_member", e.target.is_member.value === "false" ? false : true);
+                  body.append(
+                    "is_knob_member",
+                    e.target.is_member.value === "false" ? false : true
+                  );
                 } else {
                   body.append("id", current_person._id);
                 }
@@ -449,7 +498,10 @@ const DashboardRegistry = () => {
                 body.append("city", e.target.city.value);
                 body.append("email", e.target.email.value);
                 body.append("egn", e.target.egn.value);
-                body.append("visible", e.target.visible.value === "false" ? false : true);
+                body.append(
+                  "visible",
+                  e.target.visible.value === "false" ? false : true
+                );
 
                 const resp = await fetch(
                   add
@@ -459,14 +511,20 @@ const DashboardRegistry = () => {
                     method: add ? "POST" : "PUT",
                     body: body,
                     headers: {
-                      Authorization: `Bearer ${JSON.parse(localStorage.getItem("user")).token}`,
+                      Authorization: `Bearer ${
+                        JSON.parse(localStorage.getItem("user")).token
+                      }`,
                     },
                   }
                 );
                 if (resp.status !== 200) {
                   const error = await resp.json();
                   setError(error.error);
-                  if (first_name === undefined || middle_name === undefined || last_name === undefined) {
+                  if (
+                    first_name === undefined ||
+                    middle_name === undefined ||
+                    last_name === undefined
+                  ) {
                     setError("Моля въведете име, презиме и фамилия");
                   }
                 } else {
@@ -492,13 +550,22 @@ const DashboardRegistry = () => {
                   />
                 </div>
               </Modal.Header>
-              <Modal.Body style={{ marginLeft: 15, marginRight: 15, marginTop: 15, marginBottom: 15 }}>
+              <Modal.Body
+                style={{
+                  marginLeft: 15,
+                  marginRight: 15,
+                  marginTop: 15,
+                  marginBottom: 15,
+                }}
+              >
                 {add ? (
                   <>
                     {" "}
                     <div className="modalResponsive">
                       <span style={{ fontWeight: "bold" }}>Сертификати:</span>
-                      <span style={{ display: "flex", flexDirection: "column" }}>
+                      <span
+                        style={{ display: "flex", flexDirection: "column" }}
+                      >
                         {certificates_selected.map((v, i) => (
                           <>
                             <div style={{ marginBottom: "8px" }}>Номер</div>
@@ -514,9 +581,20 @@ const DashboardRegistry = () => {
                                 marginBottom: 10,
                               }}
                             />
-                            <div style={{ marginTop: "8px", marginBottom: "8px" }}>Вид</div>
-                            <Dropdown placement="bottom-left" css={{ width: 500 }}>
-                              <Dropdown.Button flat color="warning" css={{ width: 500 }}>
+                            <div
+                              style={{ marginTop: "8px", marginBottom: "8px" }}
+                            >
+                              Вид
+                            </div>
+                            <Dropdown
+                              placement="bottom-left"
+                              css={{ width: 500 }}
+                            >
+                              <Dropdown.Button
+                                flat
+                                color="warning"
+                                css={{ width: 500 }}
+                              >
                                 {certificates_selected[i]
                                   ? certificates_selected[i].type
                                   : "Изберете оценителска правоспособност"}
@@ -527,43 +605,83 @@ const DashboardRegistry = () => {
                                 items={capacities}
                                 selectionMode="single"
                                 onSelectionChange={(e) => {
-                                  let new_capacities = [...certificates_selected];
+                                  let new_capacities = [
+                                    ...certificates_selected,
+                                  ];
                                   new_capacities[i].type = e.currentKey;
                                   set_certificates_selected(new_capacities);
                                 }}
                               >
                                 {(item) => (
-                                  <Dropdown.Item key={item.name} css={{ width: 500 }}>
-                                    <span style={{ fontSize: 12 }}>{item.name}</span>
+                                  <Dropdown.Item
+                                    key={item.name}
+                                    css={{ width: 500 }}
+                                  >
+                                    <span style={{ fontSize: 12 }}>
+                                      {item.name}
+                                    </span>
                                   </Dropdown.Item>
                                 )}
                               </Dropdown.Menu>
                             </Dropdown>
-                            <div style={{ marginTop: "8px", height: "1px", backgroundColor: "gray", width: "100%" }} />
+                            <div
+                              style={{
+                                marginTop: "8px",
+                                height: "1px",
+                                backgroundColor: "gray",
+                                width: "100%",
+                              }}
+                            />
                           </>
                         ))}
-                        <div style={{ display: "flex", gap: "1rem", marginTop: "1rem" }}>
+                        <div
+                          style={{
+                            display: "flex",
+                            gap: "1rem",
+                            marginTop: "1rem",
+                          }}
+                        >
                           <Button
                             style={{ marginBottom: 10, width: 100 }}
                             color="warning"
-                            onPress={() => set_certificates_selected([...certificates_selected, {}])}
+                            onPress={() =>
+                              set_certificates_selected([
+                                ...certificates_selected,
+                                {},
+                              ])
+                            }
                           >
                             Добавете
                           </Button>
                           <Button
                             style={{ marginBottom: 10, width: 100 }}
                             color="error"
-                            onPress={() => set_certificates_selected(certificates_selected.slice(0, -1))}
+                            onPress={() =>
+                              set_certificates_selected(
+                                certificates_selected.slice(0, -1)
+                              )
+                            }
                           >
                             Премахнете
                           </Button>
                         </div>
                       </span>
                     </div>
-                    <div className="modalResponsive" style={{ display: "flex" }}>
-                      <span style={{ fontWeight: "bold" }}>Членува в КНОБ:</span>
+                    <div
+                      className="modalResponsive"
+                      style={{ display: "flex" }}
+                    >
+                      <span style={{ fontWeight: "bold" }}>
+                        Членува в КНОБ:
+                      </span>
                       <div style={{ width: 500, marginBottom: 10 }}>
-                        <Radio.Group color="warning" orientation="horizontal" required name="is_member" id="is_member">
+                        <Radio.Group
+                          color="warning"
+                          orientation="horizontal"
+                          required
+                          name="is_member"
+                          id="is_member"
+                        >
                           <Radio value="true">Да</Radio>
                           <Radio value="false">Не</Radio>
                         </Radio.Group>
@@ -581,7 +699,12 @@ const DashboardRegistry = () => {
                     initialValue={current_person && current_person.egn}
                     name="egn"
                     id="egn"
-                    style={{ background: "white", marginLeft: 0, marginRight: 0, marginBottom: 10 }}
+                    style={{
+                      background: "white",
+                      marginLeft: 0,
+                      marginRight: 0,
+                      marginBottom: 10,
+                    }}
                   />
                 </div>
                 <div className="modalResponsive">
@@ -591,7 +714,12 @@ const DashboardRegistry = () => {
                     initialValue={current_person && current_person.address}
                     name="address"
                     id="address"
-                    style={{ background: "white", marginLeft: 0, marginRight: 0, marginBottom: 10 }}
+                    style={{
+                      background: "white",
+                      marginLeft: 0,
+                      marginRight: 0,
+                      marginBottom: 10,
+                    }}
                   />
                 </div>
                 <div className="modalResponsive">
@@ -601,7 +729,12 @@ const DashboardRegistry = () => {
                     initialValue={current_person && current_person.landline}
                     name="landline"
                     id="landline"
-                    style={{ background: "white", marginLeft: 0, marginRight: 0, marginBottom: 10 }}
+                    style={{
+                      background: "white",
+                      marginLeft: 0,
+                      marginRight: 0,
+                      marginBottom: 10,
+                    }}
                   />
                 </div>
                 <div className="modalResponsive">
@@ -611,7 +744,12 @@ const DashboardRegistry = () => {
                     initialValue={current_person && current_person.mobile_phone}
                     name="mobile_phone"
                     id="mobile_phone"
-                    style={{ background: "white", marginLeft: 0, marginRight: 0, marginBottom: 10 }}
+                    style={{
+                      background: "white",
+                      marginLeft: 0,
+                      marginRight: 0,
+                      marginBottom: 10,
+                    }}
                   />
                 </div>
                 <div className="modalResponsive">
@@ -621,7 +759,12 @@ const DashboardRegistry = () => {
                     initialValue={current_person && current_person.email}
                     name="email"
                     id="email"
-                    style={{ background: "white", marginLeft: 0, marginRight: 0, marginBottom: 10 }}
+                    style={{
+                      background: "white",
+                      marginLeft: 0,
+                      marginRight: 0,
+                      marginBottom: 10,
+                    }}
                   />
                 </div>
                 <div className="modalResponsive">
@@ -631,7 +774,12 @@ const DashboardRegistry = () => {
                     initialValue={current_person && current_person.specialty}
                     name="speciality"
                     id="speciality"
-                    style={{ background: "white", marginLeft: 0, marginRight: 0, marginBottom: 10 }}
+                    style={{
+                      background: "white",
+                      marginLeft: 0,
+                      marginRight: 0,
+                      marginBottom: 10,
+                    }}
                   />
                 </div>
                 <div className="modalResponsive">
@@ -641,7 +789,12 @@ const DashboardRegistry = () => {
                     initialValue={current_person && current_person.city}
                     name="city"
                     id="city"
-                    style={{ background: "white", marginLeft: 0, marginRight: 0, marginBottom: 10 }}
+                    style={{
+                      background: "white",
+                      marginLeft: 0,
+                      marginRight: 0,
+                      marginBottom: 10,
+                    }}
                   />
                 </div>
                 <div className="modalResponsive">
@@ -651,7 +804,12 @@ const DashboardRegistry = () => {
                     initialValue={current_person && current_person.experience}
                     name="experience"
                     id="experience"
-                    style={{ background: "white", marginLeft: 0, marginRight: 0, marginBottom: 10 }}
+                    style={{
+                      background: "white",
+                      marginLeft: 0,
+                      marginRight: 0,
+                      marginBottom: 10,
+                    }}
                   />
                 </div>
                 <div className="modalResponsive">
@@ -661,13 +819,24 @@ const DashboardRegistry = () => {
                     initialValue={current_person && current_person.education}
                     name="education"
                     id="education"
-                    style={{ background: "white", marginLeft: 0, marginRight: 0, marginBottom: 10 }}
+                    style={{
+                      background: "white",
+                      marginLeft: 0,
+                      marginRight: 0,
+                      marginBottom: 10,
+                    }}
                   />
                 </div>
                 <div className="modalResponsive">
                   <span style={{ fontWeight: "bold" }}>Видим в регистъра:</span>
                   <div style={{ width: 500 }}>
-                    <Radio.Group color="warning" orientation="horizontal" required name="visible" id="visible">
+                    <Radio.Group
+                      color="warning"
+                      orientation="horizontal"
+                      required
+                      name="visible"
+                      id="visible"
+                    >
                       <Radio value="true">Да</Radio>
                       <Radio value="false">Не</Radio>
                     </Radio.Group>
@@ -684,13 +853,18 @@ const DashboardRegistry = () => {
                           const body = new FormData();
                           body.append("id", current_person._id);
 
-                          const resp = await fetch(`${process.env.REACT_APP_API_URL}/api/post-deactivate-knob`, {
-                            method: "POST",
-                            body: body,
-                            headers: {
-                              Authorization: `Bearer ${JSON.parse(localStorage.getItem("user")).token}`,
-                            },
-                          });
+                          const resp = await fetch(
+                            `${process.env.REACT_APP_API_URL}/api/post-deactivate-knob`,
+                            {
+                              method: "POST",
+                              body: body,
+                              headers: {
+                                Authorization: `Bearer ${
+                                  JSON.parse(localStorage.getItem("user")).token
+                                }`,
+                              },
+                            }
+                          );
                           if (resp.status !== 200) {
                             const error = await resp.json();
                             setError(error.error);
@@ -707,13 +881,18 @@ const DashboardRegistry = () => {
                           const body = new FormData();
                           body.append("id", current_person._id);
 
-                          const resp = await fetch(`${process.env.REACT_APP_API_URL}/api/post-activate-knob`, {
-                            method: "POST",
-                            body: body,
-                            headers: {
-                              Authorization: `Bearer ${JSON.parse(localStorage.getItem("user")).token}`,
-                            },
-                          });
+                          const resp = await fetch(
+                            `${process.env.REACT_APP_API_URL}/api/post-activate-knob`,
+                            {
+                              method: "POST",
+                              body: body,
+                              headers: {
+                                Authorization: `Bearer ${
+                                  JSON.parse(localStorage.getItem("user")).token
+                                }`,
+                              },
+                            }
+                          );
                           if (resp.status !== 200) {
                             const error = await resp.json();
                             setError(error.error);
@@ -738,7 +917,8 @@ const DashboardRegistry = () => {
                     >
                       Добави сертификат
                     </Button>
-                    {current_person && current_person.current_valid_certificates.length !== 0 ? (
+                    {current_person &&
+                    current_person.current_valid_certificates.length !== 0 ? (
                       <Button
                         color="warning"
                         onPress={() => {
@@ -763,7 +943,12 @@ const DashboardRegistry = () => {
             </form>
           </Modal>
           {current_person && (
-            <Modal closeButton width="85%" open={visibleArchive} onClose={() => setVisibleArchive(false)}>
+            <Modal
+              closeButton
+              width="85%"
+              open={visibleArchive}
+              onClose={() => setVisibleArchive(false)}
+            >
               <form
                 onSubmit={async (e) => {
                   e.preventDefault();
@@ -782,16 +967,24 @@ const DashboardRegistry = () => {
                   body.append("reason_for_invalidation", e.target.reason.value);
 
                   if (e.target.new_certificate.value) {
-                    body.append("certificate_number", e.target.new_certificate.value);
+                    body.append(
+                      "certificate_number",
+                      e.target.new_certificate.value
+                    );
                   }
 
-                  const resp = await fetch(`${process.env.REACT_APP_API_URL}/api/post-deactivate-certificate`, {
-                    method: "POST",
-                    body: body,
-                    headers: {
-                      Authorization: `Bearer ${JSON.parse(localStorage.getItem("user")).token}`,
-                    },
-                  });
+                  const resp = await fetch(
+                    `${process.env.REACT_APP_API_URL}/api/post-deactivate-certificate`,
+                    {
+                      method: "POST",
+                      body: body,
+                      headers: {
+                        Authorization: `Bearer ${
+                          JSON.parse(localStorage.getItem("user")).token
+                        }`,
+                      },
+                    }
+                  );
                   if (resp.status !== 200) {
                     const error = await resp.json();
                     setError(error.error);
@@ -809,7 +1002,14 @@ const DashboardRegistry = () => {
                     <p style={{ color: "red", fontWeight: "bold" }}>{error}</p>
                   </div>
                 </Modal.Header>
-                <Modal.Body style={{ marginLeft: 15, marginRight: 15, marginTop: 15, marginBottom: 15 }}>
+                <Modal.Body
+                  style={{
+                    marginLeft: 15,
+                    marginRight: 15,
+                    marginTop: 15,
+                    marginBottom: 15,
+                  }}
+                >
                   <p>Изберете сертификат, който да бъде обезсилван:</p>
                   <Radio.Group
                     color="warning"
@@ -829,7 +1029,12 @@ const DashboardRegistry = () => {
                       name="new_certificate"
                       id="new_certificate"
                       width={500}
-                      style={{ background: "white", marginLeft: 0, marginRight: 0, marginBottom: 10 }}
+                      style={{
+                        background: "white",
+                        marginLeft: 0,
+                        marginRight: 0,
+                        marginBottom: 10,
+                      }}
                     />
                   </div>
                   <div className="modalResponsive">
@@ -838,7 +1043,12 @@ const DashboardRegistry = () => {
                       name="reason"
                       id="reason"
                       width={500}
-                      style={{ background: "white", marginLeft: 0, marginRight: 0, marginBottom: 10 }}
+                      style={{
+                        background: "white",
+                        marginLeft: 0,
+                        marginRight: 0,
+                        marginBottom: 10,
+                      }}
                     />
                   </div>
                 </Modal.Body>
@@ -859,7 +1069,12 @@ const DashboardRegistry = () => {
             </Modal>
           )}
           {current_person && (
-            <Modal closeButton width="85%" open={addCertificateVisible} onClose={() => setAddCertificateVisible(false)}>
+            <Modal
+              closeButton
+              width="85%"
+              open={addCertificateVisible}
+              onClose={() => setAddCertificateVisible(false)}
+            >
               <form
                 onSubmit={async (e) => {
                   e.preventDefault();
@@ -868,17 +1083,25 @@ const DashboardRegistry = () => {
                   body.append("id", current_person._id);
                   body.append("owner_type", "User");
                   certificates_selected.forEach((v, i) => {
-                    body.append("certificate_number[]", e.target[`certificate_number_${i}`].value);
+                    body.append(
+                      "certificate_number[]",
+                      e.target[`certificate_number_${i}`].value
+                    );
                     body.append("certificate_type[]", v.type);
                   });
 
-                  const resp = await fetch(`${process.env.REACT_APP_API_URL}/api/post-add-certificate`, {
-                    method: "POST",
-                    body: body,
-                    headers: {
-                      Authorization: `Bearer ${JSON.parse(localStorage.getItem("user")).token}`,
-                    },
-                  });
+                  const resp = await fetch(
+                    `${process.env.REACT_APP_API_URL}/api/post-add-certificate`,
+                    {
+                      method: "POST",
+                      body: body,
+                      headers: {
+                        Authorization: `Bearer ${
+                          JSON.parse(localStorage.getItem("user")).token
+                        }`,
+                      },
+                    }
+                  );
                   if (resp.status !== 200) {
                     const error = await resp.json();
                     setError(error.error);
@@ -896,7 +1119,14 @@ const DashboardRegistry = () => {
                     <p style={{ color: "red", fontWeight: "bold" }}>{error}</p>
                   </div>
                 </Modal.Header>
-                <Modal.Body style={{ marginLeft: 15, marginRight: 15, marginTop: 15, marginBottom: 15 }}>
+                <Modal.Body
+                  style={{
+                    marginLeft: 15,
+                    marginRight: 15,
+                    marginTop: 15,
+                    marginBottom: 15,
+                  }}
+                >
                   <span style={{ display: "flex", flexDirection: "column" }}>
                     {certificates_selected.map((v, i) => (
                       <>
@@ -913,9 +1143,15 @@ const DashboardRegistry = () => {
                             marginBottom: 10,
                           }}
                         />
-                        <div style={{ marginTop: "8px", marginBottom: "8px" }}>Вид</div>
+                        <div style={{ marginTop: "8px", marginBottom: "8px" }}>
+                          Вид
+                        </div>
                         <Dropdown placement="bottom-left" css={{ width: 500 }}>
-                          <Dropdown.Button flat color="warning" css={{ width: 500 }}>
+                          <Dropdown.Button
+                            flat
+                            color="warning"
+                            css={{ width: 500 }}
+                          >
                             {certificates_selected[i]
                               ? certificates_selected[i].type
                               : "Изберете оценителска правоспособност"}
@@ -932,27 +1168,54 @@ const DashboardRegistry = () => {
                             }}
                           >
                             {(item) => (
-                              <Dropdown.Item key={item.name} css={{ width: 500 }}>
-                                <span style={{ fontSize: 12 }}>{item.name}</span>
+                              <Dropdown.Item
+                                key={item.name}
+                                css={{ width: 500 }}
+                              >
+                                <span style={{ fontSize: 12 }}>
+                                  {item.name}
+                                </span>
                               </Dropdown.Item>
                             )}
                           </Dropdown.Menu>
                         </Dropdown>
-                        <div style={{ marginTop: "8px", height: "1px", backgroundColor: "gray", width: "100%" }} />
+                        <div
+                          style={{
+                            marginTop: "8px",
+                            height: "1px",
+                            backgroundColor: "gray",
+                            width: "100%",
+                          }}
+                        />
                       </>
                     ))}
-                    <div style={{ display: "flex", gap: "1rem", marginTop: "1rem" }}>
+                    <div
+                      style={{
+                        display: "flex",
+                        gap: "1rem",
+                        marginTop: "1rem",
+                      }}
+                    >
                       <Button
                         style={{ marginBottom: 10, width: 100 }}
                         color="warning"
-                        onPress={() => set_certificates_selected([...certificates_selected, {}])}
+                        onPress={() =>
+                          set_certificates_selected([
+                            ...certificates_selected,
+                            {},
+                          ])
+                        }
                       >
                         Добавете
                       </Button>
                       <Button
                         style={{ marginBottom: 10, width: 100 }}
                         color="error"
-                        onPress={() => set_certificates_selected(certificates_selected.slice(0, -1))}
+                        onPress={() =>
+                          set_certificates_selected(
+                            certificates_selected.slice(0, -1)
+                          )
+                        }
                       >
                         Премахнете
                       </Button>
@@ -960,7 +1223,10 @@ const DashboardRegistry = () => {
                   </span>
                 </Modal.Body>
                 <Modal.Footer>
-                  <Button color="warning" onClick={() => setVisibleArchive(false)}>
+                  <Button
+                    color="warning"
+                    onClick={() => setVisibleArchive(false)}
+                  >
                     Затвори
                   </Button>
                   <Button color="success" type="submit">
@@ -975,8 +1241,16 @@ const DashboardRegistry = () => {
           <main className="page-wrapper">
             <HeaderAdmin btnStyle="btn-small round btn-icon" />
             {/* Start  Search Area*/}
-            <div style={{ display: "flex", flexDirection: "column", marginLeft: 30 }}>
-              <h3 style={{ color: "orange", marginTop: 30 }}>Публичен регистър на независимите оценители</h3>
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                marginLeft: 30,
+              }}
+            >
+              <h3 style={{ color: "orange", marginTop: 30 }}>
+                Публичен регистър на независимите оценители
+              </h3>
               <p
                 style={{
                   fontSize: 16,
@@ -989,7 +1263,10 @@ const DashboardRegistry = () => {
                 Филтър
               </p>
               <br />
-              <form className="filter" style={{ display: "flex", marginLeft: 15, gap: 30 }}>
+              <form
+                className="filter"
+                style={{ display: "flex", marginLeft: 15, gap: 30 }}
+              >
                 <div style={{ display: "flex", flexDirection: "column " }}>
                   <Input
                     style={{ background: "white", margin: 0, fontSize: 16 }}
@@ -1000,13 +1277,19 @@ const DashboardRegistry = () => {
                   />
 
                   <Dropdown placement="bottom-left">
-                    <Dropdown.Button flat style={{ marginTop: 30 }} color="warning">
+                    <Dropdown.Button
+                      flat
+                      style={{ marginTop: 30 }}
+                      color="warning"
+                    >
                       {selected_city ? selected_city.name : "Град"}
                     </Dropdown.Button>
                     <Dropdown.Menu
                       items={cities}
                       selectionMode="single"
-                      onSelectionChange={(e) => set_selected_city({ name: e.currentKey })}
+                      onSelectionChange={(e) =>
+                        set_selected_city({ name: e.currentKey })
+                      }
                     >
                       {(item) => (
                         <Dropdown.Item key={item.name}>
@@ -1018,13 +1301,21 @@ const DashboardRegistry = () => {
                 </div>
                 <div style={{ display: "flex", flexDirection: "column" }}>
                   <Dropdown placement="bottom-left">
-                    <Dropdown.Button color="warning" flat style={{ marginBottom: 30 }}>
-                      {selected_capacity ? selected_capacity.name : "Оценителска правоспособност"}
+                    <Dropdown.Button
+                      color="warning"
+                      flat
+                      style={{ marginBottom: 30 }}
+                    >
+                      {selected_capacity
+                        ? selected_capacity.name
+                        : "Оценителска правоспособност"}
                     </Dropdown.Button>
                     <Dropdown.Menu
                       items={capacities}
                       selectionMode="single"
-                      onSelectionChange={(e) => set_selected_capacity({ name: e.currentKey })}
+                      onSelectionChange={(e) =>
+                        set_selected_capacity({ name: e.currentKey })
+                      }
                     >
                       {(item) => (
                         <Dropdown.Item key={item.name}>
@@ -1130,7 +1421,15 @@ const DashboardRegistry = () => {
                   <Table.Header columns={columnsPeople}>
                     {(column) => (
                       <Table.Column key={column.key}>
-                        <span style={{ fontSize: 14, marginLeft: 5, marginRight: 5 }}>{column.label}</span>
+                        <span
+                          style={{
+                            fontSize: 14,
+                            marginLeft: 5,
+                            marginRight: 5,
+                          }}
+                        >
+                          {column.label}
+                        </span>
                       </Table.Column>
                     )}
                   </Table.Header>
@@ -1148,7 +1447,13 @@ const DashboardRegistry = () => {
                                 setModal(true);
                               }}
                             >
-                              <span style={{ color: "black", fontSize: 14, fontWeight: "normal" }}>
+                              <span
+                                style={{
+                                  color: "black",
+                                  fontSize: 14,
+                                  fontWeight: "normal",
+                                }}
+                              >
                                 {item[columnKey]}
                               </span>
                             </span>
