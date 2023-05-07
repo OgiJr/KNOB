@@ -1014,15 +1014,6 @@ const BarTable = () => {
                     <Dropdown.Item key="100">
                       <span style={{ fontSize: 14 }}>100</span>
                     </Dropdown.Item>
-                    <Dropdown.Item key="500">
-                      <span style={{ fontSize: 14 }}>500</span>
-                    </Dropdown.Item>
-                    <Dropdown.Item key="1000">
-                      <span style={{ fontSize: 14 }}>1000</span>
-                    </Dropdown.Item>
-                    <Dropdown.Item key="2000">
-                      <span style={{ fontSize: 14 }}>2000</span>
-                    </Dropdown.Item>
                   </Dropdown.Menu>
                 </Dropdown>
                 <div style={{ marginRight: 20 }}>
