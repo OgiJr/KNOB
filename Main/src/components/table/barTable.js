@@ -451,16 +451,14 @@ const BarTable = () => {
   React.useEffect(() => {
     if (invalid_people) {
       set_mapped_invalid_users(
-        invalid_people.results
-          .map((u) => ({
-            number: u.number,
-            name: u.name,
-            type: capacities_map[u.certificate_type],
-            oldNumber: u.certificate_number,
-            newNumber: u.new_certificate ? u.new_certificate.certificate_number : "Няма",
-            reason: u.reason_for_invalidation,
-          }))
-          .slice((page - 1) * entries_per_page, (page - 1) * entries_per_page + entries_per_page)
+        invalid_people.results.map((u) => ({
+          number: u.number,
+          name: u.name,
+          type: capacities_map[u.certificate_type],
+          oldNumber: u.certificate_number,
+          newNumber: u.new_certificate ? u.new_certificate.certificate_number : "Няма",
+          reason: u.reason_for_invalidation,
+        }))
       );
     }
   }, [invalid_people, page, entries_per_page, set_mapped_invalid_users]);
@@ -468,16 +466,14 @@ const BarTable = () => {
   React.useEffect(() => {
     if (invalid_companies) {
       set_mapped_invalid_companies(
-        invalid_companies.results
-          .map((c) => ({
-            number: c.number,
-            name: c.name,
-            type: capacities_map[c.certificate_type],
-            oldNumber: c.certificate_number,
-            newNumber: c.new_certificate ? c.new_certificate.certificate_number : "Няма",
-            reason: c.reason_for_invalidation,
-          }))
-          .slice((page - 1) * entries_per_page, (page - 1) * entries_per_page + entries_per_page)
+        invalid_companies.results.map((c) => ({
+          number: c.number,
+          name: c.name,
+          type: capacities_map[c.certificate_type],
+          oldNumber: c.certificate_number,
+          newNumber: c.new_certificate ? c.new_certificate.certificate_number : "Няма",
+          reason: c.reason_for_invalidation,
+        }))
       );
     }
   }, [invalid_companies, page, entries_per_page, set_mapped_invalid_companies]);
@@ -543,7 +539,6 @@ const BarTable = () => {
             is_member: user.is_knob_member ? "Да" : "Не",
             ...user,
           }))
-          .slice((page - 1) * entries_per_page, (page - 1) * entries_per_page + entries_per_page)
       );
     } else {
       set_mapped_users([]);
@@ -553,22 +548,45 @@ const BarTable = () => {
   React.useEffect(() => {
     if (companies) {
       set_mapped_companies(
-        companies.results
-          .filter((c) => {
-            if (name) {
-              if (!c.name.toLowerCase().includes(name.toLowerCase())) {
-                return false;
+        companies.results.filter((c) => {
+          if (name) {
+            if (!c.name.toLowerCase().includes(name.toLowerCase())) {
+              return false;
+            }
+          }
+
+          if (certificate_number) {
+            if (!c.current_valid_certificates || c.current_valid_certificates.length === 0) {
+              return false;
+            }
+
+            let match_cert = false;
+            for (const cert of c.current_valid_certificates) {
+              if (cert.certificate_number.includes(certificate_number)) {
+                match_cert = true;
               }
             }
 
-            if (certificate_number) {
+            if (!match_cert) {
+              return false;
+            }
+          }
+
+          if (selected_city) {
+            if (selected_city.name !== "Всички" && c.city !== selected_city.name) {
+              return false;
+            }
+          }
+
+          if (selected_capacity) {
+            if (selected_capacity.name !== "Всички") {
               if (!c.current_valid_certificates || c.current_valid_certificates.length === 0) {
                 return false;
               }
-
               let match_cert = false;
+
               for (const cert of c.current_valid_certificates) {
-                if (cert.certificate_number.includes(certificate_number)) {
+                if (cert.certificate_type === selected_capacity.name) {
                   match_cert = true;
                 }
               }
@@ -577,35 +595,10 @@ const BarTable = () => {
                 return false;
               }
             }
+          }
 
-            if (selected_city) {
-              if (selected_city.name !== "Всички" && c.city !== selected_city.name) {
-                return false;
-              }
-            }
-
-            if (selected_capacity) {
-              if (selected_capacity.name !== "Всички") {
-                if (!c.current_valid_certificates || c.current_valid_certificates.length === 0) {
-                  return false;
-                }
-                let match_cert = false;
-
-                for (const cert of c.current_valid_certificates) {
-                  if (cert.certificate_type === selected_capacity.name) {
-                    match_cert = true;
-                  }
-                }
-
-                if (!match_cert) {
-                  return false;
-                }
-              }
-            }
-
-            return true;
-          })
-          .slice((page - 1) * entries_per_page, (page - 1) * entries_per_page + entries_per_page)
+          return true;
+        })
       );
     }
   }, [
@@ -1094,7 +1087,12 @@ const BarTable = () => {
                       </Table.Column>
                     )}
                   </Table.Header>
-                  <Table.Body items={mapped_users}>
+                  <Table.Body
+                    items={mapped_users.slice(
+                      (page - 1) * entries_per_page,
+                      (page - 1) * entries_per_page + entries_per_page
+                    )}
+                  >
                     {(item) => (
                       <Table.Row key={item._id}>
                         {(columnKey) => (
@@ -1136,7 +1134,12 @@ const BarTable = () => {
                       </Table.Column>
                     )}
                   </Table.Header>
-                  <Table.Body items={mapped_companies}>
+                  <Table.Body
+                    items={mapped_companies.slice(
+                      (page - 1) * entries_per_page,
+                      (page - 1) * entries_per_page + entries_per_page
+                    )}
+                  >
                     {(item) => (
                       <Table.Row key={item._id}>
                         {(columnKey) => (
@@ -1178,7 +1181,12 @@ const BarTable = () => {
                       </Table.Column>
                     )}
                   </Table.Header>
-                  <Table.Body items={mapped_invalid_users}>
+                  <Table.Body
+                    items={mapped_invalid_users.slice(
+                      (page - 1) * entries_per_page,
+                      (page - 1) * entries_per_page + entries_per_page
+                    )}
+                  >
                     {(item) => (
                       <Table.Row key={item.number}>
                         {(columnKey) => (
@@ -1212,7 +1220,12 @@ const BarTable = () => {
                       </Table.Column>
                     )}
                   </Table.Header>
-                  <Table.Body items={mapped_invalid_companies}>
+                  <Table.Body
+                    items={mapped_invalid_companies.slice(
+                      (page - 1) * entries_per_page,
+                      (page - 1) * entries_per_page + entries_per_page
+                    )}
+                  >
                     {(item) => (
                       <Table.Row key={item.number}>
                         {(columnKey) => (
