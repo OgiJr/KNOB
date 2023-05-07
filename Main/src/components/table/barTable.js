@@ -793,6 +793,7 @@ const BarTable = () => {
                   set_selected_capacity(null);
                   set_certificate_number("");
                   set_selected_city(null);
+                  set_page(1);
                 }}
               >
                 Физически лица
@@ -812,6 +813,7 @@ const BarTable = () => {
                   set_selected_capacity(null);
                   set_certificate_number("");
                   set_selected_city(null);
+                  set_page(1);
                 }}
               >
                 Юридически лица
@@ -824,7 +826,10 @@ const BarTable = () => {
                   marginLeft: 30,
                 }}
                 color="warning"
-                onPress={() => setTableType("invalid")}
+                onPress={() => {
+                  setTableType("invalid");
+                  set_page(1);
+                }}
               >
                 Обезсилени сертификати
               </Button>
@@ -1028,9 +1033,27 @@ const BarTable = () => {
                   </Dropdown.Menu>
                 </Dropdown>
                 <div style={{ marginRight: 20 }}>
-                  {tableType === "people" ? (
+                  {tableType !== "invalid" ? (
+                    tableType === "people" ? (
+                      <Pagination
+                        total={Math.ceil(mapped_users.length / entries_per_page)}
+                        initialPage={1}
+                        color="warning"
+                        size="xl"
+                        onChange={(p) => set_page(p)}
+                      />
+                    ) : (
+                      <Pagination
+                        total={Math.ceil(mapped_companies.length / entries_per_page)}
+                        initialPage={1}
+                        color="warning"
+                        size="xl"
+                        onChange={(p) => set_page(p)}
+                      />
+                    )
+                  ) : invalidType === "people" ? (
                     <Pagination
-                      total={Math.ceil(users.results.length / entries_per_page)}
+                      total={Math.ceil(mapped_invalid_users.length / entries_per_page)}
                       initialPage={1}
                       color="warning"
                       size="xl"
@@ -1038,7 +1061,7 @@ const BarTable = () => {
                     />
                   ) : (
                     <Pagination
-                      total={Math.ceil(companies.results.length / entries_per_page)}
+                      total={Math.ceil(mapped_invalid_companies.length / entries_per_page)}
                       initialPage={1}
                       color="warning"
                       size="xl"
