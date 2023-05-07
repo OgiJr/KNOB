@@ -452,7 +452,6 @@ const BarTable = () => {
     if (invalid_people) {
       set_mapped_invalid_users(
         invalid_people.results
-          .slice((page - 1) * entries_per_page, (page - 1) * entries_per_page + entries_per_page)
           .map((u) => ({
             number: u.number,
             name: u.name,
@@ -461,6 +460,7 @@ const BarTable = () => {
             newNumber: u.new_certificate ? u.new_certificate.certificate_number : "Няма",
             reason: u.reason_for_invalidation,
           }))
+          .slice((page - 1) * entries_per_page, (page - 1) * entries_per_page + entries_per_page)
       );
     }
   }, [invalid_people, page, entries_per_page, set_mapped_invalid_users]);
@@ -469,7 +469,6 @@ const BarTable = () => {
     if (invalid_companies) {
       set_mapped_invalid_companies(
         invalid_companies.results
-          .slice((page - 1) * entries_per_page, (page - 1) * entries_per_page + entries_per_page)
           .map((c) => ({
             number: c.number,
             name: c.name,
@@ -478,6 +477,7 @@ const BarTable = () => {
             newNumber: c.new_certificate ? c.new_certificate.certificate_number : "Няма",
             reason: c.reason_for_invalidation,
           }))
+          .slice((page - 1) * entries_per_page, (page - 1) * entries_per_page + entries_per_page)
       );
     }
   }, [invalid_companies, page, entries_per_page, set_mapped_invalid_companies]);
@@ -486,7 +486,6 @@ const BarTable = () => {
     if (users) {
       set_mapped_users(
         users.results
-          .slice((page - 1) * entries_per_page, (page - 1) * entries_per_page + entries_per_page)
           .filter((u) => {
             if (name) {
               const full_name = `${u.first_name} ${u.middle_name} ${u.last_name}`;
@@ -544,6 +543,7 @@ const BarTable = () => {
             is_member: user.is_knob_member ? "Да" : "Не",
             ...user,
           }))
+          .slice((page - 1) * entries_per_page, (page - 1) * entries_per_page + entries_per_page)
       );
     } else {
       set_mapped_users([]);
@@ -554,7 +554,6 @@ const BarTable = () => {
     if (companies) {
       set_mapped_companies(
         companies.results
-          .slice((page - 1) * entries_per_page, (page - 1) * entries_per_page + entries_per_page)
           .filter((c) => {
             if (name) {
               if (!c.name.toLowerCase().includes(name.toLowerCase())) {
@@ -606,6 +605,7 @@ const BarTable = () => {
 
             return true;
           })
+          .slice((page - 1) * entries_per_page, (page - 1) * entries_per_page + entries_per_page)
       );
     }
   }, [
