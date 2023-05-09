@@ -1,13 +1,5 @@
 import React from "react";
-import {
-  Modal,
-  Button,
-  Dropdown,
-  Input,
-  Pagination,
-  Table,
-  Radio,
-} from "@nextui-org/react";
+import { Modal, Button, Dropdown, Input, Pagination, Table, Radio } from "@nextui-org/react";
 import "../../assets/scss/table.scss";
 import useSWR from "swr";
 import SEO from "../../common/SEO";
@@ -295,10 +287,10 @@ const cities = [
 const capacities = [
   { name: "Недвижими имоти" },
   { name: "Недвижими културни ценности" },
-  { name: "Машини и съоражения" },
-  { name: "Права на интелектуална и индустриална собственост" },
+  { name: "Машини и съоръжения" },
+  { name: "Права на интелектуалната и индустриалната собственост" },
   { name: "Търговски предприятия и вземания" },
-  { name: "Финансови активи и фанансови институции" },
+  { name: "Финансови активи и финансови институции" },
   { name: "Други активи" },
   { name: "Земеделски земи и трайни насаждения" },
   { name: "Поземлени имоти в горски територии" },
@@ -331,9 +323,7 @@ const DashboardCompanies = () => {
   const fetcher = (url) =>
     fetch(url, {
       headers: {
-        Authorization: `Bearer ${
-          JSON.parse(localStorage.getItem("user")).token
-        }`,
+        Authorization: `Bearer ${JSON.parse(localStorage.getItem("user")).token}`,
       },
     }).then((res) => res.json());
 
@@ -344,31 +334,21 @@ const DashboardCompanies = () => {
   const [certificate_number, set_certificate_number] = React.useState("");
   const [entries_per_page, set_entries_per_page] = React.useState(50);
   const [page, set_page] = React.useState(1);
-  const { data: companies } = useSWR(
-    `${process.env.REACT_APP_API_URL}/api/get-companies`,
-    fetcher
-  );
-  const { data: users } = useSWR(
-    `${process.env.REACT_APP_API_URL}/api/get-users`,
-    fetcher
-  );
+  const { data: companies } = useSWR(`${process.env.REACT_APP_API_URL}/api/get-companies`, fetcher);
+  const { data: users } = useSWR(`${process.env.REACT_APP_API_URL}/api/get-users`, fetcher);
   const [visibleArchive, setVisibleArchive] = React.useState(false);
   const [add, setAdd] = React.useState(false);
   const [modal, setModal] = React.useState(false);
   const [current_company, set_current_company] = React.useState(null);
   const [error, setError] = React.useState("");
   const [certificates_selected, set_certificates_selected] = React.useState([]);
-  const [addCertificateVisible, setAddCertificateVisible] =
-    React.useState(false);
+  const [addCertificateVisible, setAddCertificateVisible] = React.useState(false);
 
   React.useEffect(() => {
     if (companies) {
       set_mapped_companies(
         companies.results
-          .slice(
-            (page - 1) * entries_per_page,
-            (page - 1) * entries_per_page + entries_per_page
-          )
+          .slice((page - 1) * entries_per_page, (page - 1) * entries_per_page + entries_per_page)
           .filter((c) => {
             if (name) {
               if (!c.name.toLowerCase().includes(name.toLowerCase())) {
@@ -377,10 +357,7 @@ const DashboardCompanies = () => {
             }
 
             if (certificate_number) {
-              if (
-                !c.current_valid_certificates ||
-                c.current_valid_certificates.length === 0
-              ) {
+              if (!c.current_valid_certificates || c.current_valid_certificates.length === 0) {
                 return false;
               }
 
@@ -397,20 +374,14 @@ const DashboardCompanies = () => {
             }
 
             if (selected_city) {
-              if (
-                selected_city.name !== "Всички" &&
-                c.city !== selected_city.name
-              ) {
+              if (selected_city.name !== "Всички" && c.city !== selected_city.name) {
                 return false;
               }
             }
 
             if (selected_capacity) {
               if (selected_capacity.name !== "Всички") {
-                if (
-                  !c.current_valid_certificates ||
-                  c.current_valid_certificates.length === 0
-                ) {
+                if (!c.current_valid_certificates || c.current_valid_certificates.length === 0) {
                   return false;
                 }
                 let match_cert = false;
@@ -461,22 +432,14 @@ const DashboardCompanies = () => {
       {companies && users && (
         <>
           {/* Start Modal Area */}
-          <Modal
-            closeButton
-            width="85%"
-            open={modal}
-            onClose={() => setModal(false)}
-          >
+          <Modal closeButton width="85%" open={modal} onClose={() => setModal(false)}>
             <form
               onSubmit={async (e) => {
                 e.preventDefault();
                 const body = new FormData();
                 if (add) {
                   certificates_selected.forEach((c, i) => {
-                    body.append(
-                      "certificate_number[]",
-                      e.target[`certificate_number_${i}`].value
-                    );
+                    body.append("certificate_number[]", e.target[`certificate_number_${i}`].value);
                     body.append("certificate_type[]", c.type);
                   });
                 } else {
@@ -498,10 +461,7 @@ const DashboardCompanies = () => {
                 body.append("mobile_phone", e.target.mobile_phone.value);
                 body.append("landline", e.target.landline.value);
                 body.append("eik", e.target.eik.value);
-                body.append(
-                  "visible",
-                  e.target.visible.value === "false" ? false : true
-                );
+                body.append("visible", e.target.visible.value === "false" ? false : true);
 
                 const resp = await fetch(
                   add
@@ -511,9 +471,7 @@ const DashboardCompanies = () => {
                     method: add ? "POST" : "PUT",
                     body: body,
                     headers: {
-                      Authorization: `Bearer ${
-                        JSON.parse(localStorage.getItem("user")).token
-                      }`,
+                      Authorization: `Bearer ${JSON.parse(localStorage.getItem("user")).token}`,
                     },
                   }
                 );
@@ -572,9 +530,7 @@ const DashboardCompanies = () => {
                     width={500}
                     name="mobile_phone"
                     id="mobile_phone"
-                    initialValue={
-                      current_company && current_company.mobile_phone
-                    }
+                    initialValue={current_company && current_company.mobile_phone}
                     style={{
                       background: "white",
                       marginLeft: 0,
@@ -617,20 +573,9 @@ const DashboardCompanies = () => {
                               marginBottom: 10,
                             }}
                           />
-                          <div
-                            style={{ marginTop: "8px", marginBottom: "8px" }}
-                          >
-                            Вид
-                          </div>
-                          <Dropdown
-                            placement="bottom-left"
-                            css={{ width: 500 }}
-                          >
-                            <Dropdown.Button
-                              flat
-                              color="warning"
-                              css={{ width: 500 }}
-                            >
+                          <div style={{ marginTop: "8px", marginBottom: "8px" }}>Вид</div>
+                          <Dropdown placement="bottom-left" css={{ width: 500 }}>
+                            <Dropdown.Button flat color="warning" css={{ width: 500 }}>
                               {certificates_selected[i]
                                 ? certificates_selected[i].type
                                 : "Изберете оценителска правоспособност"}
@@ -647,13 +592,8 @@ const DashboardCompanies = () => {
                               }}
                             >
                               {(item) => (
-                                <Dropdown.Item
-                                  key={item.name}
-                                  css={{ width: 500 }}
-                                >
-                                  <span style={{ fontSize: 12 }}>
-                                    {item.name}
-                                  </span>
+                                <Dropdown.Item key={item.name} css={{ width: 500 }}>
+                                  <span style={{ fontSize: 12 }}>{item.name}</span>
                                 </Dropdown.Item>
                               )}
                             </Dropdown.Menu>
@@ -678,23 +618,14 @@ const DashboardCompanies = () => {
                         <Button
                           style={{ marginBottom: 10, width: 100 }}
                           color="warning"
-                          onPress={() =>
-                            set_certificates_selected([
-                              ...certificates_selected,
-                              {},
-                            ])
-                          }
+                          onPress={() => set_certificates_selected([...certificates_selected, {}])}
                         >
                           Добавете
                         </Button>
                         <Button
                           style={{ marginBottom: 10, width: 100 }}
                           color="error"
-                          onPress={() =>
-                            set_certificates_selected(
-                              certificates_selected.slice(0, -1)
-                            )
-                          }
+                          onPress={() => set_certificates_selected(certificates_selected.slice(0, -1))}
                         >
                           Премахнете
                         </Button>
@@ -744,9 +675,7 @@ const DashboardCompanies = () => {
                   >
                     <Input
                       width={500}
-                      initialValue={
-                        current_company && current_company.valuer_string
-                      }
+                      initialValue={current_company && current_company.valuer_string}
                       name={"valuers"}
                       id={"valuers"}
                       style={{
@@ -756,21 +685,13 @@ const DashboardCompanies = () => {
                         marginBottom: 10,
                       }}
                     />
-                    <span>
-                      Въведете номерате на оценителите, разделени със запетайки
-                    </span>
+                    <span>Въведете номерате на оценителите, разделени със запетайки</span>
                   </div>
                 </div>
                 <div className="modalResponsive">
                   <span style={{ fontWeight: "bold" }}>Видим в регистъра:</span>
                   <div style={{ width: 500 }}>
-                    <Radio.Group
-                      color="warning"
-                      orientation="horizontal"
-                      required
-                      name="visible"
-                      id="visible"
-                    >
+                    <Radio.Group color="warning" orientation="horizontal" required name="visible" id="visible">
                       <Radio value="true">Да</Radio>
                       <Radio value="false">Не</Radio>
                     </Radio.Group>
@@ -779,9 +700,7 @@ const DashboardCompanies = () => {
               </Modal.Body>
               <Modal.Footer>
                 {!add ? (
-                  <div
-                    style={{ display: "flex", flexDirection: "row", gap: 5 }}
-                  >
+                  <div style={{ display: "flex", flexDirection: "row", gap: 5 }}>
                     <Button
                       color="warning"
                       onPress={() => {
@@ -790,19 +709,18 @@ const DashboardCompanies = () => {
                     >
                       Добави сертификат
                     </Button>
-                    {current_company &&
-                      current_company.current_valid_certificates.length > 0 && (
-                        <Button
-                          color="error"
-                          onPress={() => {
-                            setModal(false);
-                            setAdd(false);
-                            setVisibleArchive(true);
-                          }}
-                        >
-                          Деактивирай
-                        </Button>
-                      )}
+                    {current_company && current_company.current_valid_certificates.length > 0 && (
+                      <Button
+                        color="error"
+                        onPress={() => {
+                          setModal(false);
+                          setAdd(false);
+                          setVisibleArchive(true);
+                        }}
+                      >
+                        Деактивирай
+                      </Button>
+                    )}
                   </div>
                 ) : (
                   <></>
@@ -813,12 +731,7 @@ const DashboardCompanies = () => {
               </Modal.Footer>
             </form>
           </Modal>
-          <Modal
-            closeButton
-            width="85%"
-            open={visibleArchive}
-            onClose={() => setVisibleArchive(false)}
-          >
+          <Modal closeButton width="85%" open={visibleArchive} onClose={() => setVisibleArchive(false)}>
             <form
               onSubmit={async (e) => {
                 e.preventDefault();
@@ -837,24 +750,16 @@ const DashboardCompanies = () => {
                 body.append("reason_for_invalidation", e.target.reason.value);
 
                 if (e.target.new_certificate.value) {
-                  body.append(
-                    "certificate_number",
-                    e.target.new_certificate.value
-                  );
+                  body.append("certificate_number", e.target.new_certificate.value);
                 }
 
-                const resp = await fetch(
-                  `${process.env.REACT_APP_API_URL}/api/post-deactivate-certificate`,
-                  {
-                    method: "POST",
-                    body: body,
-                    headers: {
-                      Authorization: `Bearer ${
-                        JSON.parse(localStorage.getItem("user")).token
-                      }`,
-                    },
-                  }
-                );
+                const resp = await fetch(`${process.env.REACT_APP_API_URL}/api/post-deactivate-certificate`, {
+                  method: "POST",
+                  body: body,
+                  headers: {
+                    Authorization: `Bearer ${JSON.parse(localStorage.getItem("user")).token}`,
+                  },
+                });
                 if (resp.status !== 200) {
                   const error = await resp.json();
                   setError(error.error);
@@ -865,10 +770,7 @@ const DashboardCompanies = () => {
             >
               <Modal.Header>
                 <div style={{ display: "flex", flexDirection: "column" }}>
-                  <h5>
-                    Обезсилване на сертификата на:{" "}
-                    {current_company && current_company.name}
-                  </h5>
+                  <h5>Обезсилване на сертификата на: {current_company && current_company.name}</h5>
                   <p style={{ color: "red", fontWeight: "bold" }}>{error}</p>
                 </div>
               </Modal.Header>
@@ -923,10 +825,7 @@ const DashboardCompanies = () => {
                 </div>
               </Modal.Body>
               <Modal.Footer>
-                <Button
-                  color="warning"
-                  onClick={() => setVisibleArchive(false)}
-                >
+                <Button color="warning" onClick={() => setVisibleArchive(false)}>
                   Затвори
                 </Button>
                 <Button color="success" type="submit">
@@ -935,12 +834,7 @@ const DashboardCompanies = () => {
               </Modal.Footer>
             </form>
           </Modal>
-          <Modal
-            closeButton
-            width="85%"
-            open={addCertificateVisible}
-            onClose={() => setAddCertificateVisible(false)}
-          >
+          <Modal closeButton width="85%" open={addCertificateVisible} onClose={() => setAddCertificateVisible(false)}>
             <form
               onSubmit={async (e) => {
                 e.preventDefault();
@@ -949,25 +843,17 @@ const DashboardCompanies = () => {
                 body.append("id", current_company._id);
                 body.append("owner_type", "Company");
                 certificates_selected.forEach((v, i) => {
-                  body.append(
-                    "certificate_number[]",
-                    e.target[`certificate_number_${i}`].value
-                  );
+                  body.append("certificate_number[]", e.target[`certificate_number_${i}`].value);
                   body.append("certificate_type[]", v.type);
                 });
 
-                const resp = await fetch(
-                  `${process.env.REACT_APP_API_URL}/api/post-add-certificate`,
-                  {
-                    method: "POST",
-                    body: body,
-                    headers: {
-                      Authorization: `Bearer ${
-                        JSON.parse(localStorage.getItem("user")).token
-                      }`,
-                    },
-                  }
-                );
+                const resp = await fetch(`${process.env.REACT_APP_API_URL}/api/post-add-certificate`, {
+                  method: "POST",
+                  body: body,
+                  headers: {
+                    Authorization: `Bearer ${JSON.parse(localStorage.getItem("user")).token}`,
+                  },
+                });
                 if (resp.status !== 200) {
                   const error = await resp.json();
                   setError(error.error);
@@ -978,10 +864,7 @@ const DashboardCompanies = () => {
             >
               <Modal.Header>
                 <div style={{ display: "flex", flexDirection: "column" }}>
-                  <h5>
-                    Добавяне на сертификата на{" "}
-                    {current_company && current_company.name}
-                  </h5>
+                  <h5>Добавяне на сертификата на {current_company && current_company.name}</h5>
                   <p style={{ color: "red", fontWeight: "bold" }}>{error}</p>
                 </div>
               </Modal.Header>
@@ -1009,15 +892,9 @@ const DashboardCompanies = () => {
                           marginBottom: 10,
                         }}
                       />
-                      <div style={{ marginTop: "8px", marginBottom: "8px" }}>
-                        Вид
-                      </div>
+                      <div style={{ marginTop: "8px", marginBottom: "8px" }}>Вид</div>
                       <Dropdown placement="bottom-left" css={{ width: 500 }}>
-                        <Dropdown.Button
-                          flat
-                          color="warning"
-                          css={{ width: 500 }}
-                        >
+                        <Dropdown.Button flat color="warning" css={{ width: 500 }}>
                           {certificates_selected[i]
                             ? certificates_selected[i].type
                             : "Изберете оценителска правоспособност"}
@@ -1050,29 +927,18 @@ const DashboardCompanies = () => {
                       />
                     </>
                   ))}
-                  <div
-                    style={{ display: "flex", gap: "1rem", marginTop: "1rem" }}
-                  >
+                  <div style={{ display: "flex", gap: "1rem", marginTop: "1rem" }}>
                     <Button
                       style={{ marginBottom: 10, width: 100 }}
                       color="warning"
-                      onPress={() =>
-                        set_certificates_selected([
-                          ...certificates_selected,
-                          {},
-                        ])
-                      }
+                      onPress={() => set_certificates_selected([...certificates_selected, {}])}
                     >
                       Добавете
                     </Button>
                     <Button
                       style={{ marginBottom: 10, width: 100 }}
                       color="error"
-                      onPress={() =>
-                        set_certificates_selected(
-                          certificates_selected.slice(0, -1)
-                        )
-                      }
+                      onPress={() => set_certificates_selected(certificates_selected.slice(0, -1))}
                     >
                       Премахнете
                     </Button>
@@ -1080,10 +946,7 @@ const DashboardCompanies = () => {
                 </span>
               </Modal.Body>
               <Modal.Footer>
-                <Button
-                  color="warning"
-                  onClick={() => setVisibleArchive(false)}
-                >
+                <Button color="warning" onClick={() => setVisibleArchive(false)}>
                   Затвори
                 </Button>
                 <Button color="success" type="submit">
@@ -1105,9 +968,7 @@ const DashboardCompanies = () => {
                 marginLeft: 30,
               }}
             >
-              <h3 style={{ color: "orange", marginTop: 30 }}>
-                Публичен регистър на независимите оценители
-              </h3>
+              <h3 style={{ color: "orange", marginTop: 30 }}>Публичен регистър на независимите оценители</h3>
               <p
                 style={{
                   fontSize: 16,
@@ -1120,10 +981,7 @@ const DashboardCompanies = () => {
                 Филтър
               </p>
               <br />
-              <form
-                className="filter"
-                style={{ display: "flex", marginLeft: 15, gap: 30 }}
-              >
+              <form className="filter" style={{ display: "flex", marginLeft: 15, gap: 30 }}>
                 <div style={{ display: "flex", flexDirection: "column " }}>
                   <Input
                     style={{ background: "white", margin: 0, fontSize: 16 }}
@@ -1134,19 +992,13 @@ const DashboardCompanies = () => {
                   />
 
                   <Dropdown placement="bottom-left">
-                    <Dropdown.Button
-                      flat
-                      style={{ marginTop: 30 }}
-                      color="warning"
-                    >
+                    <Dropdown.Button flat style={{ marginTop: 30 }} color="warning">
                       {selected_city ? selected_city.name : "Град"}
                     </Dropdown.Button>
                     <Dropdown.Menu
                       items={cities}
                       selectionMode="single"
-                      onSelectionChange={(e) =>
-                        set_selected_city({ name: e.currentKey })
-                      }
+                      onSelectionChange={(e) => set_selected_city({ name: e.currentKey })}
                     >
                       {(item) => (
                         <Dropdown.Item key={item.name}>
@@ -1158,21 +1010,13 @@ const DashboardCompanies = () => {
                 </div>
                 <div style={{ display: "flex", flexDirection: "column" }}>
                   <Dropdown placement="bottom-left">
-                    <Dropdown.Button
-                      color="warning"
-                      flat
-                      style={{ marginBottom: 30 }}
-                    >
-                      {selected_capacity
-                        ? selected_capacity.name
-                        : "Оценителска правоспособност"}
+                    <Dropdown.Button color="warning" flat style={{ marginBottom: 30 }}>
+                      {selected_capacity ? selected_capacity.name : "Оценителска правоспособност"}
                     </Dropdown.Button>
                     <Dropdown.Menu
                       items={capacities}
                       selectionMode="single"
-                      onSelectionChange={(e) =>
-                        set_selected_capacity({ name: e.currentKey })
-                      }
+                      onSelectionChange={(e) => set_selected_capacity({ name: e.currentKey })}
                     >
                       {(item) => (
                         <Dropdown.Item key={item.name}>
@@ -1259,9 +1103,7 @@ const DashboardCompanies = () => {
                   </Dropdown>
                   <div style={{ marginRight: 20 }}>
                     <Pagination
-                      total={Math.ceil(
-                        companies.results.length / entries_per_page
-                      )}
+                      total={Math.ceil(companies.results.length / entries_per_page)}
                       initialPage={1}
                       color="warning"
                       size="xl"
