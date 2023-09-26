@@ -16,9 +16,9 @@ const Copyright = () => {
             <div className="copyright-right text-center text-md-end">
               <p className="copyright-text" style={{ fontSize: "16px", marginTop: 20 }}>
                 Created by{" "}
-                <a target={"_blank"} href="https://javery.bg/" style={{ color: "orange" }} rel="noreferrer">
+                <a target={"_blank"} href="https://simplefinance.net/" style={{ color: "orange" }} rel="noreferrer">
                   {" "}
-                  Javery
+                  SimpleFinance
                 </a>
                 .{" "}
               </p>
