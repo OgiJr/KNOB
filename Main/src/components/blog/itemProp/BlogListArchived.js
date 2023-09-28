@@ -40,7 +40,7 @@ const BlogListArchived = ({ data, StyleVar, international = false }) => {
           <div className="content" style={{ display: "flex", flexDirection: "column" }}>
             <h4 style={{ fontSize: 20 }}>
               {data.short_description ? (
-                <Link to={process.env.PUBLIC_URL + `/blog-details?id=${data.id}`}>{data.title}</Link>
+                <Link to={process.env.PUBLIC_URL + `/blog-details?id=${data._id}`}>{data.title}</Link>
               ) : (
                 data.title
               )}

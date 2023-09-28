@@ -73,6 +73,7 @@ const HomeDefault = () => {
                         </a>
                       ) : jwt_decode(user.token).type === "Guest" ? (
                         <a
+                          href="#"
                           className="btn-default btn-medium round btn-icon"
                           onClick={() => {
                             logout();
